@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <title>Video Bundle Store</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body{
   font-family: Arial, sans-serif;
@@ -14,27 +16,27 @@ body{
   background:#fff;
   margin:15px;
   padding:15px;
-  border-radius:10px;
+  border-radius:12px;
   display:flex;
+  gap:12px;
 }
 .img{
   width:40%;
-  background:#ddd;
   height:120px;
   border-radius:8px;
+  object-fit:cover;
 }
 .text{
   width:60%;
-  padding-left:15px;
 }
 .btn{
   background:#000;
   color:#fff;
-  padding:8px 15px;
+  padding:10px 18px;
   text-decoration:none;
-  border-radius:5px;
+  border-radius:8px;
   display:inline-block;
-  margin-top:5px;
+  margin-top:6px;
 }
 del{color:red;}
 .note{
@@ -43,6 +45,11 @@ del{color:red;}
   color:#555;
   margin:20px;
 }
+.urgent{
+  color:red;
+  font-size:12px;
+  margin-top:4px;
+}
 </style>
 </head>
 
@@ -50,11 +57,12 @@ del{color:red;}
 
 <!-- Milk Bundle -->
 <div class="card">
-  <div class="img"></div>
+  <img src="milk.jpg" class="img">
   <div class="text">
     <h3>Milk Videos Bundle</h3>
     <p>1000+ Videos</p>
     <p><del>₹500</del> <b>₹39 Only</b></p>
+    <p class="urgent">⚡ Offer valid today only</p>
     <a class="btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=MilkVideos&am=39&cu=INR">
       Buy Now
     </a>
@@ -63,11 +71,12 @@ del{color:red;}
 
 <!-- Tom & Jerry Bundle -->
 <div class="card">
-  <div class="img"></div>
+  <img src="tom.jpg" class="img">
   <div class="text">
     <h3>Tom & Jerry Bundle</h3>
     <p>500+ Videos</p>
     <p><del>₹300</del> <b>₹39 Only</b></p>
+    <p class="urgent">⚡ Offer valid today only</p>
     <a class="btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=TomJerryVideos&am=39&cu=INR">
       Buy Now
     </a>
@@ -76,11 +85,12 @@ del{color:red;}
 
 <!-- Anime Bundle -->
 <div class="card">
-  <div class="img"></div>
+  <img src="anime.jpg" class="img">
   <div class="text">
     <h3>Anime Videos Bundle</h3>
     <p>1000+ Videos</p>
     <p><del>₹500</del> <b>₹39 Only</b></p>
+    <p class="urgent">⚡ Offer valid today only</p>
     <a class="btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AnimeVideos&am=39&cu=INR">
       Buy Now
     </a>
@@ -88,9 +98,21 @@ del{color:red;}
 </div>
 
 <p class="note">
+✔ Paytm Verified Seller<br>
+✔ Secure UPI Payment<br>
+✔ Instant Delivery via Telegram<br><br>
 Digital Product • No Refund After Access<br>
 Payment ke baad screenshot Telegram par bheje
 </p>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/91XXXXXXXXXX"
+style="position:fixed;bottom:20px;right:20px;
+background:#25D366;color:white;
+padding:14px 16px;border-radius:50%;
+text-decoration:none;font-size:20px;">
+💬
+</a>
 
 </body>
 </html>
