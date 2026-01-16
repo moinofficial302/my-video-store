@@ -13,6 +13,60 @@ body{
   padding:0;
 }
 
+  <style>
+/* RECOMMENDED BUNDLES SECTION */
+.reco-section{
+  margin:20px 0;
+}
+
+.reco-title{
+  font-size:18px;
+  font-weight:700;
+  margin:0 15px 10px;
+}
+
+.reco-scroll{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:0 15px 10px;
+  scroll-snap-type:x mandatory;
+}
+
+.reco-card{
+  min-width:160px;
+  background:#fff;
+  border-radius:14px;
+  padding:10px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+  scroll-snap-align:start;
+}
+
+.reco-card img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.reco-price{
+  font-weight:700;
+  margin:6px 0;
+}
+
+.reco-buy{
+  display:block;
+  background:#ffd600;
+  color:#000;
+  font-weight:700;
+  padding:8px 0;
+  border-radius:20px;
+  text-decoration:none;
+  font-size:14px;
+}
+</style>
+  
 /* HEADER */
 .header{
   background:#fff;
@@ -183,6 +237,47 @@ function toggleDetails(id){
   </div>
 </div>
 
+<!-- YOU MAY ALSO LIKE -->
+<div class="reco-section">
+  <div class="reco-title">You may also like</div>
+
+  <div class="reco-scroll">
+
+    <div class="reco-card">
+      <img src="Hulk.jpg">
+      <div class="reco-price">₹39 Only</div>
+      <a href="upi://pay?pa=paytm.s12wbso@pty&pn=Hulk&am=39&cu=INR" class="reco-buy">
+        Buy Now
+      </a>
+    </div>
+
+    <div class="reco-card">
+      <img src="Food.jpg">
+      <div class="reco-price">₹39 Only</div>
+      <a href="upi://pay?pa=paytm.s12wbso@pty&pn=Food&am=39&cu=INR" class="reco-buy">
+        Buy Now
+      </a>
+    </div>
+
+    <div class="reco-card">
+      <img src="anime.jpg">
+      <div class="reco-price">₹45 Only</div>
+      <a href="upi://pay?pa=paytm.s12wbso@pty&pn=Anime&am=45&cu=INR" class="reco-buy">
+        Buy Now
+      </a>
+    </div>
+
+    <div class="reco-card">
+      <img src="Car.jpg">
+      <div class="reco-price">₹39 Only</div>
+      <a href="upi://pay?pa=paytm.s12wbso@pty&pn=Car&am=39&cu=INR" class="reco-buy">
+        Buy Now
+      </a>
+    </div>
+
+  </div>
+</div>
+  
 <!-- FOOTER -->
 <p class="note">
 ✔ Paytm Verified Seller<br>
