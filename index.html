@@ -23,14 +23,16 @@ body{
   justify-content:space-between;
   align-items:center;
 }
-.header img{height:50px}
+.header img{
+  height:50px;
+}
 
 /* CARD */
 .card{
   background:#fff;
   margin:15px;
   padding:15px;
-  border-radius:14px;
+  border-radius:15px;
   display:flex;
   gap:14px;
   align-items:center;
@@ -45,42 +47,51 @@ body{
 }
 
 /* TEXT */
-.text{width:62%}
-del{color:red}
+.text{
+  width:62%;
+}
+.text h3{
+  margin:0 0 6px;
+}
+.text p{
+  margin:4px 0;
+}
+del{color:red;}
 .urgent{
   color:#e53935;
   font-size:12px;
-  margin-top:6px;
 }
 
-/* BUY BUTTON */
-.buy-btn{
-  display:block;
+/* BUTTON ROW (IMPORTANT) */
+.btn-row{
+  display:flex;
+  gap:12px;
   margin-top:14px;
+}
+
+/* BUY NOW */
+.buy-btn{
+  flex:1.2;
   background:linear-gradient(90deg,#FFE600,#FFD000);
   color:#000;
-  padding:14px 28px;
+  padding:14px 0;
+  text-align:center;
   border-radius:40px;
   font-weight:700;
   text-decoration:none;
-  text-align:center;
+  box-shadow:0 6px 14px rgba(0,0,0,0.25);
 }
 
-/* VIEW DETAILS BUTTON */
+/* VIEW DETAILS */
 .details-btn{
-  margin-top:12px;
-  background:#f1f3f4;
+  flex:1;
+  background:#f1f1f1;
   color:#000;
-  padding:10px 22px;
-  border-radius:14px;
-  border:1px solid #ddd;
+  padding:12px 0;
+  border-radius:40px;
+  border:none;
   font-weight:600;
-  font-size:14px;
   cursor:pointer;
-  display:block;
-  width:fit-content;
-  margin-left:auto;
-  margin-right:auto;
 }
 
 /* DETAILS BOX */
@@ -94,7 +105,7 @@ del{color:red}
   line-height:1.5;
 }
 
-/* FOOTER NOTE */
+/* FOOTER */
 .note{
   text-align:center;
   font-size:12px;
@@ -106,25 +117,31 @@ del{color:red}
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <h3>Only M.7 Private Limited</h3>
-  <img src="logo.png">
+  <img src="logo.png" alt="Logo">
 </div>
 
 <!-- HULK -->
 <div class="card">
   <img src="Hulk.jpg" class="img">
+
   <div class="text">
     <h3>Hulk Videos Bundle</h3>
     <p>1000+ Videos</p>
     <p><del>₹799</del> <b>₹39 Only</b></p>
     <p class="urgent">⚡ Offer valid today only</p>
 
-    <a class="buy-btn" href="#">Buy Now</a>
+    <div class="btn-row">
+      <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">
+        Buy Now
+      </a>
 
-    <button class="details-btn" onclick="toggleDetails('hulk')">
-      View Details ▼
-    </button>
+      <button class="details-btn" onclick="toggleDetails('hulk')">
+        View Details ▼
+      </button>
+    </div>
 
     <div class="details-box" id="hulk">
       <b>Bundle Type:</b> Long + Short Videos<br>
@@ -139,39 +156,45 @@ del{color:red}
 <!-- AI FOOD -->
 <div class="card">
   <img src="Food.jpg" class="img">
+
   <div class="text">
     <h3>AI Food Cutting Video</h3>
     <p>500+ Videos</p>
     <p><del>₹499</del> <b>₹39 Only</b></p>
     <p class="urgent">⚡ Offer valid today only</p>
 
-    <a class="buy-btn" href="#">Buy Now</a>
+    <div class="btn-row">
+      <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">
+        Buy Now
+      </a>
 
-    <button class="details-btn" onclick="toggleDetails('food')">
-      View Details ▼
-    </button>
+      <button class="details-btn" onclick="toggleDetails('food')">
+        View Details ▼
+      </button>
+    </div>
 
     <div class="details-box" id="food">
       <b>Bundle Type:</b> Short Videos<br>
       <b>Total Videos:</b> 500+<br>
-      <b>Copyright:</b> Free for Instagram<br>
+      <b>Copyright:</b> Free for Social Media<br>
       <b>Quality:</b> Full HD<br>
-      <b>Delivery:</b> Instant
+      <b>Delivery:</b> Instant (Telegram / Drive)
     </div>
   </div>
 </div>
 
+<!-- FOOTER -->
 <p class="note">
 ✔ Paytm Verified Seller<br>
 ✔ Secure UPI Payment<br>
-✔ Instant Delivery<br>
-Digital Product • No Refund
+✔ Instant Delivery (Telegram / WhatsApp / Email)<br>
+Digital Product • No Refund After Access
 </p>
 
 <script>
 function toggleDetails(id){
   var box = document.getElementById(id);
-  box.style.display = box.style.display === "block" ? "none" : "block";
+  box.style.display = (box.style.display === "block") ? "none" : "block";
 }
 </script>
 
