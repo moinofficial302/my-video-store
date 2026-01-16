@@ -12,9 +12,70 @@ body{
   margin:0;
   padding:0;
 }
+.card{
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.img{
+  width:100%;
+  height:180px;
+  border-radius:8px;
+  object-fit:cover;
+}
+.text{
+  width:100%;
+}
 
-/* HEADER */
-.header{
+del{color:red;}
+.note{
+  text-align:center;
+  font-size:12px;
+  color:#555;
+  margin:20px;
+}
+  .urgent{
+  color:#e53935;
+  font-size:12px;
+  font-weight:500;
+  margin-top:6px;
+  }
+.btn{
+  background: linear-gradient(90deg, #FFE600, #FFD000);
+  color:#000;
+  padding:14px 26px;
+  text-decoration:none;
+  border-radius:40px;
+  font-weight:700;
+  display:inline-block;
+  margin-top:10px;
+  box-shadow:0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* Selling Proof - View buttons */
+.proof-btn{
+  background:#5B4BDB;
+  color:#fff !important;
+  padding:12px 24px;
+  border-radius:40px;
+  font-weight:600;
+  text-decoration:none !important;
+  display:inline-block;
+  box-shadow:0 4px 10px rgba(0,0,0,0.25);}
+  {
+  color:red;
+  font-size:12px;
+  margin-top:4px;
+}
+</style>
+</head>
+
+<body>
+<div style="
   background:#fff;
   margin:15px;
   padding:15px;
@@ -22,80 +83,19 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-}
-.header h3{
-  margin:0;
-  font-weight:700;
-}
-.header img{
-  height:55px;
-  object-fit:contain;
-}
+">
+  
+  <!-- Left: Company Name -->
+  <h3 style="margin:0;font-weight:700;">
+    Only M.7 Private Limited
+  </h3>
 
-/* PRODUCT CARD */
-.card{
-  background:#fff;
-  margin:15px;
-  padding:15px;
-  border-radius:12px;
-  display:flex;
-  gap:14px;
-  align-items:center;
-}
-
-/* IMAGE */
-.img{
-  width:38%;
-  height:120px;
-  border-radius:8px;
-  object-fit:cover;
-}
-
-/* TEXT */
-.text{
-  width:62%;
-}
-
-del{color:red;}
-
-.urgent{
-  color:#e53935;
-  font-size:12px;
-  margin-top:6px;
-}
-
-/* BUY BUTTON */
-.buy-btn{
-  display:inline-block;
-  margin-top:14px;
-  background:linear-gradient(90deg,#FFE600,#FFD000);
-  color:#000;
-  padding:14px 28px;
-  border-radius:40px;
-  font-weight:700;
-  text-decoration:none;
-  box-shadow:0 6px 14px rgba(0,0,0,0.25);
-}
-
-/* FOOTER NOTE */
-.note{
-  text-align:center;
-  font-size:12px;
-  color:#555;
-  margin:20px;
-}
-</style>
-</head>
-
-<body>
-
-<!-- HEADER -->
-<div class="header">
-  <h3>Only M.7 Private Limited</h3>
-  <img src="logo.png" alt="Logo">
+  <!-- Right: Logo -->
+  <img src="logo.png" alt="Logo"
+       style="height:55px;object-fit:contain;">
 </div>
-
-<!-- HULK -->
+  
+<!-- Hulk Bundle -->
 <div class="card">
   <img src="Hulk.jpg" class="img">
   <div class="text">
@@ -103,61 +103,269 @@ del{color:red;}
     <p>1000+ Videos</p>
     <p><del>₹799</del> <b>₹39 Only</b></p>
     <p class="urgent">⚡ Offer valid today only</p>
-    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">
-      Buy Now
-    </a>
+    <div style="
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:14px;
+  width:100%;
+">
+
+  <!-- Details & Demo -->
+  <a href="details-hulk.html" 
+     style="
+    width:100%;
+     background:#6c63ff;
+     color:#fff;
+     padding:14px 0;
+     text-align:center;
+     border-radius:12px;
+     font-weight:600;
+     text-decoration:none;">
+     Details & Demo
+  </a>
+
+  <!-- Buy Now -->
+  <a href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR"
+     style="
+     width:100%;
+     background:linear-gradient(90deg,#FFE600,#FFD000);
+     color:#000;
+     padding:16px 0;
+     text-align:center;
+     border-radius:40px;
+     font-weight:700;
+     text-decoration:none;">
+     Buy Now
+  </a>
   </div>
 </div>
 
-<!-- AI FOOD -->
+<!-- Ai Food Cating Video -->
 <div class="card">
   <img src="Food.jpg" class="img">
   <div class="text">
-    <h3>AI Food Cutting Video</h3>
+    <h3>Ai Food Cating Video</h3>
     <p>500+ Videos</p>
     <p><del>₹499</del> <b>₹39 Only</b></p>
     <p class="urgent">⚡ Offer valid today only</p>
-    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">
-      Buy Now
-    </a>
-  </div>
+<div style="
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:14px;
+  width:100%;
+">
+  <!-- Details & Demo -->
+  <a href="details-hulk.html" 
+     style="
+     width:100%;
+     background:#6c63ff;
+     color:#fff;
+     padding:14px 0;
+     text-align:center;
+     border-radius:12px;
+     font-weight:600;
+     text-decoration:none;">
+     Details & Demo
+  </a>
+      
+  <!-- Buy Now -->
+  <a href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR"
+     style="
+     width:100%;
+     background:linear-gradient(90deg,#FFE600,#FFD000);
+     color:#000;
+     padding:16px 0;
+     text-align:center;
+     border-radius:40px;
+     font-weight:700;
+     text-decoration:none;">
+     Buy Now
+  </a>
+
+</div>
 </div>
 
-<!-- ANIME -->
+<!-- Anime's Bundle -->
 <div class="card">
   <img src="anime.jpg" class="img">
   <div class="text">
-    <h3>Anime Videos Bundle</h3>
+    <h3>Anime's Videos Bundle</h3>
     <p>2000+ Videos</p>
     <p><del>₹999</del> <b>₹45 Only</b></p>
     <p class="urgent">⚡ Offer valid today only</p>
-    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=Anime&am=45&cu=INR">
-      Buy Now
-    </a>
+    <div style="
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:14px;
+  width:100%;
+">
+  <!-- Details & Demo -->
+  <a href="details-hulk.html" 
+     style="
+     width:100%;
+     background:#6c63ff;
+     color:#fff;
+     padding:14px 0;
+     text-align:center;
+     border-radius:12px;
+     font-weight:600;
+     text-decoration:none;">
+     Details & Demo
+  </a>
+
+  <!-- Buy Now -->
+  <a href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR"
+     style="
+     width:100%;
+     background:linear-gradient(90deg,#FFE600,#FFD000);
+     color:#000;
+     padding:16px 0;
+     text-align:center;
+     border-radius:40px;
+     font-weight:700;
+     text-decoration:none;">
+     Buy Now
+  </a>
+
+</div>
   </div>
 </div>
-
-<!-- CAR -->
+  
+<!-- Ai Racing Car  -->
 <div class="card">
   <img src="Car.jpg" class="img">
   <div class="text">
-    <h3>AI Car Videos Bundle</h3>
+    <h3>Ai Car Videos Bundle</h3>
     <p>1000+ Videos</p>
     <p><del>₹499</del> <b>₹39 Only</b></p>
     <p class="urgent">⚡ Offer valid today only</p>
-    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=Car&am=39&cu=INR">
-      Buy Now
-    </a>
+    <div style="
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:14px;
+  width:100%;
+">
+
+  <!-- Details & Demo -->
+  <a href="details-hulk.html" 
+     style="
+     width:100%;
+     background:#6c63ff;
+     color:#fff;
+     padding:14px 0;
+     text-align:center;
+     border-radius:12px;
+     font-weight:600;
+     text-decoration:none;">
+     Details & Demo
+  </a>
+
+  <!-- Buy Now -->
+  <a href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR"
+     style="
+     width:100%;
+     background:linear-gradient(90deg,#FFE600,#FFD000);
+     color:#000;
+     padding:16px 0;
+     text-align:center;
+     border-radius:40px;
+     font-weight:700;
+     text-decoration:none;">
+     Buy Now
+  </a>
+
+</div>
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- Treading Videos -->
+<div class="card">
+  <img src="Treading.jpg" class="img">
+  <div class="text">
+    <h3>Treading Videos Bundle</h3>
+    <p>500+ Videos</p>
+    <p><del>₹499</del> <b>₹39 Only</b></p>
+    <p class="urgent">⚡ Offer valid today only</p>
+    <div style="
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:14px;
+  width:100%;
+">
+
+  <!-- Details & Demo -->
+  <a href="details-hulk.html" 
+     style="
+     width:100%;
+     background:#6c63ff;
+     color:#fff;
+     padding:14px 0;
+     text-align:center;
+     border-radius:12px;
+     font-weight:600;
+     text-decoration:none;">
+     Details & Demo
+  </a>
+
+  <!-- Buy Now -->
+  <a href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR"
+     style="
+     width:100%;
+     background:linear-gradient(90deg,#FFE600,#FFD000);
+     color:#000;
+     padding:16px 0;
+     text-align:center;
+     border-radius:40px;
+     font-weight:700;
+     text-decoration:none;">
+     Buy Now
+  </a>
+
+</div>
+  </div>
+</div>
+  </div>
+</div>  <!-- last card close -->
+
+<div style="background:#fff;margin:15px;padding:15px;border-radius:12px;">
+  <h3>24×7 Customer Support</h3>
+  <p><b>Name:</b> AKANS Moin</p>
+  <p><b>Email:</b> moinofficial302@gmail.com</p>
+</div>
+  
+<div style="background:#fff;margin:15px;padding:15px;border-radius:12px;">
+  <h3>Selling Proof & Social Pages</h3>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0;">
+    <span>Instagram Page</span>
+    <a href="https://www.instagram.com/akans.ai?igsh=MWQ5a2w1MWpmOWYyMw==" class="proof-btn">View</a>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0;">
+    <span>Telegram Channel</span>
+    <a href="https://t.me/AKANS_AI" class="proof-btn">View</a>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0;">
+    <span>Telegram Contact</span>
+    <a href="https://t.me/AKANS_Moin" class="proof-btn">View</a>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0;">
+    <span>Selling Proof</span>
+    <a href="https://t.me/+X8lVU6ZMLZNmMjI1" class="proof-btn">View</a>
+  </div>
+</div>
+  
 <p class="note">
 ✔ Paytm Verified Seller<br>
 ✔ Secure UPI Payment<br>
-✔ Instant Delivery (Telegram / WhatsApp / Email)<br><br>
-Digital Product • No Refund After Access
-</p>
+✔ Instant Delivery Telegram / Watsapp / Mail<br><br>
+Digital Product • No Refund After Access<br>
+
 
 </body>
+
+  </div>
 </html>
