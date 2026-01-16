@@ -4,237 +4,183 @@
 <meta charset="UTF-8">
 <title>Video Bundle Store</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body{
-  font-family: Arial, sans-serif;
-  background:#f2f2f2;
-  margin:0;
-  padding:0;
+  font-family: Arial, sans-serif;
+  background:#f2f2f2;
+  margin:0;
+  padding:0;
 }
-
 /* HEADER */
 .header{
-  background:#fff;
-  margin:15px;
-  padding:15px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 .header h3{
-  margin:0;
-  font-weight:700;
+  margin:0;
+  font-weight:700;
 }
 .header img{
-  height:55px;
-  object-fit:contain;
+  height:55px;
+  object-fit:contain;
 }
-
 /* PRODUCT CARD */
 .card{
-  background:#fff;
-  margin:15px;
-  padding:15px;
-  border-radius:12px;
-  display:flex;
-  gap:14px;
-  align-items:center;
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:12px;
+  display:flex;
+  gap:14px;
+  align-items:center;
 }
-
 /* IMAGE */
 .img{
-  width:38%;
-  height:120px;
-  border-radius:8px;
-  object-fit:cover;
+  width:38%;
+  height:120px;
+  border-radius:8px;
+  object-fit:cover;
 }
-
 /* TEXT */
 .text{
-  width:62%;
+  width:62%;
 }
-
 del{color:red;}
-
 .urgent{
-  color:#e53935;
-  font-size:12px;
-  margin-top:6px;
+  color:#e53935;
+  font-size:12px;
+  margin-top:6px;
 }
-
 /* BUY BUTTON */
 .buy-btn{
-  display:inline-block;
-  margin-top:14px;
-  background:linear-gradient(90deg,#FFE600,#FFD000);
-  color:#000;
-  padding:14px 28px;
-  border-radius:40px;
-  font-weight:700;
-  text-decoration:none;
-  box-shadow:0 6px 14px rgba(0,0,0,0.25);
+  display:inline-block;
+  margin-top:14px;
+  background:linear-gradient(90deg,#FFE600,#FFD000);
+  color:#000;
+  padding:14px 28px;
+  border-radius:40px;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 6px 14px rgba(0,0,0,0.25);
 }
-
 /* FOOTER NOTE */
 .note{
-  text-align:center;
-  font-size:12px;
-  color:#555;
-  margin:20px;
+  text-align:center;
+  font-size:12px;
+  color:#555;
+  margin:20px;
 }
-
-  /* VIEW BUTTON */
+  /* VIEW BUTTON */
 .view-btn{
-  background:#000;
-  color:#fff;
-  padding:10px 26px;
-  border-radius:40px;
-  text-decoration:none;
-  font-weight:600;
-  font-size:14px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:90px;
+  background:#000;
+  color:#fff;
+  padding:10px 26px;
+  border-radius:40px;
+  text-decoration:none;
+  font-weight:600;
+  font-size:14px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:90px;
 }
-
-/* PRODUCT DETAILS DROPDOWN */
-.details-box{
-  display:none;
-  margin-top:12px;
-  padding:12px;
-  background:#f7f7f7;
-  border-radius:10px;
-  font-size:14px;
-  line-height:1.5;
-}
-
-.details-btn{
-  margin-top:10px;
-  background:#eee;
-  color:#000;
-  padding:8px 20px;
-  border-radius:20px;
-  border:none;
-  font-weight:600;
-  cursor:pointer;
-}
-  
+  
 </style>
 </head>
-
 <body>
-
 <!-- HEADER -->
 <div class="header">
-  <h3>Only M.7 Private Limited</h3>
-  <img src="logo.png" alt="Logo">
+  <h3>Only M.7 Private Limited</h3>
+  <img src="logo.png" alt="Logo">
 </div>
-
 <!-- HULK -->
 <div class="card">
-  <img src="Hulk.jpg" class="img">
-  <div class="text">
-    <h3>Hulk Videos Bundle</h3>
-    <p>1000+ Videos</p>
-    <p><del>₹799</del> <b>₹39 Only</b></p>
-    <p class="urgent">⚡ Offer valid today only</p>
-    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">
-      Buy Now
-    </a>
-    <button class="details-btn" onclick="toggleDetails('hulk-details')">
-  View Details
-</button>
-
-<div class="details-box" id="hulk-details">
-  <b>Bundle Type:</b> Long + Short Videos<br>
-  <b>Total Videos:</b> 1000+<br>
-  <b>Copyright:</b> Free for Reels / Shorts<br>
-  <b>Quality:</b> Full HD / 4K<br>
-  <b>Delivery:</b> Instant (Telegram / Drive)
-  </div>
+  <img src="Hulk.jpg" class="img">
+  <div class="text">
+    <h3>Hulk Videos Bundle</h3>
+    <p>1000+ Videos</p>
+    <p><del>₹799</del> <b>₹39 Only</b></p>
+    <p class="urgent">⚡ Offer valid today only</p>
+    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">
+      Buy Now
+    </a>
+  </div>
 </div>
-
 <!-- AI FOOD -->
 <div class="card">
-  <img src="Food.jpg" class="img">
-  <div class="text">
-    <h3>AI Food Cutting Video</h3>
-    <p>500+ Videos</p>
-    <p><del>₹499</del> <b>₹39 Only</b></p>
-    <p class="urgent">⚡ Offer valid today only</p>
-    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">
-      Buy Now
-    </a>
-  </div>
+  <img src="Food.jpg" class="img">
+  <div class="text">
+    <h3>AI Food Cutting Video</h3>
+    <p>500+ Videos</p>
+    <p><del>₹499</del> <b>₹39 Only</b></p>
+    <p class="urgent">⚡ Offer valid today only</p>
+    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">
+      Buy Now
+    </a>
+  </div>
 </div>
-
 <!-- ANIME -->
 <div class="card">
-  <img src="anime.jpg" class="img">
-  <div class="text">
-    <h3>Anime Videos Bundle</h3>
-    <p>2000+ Videos</p>
-    <p><del>₹999</del> <b>₹45 Only</b></p>
-    <p class="urgent">⚡ Offer valid today only</p>
-    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=Anime&am=45&cu=INR">
-      Buy Now
-    </a>
-  </div>
+  <img src="anime.jpg" class="img">
+  <div class="text">
+    <h3>Anime Videos Bundle</h3>
+    <p>2000+ Videos</p>
+    <p><del>₹999</del> <b>₹45 Only</b></p>
+    <p class="urgent">⚡ Offer valid today only</p>
+    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=Anime&am=45&cu=INR">
+      Buy Now
+    </a>
+  </div>
 </div>
-
 <!-- CAR -->
 <div class="card">
-  <img src="Car.jpg" class="img">
-  <div class="text">
-    <h3>AI Car Videos Bundle</h3>
-    <p>1000+ Videos</p>
-    <p><del>₹499</del> <b>₹39 Only</b></p>
-    <p class="urgent">⚡ Offer valid today only</p>
-    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=Car&am=39&cu=INR">
-      Buy Now
-    </a>
-  </div>
+  <img src="Car.jpg" class="img">
+  <div class="text">
+    <h3>AI Car Videos Bundle</h3>
+    <p>1000+ Videos</p>
+    <p><del>₹499</del> <b>₹39 Only</b></p>
+    <p class="urgent">⚡ Offer valid today only</p>
+    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=Car&am=39&cu=INR">
+      Buy Now
+    </a>
+  </div>
 </div>
-
-  <!-- CUSTOMER SUPPORT -->
+  <!-- CUSTOMER SUPPORT -->
 <div class="card">
-  <div class="text" style="width:100%">
-    <h3>24×7 Customer Support</h3>
-    <p><b>Name:</b> AKANS Moin</p>
-    <p><b>Email:</b> moinofficial302@gmail.com</p>
-  </div>
+  <div class="text" style="width:100%">
+    <h3>24×7 Customer Support</h3>
+    <p><b>Name:</b> AKANS Moin</p>
+    <p><b>Email:</b> moinofficial302@gmail.com</p>
+  </div>
 </div>
-
 <!-- SELLING PROOF -->
 <div class="card">
-  <div class="text" style="width:100%">
-    <h3>Selling Proof & Social Pages</h3>
-
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
-      <span>Instagram Page</span>
-      <a href="https://www.instagram.com/akans.ai" class="view-btn">View</a>
-    </div>
-
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
-      <span>Telegram Channel</span>
-      <a href="https://t.me/AKANS_AI" class="view-btn">View</a>
-    </div>
-
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
-      <span>Telegram Contact</span>
-      <a href="https://t.me/AKANS_Moin" class="view-btn">View</a>
-    </div>
-
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
-      <span>Selling Proof</span>
-      <a href="https://t.me/+X8lVU6ZMLZNmMjI1" class="view-btn">View</a>
-    </div>
-  </div>
+  <div class="text" style="width:100%">
+    <h3>Selling Proof & Social Pages</h3>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
+      <span>Instagram Page</span>
+      <a href="https://www.instagram.com/akans.ai" class="view-btn">View</a>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
+      <span>Telegram Channel</span>
+      <a href="https://t.me/AKANS_AI" class="view-btn">View</a>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
+      <span>Telegram Contact</span>
+      <a href="https://t.me/AKANS_Moin" class="view-btn">View</a>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
+      <span>Selling Proof</span>
+      <a href="https://t.me/+X8lVU6ZMLZNmMjI1" class="view-btn">View</a>
+    </div>
+  </div>
 </div>
-  
+  
 <!-- FOOTER -->
 <p class="note">
 ✔ Paytm Verified Seller<br>
@@ -242,6 +188,5 @@ del{color:red;}
 ✔ Instant Delivery (Telegram / WhatsApp / Email)<br><br>
 Digital Product • No Refund After Access
 </p>
-
 </body>
 </html>
