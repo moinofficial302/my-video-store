@@ -20,11 +20,10 @@ body{
   padding:15px;
   border-radius:12px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
-.header h3{margin:0;font-weight:700;}
-.header img{height:55px;object-fit:contain;}
+.header img{height:50px}
 
 /* CARD */
 .card{
@@ -34,7 +33,7 @@ body{
   border-radius:14px;
   display:flex;
   gap:14px;
-  align-items:flex-start;
+  align-items:center;
 }
 
 /* IMAGE */
@@ -46,52 +45,56 @@ body{
 }
 
 /* TEXT */
-.text{width:62%;}
-del{color:red;}
-.urgent{color:#e53935;font-size:12px;margin-top:6px;}
+.text{width:62%}
+del{color:red}
+.urgent{
+  color:#e53935;
+  font-size:12px;
+  margin-top:6px;
+}
 
-/* BUY NOW */
+/* BUY BUTTON */
 .buy-btn{
-  display:inline-block;
-  margin-top:12px;
+  display:block;
+  margin-top:14px;
   background:linear-gradient(90deg,#FFE600,#FFD000);
   color:#000;
   padding:14px 28px;
   border-radius:40px;
   font-weight:700;
   text-decoration:none;
-  box-shadow:0 6px 14px rgba(0,0,0,0.25);
+  text-align:center;
 }
 
-/* AMAZON STYLE VIEW DETAILS */
+/* VIEW DETAILS BUTTON */
 .details-btn{
-  margin-top:10px;
+  margin-top:12px;
   background:#f1f3f4;
   color:#000;
-  padding:8px 16px;
-  border-radius:12px;
+  padding:10px 22px;
+  border-radius:14px;
   border:1px solid #ddd;
   font-weight:600;
-  font-size:13px;
+  font-size:14px;
   cursor:pointer;
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
+  display:block;
+  width:fit-content;
+  margin-left:auto;
+  margin-right:auto;
 }
-.details-btn::after{content:"▾";}
 
+/* DETAILS BOX */
 .details-box{
   display:none;
-  margin-top:10px;
-  padding:14px;
-  background:#fafafa;
-  border-radius:12px;
+  margin-top:12px;
+  padding:12px;
+  background:#f7f7f7;
+  border-radius:10px;
   font-size:14px;
-  line-height:1.6;
-  border:1px solid #eee;
+  line-height:1.5;
 }
 
-/* FOOTER */
+/* FOOTER NOTE */
 .note{
   text-align:center;
   font-size:12px;
@@ -99,21 +102,13 @@ del{color:red;}
   margin:20px;
 }
 </style>
-
-<script>
-function toggleDetails(id){
-  var box = document.getElementById(id);
-  box.style.display = (box.style.display === "block") ? "none" : "block";
-}
-</script>
-
 </head>
+
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <h3>Only M.7 Private Limited</h3>
-  <img src="logo.png" alt="Logo">
+  <img src="logo.png">
 </div>
 
 <!-- HULK -->
@@ -125,12 +120,10 @@ function toggleDetails(id){
     <p><del>₹799</del> <b>₹39 Only</b></p>
     <p class="urgent">⚡ Offer valid today only</p>
 
-    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">
-      Buy Now
-    </a><br>
+    <a class="buy-btn" href="#">Buy Now</a>
 
     <button class="details-btn" onclick="toggleDetails('hulk')">
-      View Details
+      View Details ▼
     </button>
 
     <div class="details-box" id="hulk">
@@ -152,31 +145,35 @@ function toggleDetails(id){
     <p><del>₹499</del> <b>₹39 Only</b></p>
     <p class="urgent">⚡ Offer valid today only</p>
 
-    <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">
-      Buy Now
-    </a><br>
+    <a class="buy-btn" href="#">Buy Now</a>
 
     <button class="details-btn" onclick="toggleDetails('food')">
-      View Details
+      View Details ▼
     </button>
 
     <div class="details-box" id="food">
-      <b>Bundle Type:</b> Satisfying AI Videos<br>
+      <b>Bundle Type:</b> Short Videos<br>
       <b>Total Videos:</b> 500+<br>
-      <b>Copyright:</b> Reels Safe<br>
+      <b>Copyright:</b> Free for Instagram<br>
       <b>Quality:</b> Full HD<br>
       <b>Delivery:</b> Instant
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <p class="note">
 ✔ Paytm Verified Seller<br>
 ✔ Secure UPI Payment<br>
-✔ Instant Delivery (Telegram / WhatsApp / Email)<br><br>
-Digital Product • No Refund After Access
+✔ Instant Delivery<br>
+Digital Product • No Refund
 </p>
+
+<script>
+function toggleDetails(id){
+  var box = document.getElementById(id);
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+</script>
 
 </body>
 </html>
