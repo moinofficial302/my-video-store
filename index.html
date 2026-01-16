@@ -62,36 +62,39 @@ del{color:red;}
   font-size:12px;
 }
 
-/* BUTTON ROW (IMPORTANT) */
+/* BUTTON ROW */
 .btn-row{
   display:flex;
-  gap:12px;
+  gap:10px;
   margin-top:14px;
+  align-items:center;
 }
 
-/* BUY NOW */
+/* VIEW DETAILS (SMALL - LEFT) */
+.details-btn{
+  flex:0.8;
+  background:#f1f1f1;
+  color:#000;
+  padding:10px 0;
+  border-radius:30px;
+  border:none;
+  font-weight:600;
+  font-size:13px;
+  cursor:pointer;
+}
+
+/* BUY NOW (BIG - RIGHT) */
 .buy-btn{
-  flex:1.2;
+  flex:1.4;
   background:linear-gradient(90deg,#FFE600,#FFD000);
   color:#000;
   padding:14px 0;
   text-align:center;
   border-radius:40px;
   font-weight:700;
+  font-size:15px;
   text-decoration:none;
   box-shadow:0 6px 14px rgba(0,0,0,0.25);
-}
-
-/* VIEW DETAILS */
-.details-btn{
-  flex:1;
-  background:#f1f1f1;
-  color:#000;
-  padding:12px 0;
-  border-radius:40px;
-  border:none;
-  font-weight:600;
-  cursor:pointer;
 }
 
 /* DETAILS BOX */
@@ -134,13 +137,15 @@ del{color:red;}
     <p class="urgent">⚡ Offer valid today only</p>
 
     <div class="btn-row">
-      <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">
-        Buy Now
-      </a>
-
+      <!-- LEFT SMALL -->
       <button class="details-btn" onclick="toggleDetails('hulk')">
         View Details ▼
       </button>
+
+      <!-- RIGHT BIG -->
+      <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">
+        Buy Now
+      </a>
     </div>
 
     <div class="details-box" id="hulk">
@@ -164,13 +169,13 @@ del{color:red;}
     <p class="urgent">⚡ Offer valid today only</p>
 
     <div class="btn-row">
-      <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">
-        Buy Now
-      </a>
-
       <button class="details-btn" onclick="toggleDetails('food')">
         View Details ▼
       </button>
+
+      <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">
+        Buy Now
+      </a>
     </div>
 
     <div class="details-box" id="food">
