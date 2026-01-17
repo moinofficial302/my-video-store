@@ -35,14 +35,17 @@ body{
   display:flex;
   gap:14px;
   align-items:center;
+  flex-wrap:wrap;
 }
 
 /* IMAGE */
 .img{
-  width:38%;
-  height:120px;
-  border-radius:10px;
-  object-fit:cover;
+  width:38%;
+  max-width:140px;
+  height:auto;
+  aspect-ratio:1/1;
+  border-radius:12px;
+  object-fit:contain;
 }
 
 /* TEXT */
@@ -94,6 +97,9 @@ del{color:red}
   border-radius:33px;
   font-size:11px;
   line-height:1.5;
+
+  width:100%;
+  clear:both;
 }
 
 /* FOOTER */
@@ -105,9 +111,14 @@ del{color:red}
 }
 
   @media (max-width:480px){
-  .img{width:40%}
-  .text{width:60%}
-  }
+  .img{
+    width:40%;
+    max-width:130px;
+  }
+  .text{
+    width:60%;
+  }
+  }
   
 </style>
 
