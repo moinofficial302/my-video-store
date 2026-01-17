@@ -184,11 +184,21 @@ function toggleDetails(id){
       <div class="btn-row">
         <button class="details-btn" onclick="toggleDetails('hulk')">View Details</button>
 
-<form action="https://formspree.io/f/xbdddbpd" method="POST">
-  
+<form action="https://formspree.io/f/xbddddpd" method="POST">
+
+  <!-- BUYER EMAIL -->
+  <input
+    type="email"
+    name="email"
+    placeholder="Enter your email"
+    required
+  >
+
+  <!-- HIDDEN DETAILS -->
   <input type="hidden" name="Bundle" value="Hulk Videos Bundle">
   <input type="hidden" name="Price" value="₹39">
 
+  <!-- BUY BUTTON -->
   <button type="submit" class="buy-btn">
     Buy Now
   </button>
