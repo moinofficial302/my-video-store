@@ -7,101 +7,42 @@
 
 <style>
 body{
-  font-family: Arial, sans-serif;
-  background:#f2f2f2;
-  margin:0;
-  padding:0;
+  font-family: Arial, sans-serif;
+  background:#f2f2f2;
+  margin:0;
+  padding:0;
 }
 
-/* RECOMMENDED BUNDLES SECTION */
-.reco-section{
-  margin:20px 0;
-}
-
-.reco-title{
-  font-size:18px;
-  font-weight:700;
-  margin:0 15px 10px;
-}
-
-.reco-scroll{
-  display:flex;
-  gap:12px;
-  overflow-x:auto;
-  padding:0 15px 10px;
-  scroll-snap-type:x mandatory;
-  width:100%;
-}
-
-.reco-section{
-  width:100%;
-  display:block;
-  clear:both;
-}
-  
-.reco-card{
-  min-width:160px;
-  background:#fff;
-  border-radius:14px;
-  padding:10px;
-  text-align:center;
-  box-shadow:0 4px 10px rgba(0,0,0,0.08);
-  scroll-snap-align:start;
-}
-
-.reco-card img{
-  width:100%;
-  height:120px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-.reco-price{
-  font-weight:700;
-  margin:6px 0;
-}
-
-.reco-buy{
-  display:block;
-  background:#ffd600;
-  color:#000;
-  font-weight:700;
-  padding:8px 0;
-  border-radius:20px;
-  text-decoration:none;
-  font-size:14px;
-}
-  
 /* HEADER */
 .header{
-  background:#fff;
-  margin:15px;
-  padding:15px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 .header h3{margin:0;font-weight:700;}
 .header img{height:55px}
 
 /* CARD */
 .card{
-  background:#fff;
-  margin:15px;
-  padding:15px;
-  border-radius:14px;
-  display:flex;
-  gap:14px;
-  align-items:center;
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:14px;
+  display:flex;
+  gap:14px;
+  align-items:center;
 }
 
 /* IMAGE */
 .img{
-  width:38%;
-  height:120px;
-  border-radius:10px;
-  object-fit:cover;
+  width:38%;
+  height:120px;
+  border-radius:10px;
+  object-fit:cover;
 }
 
 /* TEXT */
@@ -111,66 +52,63 @@ del{color:red}
 
 /* BUTTON ROW */
 .btn-row{
-  display:flex;
-  gap:10px;
-  margin-top:12px;
-  align-items:center;
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+  align-items:center;
 }
 
 /* BUY NOW */
 .buy-btn{
-  flex:1.4;
-  background:linear-gradient(90deg,#FFE600,#FFD000);
-  color:#000;
-  padding:14px 0;
-  text-align:center;
-  border-radius:40px;
-  font-weight:700;
-  text-decoration:none;
-  box-shadow:0 6px 14px rgba(0,0,0,0.25);
+  flex:1.4;
+  background:linear-gradient(90deg,#FFE600,#FFD000);
+  color:#000;
+  padding:14px 0;
+  text-align:center;
+  border-radius:40px;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 6px 14px rgba(0,0,0,0.25);
 }
 
-/* VIEW DETAILS (FIXED) */
+/* VIEW DETAILS */
 .details-btn{
-  flex:0.8;
-  background:#f1f1f1;
-  color:#000;
-  padding:10px 0;
-  border-radius:30px;
-  border:none;
-  font-weight:600;
-  font-size:10px;      /* 👈 text chhota */
-  cursor:pointer;
-  white-space:nowrap; /* 👈 MAIN FIX (same text everywhere) */
+  flex:0.8;
+  background:#f1f1f1;
+  color:#000;
+  padding:10px 0;
+  border-radius:34px;
+  border:none;
+  font-weight:600;
+  font-size:10px;      /* 👈 text chhota */
+  cursor:pointer;
+  white-space:nowrap; /* 👈 MAIN FIX (same text everywhere) */
 }
 
 /* DETAILS BOX */
 .details-box{
-  display:none;
-  margin-top:10px;
-  padding:12px;
-  background:#f7f7f7;
-  border-radius:33px;
-  font-size:11px;
-  line-height:1.5;
+  display:none;
+  margin-top:10px;
+  padding:12px;
+  background:#f7f7f7;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.5;
 }
 
 /* FOOTER */
 .note{
-  text-align:center;
-  font-size:12px;
-  color:#555;
-  margin:20px;
-  width:100%;
-  display:block;
-  clear:both;
+  text-align:center;
+  font-size:12px;
+  color:#555;
+  margin:20px;
 }
 </style>
 
 <script>
 function toggleDetails(id){
-  const box=document.getElementById(id);
-  box.style.display = box.style.display==="block" ? "none" : "block";
+  const box=document.getElementById(id);
+  box.style.display = box.style.display==="block" ? "none" : "block";
 }
 </script>
 </head>
@@ -179,113 +117,68 @@ function toggleDetails(id){
 
 <!-- HEADER -->
 <div class="header">
-  <h3>Only M.7 Private Limited</h3>
-  <img src="logo.png" alt="Logo">
+  <h3>Only M.7 Private Limited</h3>
+  <img src="logo.png" alt="Logo">
 </div>
 
 <!-- HULK -->
 <div class="card">
-  <img src="Hulk.jpg" class="img">
-  <div class="text">
-    <h3>Hulk Videos Bundle</h3>
-    <p>1000+ Videos</p>
-    <p><del>₹799</del> <b>₹39 Only</b></p>
-    <p class="urgent">⚡ Offer valid today only</p>
+  <img src="Hulk.jpg" class="img">
+  <div class="text">
+    <h3>Hulk Videos Bundle</h3>
+    <p>1000+ Videos</p>
+    <p><del>₹799</del> <b>₹39 Only</b></p>
+    <p class="urgent">⚡ Offer valid today only</p>
 
-    <div class="btn-row">
-      <button class="details-btn" onclick="toggleDetails('hulk')">
-        View Details
-      </button>
+    <div class="btn-row">
+      <button class="details-btn" onclick="toggleDetails('hulk')">
+        View Details
+      </button>
 
-      <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">
-        Buy Now
-      </a>
-    </div>
+      <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">
+        Buy Now
+      </a>
+    </div>
 
-    <div class="details-box" id="hulk">
-      <b>Bundle:</b> Ai Ganreated Viral Hulk Videos<br>
-      <b>Bundle Type:</b> Short Videos<br>
-      <b>Total Videos:</b> 1000+<br>
-      <b>Copyright:</b> Copyright Free<br>
-      <b>Quality:</b> Full HD / HD<br>
-      <b>Delivery:</b> Instant (Telegram / Watsapp / Mail)<br><br>
-      <b>⭐ 4.7 / 5 (1,047+ Ratings )</b>
-    </div>
-  </div>
+    <div class="details-box" id="hulk">
+      <b>Bundle Type:</b> Long + Short Videos<br>
+      <b>Total Videos:</b> 1000+<br>
+      <b>Copyright:</b> Free for Reels / Shorts<br>
+      <b>Quality:</b> Full HD / 4K<br>
+      <b>Delivery:</b> Instant (Telegram / Drive)
+    </div>
+  </div>
 </div>
 
 <!-- AI FOOD -->
 <div class="card">
-  <img src="Food.jpg" class="img">
-  <div class="text">
-    <h3>AI Food Cutting Video</h3>
-    <p>500+ Videos</p>
-    <p><del>₹499</del> <b>₹39 Only</b></p>
-    <p class="urgent">⚡ Offer valid today only</p>
+  <img src="Food.jpg" class="img">
+  <div class="text">
+    <h3>AI Food Cutting Video</h3>
+    <p>500+ Videos</p>
+    <p><del>₹499</del> <b>₹39 Only</b></p>
+    <p class="urgent">⚡ Offer valid today only</p>
 
-    <div class="btn-row">
-      <button class="details-btn" onclick="toggleDetails('food')">
-        View Details
-      </button>
+    <div class="btn-row">
+      <button class="details-btn" onclick="toggleDetails('food')">
+        View Details
+      </button>
 
-      <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">
-        Buy Now
-      </a>
-    </div>
+      <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">
+        Buy Now
+      </a>
+    </div>
 
-    <div class="details-box" id="food">
-      <b>Bundle:</b> Ai Ganreated Viral Food Coting Videos<br>
-      <b>Bundle Type:</b> Short Videos<br>
-      <b>Total Videos:</b> 500+<br>
-      <b>Copyright:</b> Copyright Free<br>
-      <b>Quality:</b> Full HD / HD<br>
-      <b>Delivery:</b> Instant (Telegram / Watsapp / Mail)<br><br>
-      <b>⭐ 4.7 / 5 (1,286+ Ratings )</b>
-    </div>
-  </div>
+    <div class="details-box" id="food">
+      <b>Bundle Type:</b> Short Viral Videos<br>
+      <b>Total Videos:</b> 500+<br>
+      <b>Copyright:</b> Free for Social Media<br>
+      <b>Quality:</b> Full HD<br>
+      <b>Delivery:</b> Instant
+    </div>
+  </div>
 </div>
 
-<!-- YOU MAY ALSO LIKE -->
-<div class="reco-section">
-  <div class="reco-title">You may also like</div>
-
-  <div class="reco-scroll">
-
-    <div class="reco-card">
-      <img src="Hulk.jpg">
-      <div class="reco-price">₹39 Only</div>
-      <a href="upi://pay?pa=paytm.s12wbso@pty&pn=Hulk&am=39&cu=INR" class="reco-buy">
-        Buy Now
-      </a>
-    </div>
-
-    <div class="reco-card">
-      <img src="Food.jpg">
-      <div class="reco-price">₹39 Only</div>
-      <a href="upi://pay?pa=paytm.s12wbso@pty&pn=Food&am=39&cu=INR" class="reco-buy">
-        Buy Now
-      </a>
-    </div>
-
-    <div class="reco-card">
-      <img src="anime.jpg">
-      <div class="reco-price">₹45 Only</div>
-      <a href="upi://pay?pa=paytm.s12wbso@pty&pn=Anime&am=45&cu=INR" class="reco-buy">
-        Buy Now
-      </a>
-    </div>
-
-    <div class="reco-card">
-      <img src="Car.jpg">
-      <div class="reco-price">₹39 Only</div>
-      <a href="upi://pay?pa=paytm.s12wbso@pty&pn=Car&am=39&cu=INR" class="reco-buy">
-        Buy Now
-      </a>
-    </div
-  </div>
-
-<div style="clear:both"></div>
-  
 <!-- FOOTER -->
 <p class="note">
 ✔ Paytm Verified Seller<br>
