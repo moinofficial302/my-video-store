@@ -7,104 +7,115 @@
 
 <style>
 body{
-  font-family: Arial, sans-serif;
-  background:#f2f2f2;
-  margin:0;
+  font-family: Arial, sans-serif;
+  background:#f2f2f2;
+  margin:0;
 }
 
 /* HEADER */
 .header{
-  background:#fff;
-  margin:15px;
-  padding:15px;
-  border-radius:14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 .header h3{margin:0;font-weight:700}
 .header img{height:45px}
 
 /* CARD */
 .card{
-  background:#fff;
-  margin:15px;
-  padding:15px;
-  border-radius:18px;
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:18px;
 }
 
 /* TOP ROW */
 .card-top{
-  display:flex;
-  gap:14px;
-  align-items:center;
+  display:flex;
+  gap:14px;
+  align-items:center;
 }
 
-/* IMAGE */
+/* IMAGE — 🔥 FINAL FIX 2:3 */
 .img{
-  width:38%;
-  max-width:140px;
-  border-radius:14px;
+  width:38%;
+  max-width:140px;
+  aspect-ratio:2 / 3;
+  object-fit:contain;
+  height:auto;
+  border-radius:14px;
 }
 
 /* TEXT */
-.text{
-  width:62%;
-}
+.text{width:62%}
 .text h3{margin:0 0 4px}
 del{color:red}
 .urgent{color:#e53935;font-size:12px;margin-top:4px}
 
 /* BUTTONS */
 .btn-row{
-  display:flex;
-  gap:10px;
-  margin-top:10px;
+  display:flex;
+  gap:10px;
+  margin-top:10px;
 }
+
 .details-btn{
-  flex:0.9;
-  background:#f1f1f1;
-  border:none;
-  border-radius:30px;
-  padding:10px 0;
-  font-size:11px;
-  cursor:pointer;
+  flex:0.9;
+  background:#f1f1f1;
+  border:none;
+  border-radius:30px;
+  padding:10px 0;
+  font-size:11px;
+  cursor:pointer;
+  white-space:nowrap;
 }
+
 .buy-btn{
-  flex:1.3;
-  background:#FFD600;
-  border-radius:40px;
-  text-align:center;
-  padding:14px 0;
-  font-weight:700;
-  text-decoration:none;
-  color:#000;
+  flex:1.3;
+  background:linear-gradient(90deg,#FFE600,#FFD000);
+  border-radius:40px;
+  text-align:center;
+  padding:14px 0;
+  font-weight:700;
+  text-decoration:none;
+  color:#000;
+  box-shadow:0 6px 14px rgba(0,0,0,0.25);
 }
 
 /* DETAILS */
 .details-box{
-  display:none;
-  margin-top:14px;
-  padding:14px;
-  background:#f7f7f7;
-  border-radius:20px;
-  font-size:12px;
-  line-height:1.6;
+  display:none;
+  margin-top:14px;
+  padding:14px;
+  background:#f7f7f7;
+  border-radius:20px;
+  font-size:12px;
+  line-height:1.6;
 }
 
 /* FOOTER */
 .note{
-  text-align:center;
-  font-size:12px;
-  color:#555;
-  margin:20px;
+  text-align:center;
+  font-size:12px;
+  color:#555;
+  margin:20px;
+}
+
+/* MOBILE SAFETY */
+@media (max-width:480px){
+  .img{width:40%}
+  .text{width:60%}
 }
 </style>
 
 <script>
 function toggleDetails(id){
-  const box = document.getElementById(id);
-  box.style.display = box.style.display === "block" ? "none" : "block";
+  const box = document.getElementById(id);
+  box.style.display = box.style.display === "block" ? "none" : "block";
 }
 </script>
 </head>
@@ -113,64 +124,64 @@ function toggleDetails(id){
 
 <!-- HEADER -->
 <div class="header">
-  <h3>Only M.7 Private Limited</h3>
-  <img src="logo.png">
+  <h3>Only M.7 Private Limited</h3>
+  <img src="logo.png">
 </div>
 
 <!-- HULK -->
 <div class="card">
-  <div class="card-top">
-    <img src="Hulk.jpg" class="img">
-    <div class="text">
-      <h3>Hulk Videos Bundle</h3>
-      <p>1000+ Videos</p>
-      <p><del>₹799</del> <b>₹39 Only</b></p>
-      <p class="urgent">⚡ Offer valid today only</p>
+  <div class="card-top">
+    <img src="Hulk.jpg" class="img">
+    <div class="text">
+      <h3>Hulk Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
 
-      <div class="btn-row">
-        <button class="details-btn" onclick="toggleDetails('hulk')">View Details</button>
-        <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">Buy Now</a>
-      </div>
-    </div>
-  </div>
+      <div class="btn-row">
+        <button class="details-btn" onclick="toggleDetails('hulk')">View Details</button>
+        <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">Buy Now</a>
+      </div>
+    </div>
+  </div>
 
-  <div class="details-box" id="hulk">
-    <b>Bundle:</b> AI Generated Viral Hulk Videos<br>
-    <b>Bundle Type:</b> Short Videos<br>
-    <b>Total Videos:</b> 1000+<br>
-    <b>Copyright:</b> Copyright Free<br>
-    <b>Quality:</b> Full HD / HD<br>
-    <b>Delivery:</b> Instant (Telegram / WhatsApp / Mail)<br><br>
-    ⭐ <b>4.7 / 5 (1,047+ Ratings)</b>
-  </div>
+  <div class="details-box" id="hulk">
+    <b>Bundle:</b> AI Generated Viral Hulk Videos<br>
+    <b>Bundle Type:</b> Short Videos<br>
+    <b>Total Videos:</b> 1000+<br>
+    <b>Copyright:</b> Copyright Free<br>
+    <b>Quality:</b> Full HD / HD<br>
+    <b>Delivery:</b> Instant (Telegram / WhatsApp / Mail)<br><br>
+    ⭐ <b>4.7 / 5 (1,047+ Ratings)</b>
+  </div>
 </div>
 
 <!-- FOOD -->
 <div class="card">
-  <div class="card-top">
-    <img src="Food.jpg" class="img">
-    <div class="text">
-      <h3>AI Food Cutting Video</h3>
-      <p>500+ Videos</p>
-      <p><del>₹499</del> <b>₹39 Only</b></p>
-      <p class="urgent">⚡ Offer valid today only</p>
+  <div class="card-top">
+    <img src="Food.jpg" class="img">
+    <div class="text">
+      <h3>AI Food Cutting Video</h3>
+      <p>500+ Videos</p>
+      <p><del>₹499</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
 
-      <div class="btn-row">
-        <button class="details-btn" onclick="toggleDetails('food')">View Details</button>
-        <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">Buy Now</a>
-      </div>
-    </div>
-  </div>
+      <div class="btn-row">
+        <button class="details-btn" onclick="toggleDetails('food')">View Details</button>
+        <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">Buy Now</a>
+      </div>
+    </div>
+  </div>
 
-  <div class="details-box" id="food">
-    <b>Bundle:</b> AI Generated Food Cutting Videos<br>
-    <b>Bundle Type:</b> Short Videos<br>
-    <b>Total Videos:</b> 500+<br>
-    <b>Copyright:</b> Copyright Free<br>
-    <b>Quality:</b> Full HD / HD<br>
-    <b>Delivery:</b> Instant (Telegram / WhatsApp / Mail)<br><br>
-    ⭐ <b>4.7 / 5 (1,286+ Ratings)</b>
-  </div>
+  <div class="details-box" id="food">
+    <b>Bundle:</b> AI Generated Food Cutting Videos<br>
+    <b>Bundle Type:</b> Short Videos<br>
+    <b>Total Videos:</b> 500+<br>
+    <b>Copyright:</b> Copyright Free<br>
+    <b>Quality:</b> Full HD / HD<br>
+    <b>Delivery:</b> Instant (Telegram / WhatsApp / Mail)<br><br>
+    ⭐ <b>4.7 / 5 (1,286+ Ratings)</b>
+  </div>
 </div>
 
 <p class="note">
