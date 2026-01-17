@@ -132,6 +132,21 @@ del{color:red}
   margin:0;
 }
 
+/* SCROLL BUY BUTTON */
+.scroll-buy{
+  display:block;
+  margin-top:6px;
+  background:#FFD600;
+  text-align:center;
+  padding:8px 0;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+  color:#000;
+  text-decoration:none;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+  
 /* FOOTER */
 .note{
   text-align:center;
@@ -183,9 +198,14 @@ function toggleDetails(id){
 
   <div class="scroll-row">
     <div class="scroll-card">
-      <img src="Hulk.jpg">
-      <h4>Hulk Bundle</h4>
-      <p>₹39 Only</p>
+  <img src="Hulk.jpg">
+  <h4>Hulk Bundle</h4>
+  <p>₹39 Only</p>
+
+  <a class="scroll-buy"
+     href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkBundle&am=39&cu=INR">
+     Buy Now
+  </a>
     </div>
 
     <div class="scroll-card">
