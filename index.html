@@ -25,28 +25,25 @@ body{
 .header h3{margin:0;font-weight:700}
 .header img{height:45px}
 
-/* CARD */
+/* NORMAL CARD */
 .card{
   background:#fff;
   margin:15px;
   padding:15px;
   border-radius:18px;
 }
-
-/* TOP ROW */
 .card-top{
   display:flex;
   gap:14px;
   align-items:center;
 }
 
-/* IMAGE — 🔥 FINAL FIX 2:3 */
+/* IMAGE — FIXED 2:3 */
 .img{
   width:38%;
   max-width:140px;
   aspect-ratio:2 / 3;
   object-fit:contain;
-  height:auto;
   border-radius:14px;
 }
 
@@ -62,7 +59,6 @@ del{color:red}
   gap:10px;
   margin-top:10px;
 }
-
 .details-btn{
   flex:0.9;
   background:#f1f1f1;
@@ -73,7 +69,6 @@ del{color:red}
   cursor:pointer;
   white-space:nowrap;
 }
-
 .buy-btn{
   flex:1.3;
   background:linear-gradient(90deg,#FFE600,#FFD000);
@@ -97,6 +92,46 @@ del{color:red}
   line-height:1.6;
 }
 
+/* 🔥 HORIZONTAL SCROLL SECTION */
+.scroll-section{
+  margin:15px;
+}
+.scroll-title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+.scroll-row{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+}
+.scroll-row::-webkit-scrollbar{display:none}
+
+/* SMALL SCROLL CARD */
+.scroll-card{
+  min-width:140px;
+  background:#fff;
+  border-radius:14px;
+  padding:10px;
+  scroll-snap-align:start;
+}
+.scroll-card img{
+  width:100%;
+  aspect-ratio:2 / 3;
+  object-fit:contain;
+  border-radius:12px;
+}
+.scroll-card h4{
+  font-size:13px;
+  margin:6px 0 2px;
+}
+.scroll-card p{
+  font-size:12px;
+  margin:0;
+}
+
 /* FOOTER */
 .note{
   text-align:center;
@@ -104,18 +139,12 @@ del{color:red}
   color:#555;
   margin:20px;
 }
-
-/* MOBILE SAFETY */
-@media (max-width:480px){
-  .img{width:40%}
-  .text{width:60%}
-}
 </style>
 
 <script>
 function toggleDetails(id){
-  const box = document.getElementById(id);
-  box.style.display = box.style.display === "block" ? "none" : "block";
+  const box=document.getElementById(id);
+  box.style.display = box.style.display==="block" ? "none" : "block";
 }
 </script>
 </head>
@@ -128,7 +157,7 @@ function toggleDetails(id){
   <img src="logo.png">
 </div>
 
-<!-- HULK -->
+<!-- NORMAL CARD 1 -->
 <div class="card">
   <div class="card-top">
     <img src="Hulk.jpg" class="img">
@@ -137,50 +166,57 @@ function toggleDetails(id){
       <p>1000+ Videos</p>
       <p><del>₹799</del> <b>₹39 Only</b></p>
       <p class="urgent">⚡ Offer valid today only</p>
-
       <div class="btn-row">
         <button class="details-btn" onclick="toggleDetails('hulk')">View Details</button>
-        <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkVideos&am=39&cu=INR">Buy Now</a>
+        <a class="buy-btn" href="#">Buy Now</a>
       </div>
     </div>
   </div>
-
   <div class="details-box" id="hulk">
-    <b>Bundle:</b> AI Generated Viral Hulk Videos<br>
-    <b>Bundle Type:</b> Short Videos<br>
-    <b>Total Videos:</b> 1000+<br>
-    <b>Copyright:</b> Copyright Free<br>
-    <b>Quality:</b> Full HD / HD<br>
-    <b>Delivery:</b> Instant (Telegram / WhatsApp / Mail)<br><br>
-    ⭐ <b>4.7 / 5 (1,047+ Ratings)</b>
+    AI Generated Viral Hulk Videos
   </div>
 </div>
 
-<!-- FOOD -->
-<div class="card">
-  <div class="card-top">
-    <img src="Food.jpg" class="img">
-    <div class="text">
-      <h3>AI Food Cutting Video</h3>
-      <p>500+ Videos</p>
-      <p><del>₹499</del> <b>₹39 Only</b></p>
-      <p class="urgent">⚡ Offer valid today only</p>
+<!-- 🔥 LEFT RIGHT SCROLL SECTION -->
+<div class="scroll-section">
+  <div class="scroll-title">🔥 Trending Bundles</div>
 
-      <div class="btn-row">
-        <button class="details-btn" onclick="toggleDetails('food')">View Details</button>
-        <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=AIFood&am=39&cu=INR">Buy Now</a>
-      </div>
+  <div class="scroll-row">
+    <div class="scroll-card">
+      <img src="Hulk.jpg">
+      <h4>Hulk Bundle</h4>
+      <p>₹39 Only</p>
     </div>
-  </div>
 
-  <div class="details-box" id="food">
-    <b>Bundle:</b> AI Generated Food Cutting Videos<br>
-    <b>Bundle Type:</b> Short Videos<br>
-    <b>Total Videos:</b> 500+<br>
-    <b>Copyright:</b> Copyright Free<br>
-    <b>Quality:</b> Full HD / HD<br>
-    <b>Delivery:</b> Instant (Telegram / WhatsApp / Mail)<br><br>
-    ⭐ <b>4.7 / 5 (1,286+ Ratings)</b>
+    <div class="scroll-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+    </div>
+
+    <div class="scroll-card">
+      <img src="Bundle3.jpg">
+      <h4>Car Reels</h4>
+      <p>₹39 Only</p>
+    </div>
+
+    <div class="scroll-card">
+      <img src="Bundle4.jpg">
+      <h4>Gym Videos</h4>
+      <p>₹39 Only</p>
+    </div>
+
+    <div class="scroll-card">
+      <img src="Bundle5.jpg">
+      <h4>Anime Pack</h4>
+      <p>₹39 Only</p>
+    </div>
+
+    <div class="scroll-card">
+      <img src="Bundle6.jpg">
+      <h4>Trending AI</h4>
+      <p>₹39 Only</p>
+    </div>
   </div>
 </div>
 
