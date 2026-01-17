@@ -71,18 +71,18 @@ del{color:red}
   box-shadow:0 6px 14px rgba(0,0,0,0.25);
 }
 
-/* VIEW DETAILS */
+/* VIEW DETAILS (FIXED) */
 .details-btn{
   flex:0.8;
   background:#f1f1f1;
   color:#000;
   padding:10px 0;
-  border-radius:34px;
+  border-radius:30px;
   border:none;
   font-weight:600;
-  font-size:10px;     
+  font-size:10px;      /* 👈 text chhota */
   cursor:pointer;
-  white-space:nowrap;
+  white-space:nowrap; /* 👈 MAIN FIX (same text everywhere) */
 }
 
 /* DETAILS BOX */
@@ -91,8 +91,8 @@ del{color:red}
   margin-top:10px;
   padding:12px;
   background:#f7f7f7;
-  border-radius:10px;
-  font-size:13px;
+  border-radius:33px;
+  font-size:11px;
   line-height:1.5;
 }
 
@@ -103,6 +103,16 @@ del{color:red}
   color:#555;
   margin:20px;
 }
+
+@media (max-width:480px){
+  .img{width:40%}
+  .text{width:60%}
+
+  .card{
+    align-items:flex-start;
+  }
+}
+  
 </style>
 
 <script>
@@ -141,11 +151,13 @@ function toggleDetails(id){
     </div>
 
     <div class="details-box" id="hulk">
-      <b>Bundle Type:</b> Long + Short Videos<br>
+      <b>Bundle:</b> Ai Ganreated Viral Hulk Videos<br>
+      <b>Bundle Type:</b> Short Videos<br>
       <b>Total Videos:</b> 1000+<br>
-      <b>Copyright:</b> Free for Reels / Shorts<br>
-      <b>Quality:</b> Full HD / 4K<br>
-      <b>Delivery:</b> Instant (Telegram / Drive)
+      <b>Copyright:</b> Copyright Free<br>
+      <b>Quality:</b> Full HD / HD<br>
+      <b>Delivery:</b> Instant (Telegram / Watsapp / Mail)<br><br>
+      <b>⭐ 4.7 / 5 (1,047+ Ratings )</b>
     </div>
   </div>
 </div>
@@ -170,11 +182,13 @@ function toggleDetails(id){
     </div>
 
     <div class="details-box" id="food">
-      <b>Bundle Type:</b> Short Viral Videos<br>
+      <b>Bundle:</b> Ai Ganreated Viral Food Coting Videos<br>
+      <b>Bundle Type:</b> Short Videos<br>
       <b>Total Videos:</b> 500+<br>
-      <b>Copyright:</b> Free for Social Media<br>
-      <b>Quality:</b> Full HD<br>
-      <b>Delivery:</b> Instant
+      <b>Copyright:</b> Copyright Free<br>
+      <b>Quality:</b> Full HD / HD<br>
+      <b>Delivery:</b> Instant (Telegram / Watsapp / Mail)<br><br>
+      <b>⭐ 4.7 / 5 (1,286+ Ratings )</b>
     </div>
   </div>
 </div>
