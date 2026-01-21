@@ -4,38 +4,41 @@ import {
   signInWithPhoneNumber
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-const btn = document.getElementById("sendOtpBtn");
-
+// 🔐 Setup reCAPTCHA
 window.recaptchaVerifier = new RecaptchaVerifier(
-  auth,
   "recaptcha-container",
   {
     size: "invisible",
-    callback: () => {}
-  }
+    callback: () => {
+      console.log("reCAPTCHA verified");
+    }
+  },
+  auth
 );
 
-btn.addEventListener("click", async () => {
-  const mobile = document.getElementById("mobile").value.trim();
+// 📲 Send OTP
+document.getElementById("sendOtpBtn").addEventListener("click", async () => {
+  const mobile = document.getElementById("mobile").value;
 
   if (!mobile || mobile.length !== 10) {
-    alert("Enter valid 10 digit number");
+    alert("Valid mobile number daalo");
     return;
   }
 
   const phoneNumber = "+91" + mobile;
 
   try {
-    const confirmation = await signInWithPhoneNumber(
+    const confirmationResult = await signInWithPhoneNumber(
       auth,
       phoneNumber,
       window.recaptchaVerifier
     );
 
-    window.confirmationResult = confirmation;
+    window.confirmationResult = confirmationResult;
     localStorage.setItem("mobile", mobile);
+
     window.location.href = "otp.html";
-  } catch (err) {
-    alert(err.message);
+  } catch (error) {
+    alert(error.message);
   }
 });
