@@ -4,29 +4,38 @@ import {
   signInWithPhoneNumber
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+const btn = document.getElementById("sendOtpBtn");
+
 window.recaptchaVerifier = new RecaptchaVerifier(
+  auth,
   "recaptcha-container",
-  { size: "invisible" },
-  auth
+  {
+    size: "invisible",
+    callback: () => {}
+  }
 );
 
-document.getElementById("sendOtpBtn").addEventListener("click", () => {
-  const mobile = document.getElementById("mobile").value;
+btn.addEventListener("click", async () => {
+  const mobile = document.getElementById("mobile").value.trim();
 
-  if (!mobile) {
-    alert("Mobile number required");
+  if (!mobile || mobile.length !== 10) {
+    alert("Enter valid 10 digit number");
     return;
   }
 
   const phoneNumber = "+91" + mobile;
 
-  signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
-    .then((confirmationResult) => {
-      window.confirmationResult = confirmationResult;
-      localStorage.setItem("login_mobile", mobile);
-      window.location.href = "otp.html";
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
+  try {
+    const confirmation = await signInWithPhoneNumber(
+      auth,
+      phoneNumber,
+      window.recaptchaVerifier
+    );
+
+    window.confirmationResult = confirmation;
+    localStorage.setItem("mobile", mobile);
+    window.location.href = "otp.html";
+  } catch (err) {
+    alert(err.message);
+  }
 });
