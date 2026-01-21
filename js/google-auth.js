@@ -1,7 +1,9 @@
 import { auth, db } from "./firebase.js";
+
 import {
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithRedirect,
+  getRedirectResult
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import {
@@ -10,11 +12,23 @@ import {
   setDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+// Google Provider
 const provider = new GoogleAuthProvider();
 
-document.getElementById("googleBtn").addEventListener("click", async () => {
-  try {
-    const result = await signInWithPopup(auth, provider);
+// Google button click
+const googleBtn = document.getElementById("googleBtn");
+
+if (googleBtn) {
+  googleBtn.addEventListener("click", () => {
+    signInWithRedirect(auth, provider);
+  });
+}
+
+// After redirect result
+getRedirectResult(auth)
+  .then(async (result) => {
+    if (!result) return;
+
     const user = result.user;
 
     const userRef = doc(db, "users", user.uid);
@@ -22,15 +36,17 @@ document.getElementById("googleBtn").addEventListener("click", async () => {
 
     if (!snap.exists()) {
       await setDoc(userRef, {
-        username: user.displayName,
+        username: user.displayName || "Google User",
         email: user.email,
+        mobile: "Google User",
         coins: 0,
         createdAt: new Date()
       });
     }
 
+    // Redirect to account page
     window.location.href = "account.html";
-  } catch (err) {
-    alert(err.message);
-  }
-});
+  })
+  .catch((error) => {
+    alert(error.message);
+  });
