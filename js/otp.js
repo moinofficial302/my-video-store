@@ -1,31 +1,25 @@
-import { db } from "./firebase.js";
-import {
-  doc,
-  setDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { auth } from "./firebase.js";
+import { signInWithCredential, PhoneAuthProvider } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-document.getElementById("verifyOtpBtn").addEventListener("click", () => {
+document.getElementById("verifyOtpBtn").addEventListener("click", async () => {
   const otp = document.getElementById("otp").value;
 
-  confirmationResult.confirm(otp)
-    .then((result) => {
-      const user = result.user;
+  if (!otp) {
+    alert("OTP daalo");
+    return;
+  }
 
-      const username = localStorage.getItem("signup_username");
-      const mobile = localStorage.getItem("signup_mobile");
+  try {
+    const credential = PhoneAuthProvider.credential(
+      window.confirmationResult.verificationId,
+      otp
+    );
 
-      return setDoc(doc(db, "users", user.uid), {
-        username: username,
-        mobile: mobile,
-        coins: 0,
-        createdAt: new Date()
-      });
-    })
-    .then(() => {
-      alert("Signup Successful 🎉");
-      window.location.href = "account.html";
-    })
-    .catch(() => {
-      alert("Wrong or Expired OTP ❌");
-    });
+    await signInWithCredential(auth, credential);
+
+    window.location.href = "account.html";
+  } catch (error) {
+    alert("Invalid OTP");
+  }
 });
