@@ -155,24 +155,25 @@ del{color:red}
   margin:20px;
 }
 
+/* GLASS FOOTER */
 .glass-footer{
   background: linear-gradient(
     135deg,
-    rgba(37, 99, 235, 0.25),
-    rgba(59, 130, 246, 0.15)
+    rgba(37, 99, 235, 0.35),
+    rgba(96, 165, 250, 0.25)
   );
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-radius: 18px;
   padding: 18px;
   margin: 20px;
-  box-shadow: 0 10px 30px rgba(37,99,235,0.25);
-  border: 1px solid rgba(255,255,255,0.3);
-
-/* NEW TEXT STYLE */
+  box-shadow:
+    0 15px 40px rgba(37,99,235,0.35),
+    inset 0 0 40px rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.35);
   color:#1f2937;
   font-weight:500;
-  }
+}
 
   
   .support-card h3,
@@ -453,11 +454,13 @@ function toggleDetails(id){
 </div>
   
 <!-- FOOTER -->
-<p class="note glass-footer">
-✔ Paytm Verified Seller<br>
-✔ Secure UPI Payment<br>
-✔ Instant Delivery (Telegram / WhatsApp / Email)<br><br>
-Digital Product • No Refund After Access
-</p>
+<div class="glass-footer">
+  <p>✔ Paytm Verified Seller</p>
+  <p>✔ Secure UPI Payment</p>
+  <p>✔ Instant Delivery (Telegram / WhatsApp / Email)</p>
+  <p style="margin-top:10px; font-size:12px;">
+    Digital Product • No Refund After Access
+  </p>
+</div>
 </body>
 </html>
