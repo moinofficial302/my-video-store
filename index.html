@@ -154,6 +154,45 @@ del{color:red}
   color:#555;
   margin:20px;
 }
+
+  .support-card h3,
+.proof-card h3{
+  text-align:center;
+  margin-bottom:12px;
+}
+
+.support-info p{
+  margin:6px 0;
+  font-size:14px;
+  color:#333;
+}
+
+.proof-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:12px 0;
+  font-size:14px;
+}
+
+.blue-btn{
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  color:#fff;
+  padding:8px 18px;
+  border-radius:14px;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  box-shadow:0 6px 14px rgba(37,99,235,.35);
+}
+
+/* MOBILE FIX */
+@media (max-width:600px){
+  .proof-row{
+    gap:10px;
+  }
+}
+  
 </style>
 
 <script>
@@ -355,33 +394,37 @@ function toggleDetails(id){
     </a>
   </div>
 </div>
-  <!-- CUSTOMER SUPPORT -->
-<div class="card">
-  <div class="text" style="width:100%">
-    <h3>24×7 Customer Support</h3>
-  </div>
+<!-- CUSTOMER SUPPORT -->
+<div class="card support-card">
+  <h3>24×7 Customer Support</h3>
+  <div class="support-info">
+    <p><strong>Email:</strong> moinofficial302@gmail.com</p>
+  </div>
 </div>
+
 <!-- SELLING PROOF -->
-<div class="card">
-  <div class="text" style="width:100%">
-    <h3>Selling Proof & Social Pages</h3>
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
-      <span>Instagram Page</span>
-      <a href="https://www.instagram.com/akans.ai" class="view-btn">View</a>
-    </div>
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
-      <span>Telegram Channel</span>
-      <a href="https://t.me/AKANS_AI" class="view-btn">View</a>
-    </div>
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
-      <span>Telegram Contact</span>
-      <a href="https://t.me/AKANS_Moin" class="view-btn">View</a>
-    </div>
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0;">
-      <span>Selling Proof</span>
-      <a href="https://t.me/+X8lVU6ZMLZNmMjI1" class="view-btn">View</a>
-    </div>
-  </div>
+<div class="card proof-card">
+  <h3>Selling Proof & Social Pages</h3>
+
+  <div class="proof-row">
+    <span>Instagram Page</span>
+    <a href="https://www.instagram.com/akans.ai" class="blue-btn">View</a>
+  </div>
+
+  <div class="proof-row">
+    <span>Telegram Channel</span>
+    <a href="https://t.me/AKANS_AI" class="blue-btn">View</a>
+  </div>
+
+  <div class="proof-row">
+    <span>Telegram Contact</span>
+    <a href="https://t.me/AKANS_Moin" class="blue-btn">View</a>
+  </div>
+
+  <div class="proof-row">
+    <span>Selling Proof</span>
+    <a href="https://t.me/+X8lVU6ZMLZNmMjI1" class="blue-btn">View</a>
+  </div>
 </div>
   
 <!-- FOOTER -->
