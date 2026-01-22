@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Video Bundle Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f2f2f2;
+  margin:0;
+}
+
+/* HEADER */
+.header{
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.header h3{margin:0;font-weight:700}
+.header img{height:45px}
+
+/* NORMAL CARD */
+.card{
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:18px;
+}
+.card-top{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+/* IMAGE — FIXED 2:3 */
+.img{
+  width:38%;
+  max-width:140px;
+  aspect-ratio:2 / 3;
+  object-fit:contain;
+  border-radius:14px;
+}
+
+/* TEXT */
+.text{width:62%}
+.text h3{margin:0 0 4px}
+del{color:red}
+.urgent{color:#e53935;font-size:12px;margin-top:4px}
+
+/* BUTTONS */
+.btn-row{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+.details-btn{
+  flex:0.9;
+  background:#f1f1f1;
+  border:none;
+  border-radius:30px;
+  padding:10px 0;
+  font-size:11px;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.buy-btn{
+  flex:1.3;
+  background:linear-gradient(90deg,#FFE600,#FFD000);
+  border-radius:40px;
+  text-align:center;
+  padding:14px 0;
+  font-weight:700;
+  text-decoration:none;
+  color:#000;
+  box-shadow:0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* DETAILS */
+.details-box{
+  display:none;
+  margin-top:14px;
+  padding:14px;
+  background:#f7f7f7;
+  border-radius:20px;
+  font-size:12px;
+  line-height:1.6;
+}
+
+/* 🔥 HORIZONTAL SCROLL SECTION */
+.scroll-section{
+  margin:15px;
+}
+.scroll-title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+.scroll-row{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+}
+.scroll-row::-webkit-scrollbar{display:none}
+
+/* SMALL SCROLL CARD */
+.scroll-card{
+  min-width:140px;
+  background:#fff;
+  border-radius:14px;
+  padding:10px;
+  scroll-snap-align:start;
+}
+.scroll-card img{
+  width:100%;
+  aspect-ratio:2 / 3;
+  object-fit:contain;
+  border-radius:12px;
+}
+.scroll-card h4{
+  font-size:13px;
+  margin:6px 0 2px;
+}
+.scroll-card p{
+  font-size:12px;
+  margin:0;
+}
+
+/* SCROLL BUY BUTTON */
+.scroll-buy{
+  display:block;
+  margin-top:6px;
+  background:#FFD600;
+  text-align:center;
+  padding:8px 0;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+  color:#000;
+  text-decoration:none;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+  
+/* FOOTER */
+.note{
+  text-align:center;
+  font-size:12px;
+  color:#555;
+  margin:20px;
+}
+</style>
+
+<script>
+function toggleDetails(id){
+  const box=document.getElementById(id);
+  box.style.display = box.style.display==="block" ? "none" : "block";
+}
+</script>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h3>Only M.7 Private Limited</h3>
+  <img src="logo.png">
+</div>
+
+<!-- NORMAL CARD 1 -->
+<div class="card">
+  <div class="card-top">
+    <img src="Hulk.jpg" class="img">
+    <div class="text">
+      <h3>Hulk Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+      <div class="btn-row">
+        <button class="details-btn" onclick="toggleDetails('hulk')">View Details</button>
+        <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkBundle&am=39&cu=INR">
+  Buy Now
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="details-box" id="hulk">
+  <b>Bundle:</b> AI Generated Viral Hulk Videos<br>
+  <b>Total Videos:</b> 1000+<br>
+  <b>Type:</b> Short Reels<br>
+  <b>Quality:</b> Full HD / HD<br>
+  <b>Delivery:</b> Instant (Telegram / WhatsApp)<br>
+  ⭐ <b>4.7 / 5 Ratings</b>
+  </div>
+</div>
+
+<!-- NORMAL CARD 2 -->
+<div class="card">
+  <div class="card-top">
+    <img src="Food.jpg" class="img">
+    <div class="text">
+      <h3>Food Cutting Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+
+      <div class="btn-row">
+        <button class="details-btn" onclick="toggleDetails('Food')">View Details</button>
+        <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=FoodBundle&am=39&cu=INR">
+          Buy Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-box" id="Food">
+    <b>Bundle:</b> AI Generated Viral Hulk Videos<br>
+    <b>Total Videos:</b> 1000+<br>
+    <b>Type:</b> Short Reels<br>
+    <b>Quality:</b> Full HD / HD<br>
+    <b>Delivery:</b> Instant (Telegram / WhatsApp)<br>
+    ⭐ <b>4.7 / 5 Ratings</b>
+  </div>
+</div>
+
+<!-- NORMAL CARD 3 -->
+<div class="card">
+  <div class="card-top">
+    <img src="Hulk.jpg" class="img">
+    <div class="text">
+      <h3>Hulk Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+      <div class="btn-row">
+        <button class="details-btn" onclick="toggleDetails('hulk')">View Details</button>
+        <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkBundle&am=39&cu=INR">
+  Buy Now
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="details-box" id="hulk">
+  <b>Bundle:</b> AI Generated Viral Hulk Videos<br>
+  <b>Total Videos:</b> 1000+<br>
+  <b>Type:</b> Short Reels<br>
+  <b>Quality:</b> Full HD / HD<br>
+  <b>Delivery:</b> Instant (Telegram / WhatsApp)<br>
+  ⭐ <b>4.7 / 5 Ratings</b>
+  </div>
+</div>
+
+<!-- NORMAL CARD 4 -->
+<div class="card">
+  <div class="card-top">
+    <img src="Hulk.jpg" class="img">
+    <div class="text">
+      <h3>Hulk Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+
+      <div class="btn-row">
+        <button class="details-btn" onclick="toggleDetails('hulk')">View Details</button>
+        <a class="buy-btn" href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkBundle&am=39&cu=INR">
+          Buy Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-box" id="hulk">
+    <b>Bundle:</b> AI Generated Viral Hulk Videos<br>
+    <b>Total Videos:</b> 1000+<br>
+    <b>Type:</b> Short Reels<br>
+    <b>Quality:</b> Full HD / HD<br>
+    <b>Delivery:</b> Instant (Telegram / WhatsApp)<br>
+    ⭐ <b>4.7 / 5 Ratings</b>
+  </div>
+</div>
+  
+<!-- 🔥 LEFT RIGHT SCROLL SECTION -->
+<div class="scroll-section">
+  <div class="scroll-title">🔥 Trending Bundles</div>
+
+  <div class="scroll-row">
+    <div class="scroll-card">
+  <img src="Hulk.jpg">
+  <h4>Hulk Bundle</h4>
+  <p>₹39 Only</p>
+
+  <a class="scroll-buy"
+     href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkBundle&am=39&cu=INR">
+     Buy Now
+  </a>
+    </div>
+
+    <div class="scroll-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      
+   <a class="scroll-buy"
+     href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkBundle&am=39&cu=INR">
+     Buy Now
+  </a>
+    </div>
+
+    <div class="scroll-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      
+   <a class="scroll-buy"
+     href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkBundle&am=39&cu=INR">
+     Buy Now
+  </a>
+    </div>
+
+    <div class="scroll-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      
+   <a class="scroll-buy"
+     href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkBundle&am=39&cu=INR">
+     Buy Now
+  </a>
+    </div>
+
+    <div class="scroll-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      
+   <a class="scroll-buy"
+     href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkBundle&am=39&cu=INR">
+     Buy Now
+  </a>
+    </div>
+
+    <div class="scroll-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      
+   <a class="scroll-buy"
+     href="upi://pay?pa=paytm.s12wbso@pty&pn=HulkBundle&am=39&cu=INR">
+     Buy Now
+  </a>
+    </div>
+  </div>
+</div>
+
+<p class="note">
+✔ Paytm Verified Seller<br>
+✔ Secure UPI Payment<br>
+✔ Instant Delivery (Telegram / WhatsApp / Email)
+</p>
+
+</body>
+</html>
