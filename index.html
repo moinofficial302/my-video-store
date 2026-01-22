@@ -155,6 +155,26 @@ del{color:red}
   margin:20px;
 }
 
+.glass-footer{
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.25),
+    rgba(59, 130, 246, 0.15)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 18px;
+  margin: 20px;
+  box-shadow: 0 10px 30px rgba(37,99,235,0.25);
+  border: 1px solid rgba(255,255,255,0.3);
+
+/* NEW TEXT STYLE */
+  color:#1f2937;
+  font-weight:500;
+  }
+
+  
   .support-card h3,
 .proof-card h3{
   text-align:center;
@@ -433,7 +453,7 @@ function toggleDetails(id){
 </div>
   
 <!-- FOOTER -->
-<p class="note">
+<p class="note glass-footer">
 ✔ Paytm Verified Seller<br>
 ✔ Secure UPI Payment<br>
 ✔ Instant Delivery (Telegram / WhatsApp / Email)<br><br>
