@@ -175,6 +175,39 @@ del{color:red}
   font-weight:500;
 }
 
+/* GLASS SHIMMER EFFECT */
+.glass-footer::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.6) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: shimmerMove 4s infinite;
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.glass-footer{
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes shimmerMove{
+  0%{
+    transform: translateX(-100%);
+  }
+  50%{
+    transform: translateX(100%);
+  }
+  100%{
+    transform: translateX(100%);
+  }
+}
   
   .support-card h3,
 .proof-card h3{
