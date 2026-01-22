@@ -175,6 +175,43 @@ del{color:red}
   font-weight:500;
 }
 
+/* GLASS CARD – UNIVERSAL */
+.glass-card{
+  background: linear-gradient(
+    135deg,
+    rgba(219, 234, 254, 0.55),
+    rgba(239, 246, 255, 0.75)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 18px;
+  margin: 20px;
+  box-shadow:
+    0 15px 40px rgba(37,99,235,0.25),
+    inset 0 0 40px rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.35);
+  color:#1f2937;
+  font-weight:500;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.6) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: shimmerMove 5s infinite;
+  pointer-events:none;
+}
+  
 /* GLASS SHIMMER EFFECT */
 .glass-footer::before{
   content: "";
@@ -271,7 +308,7 @@ function toggleDetails(id){
 </div>
 
 <!-- NORMAL CARD 1 -->
-<div class="card">
+<div class="card glass-card">
   <div class="card-top">
     <img src="Hulk.jpg" class="img">
     <div class="text">
@@ -298,7 +335,7 @@ function toggleDetails(id){
 </div>
 
 <!-- NORMAL CARD 2 -->
-<div class="card">
+<div class="card glass-card">
   <div class="card-top">
     <img src="Food.jpg" class="img">
     <div class="text">
@@ -327,7 +364,7 @@ function toggleDetails(id){
 </div>
 
 <!-- NORMAL CARD 3 -->
-<div class="card">
+<div class="card glass-card">
   <div class="card-top">
     <img src="Hulk.jpg" class="img">
     <div class="text">
@@ -354,7 +391,7 @@ function toggleDetails(id){
 </div>
 
 <!-- NORMAL CARD 4 -->
-<div class="card">
+<div class="card glass-card">
   <div class="card-top">
     <img src="Hulk.jpg" class="img">
     <div class="text">
@@ -454,7 +491,7 @@ function toggleDetails(id){
   </div>
 </div>
 <!-- CUSTOMER SUPPORT -->
-<div class="card support-card">
+<div class="card support-card glass-card">
   <h3>24×7 Customer Support</h3>
   <div class="support-info">
     <p><strong>Email:</strong> Akans47g@gmail.com</p>
@@ -462,7 +499,7 @@ function toggleDetails(id){
 </div>
 
 <!-- SELLING PROOF -->
-<div class="card proof-card">
+<div class="card support-card glass-card">
   <h3>Selling Proof & Social Pages</h3>
 
   <div class="proof-row">
