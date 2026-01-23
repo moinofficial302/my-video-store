@@ -128,3 +128,24 @@ onAuthStateChanged(auth, (user) => {
     localStorage.removeItem("loggedIn");
   }
 });
+
+import { sendPasswordResetEmail } from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const forgotForm = document.getElementById("forgotForm");
+
+if (forgotForm) {
+  forgotForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("forgotEmail").value;
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert("Password reset link sent to your Gmail");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  });
+}
