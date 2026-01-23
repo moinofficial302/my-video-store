@@ -11,30 +11,38 @@
 
 <div class="auth-container glass-card">
 
-  <!-- 🔹 Header -->
+  <!-- Header -->
   <h2 class="auth-title">Welcome Back 👋</h2>
   <p class="auth-subtitle">Login or create your account</p>
 
-  <!-- 🔹 Tabs -->
+  <!-- Tabs -->
   <div class="auth-tabs">
     <button id="loginTab" class="active">Login</button>
     <button id="signupTab">Sign Up</button>
   </div>
 
-  <!-- 🔹 LOGIN FORM -->
+  <!-- LOGIN FORM -->
   <form id="loginForm" class="auth-form">
 
-    <input type="text"
-           id="loginEmail"
-           placeholder="Email or Username"
-           required>
+    <input
+      type="text"
+      id="login-identifier"
+      placeholder="Email or Username"
+      required
+    >
 
-    <input type="password"
-           id="loginPassword"
-           placeholder="Password"
-           required>
+    <input
+      type="password"
+      id="login-password"
+      placeholder="Password"
+      required
+    >
 
-    <button type="submit" class="buy-btn">
+    <button
+      type="button"
+      class="buy-btn"
+      onclick="loginUser()"
+    >
       Login
     </button>
 
@@ -44,50 +52,68 @@
 
     <div class="divider">OR</div>
 
-    <button type="button"
-            class="google-btn"
-            onclick="googleLogin()">
+    <button
+      type="button"
+      class="google-btn"
+      onclick="googleLogin()"
+    >
       Continue with Google
     </button>
 
   </form>
 
-  <!-- 🔹 SIGNUP FORM -->
+  <!-- SIGNUP FORM -->
   <form id="signupForm" class="auth-form hidden">
 
-    <input type="text"
-           id="signupUsername"
-           placeholder="Username"
-           required>
+    <input
+      type="text"
+      id="signup-username"
+      placeholder="Username"
+      required
+    >
 
-    <input type="email"
-           id="signupEmail"
-           placeholder="Gmail"
-           required>
+    <input
+      type="email"
+      id="signup-email"
+      placeholder="Gmail"
+      required
+    >
 
-    <input type="password"
-           id="signupPassword"
-           placeholder="Password"
-           required>
+    <input
+      type="password"
+      id="signup-password"
+      placeholder="Password"
+      required
+    >
 
-    <input type="password"
-           id="signupConfirmPassword"
-           placeholder="Confirm Password"
-           required>
+    <input
+      type="password"
+      id="signup-confirm-password"
+      placeholder="Confirm Password"
+      required
+    >
 
-    <input type="text"
-           id="signupWhatsapp"
-           placeholder="WhatsApp Number (Optional)">
+    <input
+      type="text"
+      id="signup-whatsapp"
+      placeholder="WhatsApp Number (Optional)"
+    >
 
-    <button type="submit" class="buy-btn">
+    <button
+      type="button"
+      class="buy-btn"
+      onclick="signupUser()"
+    >
       Create Account
     </button>
 
     <div class="divider">OR</div>
 
-    <button type="button"
-            class="google-btn"
-            onclick="googleLogin()">
+    <button
+      type="button"
+      class="google-btn"
+      onclick="googleLogin()"
+    >
       Sign up with Google
     </button>
 
@@ -95,13 +121,9 @@
 
 </div>
 
-<!-- 🔹 JS -->
-<script src="js/firebase-init.js"></script>
-<script src="js/auth.js"></script>
+<!-- JS (MODULE ONLY – no duplicates) -->
+<script type="module" src="js/firebase-init.js"></script>
+<script type="module" src="js/auth.js"></script>
 
-
-  <script type="module" src="/js/firebase-init.js"></script>
-<script type="module" src="/js/auth.js"></script>
-  
 </body>
 </html>
