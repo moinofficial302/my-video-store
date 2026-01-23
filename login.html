@@ -1,10 +1,103 @@
-<input type="text" id="mobile" placeholder="Mobile Number" />
-<div id="recaptcha-container"></div>
-<button id="sendOtpBtn">Login with OTP</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Akans</title>
 
-<hr />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-<button id="googleBtn">Continue with Google</button>
+<div class="auth-container glass-card">
 
-<script type="module" src="js/login-phone.js"></script>
-<script type="module" src="js/google-auth.js"></script>
+  <!-- 🔹 Header -->
+  <h2 class="auth-title">Welcome Back 👋</h2>
+  <p class="auth-subtitle">Login or create your account</p>
+
+  <!-- 🔹 Tabs -->
+  <div class="auth-tabs">
+    <button id="loginTab" class="active">Login</button>
+    <button id="signupTab">Sign Up</button>
+  </div>
+
+  <!-- 🔹 LOGIN FORM -->
+  <form id="loginForm" class="auth-form">
+
+    <input type="text"
+           id="loginEmail"
+           placeholder="Email or Username"
+           required>
+
+    <input type="password"
+           id="loginPassword"
+           placeholder="Password"
+           required>
+
+    <button type="submit" class="buy-btn">
+      Login
+    </button>
+
+    <p class="forgot-link">
+      <a href="forgot-password.html">Forgot Password?</a>
+    </p>
+
+    <div class="divider">OR</div>
+
+    <button type="button"
+            class="google-btn"
+            onclick="googleLogin()">
+      Continue with Google
+    </button>
+
+  </form>
+
+  <!-- 🔹 SIGNUP FORM -->
+  <form id="signupForm" class="auth-form hidden">
+
+    <input type="text"
+           id="signupUsername"
+           placeholder="Username"
+           required>
+
+    <input type="email"
+           id="signupEmail"
+           placeholder="Gmail"
+           required>
+
+    <input type="password"
+           id="signupPassword"
+           placeholder="Password"
+           required>
+
+    <input type="password"
+           id="signupConfirmPassword"
+           placeholder="Confirm Password"
+           required>
+
+    <input type="text"
+           id="signupWhatsapp"
+           placeholder="WhatsApp Number (Optional)">
+
+    <button type="submit" class="buy-btn">
+      Create Account
+    </button>
+
+    <div class="divider">OR</div>
+
+    <button type="button"
+            class="google-btn"
+            onclick="googleLogin()">
+      Sign up with Google
+    </button>
+
+  </form>
+
+</div>
+
+<!-- 🔹 JS -->
+<script src="js/firebase-init.js"></script>
+<script src="js/auth.js"></script>
+
+</body>
+</html>
