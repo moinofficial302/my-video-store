@@ -1,116 +1,130 @@
-// Firebase auth & db
-const auth = firebase.auth();
-const db = firebase.firestore();
+import { auth, db } from "./firebase-init.js";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendPasswordResetEmail,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+import {
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-function signupUser() {
+/* =========================
+   SIGN UP
+========================= */
+window.signupUser = async function () {
   const username = document.getElementById("signup-username").value.trim();
   const email = document.getElementById("signup-email").value.trim();
   const password = document.getElementById("signup-password").value;
-  const confirmPassword = document.getElementById("signup-confirm-password").value;
   const whatsapp = document.getElementById("signup-whatsapp").value.trim();
 
-  if (!username || !email || !password || !confirmPassword) {
-    alert("Please fill all required fields");
+  if (!username || !email || !password) {
+    alert("Please fill required fields");
     return;
   }
 
-  if (password !== confirmPassword) {
-    alert("Passwords do not match");
-    return;
-  }
+  try {
+    const userCred = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCred.user;
 
-  auth.createUserWithEmailAndPassword(email, password)
-    .then((cred) => {
-      return db.collection("users").doc(cred.user.uid).set({
-        username: username,
-        email: email,
-        whatsapp: whatsapp || "",
-        coins: 0,
-        referralBalance: 0,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    })
-    .then(() => {
-      window.location.href = "index.html";
-    })
-    .catch((error) => {
-      alert(error.message);
+    await setDoc(doc(db, "users", user.uid), {
+      username: username,
+      email: email,
+      whatsapp: whatsapp || "",
+      coins: 0,
+      referralBalance: 0,
+      createdAt: serverTimestamp()
     });
-}
 
+    alert("Account created successfully");
+    window.location.href = "/index.html";
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
-function loginUser() {
-  const email = document.getElementById("login-email").value.trim();
+/* =========================
+   LOGIN (Email / Username)
+========================= */
+window.loginUser = async function () {
+  const emailOrUsername = document.getElementById("login-identifier").value.trim();
   const password = document.getElementById("login-password").value;
 
-  if (!email || !password) {
-    alert("Enter email and password");
+  if (!emailOrUsername || !password) {
+    alert("Enter login details");
     return;
   }
 
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      window.location.href = "index.html";
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-}
+  try {
+    // Username login future-ready, abhi email only
+    await signInWithEmailAndPassword(auth, emailOrUsername, password);
+    window.location.href = "/index.html";
+  } catch (error) {
+    alert("Login failed");
+  }
+};
 
+/* =========================
+   GOOGLE LOGIN
+========================= */
+window.googleLogin = async function () {
+  const provider = new GoogleAuthProvider();
 
-function googleLogin() {
-  const provider = new firebase.auth.GoogleAuthProvider();
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
 
-  auth.signInWithPopup(provider)
-    .then((result) => {
-      const user = result.user;
+    const ref = doc(db, "users", user.uid);
+    const snap = await getDoc(ref);
 
-      const userRef = db.collection("users").doc(user.uid);
-      return userRef.get().then((doc) => {
-        if (!doc.exists) {
-          return userRef.set({
-            username: user.displayName,
-            email: user.email,
-            whatsapp: "",
-            coins: 0,
-            referralBalance: 0,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-        }
+    if (!snap.exists()) {
+      await setDoc(ref, {
+        username: user.displayName || "User",
+        email: user.email,
+        whatsapp: "",
+        coins: 0,
+        referralBalance: 0,
+        createdAt: serverTimestamp()
       });
-    })
-    .then(() => {
-      window.location.href = "index.html";
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-}
+    }
 
+    window.location.href = "/index.html";
+  } catch (error) {
+    alert("Google login failed");
+  }
+};
 
-function resetPassword() {
-  const email = document.getElementById("reset-email").value.trim();
-
+/* =========================
+   FORGOT PASSWORD
+========================= */
+window.resetPassword = async function () {
+  const email = document.getElementById("forgot-email").value.trim();
   if (!email) {
-    alert("Enter your email");
+    alert("Enter email");
     return;
   }
 
-  auth.sendPasswordResetEmail(email)
-    .then(() => {
-      alert("Password reset link sent to your email");
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-}
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert("Password reset email sent");
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
-
-auth.onAuthStateChanged((user) => {
+/* =========================
+   AUTH CHECK (GLOBAL)
+========================= */
+onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("User logged in:", user.email);
+    localStorage.setItem("loggedIn", "true");
   } else {
-    console.log("User not logged in");
+    localStorage.removeItem("loggedIn");
   }
 });
