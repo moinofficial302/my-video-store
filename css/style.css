@@ -68,6 +68,12 @@
   cursor:pointer;
 }
 
-.hidden{
-  display:none;
+
+.hidden {
+  display: none;
+}
+
+.auth-tabs button.active {
+  background: #2563eb;
+  color: #fff;
 }
