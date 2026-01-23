@@ -1,4 +1,8 @@
+/* =========================
+   IMPORTS
+========================= */
 import { auth, db } from "./firebase-init.js";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -15,6 +19,34 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+
+/* =========================
+   TAB SWITCH (LOGIN / SIGNUP)
+========================= */
+const loginTab = document.getElementById("loginTab");
+const signupTab = document.getElementById("signupTab");
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
+
+if (loginTab && signupTab) {
+  loginTab.addEventListener("click", () => {
+    loginTab.classList.add("active");
+    signupTab.classList.remove("active");
+
+    loginForm.classList.remove("hidden");
+    signupForm.classList.add("hidden");
+  });
+
+  signupTab.addEventListener("click", () => {
+    signupTab.classList.add("active");
+    loginTab.classList.remove("active");
+
+    signupForm.classList.remove("hidden");
+    loginForm.classList.add("hidden");
+  });
+}
+
+
 /* =========================
    SIGN UP
 ========================= */
@@ -25,7 +57,7 @@ window.signupUser = async function () {
   const whatsapp = document.getElementById("signup-whatsapp").value.trim();
 
   if (!username || !email || !password) {
-    alert("Please fill required fields");
+    alert("Please fill all required fields");
     return;
   }
 
@@ -34,41 +66,42 @@ window.signupUser = async function () {
     const user = userCred.user;
 
     await setDoc(doc(db, "users", user.uid), {
-      username: username,
-      email: email,
+      username,
+      email,
       whatsapp: whatsapp || "",
       coins: 0,
       referralBalance: 0,
       createdAt: serverTimestamp()
     });
 
-    alert("Account created successfully");
+    alert("Account created successfully 🎉");
     window.location.href = "/index.html";
   } catch (error) {
     alert(error.message);
   }
 };
 
+
 /* =========================
-   LOGIN (Email / Username)
+   LOGIN
 ========================= */
 window.loginUser = async function () {
-  const emailOrUsername = document.getElementById("login-identifier").value.trim();
+  const email = document.getElementById("login-identifier").value.trim();
   const password = document.getElementById("login-password").value;
 
-  if (!emailOrUsername || !password) {
+  if (!email || !password) {
     alert("Enter login details");
     return;
   }
 
   try {
-    // Username login future-ready, abhi email only
-    await signInWithEmailAndPassword(auth, emailOrUsername, password);
+    await signInWithEmailAndPassword(auth, email, password);
     window.location.href = "/index.html";
   } catch (error) {
-    alert("Login failed");
+    alert("Invalid email or password");
   }
 };
+
 
 /* =========================
    GOOGLE LOGIN
@@ -100,26 +133,28 @@ window.googleLogin = async function () {
   }
 };
 
+
 /* =========================
    FORGOT PASSWORD
 ========================= */
 window.resetPassword = async function () {
-  const email = document.getElementById("forgot-email").value.trim();
+  const email = document.getElementById("forgot-email")?.value.trim();
   if (!email) {
-    alert("Enter email");
+    alert("Enter your email");
     return;
   }
 
   try {
     await sendPasswordResetEmail(auth, email);
-    alert("Password reset email sent");
+    alert("Password reset link sent to your Gmail");
   } catch (error) {
     alert(error.message);
   }
 };
 
+
 /* =========================
-   AUTH CHECK (GLOBAL)
+   AUTH STATE CHECK
 ========================= */
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -128,24 +163,3 @@ onAuthStateChanged(auth, (user) => {
     localStorage.removeItem("loggedIn");
   }
 });
-
-import { sendPasswordResetEmail } from
-"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-const forgotForm = document.getElementById("forgotForm");
-
-if (forgotForm) {
-  forgotForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("forgotEmail").value;
-
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        alert("Password reset link sent to your Gmail");
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  });
-}
