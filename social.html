@@ -58,6 +58,28 @@
   });
     </script>
 
+<script>
+  let lastScroll = 0;
+  const nav = document.querySelector(".bottom-nav");
+
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > lastScroll && currentScroll > 80) {
+      // scroll down → hide
+      nav.classList.add("hide");
+    } else {
+      // scroll up → show
+      nav.classList.remove("hide");
+    }
+
+    lastScroll = currentScroll;
+  });
+</script>
+
+
+  
+
 <!-- Social -->
 <button class="nav-item active">Social</button>
 
