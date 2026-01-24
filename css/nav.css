@@ -1,69 +1,69 @@
-/* ===== BOTTOM NAV – GLASS BLUR (FINAL) ===== */
+/* ===== BOTTOM NAV – GLASS + AUTO HIDE ===== */
 .bottom-nav{
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
 
-  height: 50px;                 /* ✅ Patli */
-  padding: 4px 6px;
+  height: 44px;
+  padding: 4px 8px;
 
   display: flex;
   justify-content: space-around;
   align-items: center;
 
-  background: rgba(35, 35, 35, 0.65);   /* 🔥 glass */
-  backdrop-filter: blur(14px);         /* 🔥 blur */
+  background: rgba(25, 25, 25, 0.75);   /* glass */
+  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 
-  border-top: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 -8px 25px rgba(0,0,0,0.4);
+  border-radius: 0;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.35);
 
-  border-radius: 0;              /* ❌ no golai */
+  transform: translateY(0);
+  transition: transform 0.35s ease;
+
   z-index: 999;
+}
+
+/* HIDE STATE */
+.bottom-nav.hide{
+  transform: translateY(100%);
 }
 
 /* NAV ITEM */
 .nav-item{
   background: transparent;
   border: none;
-  color: #cfcfcf;
+  color: #bdbdbd;
 
   font-size: 12px;
   font-weight: 500;
-  padding: 4px 8px;
+  padding: 2px 8px;
 
   cursor: pointer;
   position: relative;
 }
 
-/* ACTIVE TEXT */
+/* ACTIVE */
 .nav-item.active{
   color: #4de7e7;
 }
 
 /* ACTIVE LINE */
-.nav-item::after{
+.nav-item.active::after{
   content: "";
   position: absolute;
-  bottom: -6px;
+  bottom: -4px;
   left: 50%;
-  transform: translateX(-50%) scaleX(0);
+  transform: translateX(-50%);
 
-  width: 22px;
+  width: 20px;
   height: 2px;
   background: #4de7e7;
-  border-radius: 4px;
-
-  transition: transform 0.3s ease;
+  border-radius: 1px;
 }
 
-/* SHOW ACTIVE LINE */
-.nav-item.active::after{
-  transform: translateX(-50%) scaleX(1);
-}
-
-/* BODY SAFE SPACE */
+/* SAFE SPACE */
 body{
-  padding-bottom: 60px;
+  padding-bottom: 52px;
 }
