@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <title>Account | Akans</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<link rel="stylesheet" href="css/nav.css">
+  
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -32,8 +33,9 @@
 </div>
 
 <!-- 🔹 BOTTOM NAVIGATION -->
-<div class="bottom-nav glass-nav">
-  <button class="nav-item" onclick="location.href='index.html'">
+
+<div class="bottom-nav">
+  <button class="nav-item active" onclick="location.href='index.html'">
     Bundle
   </button>
 
@@ -45,11 +47,11 @@
     Social
   </button>
 
-  <button class="nav-item active">
+  <button class="nav-item" onclick="location.href='account.html'">
     Account
   </button>
 </div>
-
+  
 <!-- 🔹 JS -->
 <script type="module" src="js/firebase-init.js"></script>
 <script type="module" src="js/account.js"></script>
