@@ -1,42 +1,39 @@
-/* ===== UNIVERSAL BOTTOM NAV ===== */
+/* ===== BOTTOM NAV – MOBILE STICKY ===== */
 .bottom-nav{
   position: fixed;
-  bottom: 12px;
-  left: 12px;
-  right: 12px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-  height: 58px;
+  height: 62px;
   padding: 8px 10px;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 
-  background: #2a2a2a;
-  border-radius: 20px;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+  background: #2b2b2b;
+  border-radius: 22px 22px 0 0;
 
-  z-index: 9999;
+  box-shadow: 0 -6px 20px rgba(0,0,0,0.35);
+  z-index: 999;
 }
 
-/* NAV BUTTON */
+/* NAV ITEM */
 .nav-item{
-  flex: 1;
-  text-align: center;
-
   background: transparent;
   border: none;
-
-  font-size: 14px;
-  font-weight: 600;
   color: #bdbdbd;
 
-  padding: 6px 0;
+  font-size: 14px;
+  font-weight: 500;
+
+  padding: 6px 12px;
   cursor: pointer;
   position: relative;
 }
 
-/* ACTIVE */
+/* ACTIVE TAB */
 .nav-item.active{
   color: #4de7e7;
 }
@@ -45,17 +42,17 @@
 .nav-item.active::after{
   content: "";
   position: absolute;
-  bottom: -8px;
+  bottom: -6px;
   left: 50%;
   transform: translateX(-50%);
 
-  width: 26px;
+  width: 24px;
   height: 3px;
   background: #4de7e7;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
-/* SAFE SPACE FOR ALL PAGES */
+/* BODY SAFE SPACE */
 body{
-  padding-bottom: 90px;
+  padding-bottom: 75px;
 }
