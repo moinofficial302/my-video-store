@@ -1,4 +1,61 @@
-<h3 id="userName">Loading...</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Account | Akans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- 🔹 ACCOUNT CARD -->
+<div class="card glass-card" style="margin-top:20px;">
+  <h2 style="text-align:center;">👤 My Account</h2>
+
+  <div class="account-info">
+    <p><strong>Name:</strong> <span id="userName">Loading...</span></p>
+    <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
+  </div>
+
+  <div class="wallet-box">
+    <h3>🪙 Wallet</h3>
+    <p><strong>Coins:</strong> <span id="userCoins">0</span></p>
+    <a href="add-money.html" class="blue-btn">Add Money</a>
+  </div>
+
+  <button class="buy-btn" onclick="logoutUser()" style="margin-top:15px;">
+    Logout
+  </button>
+</div>
+
+<!-- 🔹 BOTTOM NAVIGATION -->
+<div class="bottom-nav glass-nav">
+  <button class="nav-item" onclick="location.href='index.html'">
+    Bundle
+  </button>
+
+  <button class="nav-item" onclick="location.href='ai-editing.html'">
+    AI & Editing
+  </button>
+
+  <button class="nav-item" onclick="location.href='social.html'">
+    Social
+  </button>
+
+  <button class="nav-item active">
+    Account
+  </button>
+</div>
+
+<!-- 🔹 JS -->
+<script type="module" src="js/firebase-init.js"></script>
+<script type="module" src="js/account.js"></script>
+
+
+  <h3 id="userName">Loading...</h3>
 <p id="userMobile"></p>
 <h2>Coins: <span id="userCoins">0</span></h2>
 
@@ -8,3 +65,13 @@
 
 <!-- Account -->
 <button class="nav-item active">Account</button>
+
+  
+</body>
+</html>
+
+
+
+
+
+
