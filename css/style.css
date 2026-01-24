@@ -139,3 +139,8 @@
   background: #4de0e6;
   border-radius: 10px;
 }
+
+/* bottom navigation space */
+body{
+  padding-bottom: 90px;
+}
