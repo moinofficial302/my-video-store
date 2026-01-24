@@ -104,3 +104,8 @@
 body{
   padding-bottom: 80px;
 }
+
+
+.page-content{
+  padding-bottom: 80px; /* bundle cards ko space mile */
+}
