@@ -111,34 +111,7 @@
   box-shadow: 0 8px 30px rgba(0,0,0,0.3);
 }
 
-/* 🔹 NAV ITEMS */
-.nav-item {
-  background: none;
-  border: none;
-  color: #aaa;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 8px 12px;
-  position: relative;
-}
 
-/* 🔹 ACTIVE TAB */
-.nav-item.active {
-  color: #4de0e6;
-}
-
-.nav-item.active::after {
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
-  height: 3px;
-  background: #4de0e6;
-  border-radius: 10px;
-}
 
 /* bottom navigation space */
 body{
