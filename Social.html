@@ -1,1 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Social Media | Akans</title>
 
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- 🔹 PAGE HEADING -->
+<h2 style="padding:16px;">🌐 Social Media Products</h2>
+
+<!-- 🔹 SOCIAL PRODUCTS -->
+<div class="tab-section active">
+
+  <div class="card glass-card">
+    <h3>Instagram Growth Bundle</h3>
+    <p>Reels + Hashtags</p>
+    <p>₹39 Only</p>
+    <button class="buy-btn" onclick="buyProduct('insta-growth',39)">
+      Buy Now
+    </button>
+  </div>
+
+  <div class="card glass-card">
+    <h3>Telegram Channel Setup</h3>
+    <p>Brand + Monetization</p>
+    <p>₹49 Only</p>
+    <button class="buy-btn" onclick="buyProduct('telegram',49)">
+      Buy Now
+    </button>
+  </div>
+
+</div>
+
+<!-- 🔹 BOTTOM NAVIGATION -->
+<div class="bottom-nav glass-nav">
+  <button class="nav-item" onclick="location.href='bundle.html'">Bundle</button>
+  <button class="nav-item" onclick="location.href='ai-editing.html'">AI & Editing</button>
+  <button class="nav-item active" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item" onclick="location.href='account.html'">Account</button>
+</div>
+
+<script src="js/firebase-init.js"></script>
+<script src="js/products.js"></script>
+
+</body>
+</html>
