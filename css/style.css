@@ -109,3 +109,13 @@ body{
 .page-content{
   padding-bottom: 80px; /* bundle cards ko space mile */
 }
+
+
+/* ===== FIX BUNDLE SIZE (LOCK IT) ===== */
+.card,
+.glass-card {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  transform: none !important;
+}
