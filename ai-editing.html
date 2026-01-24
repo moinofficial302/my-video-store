@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI & Editing | Akans</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- 🔹 PAGE HEADING -->
+<h2 style="padding:16px;">🤖 AI & Editing Packs</h2>
+
+<!-- 🔹 AI PRODUCTS SECTION -->
+<div class="tab-section active">
+
+  <div class="card glass-card">
+    <h3>AI Reel Prompts Bundle</h3>
+    <p>100+ Viral Prompts</p>
+    <p>₹49 Only</p>
+    <button class="buy-btn" onclick="buyProduct('ai-prompts',49)">
+      Buy Now
+    </button>
+  </div>
+
+  <div class="card glass-card">
+    <h3>AI Image Generator Pack</h3>
+    <p>Midjourney + Leonardo</p>
+    <p>₹59 Only</p>
+    <button class="buy-btn" onclick="buyProduct('ai-image',59)">
+      Buy Now
+    </button>
+  </div>
+
+</div>
+
+<!-- 🔹 BOTTOM NAVIGATION -->
+<div class="bottom-nav glass-nav">
+  <button class="nav-item" onclick="location.href='bundle.html'">Bundle</button>
+  <button class="nav-item active" onclick="location.href='ai-editing.html'">AI & Editing</button>
+  <button class="nav-item" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item" onclick="location.href='account.html'">Account</button>
+</div>
+
+<script src="js/firebase-init.js"></script>
+<script src="js/products.js"></script>
+
+</body>
+</html>
