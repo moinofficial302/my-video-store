@@ -104,8 +104,30 @@
     }
   });
   </script>
-</div>
 
+<script>
+  let lastScroll = 0;
+  const nav = document.querySelector(".bottom-nav");
+
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > lastScroll && currentScroll > 80) {
+      // scroll down → hide
+      nav.classList.add("hide");
+    } else {
+      // scroll up → show
+      nav.classList.remove("hide");
+    }
+
+    lastScroll = currentScroll;
+  });
+</script>
+
+
+  
+</div>
+  
 <script src="js/firebase-init.js"></script>
 <script src="js/products.js"></script>
 
