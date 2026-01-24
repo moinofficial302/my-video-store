@@ -563,6 +563,45 @@ function toggleDetails(id){
 
   <script src="js/firebase-init.js"></script>
 <script src="js/products.js"></script>
+
+  
+<!-- 🔹 MAIN CONTENT SECTIONS -->
+<div id="bundle" class="tab-section active">
+  <h2>📦 Bundle Section</h2>
+  <p>Yahan bundles dikhenge</p>
+</div>
+
+<div id="ai" class="tab-section">
+  <h2>🤖 AI & Editing</h2>
+  <p>AI packs yahan aayenge</p>
+</div>
+
+<div id="social" class="tab-section">
+  <h2>🌐 Social</h2>
+  <p>Coming Soon</p>
+</div>
+
+<div id="account" class="tab-section">
+  <h2>👤 Account</h2>
+  <p>User dashboard</p>
+</div>
+
+<!-- 🔹 BOTTOM NAVIGATION -->
+<div class="bottom-nav glass-nav">
+  <button class="nav-item active" onclick="switchTab('bundle', this)">
+    Bundle
+  </button>
+  <button class="nav-item" onclick="switchTab('ai', this)">
+    AI & Editing
+  </button>
+  <button class="nav-item" onclick="switchTab('social', this)">
+    Social
+  </button>
+  <button class="nav-item" onclick="switchTab('account', this)">
+    Account
+  </button>
+</div>
+
   
 </body>
 </html>
