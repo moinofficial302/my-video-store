@@ -29,22 +29,34 @@
 
   <!-- 🔹 BOTTOM NAVIGATION -->
 <div class="bottom-nav">
-  <button class="nav-item active" onclick="location.href='index.html'">
+
+  <button class="nav-item" data-page="index.html" onclick="location.href='index.html'">
     Bundle
   </button>
 
-  <button class="nav-item" onclick="location.href='ai-editing.html'">
+  <button class="nav-item" data-page="ai-editing.html" onclick="location.href='ai-editing.html'">
     AI & Editing
   </button>
 
-  <button class="nav-item" onclick="location.href='social.html'">
+  <button class="nav-item" data-page="social.html" onclick="location.href='social.html'">
     Social
   </button>
 
-  <button class="nav-item" onclick="location.href='account.html'">
+  <button class="nav-item" data-page="account.html" onclick="location.href='account.html'">
     Account
   </button>
+
 </div>
+
+  <script>
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+  document.querySelectorAll(".nav-item").forEach(btn => {
+    if (btn.dataset.page === currentPage) {
+      btn.classList.add("active");
+    }
+  });
+    </script>
 
 <!-- Social -->
 <button class="nav-item active">Social</button>
