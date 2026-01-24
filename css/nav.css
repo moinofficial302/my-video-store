@@ -1,0 +1,74 @@
+/* =========================
+   BOTTOM NAVIGATION (GLASS)
+========================= */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  height: 65px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  border-radius: 22px;
+  z-index: 999;
+}
+
+/* Glass effect */
+.glass-nav {
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.35),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Nav buttons */
+.nav-item {
+  background: none;
+  border: none;
+  color: #aaa;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
+  padding: 8px 12px;
+  position: relative;
+
+  transition: color 0.3s ease;
+}
+
+/* Active tab */
+.nav-item.active {
+  color: #4de0e6;
+}
+
+/* Active underline */
+.nav-item.active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 30px;
+  height: 3px;
+
+  background: #4de0e6;
+  border-radius: 10px;
+}
+
+/* Small mobile tweak */
+@media (max-width: 480px) {
+  .nav-item {
+    font-size: 14px;
+  }
+}
