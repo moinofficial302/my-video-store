@@ -1,21 +1,21 @@
-/* ===== BOTTOM NAV – THIN & FLAT ===== */
+/* ===== BOTTOM NAV – EXTRA THIN & FLAT ===== */
 .bottom-nav{
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
 
-  height: 50px;          /* 🔻 pehle 62px tha */
-  padding: 6px 10px;    /* 🔻 thoda kam */
+  height: 44px;          /* 🔻 pehle 54px → ab ~20% kam */
+  padding: 4px 8px;     /* 🔻 aur tight */
 
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   background: #2b2b2b;
-  border-radius: 0;     /* ❌ golai hata di */
+  border-radius: 0;     /* ❌ no golai */
 
-  box-shadow: 0 -4px 16px rgba(0,0,0,0.35);
+  box-shadow: 0 -3px 12px rgba(0,0,0,0.3);
   z-index: 999;
 }
 
@@ -25,10 +25,10 @@
   border: none;
   color: #bdbdbd;
 
-  font-size: 13px;      /* 🔻 thoda chhota */
+  font-size: 12px;      /* 🔻 text bhi thoda patla */
   font-weight: 500;
 
-  padding: 4px 10px;
+  padding: 2px 8px;
   cursor: pointer;
   position: relative;
 }
@@ -42,17 +42,17 @@
 .nav-item.active::after{
   content: "";
   position: absolute;
-  bottom: -5px;
+  bottom: -4px;
   left: 50%;
   transform: translateX(-50%);
 
-  width: 22px;
-  height: 3px;
+  width: 20px;
+  height: 2.5px;
   background: #4de7e7;
-  border-radius: 2px;
+  border-radius: 1px;
 }
 
 /* BODY SAFE SPACE */
 body{
-  padding-bottom: 65px;
+  padding-bottom: 52px;
 }
