@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bundles | Akans</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- 🔹 PAGE HEADING -->
+<h2 style="padding:16px;">🔥 All Bundles</h2>
+
+<!-- 🔹 BUNDLE SECTION -->
+<div class="tab-section active" id="bundle">
+
+  <!-- COPY YOUR EXISTING BUNDLE CARDS FROM index.html -->
+  <!-- Example -->
+  <div class="card glass-card">
+    <img src="Hulk.jpg" />
+    <h3>Hulk Bundle</h3>
+    <p>₹39 Only</p>
+    <button class="buy-btn" onclick="buyProduct('hulk',39)">Buy Now</button>
+  </div>
+
+  <div class="card glass-card">
+    <img src="Food.jpg" />
+    <h3>Food Cutting</h3>
+    <p>₹39 Only</p>
+    <button class="buy-btn" onclick="buyProduct('food',39)">Buy Now</button>
+  </div>
+
+</div>
+
+<!-- 🔹 BOTTOM NAVIGATION -->
+<div class="bottom-nav glass-nav">
+  <button class="nav-item active" onclick="location.href='bundle.html'">
+    Bundle
+  </button>
+
+  <button class="nav-item" onclick="location.href='ai-editing.html'">
+    AI & Editing
+  </button>
+
+  <button class="nav-item" onclick="location.href='social.html'">
+    Social
+  </button>
+
+  <button class="nav-item" onclick="location.href='account.html'">
+    Account
+  </button>
+</div>
+
+<!-- 🔹 JS -->
+<script src="js/firebase-init.js"></script>
+<script src="js/products.js"></script>
+
+</body>
+</html>
