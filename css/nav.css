@@ -1,4 +1,5 @@
-/* ===== BOTTOM NAV – GLASS + AUTO HIDE ===== */
+/* ===== BOTTOM NAV – GLASS + AUTO HIDE (FIXED) ===== */
+
 .bottom-nav{
   position: fixed;
   bottom: 0;
@@ -12,12 +13,12 @@
   justify-content: space-around;
   align-items: center;
 
-  background: rgba(25, 25, 25, 0.75);   /* glass */
+  background: rgba(25, 25, 25, 0.75);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 
-  border-radius: 0;
   box-shadow: 0 -4px 16px rgba(0,0,0,0.35);
+  border-radius: 0;
 
   transform: translateY(0);
   transition: transform 0.35s ease;
@@ -25,12 +26,12 @@
   z-index: 999;
 }
 
-/* HIDE STATE */
+/* ===== HIDE STATE ===== */
 .bottom-nav.hide{
-  transform: translateY(100%);
+  transform: translateY(60px); /* FIXED (no %) */
 }
 
-/* NAV ITEM */
+/* ===== NAV ITEM ===== */
 .nav-item{
   background: transparent;
   border: none;
@@ -44,12 +45,12 @@
   position: relative;
 }
 
-/* ACTIVE */
+/* ===== ACTIVE ===== */
 .nav-item.active{
   color: #4de7e7;
 }
 
-/* ACTIVE LINE */
+/* ===== ACTIVE LINE ===== */
 .nav-item.active::after{
   content: "";
   position: absolute;
@@ -60,16 +61,5 @@
   width: 20px;
   height: 2px;
   background: #4de7e7;
-  border-radius: 1px;
+  border-radius: 2px;
 }
-
-
-.bottom-nav {
-  height: 44px;          /* patli nav */
-  padding: 4px 8px;
-}
-
-body{
-  padding-bottom: 60px;
-}
-
