@@ -1,3 +1,4 @@
+/* ================== AUTH / LOGIN ================== */
 .auth-container{
   max-width:360px;
   margin:40px auto;
@@ -68,42 +69,38 @@
   cursor:pointer;
 }
 
-
-.hidden {
-  display: none;
+.hidden{
+  display:none;
 }
 
-.auth-tabs button.active {
-  background: #2563eb;
-  color: #fff;
+/* ================== TAB CONTENT ================== */
+.tab-section{
+  display:none;
+  padding:20px;
 }
 
-
-/* 🔹 TAB CONTENT */
-.tab-section {
-  display: none;
-  padding: 20px;
+.tab-section.active{
+  display:block;
 }
 
-.tab-section.active {
-  display: block;
+/* ================== PAGE SAFE SPACE ================== */
+body{
+  padding-bottom:60px;
 }
 
-
-/* 🔹 GLASS EFFECT */
-.glass-nav {
-  background: rgba(20, 20, 20, 0.85);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+/* ================== GLASS NAV (OPTIONAL) ================== */
+.glass-nav{
+  background:rgba(20,20,20,0.85);
+  backdrop-filter:blur(12px);
+  box-shadow:0 8px 30px rgba(0,0,0,0.3);
 }
 
-
-
-/* ===== FINAL CARD SIZE (LOCKED) ===== */
+/* ================== 🔒 FINAL CARD SIZE (LOCKED) ================== */
 .card,
 .glass-card{
-  width: 100%;
-  max-width: 100%;
-  margin: 16px auto;
-  box-sizing: border-box;
+  width:100%;
+  max-width:100%;
+  margin:16px auto;
+  box-sizing:border-box;
+  transform:none !important;
 }
