@@ -250,3 +250,86 @@ body{
     transform: translateX(-4px);
   }
 }
+
+
+
+
+
+
+/* ==================================================
+   GLOBAL CENTER COLUMN (FINAL FIX)
+================================================== */
+.page-content,
+.main-content{
+  max-width: 430px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px;
+}
+
+/* ==================================================
+   HEADER CENTER + LIFT
+================================================== */
+.header{
+  max-width: 430px;
+  margin: 18px auto 24px;
+}
+
+/* ==================================================
+   MAIN BUNDLES CENTER
+================================================== */
+.main-bundles{
+  align-items: center;
+}
+
+.main-bundles .glass-card{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==================================================
+   TRENDING BUNDLES CENTER
+================================================== */
+.trending-bundles{
+  max-width: 430px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==================================================
+   SUPPORT / SOCIAL / TRUST CENTER
+================================================== */
+.support,
+.social-proof,
+.trust{
+  max-width: 430px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==================================================
+   SOCIAL PAGE CENTER
+================================================== */
+.social-page .glass-card{
+  max-width: 430px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==================================================
+   ACCOUNT PAGE CENTER
+================================================== */
+.account-card{
+  max-width: 430px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==================================================
+   AI & EDITING PAGE CENTER
+================================================== */
+.ai-card{
+  max-width: 430px;
+  margin-left: auto;
+  margin-right: auto;
+}
