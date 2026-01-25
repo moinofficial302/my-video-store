@@ -1,158 +1,223 @@
-/* ================== AUTH / LOGIN ================== */
-.auth-container{
-  max-width:360px;
-  margin:40px auto;
-  padding:24px;
+/* ==================================================
+   RESET + BASE
+================================================== */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.auth-title{
-  text-align:center;
-  margin-bottom:6px;
-}
-
-.auth-subtitle{
-  text-align:center;
-  font-size:13px;
-  color:#666;
-  margin-bottom:20px;
-}
-
-.auth-tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:16px;
-}
-
-.auth-tabs button{
-  flex:1;
-  padding:10px;
-  border:none;
-  border-radius:14px;
-  font-weight:600;
-  background:#eee;
-  cursor:pointer;
-}
-
-.auth-tabs button.active{
-  background:#2563eb;
-  color:#fff;
-}
-
-.auth-form input{
-  width:100%;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:14px;
-  border:1px solid #ddd;
-}
-
-.forgot-link{
-  text-align:right;
-  font-size:12px;
-  margin-top:6px;
-}
-
-.divider{
-  text-align:center;
-  margin:14px 0;
-  font-size:12px;
-  color:#999;
-}
-
-.google-btn{
-  width:100%;
-  padding:12px;
-  border-radius:999px;
-  border:1px solid #ddd;
-  background:#fff;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.hidden{
-  display:none;
-}
-
-/* ================== TAB CONTENT ================== */
-.tab-section{
-  display:none;
-  padding:20px;
-}
-
-.tab-section.active{
-  display:block;
-}
-
-/* ================== PAGE SAFE SPACE ================== */
 body{
-  padding-bottom:60px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(to bottom, #eef3fb, #ffffff);
+  padding-bottom: 70px; /* bottom nav safe space */
 }
 
-/* ================== GLASS NAV (OPTIONAL) ================== */
-.glass-nav{
-  background:rgba(20,20,20,0.85);
-  backdrop-filter:blur(12px);
-  box-shadow:0 8px 30px rgba(0,0,0,0.3);
-}
-
-/* ================== 🔒 FINAL CARD SIZE (LOCKED) ================== */
-.card,
-.glass-card{
-  width:100%;
-  max-width:100%;
-  margin:16px auto;
-  box-sizing:border-box;
-  transform:none !important;
-}
-
-/* ===== HARD CARD LOCK (FINAL) ===== */
-.card,
-.glass-card{
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-
-/* ===== FIX BUNDLE CENTER ISSUE ===== */
-
-
-
-/* CARD SIZE */
-#bundle .card {
+/* ==================================================
+   GLASS CARD BASE
+================================================== */
+.glass-card,
+.card{
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
   width: 100%;
-  max-width: 420px;
 }
 
-/* TRENDING GRID */
-.trending-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+/* ==================================================
+   HEADER
+================================================== */
+.header{
+  max-width: 95%;
+  margin: 16px auto;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
+.header img{
+  width: 38px;
+  height: 38px;
+}
 
-/* ===== MAIN TOP BUNDLES (CENTERED ONE BY ONE) ===== */
-.main-bundles {
+/* ==================================================
+   MAIN TOP BUNDLES (CENTER – ONE BY ONE)
+================================================== */
+.main-bundles{
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
+  padding: 10px 0;
 }
 
-.main-bundles .card {
-  width: 100%;
+.main-bundles .glass-card{
   max-width: 420px;
+  padding: 18px;
 }
 
-/* ===== TRENDING BUNDLES GRID ===== */
-.trending-bundles {
+/* ==================================================
+   CARD CONTENT
+================================================== */
+.card-top{
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.card-top img{
+  width: 110px;
+  border-radius: 16px;
+}
+
+.card-top .text h3{
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.card-top .text p{
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.urgent{
+  color: #ff7a00;
+  font-size: 13px;
+}
+
+/* ==================================================
+   BUTTONS
+================================================== */
+.btn-row{
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.details-btn{
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid #bcd3ff;
+  background: #eaf1ff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.buy-btn{
+  flex: 1;
+  padding: 12px;
+  border-radius: 999px;
+  border: none;
+  background: #ffd600;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+/* ==================================================
+   DETAILS BOX
+================================================== */
+.details-box{
+  display: none;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+/* ==================================================
+   TRENDING BUNDLES (2 COLUMN GRID)
+================================================== */
+.trending-title{
+  max-width: 90%;
+  margin: 30px auto 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.trending-bundles{
+  max-width: 95%;
+  margin: auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
 }
 
-@media (max-width: 600px) {
-  .trending-bundles {
-    grid-template-columns: repeat(2, 1fr);
+.trending-bundles .glass-card{
+  padding: 14px;
+  text-align: center;
+}
+
+.trending-bundles img{
+  width: 100%;
+  border-radius: 16px;
+  margin-bottom: 10px;
+}
+
+/* ==================================================
+   SUPPORT / INFO SECTIONS
+================================================== */
+.support,
+.social-proof,
+.trust{
+  max-width: 95%;
+  margin: 20px auto;
+  padding: 22px;
+}
+
+.social-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.social-row button{
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ==================================================
+   BOTTOM NAV
+================================================== */
+.bottom-nav{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(30,30,30,0.9);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-item{
+  background: none;
+  border: none;
+  color: #bbb;
+  font-size: 13px;
+}
+
+.nav-item.active{
+  color: #5eead4;
+}
+
+/* hide/show animation */
+.bottom-nav.hide{
+  transform: translateY(100%);
+  transition: 0.3s;
+}
+
+/* ==================================================
+   MOBILE SAFETY
+================================================== */
+@media (max-width: 600px){
+  .main-bundles .glass-card{
+    max-width: 92%;
   }
 }
