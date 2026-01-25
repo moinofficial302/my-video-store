@@ -4,23 +4,56 @@
   <meta charset="UTF-8">
   <title>Social | Akans</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/nav.css">
-  
-  <!-- CSS -->
+
+  <!-- NAV + MAIN CSS -->
+  <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ===== SOCIAL PAGE CENTER FIX ===== */
+    .social-wrapper{
+      max-width: 420px;
+      margin: 50px auto 0;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .social-wrapper h2{
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .social-wrapper p{
+      color: #555;
+      font-size: 14px;
+    }
+
+    .coming-soon{
+      margin-top: 26px;
+    }
+
+    .coming-soon h3{
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .coming-soon p{
+      color: #777;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
 
   <!-- 🔹 MAIN CONTENT -->
-  <div class="glass-card" style="margin:40px 16px; text-align:center;">
-    <h2 style="font-size:24px;">🌐 Social Products</h2>
-    <p style="margin-top:10px; color:#555;">
-      Instagram • Telegram • YouTube Tools
-    </p>
+  <div class="glass-card social-wrapper">
+    <h2>🌐 Social Products</h2>
+    <p>Instagram • Telegram • YouTube Tools</p>
 
-    <div style="margin-top:30px;">
-      <h3 style="font-size:20px;">🚧 Coming Soon</h3>
-      <p style="font-size:14px; color:#777; margin-top:8px;">
+    <div class="coming-soon">
+      <h3>🚧 Coming Soon</h3>
+      <p>
         Social media growth packs & tools  
         bahut jald yahan available honge.
       </p>
@@ -28,61 +61,52 @@
   </div>
 
   <!-- 🔹 BOTTOM NAVIGATION -->
-<div class="bottom-nav">
+  <div class="bottom-nav">
 
-  <button class="nav-item" data-page="index.html" onclick="location.href='index.html'">
-    Bundle
-  </button>
+    <button class="nav-item" data-page="index.html" onclick="location.href='index.html'">
+      Bundle
+    </button>
 
-  <button class="nav-item" data-page="ai-editing.html" onclick="location.href='ai-editing.html'">
-    AI & Editing
-  </button>
+    <button class="nav-item" data-page="ai-editing.html" onclick="location.href='ai-editing.html'">
+      AI & Editing
+    </button>
 
-  <button class="nav-item" data-page="social.html" onclick="location.href='social.html'">
-    Social
-  </button>
+    <button class="nav-item active" data-page="social.html" onclick="location.href='social.html'">
+      Social
+    </button>
 
-  <button class="nav-item" data-page="account.html" onclick="location.href='account.html'">
-    Account
-  </button>
+    <button class="nav-item" data-page="account.html" onclick="location.href='account.html'">
+      Account
+    </button>
 
-</div>
+  </div>
 
+  <!-- ACTIVE TAB SCRIPT -->
   <script>
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
+    document.querySelectorAll(".nav-item").forEach(btn => {
+      if (btn.dataset.page === currentPage) {
+        btn.classList.add("active");
+      }
+    });
+  </script>
 
-  document.querySelectorAll(".nav-item").forEach(btn => {
-    if (btn.dataset.page === currentPage) {
-      btn.classList.add("active");
-    }
-  });
-    </script>
+  <!-- AUTO HIDE NAV -->
+  <script>
+    let lastScroll = 0;
+    const nav = document.querySelector(".bottom-nav");
 
-<script>
-  let lastScroll = 0;
-  const nav = document.querySelector(".bottom-nav");
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.pageYOffset;
 
-  window.addEventListener("scroll", () => {
-    const currentScroll = window.pageYOffset;
+      if (currentScroll > lastScroll && currentScroll > 80) {
+        nav.classList.add("hide");
+      } else {
+        nav.classList.remove("hide");
+      }
+      lastScroll = currentScroll;
+    });
+  </script>
 
-    if (currentScroll > lastScroll && currentScroll > 80) {
-      // scroll down → hide
-      nav.classList.add("hide");
-    } else {
-      // scroll up → show
-      nav.classList.remove("hide");
-    }
-
-    lastScroll = currentScroll;
-  });
-</script>
-
-
-  
-
-<!-- Social -->
-<button class="nav-item active">Social</button>
-
-  
 </body>
 </html>
