@@ -99,14 +99,6 @@
 
 
 
-.card,
-.glass-card{
-  width: auto;
-  max-width: 100%;
-  margin: 15px;
-}
-
-
 /* ===== FINAL CARD SIZE (LOCKED) ===== */
 .card,
 .glass-card{
