@@ -163,3 +163,18 @@ onAuthStateChanged(auth, (user) => {
     localStorage.removeItem("loggedIn");
   }
 });
+
+
+
+function checkLoginAndProceed(redirectUrl) {
+  const user = localStorage.getItem("userLoggedIn");
+
+  if (!user) {
+    alert("Please login first to continue");
+    window.location.href = "login.html";
+    return;
+  }
+
+  // agar login hai
+  window.location.href = redirectUrl;
+}
