@@ -10,31 +10,33 @@
 body{
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background: linear-gradient(to bottom, #eef3fb, #ffffff);
-  padding-bottom: 70px; /* bottom nav safe space */
+  padding-bottom: 70px;
 }
 
 /* ==================================================
-   GLASS CARD BASE
+   GLASS CARD BASE (UPGRADED DEPTH)
 ================================================== */
 .glass-card,
 .card{
-  background: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.78);
   backdrop-filter: blur(14px);
   border-radius: 22px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.14);
   width: 100%;
+  transform: translateX(-4px); /* 👈 visual center trick */
 }
 
 /* ==================================================
-   HEADER
+   HEADER (PERFECT CENTER FEEL)
 ================================================== */
 .header{
-  max-width: 95%;
-  margin: 16px auto;
-  padding: 18px 20px;
+  max-width: 92%;
+  margin: 18px auto 22px;
+  padding: 18px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transform: translateX(-6px); /* 👈 */
 }
 
 .header img{
@@ -43,14 +45,14 @@ body{
 }
 
 /* ==================================================
-   MAIN TOP BUNDLES (CENTER – ONE BY ONE)
+   MAIN TOP BUNDLES
 ================================================== */
 .main-bundles{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  padding: 10px 0;
+  gap: 22px;
+  padding: 12px 0;
 }
 
 .main-bundles .glass-card{
@@ -93,7 +95,7 @@ body{
 .btn-row{
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .details-btn{
@@ -112,7 +114,7 @@ body{
   border: none;
   background: #ffd600;
   font-weight: 700;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.28);
 }
 
 /* ==================================================
@@ -125,21 +127,23 @@ body{
 }
 
 /* ==================================================
-   TRENDING BUNDLES (2 COLUMN GRID)
+   TRENDING BUNDLES
 ================================================== */
 .trending-title{
-  max-width: 90%;
-  margin: 30px auto 10px;
+  max-width: 88%;
+  margin: 34px auto 12px;
   font-size: 18px;
   font-weight: 700;
+  transform: translateX(-6px); /* 👈 */
 }
 
 .trending-bundles{
-  max-width: 95%;
+  max-width: 92%;
   margin: auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  gap: 16px;
+  transform: translateX(-6px); /* 👈 */
 }
 
 .trending-bundles .glass-card{
@@ -154,21 +158,34 @@ body{
 }
 
 /* ==================================================
-   SUPPORT / INFO SECTIONS
+   SUPPORT / INFO SECTIONS (CENTERED + LIFT)
 ================================================== */
-.support,
-.social-proof,
-.trust{
-  max-width: 95%;
-  margin: 20px auto;
+.support{
+  max-width: 90%;
+  margin: 26px auto;
   padding: 22px;
+  transform: translateX(-6px);
+}
+
+.social-proof{
+  max-width: 90%;
+  margin: 22px auto;
+  padding: 22px;
+  transform: translateX(-6px);
+}
+
+.trust{
+  max-width: 88%;
+  margin: 24px auto 30px;
+  padding: 22px;
+  transform: translateX(4px); /* 👈 thoda right */
 }
 
 .social-row{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
+  margin: 12px 0;
 }
 
 .social-row button{
@@ -178,6 +195,17 @@ body{
   background: #2563eb;
   color: #fff;
   font-weight: 600;
+}
+
+/* ==================================================
+   SOCIAL PAGE (COMING SOON FIX)
+================================================== */
+.social-page .glass-card{
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 24px;
+  transform: translateX(-6px);
+  text-align: center;
 }
 
 /* ==================================================
@@ -217,7 +245,8 @@ body{
    MOBILE SAFETY
 ================================================== */
 @media (max-width: 600px){
-  .main-bundles .glass-card{
-    max-width: 92%;
+  .glass-card,
+  .card{
+    transform: translateX(-4px);
   }
 }
