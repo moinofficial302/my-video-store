@@ -1,4 +1,4 @@
-/* ===== BOTTOM NAV – GLASS + AUTO HIDE (FIXED) ===== */
+/* ===== BOTTOM NAV – GLASS + AUTO HIDE (UPGRADED & STABLE) ===== */
 
 .bottom-nav{
   position: fixed;
@@ -6,29 +6,31 @@
   left: 0;
   right: 0;
 
-  height: 44px;
-  padding: 4px 8px;
+  height: 52px;                 /* thoda comfortable */
+  padding: 6px 10px;
 
   display: flex;
   justify-content: space-around;
   align-items: center;
 
-  background: rgba(25, 25, 25, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(25,25,25,0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 
-  box-shadow: 0 -4px 16px rgba(0,0,0,0.35);
-  border-radius: 0;
+  box-shadow: 0 -6px 20px rgba(0,0,0,0.4);
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
 
   transform: translateY(0);
   transition: transform 0.35s ease;
 
   z-index: 999;
+  will-change: transform;       /* 👈 smooth scroll */
 }
 
 /* ===== HIDE STATE ===== */
 .bottom-nav.hide{
-  transform: translateY(60px); /* FIXED (no %) */
+  transform: translateY(70px);  /* px is safest (no %) */
 }
 
 /* ===== NAV ITEM ===== */
@@ -39,10 +41,11 @@
 
   font-size: 12px;
   font-weight: 500;
-  padding: 2px 8px;
+  padding: 4px 10px;
 
   cursor: pointer;
   position: relative;
+  transition: color 0.25s ease;
 }
 
 /* ===== ACTIVE ===== */
@@ -50,20 +53,21 @@
   color: #4de7e7;
 }
 
-/* ===== ACTIVE LINE ===== */
+/* ===== ACTIVE INDICATOR ===== */
 .nav-item.active::after{
   content: "";
   position: absolute;
-  bottom: -4px;
+  bottom: -6px;
   left: 50%;
   transform: translateX(-50%);
 
-  width: 20px;
-  height: 2px;
+  width: 22px;
+  height: 3px;
   background: #4de7e7;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
+/* ===== SAFE SPACE FOR CONTENT ===== */
 body{
-  padding-bottom: 60px;
+  padding-bottom: 72px; /* nav + gap */
 }
