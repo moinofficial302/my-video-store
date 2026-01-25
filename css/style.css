@@ -104,3 +104,11 @@ body{
   box-sizing:border-box;
   transform:none !important;
 }
+
+/* ===== HARD CARD LOCK (FINAL) ===== */
+.card,
+.glass-card{
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
