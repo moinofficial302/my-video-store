@@ -69,15 +69,7 @@
   padding: 4px 8px;
 }
 
-/* ===== FIX BUNDLE SIZE (MUST) ===== */
-.card,
-.glass-card {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  transform: none !important;
-}
-
 body{
   padding-bottom: 60px;
 }
+
