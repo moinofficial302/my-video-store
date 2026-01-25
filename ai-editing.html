@@ -4,86 +4,83 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI & Editing | Akans</title>
-<link rel="stylesheet" href="css/nav.css">
-  
+
+  <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* ===== PAGE HEADING ===== */
+    .page-title{
+      padding: 18px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    /* ===== AI EDITING WRAPPER ===== */
+    .ai-wrapper{
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      padding-bottom: 80px;
+    }
+
+    .ai-wrapper .glass-card{
+      width: 100%;
+      max-width: 420px;
+      padding: 18px;
+    }
+
+    .ai-wrapper h3{
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .ai-wrapper p{
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+  </style>
 </head>
+
 <body>
 
 <!-- 🔹 PAGE HEADING -->
-<h2 style="padding:16px;">🤖 AI & Editing Packs</h2>
+<h2 class="page-title">🤖 AI & Editing Packs</h2>
 
-<!-- 🔹 AI PRODUCTS SECTION -->
-<div class="tab-section active">
+<!-- 🔹 AI PRODUCTS -->
+<div class="ai-wrapper">
 
-  <div class="card glass-card">
+  <div class="glass-card">
     <h3>AI Reel Prompts Bundle</h3>
     <p>100+ Viral Prompts</p>
     <p>₹49 Only</p>
-    <button class="buy-btn" onclick="buyProduct('ai-prompts',49)">
-      Buy Now
-    </button>
+    <button class="buy-btn" onclick="buyProduct('ai-prompts',49)">Buy Now</button>
   </div>
-</div>
-  
-</div>
-  <div class="card glass-card">
+
+  <div class="glass-card">
     <h3>AI Image Generator Pack</h3>
     <p>Midjourney + Leonardo</p>
     <p>₹59 Only</p>
-    <button class="buy-btn" onclick="buyProduct('ai-image',59)">
-      Buy Now
-    </button>
+    <button class="buy-btn" onclick="buyProduct('ai-image',59)">Buy Now</button>
   </div>
-</div>
-  
-</div>
-  <div class="card glass-card">
+
+  <div class="glass-card">
     <h3>AI Reel Prompts Bundle</h3>
     <p>100+ Viral Prompts</p>
     <p>₹49 Only</p>
-    <button class="buy-btn" onclick="buyProduct('ai-prompts',49)">
-      Buy Now
-    </button>
+    <button class="buy-btn" onclick="buyProduct('ai-prompts',49)">Buy Now</button>
   </div>
-</div>
-  
-</div>
-  <div class="card glass-card">
+
+  <div class="glass-card">
     <h3>AI Image Generator Pack</h3>
     <p>Midjourney + Leonardo</p>
     <p>₹59 Only</p>
-    <button class="buy-btn" onclick="buyProduct('ai-image',59)">
-      Buy Now
-    </button>
+    <button class="buy-btn" onclick="buyProduct('ai-image',59)">Buy Now</button>
   </div>
-</div>
-  
-</div>
-    <div class="card glass-card">
-    <h3>AI Reel Prompts Bundle</h3>
-    <p>100+ Viral Prompts</p>
-    <p>₹49 Only</p>
-    <button class="buy-btn" onclick="buyProduct('ai-prompts',49)">
-      Buy Now
-    </button>
-  </div>
-</div>
-  
-</div>
-  <div class="card glass-card">
-    <h3>AI Image Generator Pack</h3>
-    <p>Midjourney + Leonardo</p>
-    <p>₹59 Only</p>
-    <button class="buy-btn" onclick="buyProduct('ai-image',59)">
-      Buy Now
-    </button>
-  </div>
-  
+
 </div>
 
-
-  
 <!-- 🔹 BOTTOM NAVIGATION -->
 <div class="bottom-nav">
 
@@ -91,7 +88,7 @@
     Bundle
   </button>
 
-  <button class="nav-item" data-page="ai-editing.html" onclick="location.href='ai-editing.html'">
+  <button class="nav-item active" data-page="ai-editing.html" onclick="location.href='ai-editing.html'">
     AI & Editing
   </button>
 
@@ -105,39 +102,32 @@
 
 </div>
 
-  <script>
+<!-- ACTIVE TAB -->
+<script>
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
-
   document.querySelectorAll(".nav-item").forEach(btn => {
     if (btn.dataset.page === currentPage) {
       btn.classList.add("active");
     }
   });
-  </script>
+</script>
 
+<!-- AUTO HIDE NAV -->
 <script>
   let lastScroll = 0;
   const nav = document.querySelector(".bottom-nav");
 
   window.addEventListener("scroll", () => {
     const currentScroll = window.pageYOffset;
-
     if (currentScroll > lastScroll && currentScroll > 80) {
-      // scroll down → hide
       nav.classList.add("hide");
     } else {
-      // scroll up → show
       nav.classList.remove("hide");
     }
-
     lastScroll = currentScroll;
   });
 </script>
 
-
-  
-</div>
-  
 <script src="js/firebase-init.js"></script>
 <script src="js/products.js"></script>
 
