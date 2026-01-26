@@ -353,8 +353,7 @@ body{
   display:block;
 }
 
-.card,
-.scroll-card{
+.card{
   overflow:hidden;
 }
 
