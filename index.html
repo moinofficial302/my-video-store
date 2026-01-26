@@ -1,359 +1,309 @@
-<!DOCTYPE html>  <html lang="en">  
-<head>  
-<meta charset="UTF-8">  
-<title>AKANS Store | Bundles</title>  
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="stylesheet" href="css/style.css">  
-<link rel="stylesheet" href="css/nav.css">  <style>  
-body{  
-  margin:0;  
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;  
-  background:linear-gradient(to bottom,#eef3fb,#ffffff);  
-  padding-bottom:80px;  
-}  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AKANS Store | Bundles</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/nav.css">
+
+<style>
+/* ========== BASE ========== */
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  background:linear-gradient(to bottom,#eef3fb,#ffffff);
+  padding-bottom:80px; /* bottom nav safe space */
+}
+
+/* ========== PAGE WRAPPER (LOCK CENTER) ========== */
+.page-wrap{
+  max-width:440px;
+  margin:0 auto;
+}
+
+/* ========== HEADER ========== */
+.header{
+  margin:16px;
+  padding:16px 18px;
+  border-radius:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(12px);
+  box-shadow:0 10px 26px rgba(0,0,0,0.12);
+}
+
+.header h3{
+  margin:0;
+  font-size:18px;
+  font-weight:700;
+}
+
+.header img{
+  height:42px;
+}
+</style>
+
+<script>
+function toggleDetails(id){
+  const box = document.getElementById(id);
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+</script>
+</head>
+
+<body>
+
+<!-- 🔒 PAGE START -->
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h3>Only M.7 Limited</h3>
+    <img src="logo.png" alt="AKANS Logo">
+  </div>
+
+
   
-/* 🔒 CENTER LOCK */  
-.page-wrap{  
-  max-width:440px;  
-  margin:0 auto;  
-}  
-  
-/* HEADER */  
-.header{  
-  margin:16px;  
-  padding:16px 18px;  
-  border-radius:18px;  
-  display:flex;  
-  justify-content:space-between;  
-  align-items:center;  
-  background:rgba(255,255,255,.85);  
-  backdrop-filter:blur(12px);  
-  box-shadow:0 10px 26px rgba(0,0,0,.12);  
-}  
-  
-.header img{height:42px}  
-  
-/* CARD */  
-.card{  
-  margin:16px auto;  
-}  
-  
-.card-top{  
-  display:flex;  
-  gap:14px;  
-  align-items:center;  
-}  
-  
-.img{  
-  width:110px;  
-  aspect-ratio:2/3;  
-  object-fit:contain;  
-  flex-shrink:0;  
-  border-radius:14px;  
-}  
-  
-.text{width:62%}  
-  
-.text h3{margin:0 0 4px;font-size:16px}  
-.text p{margin:2px 0;font-size:14px}  
-  
-del{color:#e53935}  
-.urgent{color:#ff6a00;font-size:12px}  
-  
-/* BUTTONS */  
-.btn-row{display:flex;gap:10px;margin-top:10px}  
-  
-.details-btn{  
-  flex:.7;  
-  padding:6px 10px;  
-  border-radius:12px;  
-  font-size:12px;  
-  background:rgba(37,99,235,.1);  
-  border:1px solid rgba(37,99,235,.25);  
-  color:#2563eb;  
-}  
-  
-.buy-btn{  
-  flex:1.3;  
-  padding:14px 0;  
-  border:none;  
-  border-radius:999px;  
-  font-weight:700;  
-  background:#ffd600;  
-  box-shadow:0 6px 16px rgba(0,0,0,.25);  
-}  
-  
-/* DETAILS */  
-.details-box{  
-  display:none;  
-  margin-top:14px;  
-  padding:14px;  
-  background:#fff;  
-  border-radius:16px;  
-  font-size:13px;  
-}  
-  
-/* 🔥 TRENDING */  
-.scroll-section{margin:20px 16px}  
-.scroll-title{font-weight:700;margin-bottom:10px}  
-  
-.scroll-row{  
-  display:flex;  
-  gap:12px;  
-  overflow-x:auto;  
-  scroll-snap-type:x mandatory;  
-}  
-.scroll-row::-webkit-scrollbar{display:none}  
-  
-.scroll-card{  
-  min-width:140px;  
-  scroll-snap-align:start;  
-}  
-  
-.scroll-card img{  
-  width:100%;  
-  aspect-ratio:2/3;  
-  object-fit:contain;  
-  border-radius:12px;  
-}  
-  
-.scroll-buy{  
-  width:100%;  
-  margin-top:8px;  
-  padding:10px 0;  
-  border:none;  
-  border-radius:30px;  
-  font-weight:700;  
-  background:#ffd600;  
-}  
-  
-/* SUPPORT + PROOF */  
-.support-card,.proof-card{margin:16px}  
-  
-.proof-row{  
-  display:flex;  
-  justify-content:space-between;  
-  align-items:center;  
-  margin:10px 0;  
-}  
-  
-.blue-btn{  
-  background:#2563eb;  
-  color:#fff;  
-  padding:6px 14px;  
-  border-radius:12px;  
-  text-decoration:none;  
-  font-size:13px;  
-}  
-  
-/* FOOTER */  
-.glass-footer{  
-  margin:20px 16px;  
-  padding:18px;  
-  border-radius:18px;  
-  background:#fff;  
-  font-size:13px;  
-}  
-  
-/* BOTTOM NAV */  
-.bottom-nav{position:fixed;bottom:0;left:0;right:0}  
-</style>  <script>  
-function toggleDetails(id){  
-  const box=document.getElementById(id);  
-  box.style.display=box.style.display==="block"?"none":"block";  
-}  
-</script> 
-</head> 
-  <body> 
-    <div class="page-wrap"> 
-      <!-- HEADER --> 
-      <div class="header">  
-  <h3>Only M.7 Limited</h3>  
-  <img src="logo.png">  
-</div> 
+   <!-- 🔴 PART-2  -->
    
-   
-  🔴PART-2 BUNDLE CODE  
-      
   
-  <!-- BUNDLE 1 -->  
-   
-   
-   <div class="card glass-card">  
-  <div class="card-top">  
-    <img src="Hulk.jpg" class="img" alt="Hulk Bundle">  
-    <div class="text">  
-      <h3>Hulk Videos Bundle</h3>  
-      <p>1000+ Videos</p>  
-      <p><del>₹799</del> <b>₹39 Only</b></p>  
-      <p class="urgent">⚡ Offer valid today only</p> 
-      <div class="btn-row">  
-    <button class="details-btn" onclick="toggleDetails('details-hulk-1')">  
-      View Details  
-    </button>  
-    <button class="buy-btn" onclick="buyProduct('hulk',39)">  
-      Buy Now  
-    </button>  
-  </div>  
+      <!-- ===============================
+   MAIN BUNDLE CARDS
+================================= -->
+
+<!-- BUNDLE 1 -->
+<div class="card glass-card">
+
+  <div class="card-top">
+    <img src="Hulk.jpg" class="img" alt="Hulk Bundle">
+
+    <div class="text">
+      <h3>Hulk Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+
+      <div class="btn-row">
+        <button class="details-btn"
+          onclick="toggleDetails('details-hulk-1')">
+          View Details
+        </button>
+
+        <button class="buy-btn"
+          onclick="buyProduct('hulk',39)">
+          Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAILS INSIDE CARD -->
+  <div class="details-box" id="details-hulk-1">
+    <b>Bundle:</b> AI Generated Hulk Videos<br>
+    <b>Total:</b> 1000+ Videos<br>
+    <b>Type:</b> Short Reels<br>
+    <b>Quality:</b> Full HD<br>
+    <b>Delivery:</b> Instant<br>
+    ⭐⭐⭐⭐ <b>4.7 / 5 Rating</b>
+  </div>
+
 </div>
 
-  </div>    <div class="details-box" id="details-hulk-1">  
-    <b>Bundle:</b> AI Generated Hulk Videos<br>  
-    <b>Total:</b> 1000+ Videos<br>  
-    <b>Type:</b> Short Reels<br>  
-    <b>Quality:</b> Full HD<br>  
-    <b>Delivery:</b> Instant<br>  
-    ⭐⭐⭐⭐ <b>4.7 / 5 Rating</b>  
-  </div>  
-</div>  <!-- BUNDLE 2 --> 
-      <div class="card glass-card">  
-  <div class="card-top">  
-    <img src="Food.jpg" class="img" alt="Food Bundle">  
-    <div class="text">  
-      <h3>Food Cutting Videos Bundle</h3>  
-      <p>1000+ Videos</p>  
-      <p><del>₹799</del> <b>₹39 Only</b></p>  
-      <p class="urgent">⚡ Offer valid today only</p> 
-      <div class="btn-row">  
-    <button class="details-btn" onclick="toggleDetails('details-food-1')">  
-      View Details  
-    </button>  
-    <button class="buy-btn" onclick="buyProduct('food',39)">  
-      Buy Now  
-    </button>  
-  </div>  
+
+<!-- BUNDLE 2 -->
+<div class="card glass-card">
+
+  <div class="card-top">
+    <img src="Food.jpg" class="img" alt="Food Bundle">
+
+    <div class="text">
+      <h3>Food Cutting Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+
+      <div class="btn-row">
+        <button class="details-btn"
+          onclick="toggleDetails('details-food-1')">
+          View Details
+        </button>
+
+        <button class="buy-btn"
+          onclick="buyProduct('food',39)">
+          Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-box" id="details-food-1">
+    <b>Bundle:</b> AI Food Cutting Videos<br>
+    <b>Total:</b> 1000+ Videos<br>
+    <b>Type:</b> Satisfying Reels<br>
+    <b>Quality:</b> Full HD<br>
+    <b>Delivery:</b> Instant<br>
+    ⭐⭐⭐⭐ <b>4.6 / 5 Rating</b>
+  </div>
+
 </div>
 
-  </div>    <div class="details-box" id="details-food-1">  
-    <b>Bundle:</b> AI Food Cutting Videos<br>  
-    <b>Total:</b> 1000+ Videos<br>  
-    <b>Type:</b> Satisfying Reels<br>  
-    <b>Quality:</b> Full HD<br>  
-    <b>Delivery:</b> Instant<br>  
-    ⭐⭐⭐⭐ <b>4.6 / 5 Rating</b>  
-  </div>  
-</div>  
+
+<!-- BUNDLE 3 -->
+<div class="card glass-card">
+
+  <div class="card-top">
+    <img src="Car.jpg" class="img" alt="Car Bundle">
+
+    <div class="text">
+      <h3>Car Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹45 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+
+      <div class="btn-row">
+        <button class="details-btn"
+          onclick="toggleDetails('details-car-1')">
+          View Details
+        </button>
+
+        <button class="buy-btn"
+          onclick="buyProduct('car',45)">
+          Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-box" id="details-car-1">
+    <b>Bundle:</b> AI Car Videos<br>
+    <b>Total:</b> 1000+ Videos<br>
+    <b>Type:</b> Cinematic Reels<br>
+    <b>Quality:</b> Full HD<br>
+    <b>Delivery:</b> Instant<br>
+    ⭐⭐⭐⭐ <b>4.8 / 5 Rating</b>
+  </div>
+
+</div>
+  
+
+     <!-- 🔴 PART-3 -->
+  
       
-      
-      <!-- BUNDLE 3 --> 
-      
-      <div class="card glass-card">  
-  <div class="card-top">  
-    <img src="Car.jpg" class="img" alt="Car Bundle">  
-    <div class="text">  
-      <h3>Car Videos Bundle</h3>  
-      <p>1000+ Videos</p>  
-      <p><del>₹799</del> 
-        <b>₹45 Only</b></p>  
-      <p class="urgent">⚡ Offer valid today only</p> 
-      <div class="btn-row">  
-    <button class="details-btn" onclick="toggleDetails('details-car-1')">  
-      View Details  
-    </button>  
-    <button class="buy-btn" onclick="buyProduct('car',45)">  
-      Buy Now  
-    </button>  
-  </div>  
+<!-- ===============================
+   🔥 TRENDING BUNDLES (HORIZONTAL)
+================================= -->
+
+<div class="scroll-section">
+
+  <div class="scroll-title">🔥 Trending Bundles</div>
+
+  <div class="scroll-row">
+
+    <!-- CARD 1 -->
+    <div class="scroll-card glass-card">
+      <img src="Hulk.jpg" alt="Hulk Bundle">
+      <h4>Hulk Bundle</h4>
+      <p>₹39 Only</p>
+      <button class="scroll-buy"
+        onclick="buyProduct('hulk',39)">
+        Buy Now
+      </button>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="scroll-card glass-card">
+      <img src="Food.jpg" alt="Food Bundle">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      <button class="scroll-buy"
+        onclick="buyProduct('food',39)">
+        Buy Now
+      </button>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="scroll-card glass-card">
+      <img src="Car.jpg" alt="Car Bundle">
+      <h4>Car Videos</h4>
+      <p>₹45 Only</p>
+      <button class="scroll-buy"
+        onclick="buyProduct('car',45)">
+        Buy Now
+      </button>
+    </div>
+
+  </div>
 </div>
 
-  </div>  
-        <div class="details-box" id="details-car-1">  
-    <b>Bundle:</b> AI Car Videos<br>  
-    <b>Total:</b> 1000+ Videos<br>  
-    <b>Type:</b> Cinematic Reels<br>  
-    <b>Quality:</b> Full HD<br>  
-    <b>Delivery:</b> Instant<br>  
-    ⭐⭐⭐⭐ <b>4.8 / 5 Rating</b>  
-  </div>  
-</div>  
-   
-   🔴 PART-3 CODE RAHEGA
-      
-   🔥 TRENDING BUNDLES (HORIZONTAL)  
-   
-   <div class="scroll-section">  
-  <div class="scroll-title">🔥 Trending Bundles</div> 
-     
-     <div class="scroll-row">  
-       
-    <div class="scroll-card glass-card">  
-      <img src="Hulk.jpg" alt="">  
-      <h4>Hulk Bundle</h4>  
-      <p>₹39 Only</p>  
-      <button class="scroll-buy" onclick="buyProduct('hulk',39)">Buy Now</button>  
-    </div> 
-       
-       <div class="scroll-card glass-card">  
-  <img src="Food.jpg" alt="">  
-  <h4>Food Cutting</h4>  
-  <p>₹39 Only</p>  
-  <button class="scroll-buy" onclick="buyProduct('food',39)">Buy Now</button>  
-</div>  
 
-<div class="scroll-card glass-card">  
-  <img src="Car.jpg" alt="">  
-  <h4>Car Videos</h4>  
-  <p>₹45 Only</p>  
-  <button class="scroll-buy" onclick="buyProduct('car',45)">Buy Now</button>  
+<!-- ===============================
+   📞 CUSTOMER SUPPORT
+================================= -->
+
+<div class="card glass-card support-card">
+  <h3>24×7 Customer Support</h3>
+  <div class="support-info">
+    <p><strong>Email:</strong> Akans47g@gmail.com</p>
+  </div>
 </div>
 
-  </div>  
-</div>  
-   
-   <!-- ===============================  
-   📞 CUSTOMER SUPPORT  
-================================= --> 
-   
-   <div class="card glass-card support-card">  
-  <h3>24×7 Customer Support</h3>  
-  <div class="support-info">  
-    <p><strong>Email:</strong> Akans47g@gmail.com</p>  
-  </div>  
-</div>  
-   
-   <!-- ===============================  
-   🔗 SELLING PROOF & SOCIAL  
-================================= -->  
-   
-   <div class="card glass-card proof-card">  
-  <h3>Selling Proof & Social Pages</h3>  
-     
-     <div class="proof-row">   
-    <span>Instagram Page</span>  
-    <a href="https://www.instagram.com/akans.ai" class="blue-btn">View</a>  
-  </div>  
-     
-     <div class="proof-row">  
-    <span>Telegram Channel</span>  
-    <a href="https://t.me/AKANS_AI" class="blue-btn">View</a>  
-  </div>   
-     
-     <div class="proof-row">  
-    <span>Telegram Contact</span>  
-    <a href="https://t.me/AKANS_Moin" class="blue-btn">View</a>  
-  </div>  
-     
-     <div class="proof-row">  
-    <span>Selling Proof</span>  
-    <a href="https://t.me/+X8lVU6ZMLZNmMjI1" class="blue-btn">View</a>  
-  </div>  
-</div> 
-      
-   
-   <!-- ===============================  
-   ✅ TRUST / PAYMENT FOOTER  
-================================= --> 
-   
-   <div class="glass-footer">  
-  <p>✔ Paytm Verified Seller</p>  
-  <p>✔ Secure UPI Payment</p>  
-  <p>✔ Instant Delivery</p>  
-  <p>✔ Privacy Policy</p>  
-  <p style="margin-top:10px;font-size:12px;">  
-    Digital Product • No Refund After Access  
-  </p>  
-</div>  
-</div>  
+
+<!-- ===============================
+   🔗 SELLING PROOF & SOCIAL
+================================= -->
+
+<div class="card glass-card proof-card">
+  <h3>Selling Proof & Social Pages</h3>
+
+  <div class="proof-row">
+    <span>Instagram Page</span>
+    <a href="https://www.instagram.com/akans.ai"
+       class="blue-btn">View</a>
+  </div>
+
+  <div class="proof-row">
+    <span>Telegram Channel</span>
+    <a href="https://t.me/AKANS_AI"
+       class="blue-btn">View</a>
+  </div>
+
+  <div class="proof-row">
+    <span>Telegram Contact</span>
+    <a href="https://t.me/AKANS_Moin"
+       class="blue-btn">View</a>
+  </div>
+
+  <div class="proof-row">
+    <span>Selling Proof</span>
+    <a href="https://t.me/+X8lVU6ZMLZNmMjI1"
+       class="blue-btn">View</a>
+  </div>
+</div>
+
+
+<!-- ===============================
+   ✅ TRUST / PAYMENT FOOTER
+================================= -->
+
+<div class="glass-footer">
+  <p>✔ Paytm Verified Seller</p>
+  <p>✔ Secure UPI Payment</p>
+  <p>✔ Instant Delivery</p>
+  <p>✔ Privacy Policy</p>
+  <p style="margin-top:10px;font-size:12px;">
+    Digital Product • No Refund After Access
+  </p>
+</div>
+
+  
+
+    <!-- 🔴 PART 4 -->
+  
 
 
 <!-- 🔻 BOTTOM NAVIGATION -->
