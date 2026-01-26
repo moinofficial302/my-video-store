@@ -403,3 +403,69 @@ body{
   background: #ffd600;
   font-weight: 700;
 }
+
+
+
+/* ===============================
+   TRENDING BUNDLES (FINAL)
+================================ */
+
+.trending-section{
+  padding: 10px 0 20px;
+}
+
+.trending-title{
+  font-size: 20px;
+  font-weight: 700;
+  margin: 20px 16px 12px;
+}
+
+/* horizontal smooth scroll */
+.trending-row{
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 0 16px 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.trending-row::-webkit-scrollbar{
+  display: none;
+}
+
+/* card */
+.trending-card{
+  min-width: 220px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  scroll-snap-align: start;
+  text-align: center;
+}
+
+.trending-card img{
+  width: 100%;
+  border-radius: 14px;
+  margin-bottom: 10px;
+}
+
+.trending-card h4{
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.trending-card p{
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.trending-card button{
+  width: 100%;
+  padding: 12px;
+  border-radius: 999px;
+  border: none;
+  background: #ffd600;
+  font-weight: 700;
+}
