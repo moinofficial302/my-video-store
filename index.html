@@ -50,15 +50,20 @@ body{
   height:42px;
 }
 
-/* IMAGE FIX */
-.img{
-  width:38%;
-  max-width:140px;
-  aspect-ratio:2 / 3;
-  object-fit:contain;
-  border-radius:14px;
+
+  .img{
+  width:110px;
+  height:auto;
+  aspect-ratio:2 / 3;
+  object-fit:contain;
+  flex-shrink:0;
+  }
+
+.card{
+  margin:16px auto;
 }
 
+  
 /* CARD TOP */
 .card-top{
   display:flex;
@@ -139,14 +144,15 @@ function toggleDetails(id){
 </head>
 <body>
 
-<!-- HEADER -->
+
+<!-- PAGE WRAP START -->
+<div class="page-wrap">
+
+  <!-- HEADER -->
 <div class="header">
   <h3>Only M.7 Limited</h3>
   <img src="logo.png" alt="AKANS Logo">
 </div>
-
-<!-- PAGE WRAP START -->
-<div class="page-wrap">
 
 <!-- BUNDLE SECTION START -->
 <div id="bundle" class="tab-section active">
