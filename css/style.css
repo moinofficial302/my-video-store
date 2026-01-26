@@ -333,3 +333,33 @@ body{
   margin-left: auto;
   margin-right: auto;
 }
+
+
+
+
+/* 🔒 FORCE FIX FOR CARD IMAGES */
+.card .img{
+  width:110px !important;
+  height:auto !important;
+  max-width:110px !important;
+  flex-shrink:0;
+}
+
+/* 🔒 FIX FOR TRENDING SCROLL IMAGES */
+.scroll-card img{
+  width:100%;
+  max-width:140px;
+  height:auto;
+  display:block;
+}
+
+.card,
+.scroll-card{
+  overflow:hidden;
+}
+
+.page-wrap{
+  max-width:440px;
+  width:100%;
+  margin:0 auto;
+}
