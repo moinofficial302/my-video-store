@@ -137,25 +137,14 @@ body{
   transform: translateX(-6px); /* 👈 */
 }
 
-.trending-bundles{
-  max-width: 92%;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  transform: translateX(-6px); /* 👈 */
-}
+
 
 .trending-bundles .glass-card{
   padding: 14px;
   text-align: center;
 }
 
-.trending-bundles img{
-  width: 100%;
-  border-radius: 16px;
-  margin-bottom: 10px;
-}
+
 
 /* ==================================================
    SUPPORT / INFO SECTIONS (CENTERED + LIFT)
@@ -361,4 +350,56 @@ body{
   max-width:440px;
   width:100%;
   margin:0 auto;
+}
+
+/* ===============================
+   🔥 TRENDING SCROLL (FINAL FIX)
+================================ */
+
+.scroll-section{
+  max-width: 440px;
+  margin: 24px auto;
+  padding-left: 12px;
+}
+
+.scroll-title{
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.scroll-row{
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-row::-webkit-scrollbar{
+  display: none;
+}
+
+.scroll-card{
+  min-width: 150px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  padding: 12px;
+  text-align: center;
+}
+
+.scroll-card img{
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  margin-bottom: 8px;
+}
+
+.scroll-buy{
+  width: 100%;
+  padding: 10px;
+  border-radius: 999px;
+  border: none;
+  background: #ffd600;
+  font-weight: 700;
 }
