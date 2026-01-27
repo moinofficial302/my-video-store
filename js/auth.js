@@ -1,6 +1,6 @@
-/* =========================
+  /* ===============================
    IMPORTS
-========================= */
+================================ */
 import { auth, db } from "./firebase-init.js";
 
 import {
@@ -19,10 +19,9 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-
-/* =========================
+/* ===============================
    TAB SWITCH (LOGIN / SIGNUP)
-========================= */
+================================ */
 const loginTab = document.getElementById("loginTab");
 const signupTab = document.getElementById("signupTab");
 const loginForm = document.getElementById("loginForm");
@@ -32,7 +31,6 @@ if (loginTab && signupTab) {
   loginTab.addEventListener("click", () => {
     loginTab.classList.add("active");
     signupTab.classList.remove("active");
-
     loginForm.classList.remove("hidden");
     signupForm.classList.add("hidden");
   });
@@ -40,16 +38,14 @@ if (loginTab && signupTab) {
   signupTab.addEventListener("click", () => {
     signupTab.classList.add("active");
     loginTab.classList.remove("active");
-
     signupForm.classList.remove("hidden");
     loginForm.classList.add("hidden");
   });
 }
 
-
-/* =========================
+/* ===============================
    SIGN UP
-========================= */
+================================ */
 window.signupUser = async function () {
   const username = document.getElementById("signup-username").value.trim();
   const email = document.getElementById("signup-email").value.trim();
@@ -74,17 +70,15 @@ window.signupUser = async function () {
       createdAt: serverTimestamp()
     });
 
-    alert("Account created successfully 🎉");
-    window.location.href = "/index.html";
+    window.location.href = "index.html";
   } catch (error) {
     alert(error.message);
   }
 };
 
-
-/* =========================
+/* ===============================
    LOGIN
-========================= */
+================================ */
 window.loginUser = async function () {
   const email = document.getElementById("login-identifier").value.trim();
   const password = document.getElementById("login-password").value;
@@ -96,16 +90,15 @@ window.loginUser = async function () {
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    window.location.href = "/index.html";
+    window.location.href = "index.html";
   } catch (error) {
     alert("Invalid email or password");
   }
 };
 
-
-/* =========================
+/* ===============================
    GOOGLE LOGIN
-========================= */
+================================ */
 window.googleLogin = async function () {
   const provider = new GoogleAuthProvider();
 
@@ -127,16 +120,15 @@ window.googleLogin = async function () {
       });
     }
 
-    window.location.href = "/index.html";
+    window.location.href = "index.html";
   } catch (error) {
     alert("Google login failed");
   }
 };
 
-
-/* =========================
+/* ===============================
    FORGOT PASSWORD
-========================= */
+================================ */
 window.resetPassword = async function () {
   const email = document.getElementById("forgot-email")?.value.trim();
   if (!email) {
@@ -152,10 +144,9 @@ window.resetPassword = async function () {
   }
 };
 
-
-/* =========================
-   AUTH STATE CHECK
-========================= */
+/* ===============================
+   AUTH STATE
+================================ */
 onAuthStateChanged(auth, (user) => {
   if (user) {
     localStorage.setItem("loggedIn", "true");
@@ -164,17 +155,32 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+/* ===============================
+   BUY PRODUCT (GLOBAL)
+================================ */
+window.buyProduct = function (productId, price) {
+  const loggedIn = localStorage.getItem("loggedIn");
 
-
-function checkLoginAndProceed(redirectUrl) {
-  const user = localStorage.getItem("userLoggedIn");
-
-  if (!user) {
-    alert("Please login first to continue");
-    window.location.href = "login.html";
+  if (!loggedIn) {
+    alert("Please login first");
+    window.location.href = "account.html";
     return;
   }
 
-  // agar login hai
+  alert("Buying product: " + productId + " | Price: ₹" + price);
+};
+
+/* ===============================
+   LOGIN CHECK HELPER
+================================ */
+window.checkLoginAndProceed = function (redirectUrl) {
+  const loggedIn = localStorage.getItem("loggedIn");
+
+  if (!loggedIn) {
+    alert("Please login first to continue");
+    window.location.href = "account.html";
+    return;
+  }
+
   window.location.href = redirectUrl;
-}
+};
