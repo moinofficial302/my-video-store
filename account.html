@@ -2,130 +2,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Account | Akans</title>
+  <title>Account | AKANS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/style.css">
+  <!-- Firebase + Auth -->
+  <script type="module" src="js/firebase-init.js"></script>
+  <script type="module" src="js/auth.js"></script>
 
   <style>
-    /* ===== ACCOUNT WRAPPER ===== */
-    .account-wrapper{
-      max-width: 420px;
-      margin: 24px auto;
-      padding-bottom: 80px;
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg,#0b1022,#020617);
+      color:#e5e7eb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
-
-    .account-card{
-      padding: 20px;
-      text-align: center;
+    .card{
+      width:100%;
+      max-width:360px;
+      background: linear-gradient(
+        135deg,
+        rgba(255,255,255,.10),
+        rgba(255,255,255,.04)
+      );
+      backdrop-filter: blur(14px);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:
+        0 25px 60px rgba(0,0,0,.65),
+        inset 0 0 0 1px rgba(255,215,0,.35);
+      text-align:center;
     }
-
-    .account-info p{
-      font-size: 14px;
-      margin: 6px 0;
+    .card img{
+      width:80px;
+      height:80px;
+      border-radius:50%;
+      margin-bottom:10px;
+      box-shadow:
+        0 0 0 3px rgba(255,215,0,.35),
+        0 12px 30px rgba(0,0,0,.6);
     }
-
-    .wallet-box{
-      margin-top: 16px;
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.6);
+    h2{
+      margin:6px 0 4px;
+      font-size:20px;
     }
-
-    .wallet-box h3{
-      margin-bottom: 8px;
+    p{
+      margin:0 0 16px;
+      font-size:14px;
+      color:#9ca3af;
     }
-
-    .blue-btn{
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
-      border-radius: 999px;
-      background: #2563eb;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
+    .btn{
+      width:100%;
+      border:none;
+      border-radius:16px;
+      padding:12px 0;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .logout{
+      background:linear-gradient(135deg,#ef4444,#b91c1c);
+      color:#fff;
+      box-shadow:0 8px 18px rgba(239,68,68,.45);
+    }
+    .back{
+      margin-top:10px;
+      background:rgba(255,255,255,.08);
+      color:#e5e7eb;
     }
   </style>
 </head>
 
-<body>
+<body onload="requireLogin()">
 
-<!-- 🔹 ACCOUNT SECTION -->
-<div class="account-wrapper">
-  <div class="glass-card account-card">
+  <div class="card">
+    <img src="assets/logo.png" alt="AKANS">
+    <h2>Your Account</h2>
+    <p>You are logged in</p>
 
-    <h2>👤 My Account</h2>
-
-    <div class="account-info">
-      <p><strong>Name:</strong> <span id="userName">Loading...</span></p>
-      <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
-    </div>
-
-    <div class="wallet-box">
-      <h3>🪙 Wallet</h3>
-      <p><strong>Coins:</strong> <span id="userCoins">0</span></p>
-      <a href="add-money.html" class="blue-btn">Add Money</a>
-    </div>
-
-    <button class="buy-btn" onclick="logoutUser()" style="margin-top:16px;">
+    <button class="btn logout" onclick="logoutUser()">
       Logout
     </button>
 
+    <button class="btn back" onclick="location.href='index.html'">
+      Back to Home
+    </button>
   </div>
-</div>
-
-<!-- 🔹 BOTTOM NAVIGATION -->
-<div class="bottom-nav">
-
-  <button class="nav-item" data-page="index.html" onclick="location.href='index.html'">
-    Bundle
-  </button>
-
-  <button class="nav-item" data-page="ai-editing.html" onclick="location.href='ai-editing.html'">
-    AI & Editing
-  </button>
-
-  <button class="nav-item" data-page="social.html" onclick="location.href='social.html'">
-    Social
-  </button>
-
-  <button class="nav-item" data-page="account.html" onclick="location.href='account.html'">
-    Account
-  </button>
-
-</div>
-
-<!-- 🔹 ACTIVE TAB LOGIC -->
-<script>
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll(".nav-item").forEach(btn => {
-    if (btn.dataset.page === currentPage) {
-      btn.classList.add("active");
-    }
-  });
-</script>
-
-<!-- 🔹 AUTO HIDE NAV -->
-<script>
-  let lastScroll = 0;
-  const nav = document.querySelector(".bottom-nav");
-
-  window.addEventListener("scroll", () => {
-    const currentScroll = window.pageYOffset;
-    if (currentScroll > lastScroll && currentScroll > 80) {
-      nav.classList.add("hide");
-    } else {
-      nav.classList.remove("hide");
-    }
-    lastScroll = currentScroll;
-  });
-</script>
-
-<!-- 🔹 JS -->
-<script type="module" src="js/firebase-init.js"></script>
-<script type="module" src="js/account.js"></script>
 
 </body>
 </html>
