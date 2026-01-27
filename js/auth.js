@@ -1,6 +1,6 @@
-  /* ===============================
-   IMPORTS
-================================ */
+
+
+/* Firebase imports */
 import { auth, db } from "./firebase-init.js";
 
 import {
@@ -9,7 +9,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   sendPasswordResetEmail,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import {
@@ -21,36 +22,36 @@ import {
 
 /* ===============================
    TAB SWITCH (LOGIN / SIGNUP)
-================================ */
+=============================== */
 const loginTab = document.getElementById("loginTab");
 const signupTab = document.getElementById("signupTab");
 const loginForm = document.getElementById("loginForm");
 const signupForm = document.getElementById("signupForm");
 
 if (loginTab && signupTab) {
-  loginTab.addEventListener("click", () => {
+  loginTab.onclick = () => {
     loginTab.classList.add("active");
     signupTab.classList.remove("active");
     loginForm.classList.remove("hidden");
     signupForm.classList.add("hidden");
-  });
+  };
 
-  signupTab.addEventListener("click", () => {
+  signupTab.onclick = () => {
     signupTab.classList.add("active");
     loginTab.classList.remove("active");
     signupForm.classList.remove("hidden");
     loginForm.classList.add("hidden");
-  });
+  };
 }
 
 /* ===============================
    SIGN UP
-================================ */
+=============================== */
 window.signupUser = async function () {
   const username = document.getElementById("signup-username").value.trim();
   const email = document.getElementById("signup-email").value.trim();
-  const password = document.getElementById("signup-password").value;
   const whatsapp = document.getElementById("signup-whatsapp").value.trim();
+  const password = document.getElementById("signup-password").value;
 
   if (!username || !email || !password) {
     alert("Please fill all required fields");
@@ -64,41 +65,40 @@ window.signupUser = async function () {
     await setDoc(doc(db, "users", user.uid), {
       username,
       email,
-      whatsapp: whatsapp || "",
+      whatsapp,
       coins: 0,
-      referralBalance: 0,
       createdAt: serverTimestamp()
     });
 
     window.location.href = "index.html";
-  } catch (error) {
-    alert(error.message);
+  } catch (err) {
+    alert(err.message);
   }
 };
 
 /* ===============================
    LOGIN
-================================ */
+=============================== */
 window.loginUser = async function () {
   const email = document.getElementById("login-identifier").value.trim();
   const password = document.getElementById("login-password").value;
 
   if (!email || !password) {
-    alert("Enter login details");
+    alert("Enter email and password");
     return;
   }
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
     window.location.href = "index.html";
-  } catch (error) {
+  } catch (err) {
     alert("Invalid email or password");
   }
 };
 
 /* ===============================
    GOOGLE LOGIN
-================================ */
+=============================== */
 window.googleLogin = async function () {
   const provider = new GoogleAuthProvider();
 
@@ -115,38 +115,38 @@ window.googleLogin = async function () {
         email: user.email,
         whatsapp: "",
         coins: 0,
-        referralBalance: 0,
         createdAt: serverTimestamp()
       });
     }
 
     window.location.href = "index.html";
-  } catch (error) {
+  } catch (err) {
     alert("Google login failed");
   }
 };
 
 /* ===============================
    FORGOT PASSWORD
-================================ */
+=============================== */
 window.resetPassword = async function () {
-  const email = document.getElementById("forgot-email")?.value.trim();
+  const email = document.getElementById("login-identifier").value.trim();
+
   if (!email) {
-    alert("Enter your email");
+    alert("Enter your email first");
     return;
   }
 
   try {
     await sendPasswordResetEmail(auth, email);
-    alert("Password reset link sent to your Gmail");
-  } catch (error) {
-    alert(error.message);
+    alert("Password reset link sent to your email");
+  } catch (err) {
+    alert(err.message);
   }
 };
 
 /* ===============================
-   AUTH STATE
-================================ */
+   AUTH STATE (GLOBAL)
+=============================== */
 onAuthStateChanged(auth, (user) => {
   if (user) {
     localStorage.setItem("loggedIn", "true");
@@ -157,13 +157,13 @@ onAuthStateChanged(auth, (user) => {
 
 /* ===============================
    BUY PRODUCT (GLOBAL)
-================================ */
+=============================== */
 window.buyProduct = function (productId, price) {
   const loggedIn = localStorage.getItem("loggedIn");
 
   if (!loggedIn) {
     alert("Please login first");
-    window.location.href = "account.html";
+    window.location.href = "login.html";
     return;
   }
 
@@ -171,16 +171,24 @@ window.buyProduct = function (productId, price) {
 };
 
 /* ===============================
-   LOGIN CHECK HELPER
-================================ */
-window.checkLoginAndProceed = function (redirectUrl) {
+   PROTECTED PAGE GUARD
+=============================== */
+window.requireLogin = function () {
   const loggedIn = localStorage.getItem("loggedIn");
-
   if (!loggedIn) {
-    alert("Please login first to continue");
-    window.location.href = "account.html";
-    return;
+    window.location.href = "login.html";
   }
+};
 
-  window.location.href = redirectUrl;
+/* ===============================
+   LOGOUT
+=============================== */
+window.logoutUser = async function () {
+  try {
+    await signOut(auth);
+    localStorage.removeItem("loggedIn");
+    window.location.href = "login.html";
+  } catch (err) {
+    alert("Logout failed");
+  }
 };
