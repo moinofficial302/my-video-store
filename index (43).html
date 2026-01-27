@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AKANS Social Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css?v=1001">
+<link rel="stylesheet" href="css/nav.css?v=1001">
+  
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f2f2f2;
+  margin:0;
+}
+
+/* HEADER */
+.header{
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.header h3{margin:0;font-weight:700}
+.header img{height:45px}
+
+/* NORMAL CARD */
+.card{
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:18px;
+}
+.card-top{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+/* IMAGE — FIXED 2:3 */
+.img{
+  width:38%;
+  max-width:140px;
+  aspect-ratio:2 / 3;
+  object-fit:contain;
+  border-radius:14px;
+}
+
+/* TEXT */
+.text{width:62%}
+.text h3{margin:0 0 4px}
+del{color:red}
+.urgent{color:#e53935;font-size:12px;margin-top:4px}
+
+/* BUTTONS */
+.btn-row{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+  .details-btn{
+  flex:0.6;                /* chhota rahe */
+  padding:3px 8px;
+  border-radius:12px;
+  font-size:11px;
+  font-weight:600;
+
+  color:#2563eb;
+  background:rgba(37,99,235,0.08);
+  border:1px solid rgba(37,99,235,0.25);
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all 0.3s ease;
+}
+
+.details-btn:hover{
+  background:rgba(37,99,235,0.14);
+  box-shadow:0 6px 16px rgba(37,99,235,0.25);
+  transform:translateY(-1px);
+}
+  
+.buy-btn{
+  flex:1.6;
+  background:linear-gradient(90deg,#FFE600,#FFD000);
+  border-radius:45px;
+  text-align:center;
+  padding:18px 0;
+  font-weight:700;
+  text-decoration:none;
+  color:#000;
+  box-shadow:0 6px 14px rgba(0,0,0,0.25);
+}
+  
+/* DETAILS */
+.details-box{
+  display:none;
+  margin-top:14px;
+  padding:14px;
+  background:#f7f7f7;
+  border-radius:20px;
+  font-size:12px;
+  line-height:1.6;
+}
+
+/* 🔥 HORIZONTAL SCROLL SECTION */
+.scroll-section{
+  margin:15px;
+}
+.scroll-title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+.scroll-row{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+}
+.scroll-row::-webkit-scrollbar{display:none}
+
+/* SMALL SCROLL CARD */
+.scroll-card{
+  min-width:140px;
+  background:#fff;
+  border-radius:14px;
+  padding:10px;
+  scroll-snap-align:start;
+}
+.scroll-card img{
+  width:100%;
+  aspect-ratio:2 / 3;
+  object-fit:contain;
+  border-radius:12px;
+}
+.scroll-card h4{
+  font-size:13px;
+  margin:6px 0 2px;
+}
+.scroll-card p{
+  font-size:12px;
+  margin:0;
+}
+
+/* SCROLL BUY BUTTON */
+.scroll-buy{
+  width:100%;  
+  display:block;
+  margin-top:10px;
+  
+  background:#FFD600;
+  text-align:center;
+  padding:12px 0;
+  border-radius:30px;
+  font-size:14px;
+  font-weight:700;
+  color:#000;
+  
+  border:none;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,0.25);
+}
+  
+/* FOOTER */
+.note{
+  text-align:center;
+  font-size:12px;
+  color:#555;
+  margin:20px;
+}
+
+/* GLASS FOOTER */
+.glass-footer{
+  background: linear-gradient(
+  135deg,
+  rgba(219, 234, 254, 0.6),
+  rgba(239, 246, 255, 0.8)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 18px;
+  margin: 20px;
+  box-shadow:
+    0 15px 40px rgba(37,99,235,0.35),
+    inset 0 0 40px rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.35);
+  color:#1f2937;
+  font-weight:500;
+}
+
+/* GLASS CARD – UNIVERSAL */
+.glass-card{
+  background: linear-gradient(
+    135deg,
+    rgba(219, 234, 254, 0.55),
+    rgba(239, 246, 255, 0.75)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 18px;
+  margin: 20px;
+  box-shadow:
+    0 15px 40px rgba(37,99,235,0.25),
+    inset 0 0 40px rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.35);
+  color:#1f2937;
+  font-weight:500;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.6) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: shimmerMove 5s infinite;
+  pointer-events:none;
+}
+  
+/* GLASS SHIMMER EFFECT */
+.glass-footer::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.6) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: shimmerMove 4s infinite;
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.glass-footer{
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes shimmerMove{
+  0%{
+    transform: translateX(-100%);
+  }
+  50%{
+    transform: translateX(100%);
+  }
+  100%{
+    transform: translateX(100%);
+  }
+}
+  
+  .support-card h3,
+.proof-card h3{
+  text-align:center;
+  margin-bottom:12px;
+}
+
+.support-info p{
+  margin:6px 0;
+  font-size:14px;
+  color:#333;
+  text-align:center;
+}
+
+  .support-info p strong{
+  color:#2563eb;
+  }
+
+.proof-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:12px 0;
+  font-size:14px;
+}
+
+.blue-btn{
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  color:#fff;
+  padding:8px 18px;
+  border-radius:14px;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  box-shadow:0 6px 14px rgba(37,99,235,.35);
+}
+
+/* MOBILE FIX */
+@media (max-width:600px){
+  .proof-row{
+    gap:10px;
+  }
+}
+  
+</style>
+
+<script>
+function toggleDetails(id){
+  const box=document.getElementById(id);
+  box.style.display = box.style.display==="block" ? "none" : "block";
+}
+</script>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header glass-card">
+  <h3>Only M.7 Limited</h3>
+  <img src="logo.png">
+</div>
+
+<!-- NORMAL CARD 1 -->
+  <div id="bundle" class="tab-section active">
+<div class="card glass-card">
+  <div class="card-top">
+    <img src="Hulk.jpg" class="img">
+    <div class="text">
+      <h3>Hulk Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+       <div class="btn-row">
+        <button class="details-btn" onclick="toggleDetails('hulk')">View Details</button>
+        <button class="buy-btn" onclick="buyProduct('hulk', 39)">
+  Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="details-box" id="hulk">
+  <b>Bundle:</b> AI Generated Viral Hulk Videos<br>
+  <b>Total Videos:</b> 1000+<br>
+  <b>Type:</b> Short Reels<br>
+  <b>Quality:</b> Full HD / HD<br>
+  <b>Delivery:</b> Instant (Telegram / WhatsApp)<br>
+  ⭐⭐⭐⭐<b>4.7 / 5 Ratings</b>
+  </div>
+</div>
+
+<!-- NORMAL CARD 2 -->
+<div class="card glass-card">
+  <div class="card-top">
+    <img src="Food.jpg" class="img">
+    <div class="text">
+      <h3>Food Cutting Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+
+      <div class="btn-row">
+        <button class="details-btn" onclick="toggleDetails('Food')">View Details</button>
+        <button class="buy-btn" onclick="buyProduct('hulk', 39)">
+  Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-box" id="Food">
+    <b>Bundle:</b> AI Generated Viral Hulk Videos<br>
+    <b>Total Videos:</b> 1000+<br>
+    <b>Type:</b> Short Reels<br>
+    <b>Quality:</b> Full HD / HD<br>
+    <b>Delivery:</b> Instant (Telegram / WhatsApp)<br>
+    ⭐⭐⭐⭐<b>4.7 / 5 Ratings</b>
+  </div>
+</div>
+
+<!-- NORMAL CARD 3 -->
+<div class="card glass-card">
+  <div class="card-top">
+    <img src="Car.jpg" class="img">
+    <div class="text">
+      <h3>Car Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹45 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+      <div class="btn-row">
+        <button class="details-btn" onclick="toggleDetails('car')">View Details</button>
+        <button class="buy-btn" onclick="buyProduct('car', 45)">
+  Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="details-box" id="car">
+  <b>Bundle:</b> AI Generated Viral car Videos<br>
+  <b>Total Videos:</b> 1000+<br>
+  <b>Type:</b> Short Reels<br>
+  <b>Quality:</b> Full HD / HD<br>
+  <b>Delivery:</b> Instant <br>
+  ⭐⭐⭐⭐ <b>4.7 / 5 Ratings</b>
+  </div>
+</div>
+
+<!-- NORMAL CARD 4 -->
+<div class="card glass-card">
+  <div class="card-top">
+    <img src="Hulk.jpg" class="img">
+    <div class="text">
+      <h3>Hulk Videos Bundle</h3>
+      <p>1000+ Videos</p>
+      <p><del>₹799</del> <b>₹39 Only</b></p>
+      <p class="urgent">⚡ Offer valid today only</p>
+
+      <div class="btn-row">
+        <button class="details-btn" onclick="toggleDetails('hulk')">View Details</button>
+        <button class="buy-btn" onclick="buyProduct('hulk', 39)">
+  Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-box" id="hulk">
+    <b>Bundle:</b> AI Generated Viral Hulk Videos<br>
+    <b>Total Videos:</b> 1000+<br>
+    <b>Type:</b> Short Reels<br>
+    <b>Quality:</b> Full HD / HD<br>
+    <b>Delivery:</b> Instant (Telegram / WhatsApp)<br>
+    ⭐⭐⭐⭐ <b>4.7 / 5 Ratings</b>
+  </div>
+</div>
+  
+<!-- 🔥 LEFT RIGHT SCROLL SECTION -->
+<div class="scroll-section">
+  <div class="scroll-title">🔥 Trending Bundles</div>
+
+  <div class="scroll-row">
+    <div class="scroll-card glass-card">
+  <img src="Hulk.jpg">
+  <h4>Hulk Bundle</h4>
+  <p>₹39 Only</p>
+
+<button class="scroll-buy"
+        onclick="buyProduct('hulk', 39)">
+  Buy Now
+</button>
+  
+    </div>
+
+    <div class="scroll-card glass-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      
+<button class="scroll-buy"
+        onclick="buyProduct('hulk', 39)">
+  Buy Now
+</button>
+  
+    </div>
+
+    <div class="scroll-card glass-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      
+<button class="scroll-buy"
+        onclick="buyProduct('hulk', 39)">
+  Buy Now
+</button>
+  
+    </div>
+
+    <div class="scroll-card glass-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      
+   <button class="scroll-buy"
+        onclick="buyProduct('hulk', 39)">
+  Buy Now
+</button>
+      
+    </div>
+
+    <div class="scroll-card glass-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      
+<button class="scroll-buy"
+        onclick="buyProduct('hulk', 39)">
+  Buy Now
+</button>
+      
+    </div>
+
+    <div class="scroll-card glass-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      
+<button class="scroll-buy"
+        onclick="buyProduct('hulk', 39)">
+  Buy Now
+</button>
+      
+  </div>
+</div>
+<!-- CUSTOMER SUPPORT -->
+<div class="card support-card glass-card">
+  <h3>24×7 Customer Support</h3>
+  <div class="support-info">
+    <p><strong>Email:</strong> Akans47g@gmail.com</p>
+  </div>
+</div>
+
+<!-- SELLING PROOF -->
+<div class="card support-card glass-card">
+  <h3>Selling Proof & Social Pages</h3>
+
+  <div class="proof-row">
+    <span>Instagram Page</span>
+    <a href="https://www.instagram.com/akans.ai" class="blue-btn">View</a>
+  </div>
+
+  <div class="proof-row">
+    <span>Telegram Channel</span>
+    <a href="https://t.me/AKANS_AI" class="blue-btn">View</a>
+  </div>
+
+  <div class="proof-row">
+    <span>Telegram Contact</span>
+    <a href="https://t.me/AKANS_Moin" class="blue-btn">View</a>
+  </div>
+
+  <div class="proof-row">
+    <span>Selling Proof</span>
+    <a href="https://t.me/+X8lVU6ZMLZNmMjI1" class="blue-btn">View</a>
+  </div>
+</div>
+  
+<!-- FOOTER -->
+<div class="glass-footer">
+  <p>✔ Paytm Verified Seller</p>
+  <p>✔ Secure UPI Payment</p>
+  <p>✔ Instant Delivery</p>
+  <p>✔ Privacy Policy</p>
+  <p style="margin-top:10px; font-size:12px;">
+    Digital Product • No Refund After Access
+  </p>
+</div>
+
+<!-- 🔹 BOTTOM NAVIGATION -->
+<div class="bottom-nav">
+
+  <button class="nav-item" data-page="index.html" onclick="location.href='index.html'">
+    Bundle
+  </button>
+
+  <button class="nav-item" data-page="ai-editing.html" onclick="location.href='ai-editing.html'">
+    AI & Editing
+  </button>
+
+  <button class="nav-item" data-page="social.html" onclick="location.href='social.html'">
+    Social
+  </button>
+
+  <button class="nav-item" data-page="account.html" onclick="location.href='account.html'">
+    Account
+  </button>
+
+</div>
+
+  <script>
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+  document.querySelectorAll(".nav-item").forEach(btn => {
+    if (btn.dataset.page === currentPage) {
+      btn.classList.add("active");
+    }
+  });
+    </script>
+
+
+<script>
+  let lastScroll = 0;
+  const nav = document.querySelector(".bottom-nav");
+
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > lastScroll && currentScroll > 80) {
+      // scroll down → hide
+      nav.classList.add("hide");
+    } else {
+      // scroll up → show
+      nav.classList.remove("hide");
+    }
+
+    lastScroll = currentScroll;
+  });
+</script>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>
