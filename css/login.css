@@ -1,0 +1,181 @@
+
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(1200px 600px at top,#1b2b5f 0%,transparent 60%),
+    linear-gradient(135deg,#0b1022,#020617);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ===============================
+   WRAPPER
+=============================== */
+.auth-wrapper{
+  width:100%;
+  max-width:380px;
+  padding:18px;
+}
+
+/* ===============================
+   LOGO
+=============================== */
+.logo-box{
+  display:flex;
+  justify-content:center;
+  margin-bottom:14px;
+}
+.logo-box img{
+  width:78px;
+  height:78px;
+  border-radius:50%;
+  background:#0b1022;
+  padding:10px;
+  box-shadow:
+    0 0 0 3px rgba(255,215,0,.35),
+    0 12px 30px rgba(0,0,0,.6);
+}
+
+/* ===============================
+   AUTH CARD (GLASS + GOLD GLOW)
+=============================== */
+.auth-card{
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.10),
+    rgba(255,255,255,.04)
+  );
+  backdrop-filter: blur(14px);
+  border-radius:22px;
+  padding:18px;
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.65),
+    inset 0 0 0 1px rgba(255,215,0,.35);
+  position:relative;
+  overflow:hidden;
+}
+
+/* subtle gold shimmer */
+.auth-card::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,215,0,.35) 50%,
+    transparent 70%
+  );
+  animation: shimmer 6s infinite;
+  pointer-events:none;
+}
+@keyframes shimmer{
+  0%{transform:translateX(-60%)}
+  50%{transform:translateX(60%)}
+  100%{transform:translateX(60%)}
+}
+
+/* ===============================
+   TABS
+=============================== */
+.auth-tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:14px;
+}
+.tab{
+  flex:1;
+  border:none;
+  border-radius:14px;
+  padding:10px 0;
+  background:rgba(255,255,255,.08);
+  color:#c7d2fe;
+  font-weight:600;
+  cursor:pointer;
+}
+.tab.active{
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  color:#fff;
+  box-shadow:0 6px 16px rgba(37,99,235,.45);
+}
+
+/* ===============================
+   FORMS
+=============================== */
+.form-box{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.form-box.hidden{
+  display:none;
+}
+
+.form-box input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+  color:#e5e7eb;
+  outline:none;
+}
+.form-box input::placeholder{
+  color:#9ca3af;
+}
+
+/* ===============================
+   BUTTONS
+=============================== */
+.primary-btn{
+  margin-top:6px;
+  border:none;
+  border-radius:16px;
+  padding:12px 0;
+  font-size:15px;
+  font-weight:700;
+  color:#fff;
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(37,99,235,.45);
+}
+
+.google-btn{
+  border:none;
+  border-radius:16px;
+  padding:12px 0;
+  font-size:14px;
+  font-weight:600;
+  background:#ffffff;
+  color:#111827;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(0,0,0,.35);
+}
+
+/* ===============================
+   LINKS
+=============================== */
+.link-text{
+  margin-top:6px;
+  text-align:center;
+  font-size:13px;
+  color:#93c5fd;
+  cursor:pointer;
+}
+
+/* ===============================
+   MOBILE SAFETY
+=============================== */
+@media (max-width:420px){
+  .auth-wrapper{padding:14px}
+  .auth-card{padding:16px}
+}
