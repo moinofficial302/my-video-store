@@ -177,6 +177,56 @@ del{color:#e53935}
   font-size:12px;
   line-height:1.6;
 }
+
+   /* =====================
+   TRENDING BUNDLES FIX
+===================== */
+.trending-row{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  padding-bottom:6px;
+}
+
+.trending-row::-webkit-scrollbar{
+  display:none;
+}
+
+.trending-card{
+  min-width:160px;
+  background: linear-gradient(
+    135deg,
+    rgba(219,234,254,.55),
+    rgba(239,246,255,.85)
+  );
+  border-radius:18px;
+  padding:12px;
+  box-shadow:0 10px 25px rgba(37,99,235,.25);
+  text-align:center;
+}
+
+.trending-card img{
+  width:100%;
+  aspect-ratio:2 / 3;
+  object-fit:contain;
+  border-radius:14px;
+}
+
+.trending-card h4{
+  margin:8px 0 2px;
+  font-size:14px;
+}
+
+.trending-card p{
+  margin:0;
+  font-size:13px;
+}
+
+.trending-card .buy-btn{
+  width:100%;
+  margin-top:8px;
+}
+   
 </style>
 
 <script>
@@ -306,41 +356,40 @@ function toggleDetails(id){
      🔥 TRENDING BUNDLES
   =============================== -->
 
-  <div class="card glass-card">
-    <h3 style="margin-bottom:12px;">🔥 Trending Bundles</h3>
+   <div class="card glass-card">
+  <h3 style="margin-bottom:12px;">🔥 Trending Bundles</h3>
 
-    <div style="display:flex;gap:12px;overflow-x:auto;">
-      <div style="min-width:140px;">
-        <img src="Hulk.jpg" class="img">
-        <h4>Hulk Bundle</h4>
-        <p>₹39 Only</p>
-        <button class="buy-btn"
-          onclick="buyProduct('hulk',39)">
-          Buy Now
-        </button>
-      </div>
+  <div class="trending-row">
 
-      <div style="min-width:140px;">
-        <img src="Food.jpg" class="img">
-        <h4>Food Cutting</h4>
-        <p>₹39 Only</p>
-        <button class="buy-btn"
-          onclick="buyProduct('food',39)">
-          Buy Now
-        </button>
-      </div>
-
-      <div style="min-width:140px;">
-        <img src="Car.jpg" class="img">
-        <h4>Car Videos</h4>
-        <p>₹45 Only</p>
-        <button class="buy-btn"
-          onclick="buyProduct('car',45)">
-          Buy Now
-        </button>
-      </div>
+    <div class="trending-card">
+      <img src="Hulk.jpg">
+      <h4>Hulk Bundle</h4>
+      <p>₹39 Only</p>
+      <button class="buy-btn" onclick="buyProduct('hulk',39)">
+        Buy Now
+      </button>
     </div>
+
+    <div class="trending-card">
+      <img src="Food.jpg">
+      <h4>Food Cutting</h4>
+      <p>₹39 Only</p>
+      <button class="buy-btn" onclick="buyProduct('food',39)">
+        Buy Now
+      </button>
+    </div>
+
+    <div class="trending-card">
+      <img src="Car.jpg">
+      <h4>Car Videos</h4>
+      <p>₹45 Only</p>
+      <button class="buy-btn" onclick="buyProduct('car',45)">
+        Buy Now
+      </button>
+    </div>
+
   </div>
+   </div>
 
   <!-- ===============================
      📞 CUSTOMER SUPPORT
@@ -351,10 +400,12 @@ function toggleDetails(id){
       <strong>Email:</strong> Akans47g@gmail.com
     </p>
   </div>
+   
 
   <!-- ===============================
      🔗 SELLING PROOF & SOCIAL
   =============================== -->
+   
   <div class="card glass-card proof-card">
     <h3 style="text-align:center;">Selling Proof & Social Pages</h3>
 
