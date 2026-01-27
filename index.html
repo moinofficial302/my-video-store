@@ -269,6 +269,10 @@ function toggleDetails(id){
   box.style.display = box.style.display === "block" ? "none" : "block";
 }
 </script>
+
+<script type="module" src="js/firebase-init.js"></script>
+<script type="module" src="js/auth.js"></script>
+   
 </head>
 
   <!-- 🔒 PAGE START -->
@@ -300,10 +304,7 @@ function toggleDetails(id){
             Details
           </button>
 
-          <button class="buy-btn"
-            onclick="buyProduct('hulk',39)">
-            Buy Now
-          </button>
+         <button class="buy-btn" onclick="buyProduct('hulk',39)">Buy Now</button>
         </div>
       </div>
     </div>
@@ -318,7 +319,12 @@ function toggleDetails(id){
     </div>
   </div>
 
-  <!-- BUNDLE 2 -->
+  
+<!-- ===============================
+            Bundle 🤯 2
+  =============================== -->
+
+   
   <div class="card glass-card">
     <div class="card-top">
       <img src="Food.jpg" class="img" alt="Food Bundle">
@@ -334,10 +340,7 @@ function toggleDetails(id){
             Details
           </button>
 
-          <button class="buy-btn"
-            onclick="buyProduct('food',39)">
-            Buy Now
-          </button>
+          <button class="buy-btn" onclick="buyProduct('Food',39)">Buy Now</button>
         </div>
       </div>
     </div>
@@ -352,7 +355,12 @@ function toggleDetails(id){
     </div>
   </div>
 
-  <!-- BUNDLE 3 -->
+
+   <!-- ===============================
+            Bundle 🤯 2
+  =============================== -->
+
+   
   <div class="card glass-card">
     <div class="card-top">
       <img src="Car.jpg" class="img" alt="Car Bundle">
@@ -368,10 +376,7 @@ function toggleDetails(id){
             Details
           </button>
 
-          <button class="buy-btn"
-            onclick="buyProduct('car',45)">
-            Buy Now
-          </button>
+          <button class="buy-btn" onclick="buyProduct('Car',45)">Buy Now</button>
         </div>
       </div>
     </div>
@@ -400,35 +405,41 @@ function toggleDetails(id){
       <img src="Hulk.jpg">
       <h4>Hulk Bundle</h4>
       <p>₹39 Only</p>
-      <button class="buy-btn" onclick="buyProduct('hulk',39)">
-        Buy Now
-      </button>
+      <button class="buy-btn" onclick="buyProduct('hulk',39)">Buy Now</button>
     </div>
+
+     <!-- ===============================
+     🔥 Trending bundle 🔥 2
+  =============================== -->
+     
 
     <div class="trending-card">
       <img src="Food.jpg">
       <h4>Food Cutting</h4>
       <p>₹39 Only</p>
-      <button class="buy-btn" onclick="buyProduct('food',39)">
-        Buy Now
-      </button>
+      <button class="buy-btn" onclick="buyProduct('Food',39)">Buy Now</button>
     </div>
+
+       <!-- ===============================
+     🔥 Trending bundle 🔥 3
+  =============================== -->
 
     <div class="trending-card">
       <img src="Car.jpg">
       <h4>Car Videos</h4>
       <p>₹45 Only</p>
-      <button class="buy-btn" onclick="buyProduct('car',45)">
-        Buy Now
-      </button>
+      <button class="buy-btn" onclick="buyProduct('Car',39)">Buy Now</button>
     </div>
 
   </div>
    </div>
+   
 
   <!-- ===============================
      📞 CUSTOMER SUPPORT
   =============================== -->
+
+   
   <div class="card glass-card support-card">
     <h3 style="text-align:center;">24×7 Customer Support</h3>
     <p style="text-align:center;">
