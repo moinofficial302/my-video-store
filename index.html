@@ -564,57 +564,65 @@ function toggleDetails(id){
   </p>
 </div>
 
-<!-- 🔹 BOTTOM NAVIGATION -->
+
+<!-- 🔻 BOTTOM NAVIGATION -->
 <div class="bottom-nav">
+  <button class="nav-item" data-page="index.html"
+          onclick="location.href='index.html'">
+    Bundle
+  </button>
 
-  <button class="nav-item" data-page="index.html" onclick="location.href='index.html'">
-    Bundle
-  </button>
+  <button class="nav-item" data-page="ai-editing.html"
+          onclick="location.href='ai-editing.html'">
+    AI & Editing
+  </button>
 
-  <button class="nav-item" data-page="ai-editing.html" onclick="location.href='ai-editing.html'">
-    AI & Editing
-  </button>
+  <button class="nav-item" data-page="social.html"
+          onclick="location.href='social.html'">
+    Social
+  </button>
 
-  <button class="nav-item" data-page="social.html" onclick="location.href='social.html'">
-    Social
-  </button>
-
-  <button class="nav-item" data-page="account.html" onclick="location.href='account.html'">
-    Account
-  </button>
-
+  <button class="nav-item" data-page="account.html"
+          onclick="location.href='account.html'">
+    Account
+  </button>
 </div>
 
-  <script>
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
-
-  document.querySelectorAll(".nav-item").forEach(btn => {
-    if (btn.dataset.page === currentPage) {
-      btn.classList.add("active");
-    }
-  });
-    </script>
-
-
 <script>
-  let lastScroll = 0;
-  const nav = document.querySelector(".bottom-nav");
+document.addEventListener("DOMContentLoaded", () => {
 
-  window.addEventListener("scroll", () => {
-    const currentScroll = window.pageYOffset;
+  /* 🧠 ACTIVE TAB FIX */
+  const currentPage =
+    window.location.pathname.split("/").pop() || "index.html";
 
-    if (currentScroll > lastScroll && currentScroll > 80) {
-      // scroll down → hide
-      nav.classList.add("hide");
-    } else {
-      // scroll up → show
-      nav.classList.remove("hide");
-    }
+  document.querySelectorAll(".nav-item").forEach(btn => {
+    if (btn.dataset.page === currentPage) {
+      btn.classList.add("active");
+    }
+  });
 
-    lastScroll = currentScroll;
-  });
+  /* ⬆⬇ AUTO HIDE NAV ON SCROLL */
+  let lastScroll = 0;
+  const nav = document.querySelector(".bottom-nav");
+
+  if (nav) {
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > lastScroll && currentScroll > 80) {
+        nav.classList.add("hide");
+      } else {
+        nav.classList.remove("hide");
+      }
+
+      lastScroll = currentScroll;
+    });
+  }
+
+});
 </script>
 
-  <script src="js/auth.js"></script>
+<script src="js/auth.js"></script>
 </body>
 </html>
+  
