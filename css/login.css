@@ -304,3 +304,28 @@ body{
   color:#e53935;
   font-weight:700;
 }
+
+
+.profile-flex{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  text-align:left;
+}
+
+.profile-text h3{
+  margin:0;
+  font-size:18px;
+}
+
+.profile-text p{
+  margin:4px 0 0;
+  font-size:14px;
+  color:#555;
+}
+
+.profile-logo{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+}
