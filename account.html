@@ -2,34 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Account | AKANS</title>
+  <title>Account | AKANS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- 🔗 MAIN CSS (IMPORTANT) -->
   <link rel="stylesheet" href="css/login.css">
 
-  <!-- Firebase (already ready, future use) -->
+  <!-- 🔥 FIREBASE + AUTH -->
   <script type="module" src="js/firebase-init.js"></script>
   <script type="module" src="js/auth.js"></script>
 </head>
 
 <body>
 
+<!-- ❌ KOI page-wrap / container NAHI -->
+<!-- ✅ DIRECT account-wrap -->
+
 <div class="account-wrap">
 
-  <!-- PROFILE -->
+  <!-- =====================
+       PROFILE SECTION
+  ====================== -->
   <div class="profile-card">
-    <img src="assets/logo.png" class="profile-logo">
-    <h3 id="userName">AKANS User</h3>
-    <p id="userEmail">user@gmail.com</p>
+    <img src="assets/logo.png" class="profile-logo" alt="Logo">
+
+    <div>
+      <h3 id="userName">AKANS User</h3>
+      <p id="userEmail">user@gmail.com</p>
+    </div>
   </div>
 
-  <!-- COINS -->
+  <!-- =====================
+       WALLET / COINS
+  ====================== -->
   <div class="wallet-card">
     <span>💰 Coins</span>
     <h2 id="coinBalance">0</h2>
   </div>
 
-  <!-- OPTIONS -->
+  <!-- =====================
+       MENU OPTIONS
+  ====================== -->
   <div class="menu-list">
 
     <div class="menu-item">➕ Add Money</div>
@@ -41,7 +54,10 @@
     <div class="menu-item">⬇ Download App</div>
     <div class="menu-item">⭐ Rating</div>
     <div class="menu-item">ℹ About Information</div>
-    <div class="menu-item logout">🚪 Logout</div>
+
+    <div class="menu-item logout" onclick="logoutUser()">
+      🚪 Logout
+    </div>
 
   </div>
 
