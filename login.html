@@ -55,10 +55,27 @@
         <input type="text" id="signup-username" placeholder="Username">
         <input type="email" id="signup-email" placeholder="Email">
         <input type="text" id="signup-whatsapp" placeholder="WhatsApp Number">
-        <input type="password" id="signup-password" placeholder="Password">
-<input type="password"  id="signupConfirmPassword"  placeholder="Confirm Password"
-  required
->
+       <div class="password-field">
+  <input
+    type="password"
+    id="signupPassword"
+    placeholder="Password"
+  >
+  <span class="toggle-eye"
+        onclick="togglePassword('signupPassword', this)">👁️</span>
+</div>
+
+<div class="password-field">
+  <input
+    type="password"
+    id="signupConfirmPassword"
+    placeholder="Confirm Password"
+  >
+  <span class="toggle-eye"
+        onclick="togglePassword('signupConfirmPassword', this)">👁️</span>
+</div>
+
+        
         <button class="primary-btn" onclick="signupUser()">
           Create Account
         </button>
