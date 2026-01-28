@@ -125,6 +125,84 @@ html, body{
   });
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 🔻 BOTTOM NAVIGATION -->
+<div class="bottom-nav">
+
+  <button class="nav-item" data-page="index.html"
+          onclick="location.href='index.html'">
+    Bundle
+  </button>
+
+  <button class="nav-item" data-page="ai-editing.html"
+          onclick="location.href='ai-editing.html'">
+    AI & Editing
+  </button>
+
+  <button class="nav-item" data-page="social.html"
+          onclick="location.href='social.html'">
+    Social
+  </button>
+
+  <button class="nav-item active" data-page="account.html"
+          onclick="location.href='account.html'">
+    Account
+  </button>
+
+</div>
+
+
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const currentPage =
+    window.location.pathname.split("/").pop() || "index.html";
+
+  document.querySelectorAll(".nav-item").forEach(btn => {
+    if (btn.dataset.page === currentPage) {
+      btn.classList.add("active");
+    }
+  });
+
+});
+  </script>
+
+
+  <script>
+let lastScroll = 0;
+const nav = document.querySelector(".bottom-nav");
+
+if (nav) {
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > lastScroll && currentScroll > 80) {
+      nav.classList.add("hide");
+    } else {
+      nav.classList.remove("hide");
+    }
+
+    lastScroll = currentScroll;
+  });
+}
+  </script>
+
+
+<link rel="stylesheet" href="css/nav.css">
   
 </body>
 </html>
