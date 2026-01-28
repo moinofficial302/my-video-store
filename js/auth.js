@@ -200,3 +200,16 @@ window.logoutUser = async function () {
     alert("Logout failed");
   }
 };
+
+
+window.togglePassword = function(inputId, el){
+  const input = document.getElementById(inputId);
+
+  if (input.type === "password") {
+    input.type = "text";
+    el.textContent = "🙈";
+  } else {
+    input.type = "password";
+    el.textContent = "👁️";
+  }
+};
