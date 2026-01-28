@@ -1,6 +1,6 @@
-
-
-/* Firebase imports */
+/* ===============================
+   FIREBASE IMPORTS
+=============================== */
 import { auth, db } from "./firebase-init.js";
 
 import {
@@ -17,6 +17,10 @@ import {
   doc,
   setDoc,
   getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -51,24 +55,23 @@ window.signupUser = async function () {
   const username = document.getElementById("signup-username").value.trim();
   const email = document.getElementById("signup-email").value.trim();
   const whatsapp = document.getElementById("signup-whatsapp").value.trim();
-  const password = document.getElementById("signup-password").value;
-const confirmPassword =
-  document.getElementById("signupConfirmPassword").value;
+  const password = document.getElementById("signupPassword").value;
+  const confirmPassword =
+    document.getElementById("signupConfirmPassword").value;
 
-if (password !== confirmPassword) {
-  alert("Password and Confirm Password do not match");
-  return;
-}
+  if (!username || !email || !password || !confirmPassword) {
+    alert("Please fill all fields");
+    return;
+  }
 
-  
-  if (!username || !email || !password) {
-    alert("Please fill all required fields");
+  if (password !== confirmPassword) {
+    alert("Password and Confirm Password do not match");
     return;
   }
 
   try {
-    const userCred = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCred.user;
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    const user = cred.user;
 
     await setDoc(doc(db, "users", user.uid), {
       username,
@@ -85,20 +88,8 @@ if (password !== confirmPassword) {
 };
 
 /* ===============================
-   LOGIN
+   LOGIN (USERNAME / EMAIL)
 =============================== */
-
-import {
-  signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-import {
-  collection,
-  query,
-  where,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
 window.loginUser = async function () {
   const identifier =
     document.getElementById("loginIdentifier").value.trim();
@@ -106,13 +97,13 @@ window.loginUser = async function () {
     document.getElementById("loginPassword").value;
 
   if (!identifier || !password) {
-    alert("Please enter Username/Email and Password");
+    alert("Enter Username/Email and Password");
     return;
   }
 
   let email = identifier;
 
-  // 🔍 Agar email nahi hai → username samjho
+  // Username se email nikalna
   if (!identifier.includes("@")) {
     const q = query(
       collection(db, "users"),
@@ -129,14 +120,12 @@ window.loginUser = async function () {
     email = snap.docs[0].data().email;
   }
 
-  // 🔐 Firebase login with email
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      window.location.href = "index.html";
-    })
-    .catch(() => {
-      alert("Invalid username/email or password");
-    });
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    window.location.href = "index.html";
+  } catch {
+    alert("Invalid username/email or password");
+  }
 };
 
 /* ===============================
@@ -163,21 +152,55 @@ window.googleLogin = async function () {
     }
 
     window.location.href = "index.html";
-  } catch (err) {
+  } catch {
     alert("Google login failed");
   }
 };
 
 /* ===============================
-   FORGOT PASSWORD
+   PASSWORD TOGGLE
 =============================== */
+window.togglePassword = function (id, el) {
+  const input = document.getElementById(id);
+  if (input.type === "password") {
+    input.type = "text";
+    el.textContent = "🙈";
+  } else {
+    input.type = "password";
+    el.textContent = "👁️";
+  }
+};
 
+/* ===============================
+   FORGOT PASSWORD
+   (Email OR Username)
+=============================== */
 window.resetPassword = async function () {
-  const email = document.getElementById("login-identifier").value.trim();
+  const identifier =
+    document.getElementById("loginIdentifier").value.trim();
 
-  if (!email) {
-    alert("Enter your email first");
+  if (!identifier) {
+    alert("Enter Username or Email first");
     return;
+  }
+
+  let email = identifier;
+
+  // Agar username diya hai → email nikaalo
+  if (!identifier.includes("@")) {
+    const q = query(
+      collection(db, "users"),
+      where("username", "==", identifier)
+    );
+
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      alert("Username not found");
+      return;
+    }
+
+    email = snap.docs[0].data().email;
   }
 
   try {
@@ -191,28 +214,24 @@ window.resetPassword = async function () {
 /* ===============================
    AUTH STATE (GLOBAL)
 =============================== */
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (user) {
     localStorage.setItem("loggedIn", "true");
+
+    // 🔹 Coins auto load (for account / index page)
+    const ref = doc(db, "users", user.uid);
+    const snap = await getDoc(ref);
+
+    if (snap.exists()) {
+      const coinsEl = document.getElementById("coinBalance");
+      if (coinsEl) {
+        coinsEl.innerText = snap.data().coins || 0;
+      }
+    }
   } else {
     localStorage.removeItem("loggedIn");
   }
 });
-
-/* ===============================
-   BUY PRODUCT (GLOBAL)
-=============================== */
-window.buyProduct = function (productId, price) {
-  const loggedIn = localStorage.getItem("loggedIn");
-
-  if (!loggedIn) {
-    alert("Please login first");
-    window.location.href = "login.html";
-    return;
-  }
-
-  alert("Buying product: " + productId + " | Price: ₹" + price);
-};
 
 /* ===============================
    PROTECTED PAGE GUARD
@@ -232,21 +251,22 @@ window.logoutUser = async function () {
     await signOut(auth);
     localStorage.removeItem("loggedIn");
     window.location.href = "login.html";
-  } catch (err) {
+  } catch {
     alert("Logout failed");
   }
 };
 
+/* ===============================
+   BUY PRODUCT (LOGIN CHECK)
+=============================== */
+window.buyProduct = function (productId, price) {
+  const loggedIn = localStorage.getItem("loggedIn");
 
-
-window.togglePassword = function(id, el){
-  const input = document.getElementById(id);
-
-  if (input.type === "password") {
-    input.type = "text";
-    el.textContent = "🙈";
-  } else {
-    input.type = "password";
-    el.textContent = "👁️";
+  if (!loggedIn) {
+    alert("Please login first");
+    window.location.href = "login.html";
+    return;
   }
+
+  alert(`Buying product: ${productId} | ₹${price}`);
 };
