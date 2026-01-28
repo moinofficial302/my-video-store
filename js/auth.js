@@ -87,21 +87,56 @@ if (password !== confirmPassword) {
 /* ===============================
    LOGIN
 =============================== */
-window.loginUser = async function () {
-  const email = document.getElementById("login-identifier").value.trim();
-  const password = document.getElementById("login-password").value;
 
-  if (!email || !password) {
-    alert("Enter email and password");
+import {
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+import {
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+window.loginUser = async function () {
+  const identifier =
+    document.getElementById("loginIdentifier").value.trim();
+  const password =
+    document.getElementById("loginPassword").value;
+
+  if (!identifier || !password) {
+    alert("Please enter Username/Email and Password");
     return;
   }
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    window.location.href = "index.html";
-  } catch (err) {
-    alert("Invalid email or password");
+  let email = identifier;
+
+  // 🔍 Agar email nahi hai → username samjho
+  if (!identifier.includes("@")) {
+    const q = query(
+      collection(db, "users"),
+      where("username", "==", identifier)
+    );
+
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      alert("Username not found");
+      return;
+    }
+
+    email = snap.docs[0].data().email;
   }
+
+  // 🔐 Firebase login with email
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      window.location.href = "index.html";
+    })
+    .catch(() => {
+      alert("Invalid username/email or password");
+    });
 };
 
 /* ===============================
@@ -136,6 +171,7 @@ window.googleLogin = async function () {
 /* ===============================
    FORGOT PASSWORD
 =============================== */
+
 window.resetPassword = async function () {
   const email = document.getElementById("login-identifier").value.trim();
 
