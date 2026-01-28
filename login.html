@@ -11,6 +11,33 @@
   <!-- Firebase -->
   <script type="module" src="js/firebase-init.js"></script>
   <script type="module" src="js/auth.js"></script>
+
+  <!-- EXTRA FIX CSS -->
+  <style>
+    .hidden { display: none; }
+
+    .input-group{
+      position: relative;
+      width: 100%;
+    }
+
+    .input-group input{
+      width: 100%;
+      padding-right: 45px;
+    }
+
+    .eye{
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      opacity: .7;
+    }
+
+    .eye:active{ opacity: 1; }
+  </style>
 </head>
 
 <body>
