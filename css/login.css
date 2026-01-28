@@ -15,7 +15,7 @@ body{
   display:flex;
   align-items:flex-start;   /* 👈 center se upar */
   justify-content:center;
-  padding-top:24px;         /* 👈 control kitna upar chahiye */
+  padding-top:32px;         /* 👈 control kitna upar chahiye */
 }
 
 /* ===============================
@@ -26,6 +26,7 @@ body{
   width:100%;
   max-width:380px;
   padding:18px;
+  transform: translateY(-50px); /* 👈 ~50% upar */
 }
 
 
