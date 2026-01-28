@@ -8,84 +8,90 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/login.css">
 
-  <!-- Firebase + Auth -->
+  <!-- Firebase -->
   <script type="module" src="js/firebase-init.js"></script>
   <script type="module" src="js/auth.js"></script>
 </head>
 
 <body>
 
-  <div class="auth-wrapper">
+<div class="auth-wrapper">
 
-    <!-- LOGO -->
-    <div class="logo-top">
-  <img src="assets/logo.png" alt="AKANS Logo">
-  <p class="logo-text">Only M.7 Limited</p>
-    </div>
-
-    <!-- AUTH CARD -->
-    <div class="auth-card">
-
-      <!-- TABS -->
-      <div class="auth-tabs">
-        <button id="loginTab" class="tab active">Login</button>
-        <button id="signupTab" class="tab">Sign Up</button>
-      </div>
-
-      <!-- LOGIN FORM -->
-      <div id="loginForm" class="form-box">
-      <input type="text" id="loginIdentifier" placeholder="Username or Email">
-
-        
-        <input type="password" id="login-password" placeholder="Password">
-
-        <button class="primary-btn" onclick="loginUser()">
-          Login
-        </button>
-
-        <button class="google-btn" onclick="googleLogin()">
-          Continue with Google
-        </button>
-
-        <p class="link-text" onclick="resetPassword()">
-          Forgot password?
-        </p>
-      </div>
-
-      <!-- SIGNUP FORM -->
-      <div id="signupForm" class="form-box hidden">
-        <input type="text" id="signup-username" placeholder="Username">
-        <input type="email" id="signup-email" placeholder="Email">
-        <input type="text" id="signup-whatsapp" placeholder="WhatsApp Number">
-
-        <div class="input-group">
-  <input
-    type="password"
-    id="signupPassword"
-    placeholder="Password"
-  >
-  <span class="eye"
-        onclick="togglePassword('signupPassword', this)">👁️</span>
-</div>
-
-<div class="input-group">
-  <input
-    type="password"
-    id="signupConfirmPassword"
-    placeholder="Confirm Password"
-  >
-  <span class="eye"
-        onclick="togglePassword('signupConfirmPassword', this)">👁️</span>
-</div>
-
-        
-        <button class="primary-btn" onclick="signupUser()">
-          Create Account
-        </button>
-      </div>
-
-    </div>
+  <!-- LOGO -->
+  <div class="logo-top">
+    <img src="assets/logo.png" alt="AKANS Logo">
+    <p class="logo-text">Only M.7 Limited</p>
   </div>
+
+  <!-- AUTH CARD -->
+  <div class="auth-card">
+
+    <!-- TABS -->
+    <div class="auth-tabs">
+      <button id="loginTab" class="tab active">Login</button>
+      <button id="signupTab" class="tab">Sign Up</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm" class="form-box">
+
+      <input
+        type="text"
+        id="loginIdentifier"
+        placeholder="Username or Email"
+      >
+
+      <div class="input-group">
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Password"
+        >
+        <span class="eye"
+          onclick="togglePassword('loginPassword', this)">👁️</span>
+      </div>
+
+      <button class="primary-btn" onclick="loginUser()">
+        Login
+      </button>
+
+      <button class="google-btn" onclick="googleLogin()">
+        Continue with Google
+      </button>
+
+      <p class="link-text" onclick="resetPassword()">
+        Forgot password?
+      </p>
+
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" class="form-box hidden">
+
+      <input type="text" id="signup-username" placeholder="Username">
+      <input type="email" id="signup-email" placeholder="Email">
+      <input type="text" id="signup-whatsapp" placeholder="WhatsApp Number">
+
+      <div class="input-group">
+        <input type="password" id="signupPassword" placeholder="Password">
+        <span class="eye"
+          onclick="togglePassword('signupPassword', this)">👁️</span>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
+        <span class="eye"
+          onclick="togglePassword('signupConfirmPassword', this)">👁️</span>
+      </div>
+
+      <button class="primary-btn" onclick="signupUser()">
+        Create Account
+      </button>
+
+    </div>
+
+  </div>
+</div>
 
 </body>
 </html>
