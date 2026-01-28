@@ -26,23 +26,34 @@ body{
   padding:18px;
 }
 
+
 /* ===============================
-   LOGO
+   TOP LOGO (CIRCLE + TEXT)
 =============================== */
-.logo-box{
+.logo-top{
   display:flex;
-  justify-content:center;
-  margin-bottom:14px;
+  flex-direction:column;
+  align-items:center;
+  margin-bottom:18px;
 }
-.logo-box img{
-  width:78px;
-  height:78px;
+
+.logo-top img{
+  width:86px;
+  height:86px;
   border-radius:50%;
   background:#0b1022;
   padding:10px;
   box-shadow:
-    0 0 0 3px rgba(255,215,0,.35),
-    0 12px 30px rgba(0,0,0,.6);
+    0 0 0 4px rgba(255,215,0,.45),
+    0 18px 40px rgba(0,0,0,.7);
+}
+
+.logo-text{
+  margin-top:10px;
+  font-size:14px;
+  font-weight:600;
+  color:#e5e7eb;
+  letter-spacing:.4px;
 }
 
 /* ===============================
