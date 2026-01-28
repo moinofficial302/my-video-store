@@ -26,7 +26,6 @@ body{
   width:100%;
   max-width:380px;
   padding:18px;
-  transform: translateY(-30px); /* 👈 ~50% upar */
 }
 
 
