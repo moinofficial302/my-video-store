@@ -15,16 +15,18 @@ body{
   display:flex;
   align-items:flex-start;   /* 👈 center se upar */
   justify-content:center;
-  padding-top:10px;         /* 👈 control kitna upar chahiye */
+  padding-top:24px;         /* 👈 control kitna upar chahiye */
 }
 
 /* ===============================
    WRAPPER
 =============================== */
+
 .auth-wrapper{
   width:100%;
   max-width:380px;
   padding:18px;
+  transform: translateY(-50px); /* 👈 ~50% upar */
 }
 
 
