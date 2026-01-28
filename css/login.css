@@ -13,8 +13,9 @@ body{
     radial-gradient(1200px 600px at top,#1b2b5f 0%,transparent 60%),
     linear-gradient(135deg,#0b1022,#020617);
   display:flex;
-  align-items:center;
+  align-items:flex-start;   /* 👈 center se upar */
   justify-content:center;
+  padding-top:32px;         /* 👈 control kitna upar chahiye */
 }
 
 /* ===============================
