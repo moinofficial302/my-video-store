@@ -2,95 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Account | AKANS</title>
+  <title>My Account | AKANS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Firebase + Auth -->
+  <link rel="stylesheet" href="css/login.css">
+
+  <!-- Firebase (already ready, future use) -->
   <script type="module" src="js/firebase-init.js"></script>
   <script type="module" src="js/auth.js"></script>
-
-  <style>
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg,#0b1022,#020617);
-      color:#e5e7eb;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .card{
-      width:100%;
-      max-width:360px;
-      background: linear-gradient(
-        135deg,
-        rgba(255,255,255,.10),
-        rgba(255,255,255,.04)
-      );
-      backdrop-filter: blur(14px);
-      border-radius:22px;
-      padding:20px;
-      box-shadow:
-        0 25px 60px rgba(0,0,0,.65),
-        inset 0 0 0 1px rgba(255,215,0,.35);
-      text-align:center;
-    }
-    .card img{
-      width:80px;
-      height:80px;
-      border-radius:50%;
-      margin-bottom:10px;
-      box-shadow:
-        0 0 0 3px rgba(255,215,0,.35),
-        0 12px 30px rgba(0,0,0,.6);
-    }
-    h2{
-      margin:6px 0 4px;
-      font-size:20px;
-    }
-    p{
-      margin:0 0 16px;
-      font-size:14px;
-      color:#9ca3af;
-    }
-    .btn{
-      width:100%;
-      border:none;
-      border-radius:16px;
-      padding:12px 0;
-      font-size:15px;
-      font-weight:700;
-      cursor:pointer;
-    }
-    .logout{
-      background:linear-gradient(135deg,#ef4444,#b91c1c);
-      color:#fff;
-      box-shadow:0 8px 18px rgba(239,68,68,.45);
-    }
-    .back{
-      margin-top:10px;
-      background:rgba(255,255,255,.08);
-      color:#e5e7eb;
-    }
-  </style>
 </head>
 
-<body onload="requireLogin()">
+<body>
 
-  <div class="card">
-    <img src="assets/logo.png" alt="AKANS">
-    <h2>Your Account</h2>
-    <p>You are logged in</p>
+<div class="account-wrap">
 
-    <button class="btn logout" onclick="logoutUser()">
-      Logout
-    </button>
-
-    <button class="btn back" onclick="location.href='index.html'">
-      Back to Home
-    </button>
+  <!-- PROFILE -->
+  <div class="profile-card">
+    <img src="assets/logo.png" class="profile-logo">
+    <h3 id="userName">AKANS User</h3>
+    <p id="userEmail">user@gmail.com</p>
   </div>
+
+  <!-- COINS -->
+  <div class="wallet-card">
+    <span>💰 Coins</span>
+    <h2 id="coinBalance">0</h2>
+  </div>
+
+  <!-- OPTIONS -->
+  <div class="menu-list">
+
+    <div class="menu-item">➕ Add Money</div>
+    <div class="menu-item">📦 My Orders</div>
+    <div class="menu-item">🎟 Coupon Code</div>
+    <div class="menu-item">🤝 Refer & Earn</div>
+    <div class="menu-item">💸 Withdraw Amount</div>
+    <div class="menu-item">👥 Community</div>
+    <div class="menu-item">⬇ Download App</div>
+    <div class="menu-item">⭐ Rating</div>
+    <div class="menu-item">ℹ About Information</div>
+    <div class="menu-item logout">🚪 Logout</div>
+
+  </div>
+
+</div>
 
 </body>
 </html>
