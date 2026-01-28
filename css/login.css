@@ -284,28 +284,37 @@ body{
 }
 
 /* ===============================
-   MENU LIST
+   MENU LIST (UPGRADED – SPACED)
 =============================== */
+
 .menu-list{
   width:100%;
-  background:#ffffff;
+  background:transparent;        /* 🔥 outer white hata diya */
   border-radius:20px;
-  overflow:hidden;
-  box-shadow:0 8px 22px rgba(0,0,0,.08);
+  margin-top:16px;               /* 🔥 wallet se gap */
 }
 
+/* EACH ROW AS CARD */
 .menu-item{
   display:flex;
   align-items:center;
-  padding:16px;
+  padding:16px 18px;
   font-size:15px;
   font-weight:500;
   cursor:pointer;
-  border-bottom:1px solid #f1f1f1;
+
+  background:#ffffff;            /* 🔥 individual card */
+  border-radius:14px;            /* 🔥 rounded row */
+  margin-bottom:10px;            /* 🔥 MAIN GAP FIX */
+
+  box-shadow:0 4px 14px rgba(0,0,0,.06);
+  transition:background .2s ease, transform .1s ease;
 }
 
-.menu-item:last-child{
-  border-bottom:none;
+/* TAP FEEL */
+.menu-item:active{
+  background:#f3f4f6;
+  transform:scale(.98);
 }
 
 /* RIGHT ARROW */
@@ -321,4 +330,10 @@ body{
 .menu-item.logout{
   color:#e53935;
   font-weight:700;
+  background:#fff5f5;
+}
+
+/* LAST ITEM EXTRA SPACE */
+.menu-item:last-child{
+  margin-bottom:0;
 }
