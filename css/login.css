@@ -337,3 +337,29 @@ body{
 .menu-item:last-child{
   margin-bottom:0;
 }
+
+
+
+
+.password-field{
+  position:relative;
+}
+
+.password-field input{
+  width:100%;
+  padding-right:44px; /* 👁️ ke liye space */
+}
+
+.toggle-eye{
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  font-size:18px;
+  opacity:.7;
+}
+
+.toggle-eye:active{
+  opacity:1;
+  }
