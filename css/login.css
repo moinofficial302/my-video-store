@@ -42,15 +42,15 @@ body{
 }
 
 .logo-top img{
-  width:86px;
-  height:86px;
+  width:110px;              /* 🔼 image size bada */
+  height:110px;             /* 🔼 image size bada */
   border-radius:50%;
-  background:transparent;   /* ❌ circle bg hata diya */
-  padding:0;                /* ❌ extra space hata diya */
-  object-fit:cover;         /* ✅ image properly fit */
+  object-fit:cover;
+
+  /* gold ring */
   box-shadow:
-    0 0 0 4px rgba(255,215,0,.9),   /* ✅ clean gold ring */
-    0 18px 40px rgba(0,0,0,.7);
+    0 0 0 5px rgba(255,215,0,.95),
+    0 22px 45px rgba(0,0,0,.75);
 }
 
 .logo-text{
