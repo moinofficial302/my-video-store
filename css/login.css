@@ -45,10 +45,11 @@ body{
   width:86px;
   height:86px;
   border-radius:50%;
-  background:#0b1022;
-  padding:10px;
+  background:transparent;   /* ❌ circle bg hata diya */
+  padding:0;                /* ❌ extra space hata diya */
+  object-fit:cover;         /* ✅ image properly fit */
   box-shadow:
-    0 0 0 4px rgba(255,215,0,.45),
+    0 0 0 4px rgba(255,215,0,.9),   /* ✅ clean gold ring */
     0 18px 40px rgba(0,0,0,.7);
 }
 
