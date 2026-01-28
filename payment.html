@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Money | AKANS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Same CSS use karo -->
+  <link rel="stylesheet" href="css/login.css">
+
+  <!-- Firebase ready (future use) -->
+  <script type="module" src="js/firebase-init.js"></script>
+  <script type="module" src="js/auth.js"></script>
+
+  <style>
+    .add-money-wrap{
+      max-width:420px;
+      margin:0 auto;
+      padding:16px;
+    }
+
+    .add-card{
+      background:#fff;
+      border-radius:18px;
+      padding:20px;
+      box-shadow:0 10px 25px rgba(0,0,0,.08);
+      text-align:center;
+    }
+
+    .add-card h2{
+      margin-bottom:10px;
+    }
+
+    .amount-input{
+      width:100%;
+      padding:14px;
+      border-radius:12px;
+      border:1px solid #ddd;
+      font-size:16px;
+      margin-top:10px;
+    }
+
+    .add-btn{
+      margin-top:16px;
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:40px;
+      background:linear-gradient(135deg,#2563eb,#1e40af);
+      color:#fff;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .note{
+      margin-top:12px;
+      font-size:13px;
+      color:#555;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="add-money-wrap">
+
+  <div class="add-card">
+    <h2>➕ Add Money</h2>
+    <p>Enter amount to add in wallet</p>
+
+    <input
+      type="number"
+      class="amount-input"
+      placeholder="Enter amount (₹)"
+      disabled
+    >
+
+    <button class="add-btn" disabled>
+      Continue (Coming Soon)
+    </button>
+
+    <p class="note">
+      💡 Payment system will be enabled soon.
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>
