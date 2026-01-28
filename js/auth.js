@@ -52,7 +52,15 @@ window.signupUser = async function () {
   const email = document.getElementById("signup-email").value.trim();
   const whatsapp = document.getElementById("signup-whatsapp").value.trim();
   const password = document.getElementById("signup-password").value;
+const confirmPassword =
+  document.getElementById("signupConfirmPassword").value;
 
+if (password !== confirmPassword) {
+  alert("Password and Confirm Password do not match");
+  return;
+}
+
+  
   if (!username || !email || !password) {
     alert("Please fill all required fields");
     return;
