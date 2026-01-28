@@ -202,8 +202,9 @@ window.logoutUser = async function () {
 };
 
 
-window.togglePassword = function(inputId, el){
-  const input = document.getElementById(inputId);
+
+window.togglePassword = function(id, el){
+  const input = document.getElementById(id);
 
   if (input.type === "password") {
     input.type = "text";
