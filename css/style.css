@@ -568,17 +568,33 @@ body{
 }
 
 
-/* ===== TOP HEADER (SAME AS BUNDLE) ===== */
 
+
+/* ==============================
+   TOP HEADER – BUNDLE STYLE
+================================ */
 
 .header-box{
   margin: 14px;
   padding: 14px 18px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg,#eaf1ff,#f6f9ff);
+  justify-content: space-between;
+
+  background: linear-gradient(
+    135deg,
+    rgba(234,242,255,0.9),
+    rgba(247,250,255,0.95)
+  );
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
   border-radius: 18px;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
 .header-box span{
@@ -591,18 +607,13 @@ body{
   height: 38px;
 }
 
-.header-box{
-  margin-bottom: 18px; /* NEW */
-}
 
 
 
 /* ==============================
    AI & EDITING – BUNDLE STYLE
 ================================ */
-/* ==============================
-   AI & EDITING – BUNDLE LOOK (FINAL)
-================================ */
+
 
 /* PAGE BACKGROUND – same as bundle */
 body{
