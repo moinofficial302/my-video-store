@@ -105,53 +105,54 @@
   </style>
 </head>
 
+
+
+  
 <body onload="requireLogin()">
 
-<!-- 🔹 TOP HEADER (BUNDLE STYLE) -->
-<div class="header-box">
-  <span>Only M.7 Limited</span>
-  <img src="assets/logo.png" alt="Logo">
-</div>
+  <!-- 🔹 TOP HEADER (SAME AS BUNDLE) -->
+  <div class="header-box">
+    <span>Only M.7 Limited</span>
+    <img src="assets/logo.png" alt="Logo">
+  </div>
 
-<!-- 🔹 AI CARD -->
-<div class="ai-wrapper">
+  <!-- 🔹 AI EDITING CARD -->
+  <div class="ai-wrapper">
 
-<div class="card glass-card">
+    <div class="card glass-card">
 
+      <img src="15gb.jpg" class="ai-image" alt="15 GB Editing Pack">
 
+      <div class="ai-content">
+        <h3>15 GB Editing Pack</h3>
+        <p>15 GB Pack</p>
 
-    <img src="15gb.jpg" class="ai-image" alt="Editing Pack">
+        <p class="price">
+          <del>₹1999</del>
+          <strong>₹99 Only</strong>
+        </p>
 
-    <div class="ai-content">
-      <h3>15 GB Editing Pack</h3>
-      <p>15 GB Pack</p>
+        <button class="details-btn">View Details</button>
 
-      <p class="price">
-        <del>₹1999</del>
-        <strong>₹99 Only</strong>
-      </p>
+        <button class="buy-btn" onclick="buyProduct('editing-pack',99)">
+          Buy Now
+        </button>
+      </div>
 
-      <button class="details-btn">View Details</button>
-
-      <button class="buy-btn" onclick="buyProduct('editing-pack',99)">
-        Buy Now
-      </button>
     </div>
 
   </div>
 
-</div>
+  <!-- 🔹 BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
+    <button class="nav-item active">AI & Editing</button>
+    <button class="nav-item" onclick="location.href='social.html'">Social</button>
+    <button class="nav-item" onclick="location.href='account.html'">Account</button>
+  </div>
 
-<!-- 🔹 BOTTOM NAV -->
-<div class="bottom-nav">
-  <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
-  <button class="nav-item active">AI & Editing</button>
-  <button class="nav-item" onclick="location.href='social.html'">Social</button>
-  <button class="nav-item" onclick="location.href='account.html'">Account</button>
-</div>
-
-<script type="module" src="js/firebase-init.js"></script>
-<script type="module" src="js/auth.js"></script>
+  <script src="js/firebase-init.js"></script>
+  <script src="js/products.js"></script>
 
 </body>
 </html>
