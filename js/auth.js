@@ -256,17 +256,3 @@ window.logoutUser = async function () {
   }
 };
 
-/* ===============================
-   BUY PRODUCT (LOGIN CHECK)
-=============================== */
-window.buyProduct = function (productId, price) {
-  const loggedIn = localStorage.getItem("loggedIn");
-
-  if (!loggedIn) {
-    alert("Please login first");
-    window.location.href = "login.html";
-    return;
-  }
-
-  alert(`Buying product: ${productId} | ₹${price}`);
-};
