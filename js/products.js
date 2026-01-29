@@ -6,7 +6,7 @@ const PRODUCTS = {
     id: "editing-pack",
     name: "15 GB Editing Pack",
     price: 99,
-    link: "https://t.me/your_channel_or_drive_link"
+    link: "https://drive.google.com/drive/folders/1GnAZnX64ObyQMW2eWHpyjxwNJANcAQcD"
   }
 };
 
