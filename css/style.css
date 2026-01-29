@@ -590,3 +590,7 @@ body{
 .header-box img{
   height: 38px;
 }
+
+.header-box{
+  margin-bottom: 18px; /* NEW */
+}
