@@ -703,3 +703,49 @@ body{
   margin-top: 10px;
   color: #000;
 }
+
+
+
+/* ==============================
+   GLASS ANIMATION (BUNDLE STYLE)
+================================ */
+
+/* smooth floating effect */
+.glass-card{
+  position: relative;
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+/* shine overlay */
+.glass-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.25),
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.25)
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.glass-card:hover::before{
+  opacity: 1;
+}
+
+/* floating animation */
+@keyframes floatCard{
+  0%{
+    transform: translateY(0px);
+  }
+  50%{
+    transform: translateY(-6px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
