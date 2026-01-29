@@ -80,3 +80,29 @@ function buyProduct(productId, price) {
 
   });
 }
+
+
+// ==================================
+// OWNERSHIP CHECK (AUTO BUTTON SWITCH)
+// ==================================
+function checkOwnership(productId, buttonEl) {
+  firebase.auth().onAuthStateChanged(user => {
+    if (!user) return;
+
+    firebase.firestore()
+      .collection("orders")
+      .doc(user.uid)
+      .collection("items")
+      .where("productId", "==", productId)
+      .limit(1)
+      .get()
+      .then(snapshot => {
+        if (!snapshot.empty) {
+          const data = snapshot.docs[0].data();
+          buttonEl.innerText = "Open Product";
+          buttonEl.onclick = () => window.open(data.link, "_blank");
+          buttonEl.classList.add("owned");
+        }
+      });
+  });
+}
