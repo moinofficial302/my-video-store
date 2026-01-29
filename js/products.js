@@ -1,7 +1,6 @@
 // ================================
-// PRODUCTS MASTER DATA
+// PRODUCTS MASTER DATA (SINGLE SOURCE)
 // ================================
-
 
 const PRODUCTS = {
   "editing-pack": {
@@ -13,12 +12,17 @@ const PRODUCTS = {
 };
 
 
-
 // ==================================
-// PRODUCTS BUY LOGIC (FIREBASE REAL)
+// BUY PRODUCT (FIREBASE REAL LOGIC)
 // ==================================
 
 function buyProduct(productId, price) {
+
+  const product = PRODUCTS[productId];
+  if (!product) {
+    alert("Invalid product");
+    return;
+  }
 
   firebase.auth().onAuthStateChanged(user => {
     if (!user) {
@@ -47,50 +51,29 @@ function buyProduct(productId, price) {
         return;
       }
 
-      // ✅ PRODUCT DETAILS (static mapping)
-      const products = {
-        "editing-pack": {
-          name: "15 GB Editing Pack",
-          link: "https://drive.google.com/YOUR_REAL_LINK"
-        }
-      };
-
-      const product = products[productId];
-      if (!product) {
-        alert("Invalid product");
-        return;
-      }
-
-      // 🔥 COINS CUT
+      // 🔥 CUT COINS
       userRef.update({
         coins: firebase.firestore.FieldValue.increment(-price)
       });
 
-      // 🧾 SAVE ORDER
-      firebase.firestore()
+      // 🧾 SAVE ORDER (NO DUPLICATE)
+      const orderRef = firebase.firestore()
         .collection("orders")
         .doc(user.uid)
         .collection("items")
-        .add({
-          productId: productId,
-          name: product.name,
-          price: price,
-          link: product.link,
-          time: firebase.firestore.FieldValue.serverTimestamp()
-        })
-        .then(() => {
+        .doc(productId);
 
-          alert("Purchase Successful 🎉");
-
-          // 🔁 BUY → OPEN PRODUCT
-          document.querySelectorAll(".buy-btn").forEach(btn => {
-            if (btn.getAttribute("onclick")?.includes(productId)) {
-              btn.innerText = "Open Product";
-              btn.onclick = () => window.open(product.link, "_blank");
-            }
-          });
-
-        });
+      orderRef.set({
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        link: product.link,
+        time: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => {
+        alert("Purchase Successful 🎉");
+        switchToOpenButton(productId, product.link);
+      });
 
     });
 
@@ -99,9 +82,27 @@ function buyProduct(productId, price) {
 
 
 // ==================================
-// OWNERSHIP CHECK (AUTO BUTTON SWITCH)
+// SWITCH BUY → OPEN PRODUCT
+// ==================================
+
+function switchToOpenButton(productId, link) {
+  document.querySelectorAll(".buy-btn").forEach(btn => {
+    if (btn.getAttribute("onclick")?.includes(productId)) {
+      btn.innerText = "Open Product";
+      btn.onclick = () => window.open(link, "_blank");
+      btn.classList.add("owned");
+    }
+  });
+}
+
+
+// ==================================
+// OWNERSHIP CHECK (AUTO ON LOAD)
 // ==================================
 function checkOwnership(productId, buttonEl) {
+  const product = PRODUCTS[productId];
+  if (!product) return;
+
   firebase.auth().onAuthStateChanged(user => {
     if (!user) return;
 
@@ -109,14 +110,12 @@ function checkOwnership(productId, buttonEl) {
       .collection("orders")
       .doc(user.uid)
       .collection("items")
-      .where("productId", "==", productId)
-      .limit(1)
+      .doc(productId)
       .get()
-      .then(snapshot => {
-        if (!snapshot.empty) {
-          const data = snapshot.docs[0].data();
+      .then(doc => {
+        if (doc.exists) {
           buttonEl.innerText = "Open Product";
-          buttonEl.onclick = () => window.open(data.link, "_blank");
+          buttonEl.onclick = () => window.open(doc.data().link, "_blank");
           buttonEl.classList.add("owned");
         }
       });
