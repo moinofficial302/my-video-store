@@ -1,67 +1,82 @@
-// ================================
-// PRODUCTS / BUY LOGIC (STEP 1)
-// ================================
-
-// Temporary demo wallet (abhi Firebase nahi)
-let demoWalletCoins = 0; 
-// testing ke liye chaaho to 100 likh sakte ho
-// let demoWalletCoins = 100;
+// ==================================
+// PRODUCTS BUY LOGIC (FIREBASE REAL)
+// ==================================
 
 function buyProduct(productId, price) {
-  console.log("Buy clicked:", productId, price);
 
-  // 🔒 LOGIN CHECK (abhi demo)
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-
-  if (!isLoggedIn) {
-    alert("Please login first to continue");
-    window.location.href = "login.html";
-    return;
-  }
-
-  // 💰 WALLET CHECK (demo)
-  if (demoWalletCoins < price) {
-    alert(
-      "Insufficient coins!\n\n" +
-      "Required: " + price + " Coins\n" +
-      "Available: " + demoWalletCoins + " Coins\n\n" +
-      "Please add money first."
-    );
-    window.location.href = "add-money.html";
-    return;
-  }
-
-  // ✅ BUY SUCCESS (demo)
-  demoWalletCoins -= price;
-
-  alert(
-    "Purchase Successful 🎉\n\n" +
-    "Product: " + productId + "\n" +
-    "Coins deducted: " + price + "\n" +
-    "Remaining coins: " + demoWalletCoins
-  );
-
-  // Button text change (basic)
-  const buttons = document.querySelectorAll(".buy-btn, .scroll-buy");
-  buttons.forEach(btn => {
-    if (btn.getAttribute("onclick")?.includes(productId)) {
-      btn.innerText = "Open Product";
+  firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+      alert("Please login first");
+      window.location.href = "login.html";
+      return;
     }
+
+    const userRef = firebase.firestore().collection("users").doc(user.uid);
+
+    userRef.get().then(doc => {
+      if (!doc.exists) {
+        alert("User wallet not found");
+        return;
+      }
+
+      const coins = doc.data().coins || 0;
+
+      // 💰 COINS CHECK
+      if (coins < price) {
+        alert(
+          "Insufficient Coins!\n\n" +
+          "Required: " + price + "\n" +
+          "Available: " + coins
+        );
+        return;
+      }
+
+      // ✅ PRODUCT DETAILS (static mapping)
+      const products = {
+        "editing-pack": {
+          name: "15 GB Editing Pack",
+          link: "https://drive.google.com/YOUR_REAL_LINK"
+        }
+      };
+
+      const product = products[productId];
+      if (!product) {
+        alert("Invalid product");
+        return;
+      }
+
+      // 🔥 COINS CUT
+      userRef.update({
+        coins: firebase.firestore.FieldValue.increment(-price)
+      });
+
+      // 🧾 SAVE ORDER
+      firebase.firestore()
+        .collection("orders")
+        .doc(user.uid)
+        .collection("items")
+        .add({
+          productId: productId,
+          name: product.name,
+          price: price,
+          link: product.link,
+          time: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+
+          alert("Purchase Successful 🎉");
+
+          // 🔁 BUY → OPEN PRODUCT
+          document.querySelectorAll(".buy-btn").forEach(btn => {
+            if (btn.getAttribute("onclick")?.includes(productId)) {
+              btn.innerText = "Open Product";
+              btn.onclick = () => window.open(product.link, "_blank");
+            }
+          });
+
+        });
+
+    });
+
   });
 }
-
-
-/* ===============================
-   BUY PRODUCT (LOGIN CHECK)
-=============================== */
-window.buyProduct = function (productId, price) {
-  const loggedIn = localStorage.getItem("loggedIn");
-
-  if (!loggedIn) {
-    alert("Please login first");
-    window.location.href = "login.html";
-    return;
-  }
-
-  alert(`Buying product: ${productId} | ₹${price}`);
-};
