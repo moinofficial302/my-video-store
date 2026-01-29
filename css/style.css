@@ -600,70 +600,82 @@ body{
 /* ==============================
    AI & EDITING – BUNDLE STYLE
 ================================ */
-
 /* ==============================
-   AI & EDITING – EXACT BUNDLE STYLE
+   AI & EDITING – BUNDLE STYLE
 ================================ */
 
-.bundle-card{
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  background: linear-gradient(135deg,#eaf1ff,#f6f9ff);
-  border-radius: 22px;
+/* wrapper */
+.ai-wrapper{
   padding: 16px;
+  padding-bottom: 90px;
+}
+
+/* same card width as bundle */
+.card{
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+}
+
+/* glass card – exact bundle feel */
+.glass-card{
+  background: linear-gradient(135deg, #eaf1ff, #f6f9ff);
+  border-radius: 22px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-  margin: 16px;
+  padding: 16px;
 }
 
-/* image same size as bundle */
-.bundle-img{
-  width: 120px;
-  border-radius: 14px;
+/* image */
+.ai-image{
+  width: 100%;
+  border-radius: 18px;
+  margin-bottom: 14px;
 }
 
-/* content */
-.bundle-content h3{
-  font-size: 17px;
+/* text */
+.ai-content h3{
+  font-size: 18px;
   font-weight: 700;
+  margin-bottom: 4px;
 }
 
-.bundle-content p{
+.ai-content p{
   font-size: 14px;
-  margin: 2px 0;
+  margin-bottom: 4px;
 }
 
+/* price */
 .price del{
   color: #e74c3c;
   margin-right: 6px;
 }
 
-.price{
-  font-weight: 600;
+.price strong{
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
 }
 
-/* buttons row */
-.btn-row{
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
-}
-
+/* buttons */
 .details-btn{
-  flex: 1;
-  padding: 10px;
+  width: 100%;
+  padding: 12px;
   border-radius: 30px;
-  border: none;
-  background: #3b82f6;
-  color: #fff;
+  border: 2px solid #3b82f6;
+  background: transparent;
+  color: #3b82f6;
   font-weight: 600;
+  margin-top: 10px;
 }
 
 .buy-btn{
-  flex: 1;
-  padding: 10px;
+  width: 100%;
+  padding: 14px;
   border-radius: 30px;
   background: #ffd400;
   border: none;
   font-weight: 700;
+  font-size: 16px;
+  margin-top: 10px;
+  color: #000;
 }
