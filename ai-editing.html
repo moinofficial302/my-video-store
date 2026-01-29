@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI & Editing | Akans</title>
 
+  <!-- NAV + MAIN STYLE -->
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/style.css" />
 
@@ -14,87 +16,164 @@
       padding: 18px;
       font-size: 22px;
       font-weight: 700;
+      text-align: center;
     }
 
-    /* ===== AI EDITING WRAPPER ===== */
+    /* ===== AI WRAPPER ===== */
     .ai-wrapper{
+      padding: 16px;
+      padding-bottom: 90px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
       align-items: center;
-      padding-bottom: 80px;
     }
 
-    .ai-wrapper .glass-card{
+    /* ===== CARD ===== */
+    .ai-card{
       width: 100%;
       max-width: 420px;
-      padding: 18px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.45);
     }
 
-    .ai-wrapper h3{
-      font-size: 18px;
-      margin-bottom: 6px;
-    }
-
-    .ai-wrapper p{
+    /* Header */
+    .ai-card-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
       font-size: 14px;
+      font-weight: 600;
+    }
+
+    .ai-card-header img{
+      height: 32px;
+    }
+
+    /* Image */
+    .ai-image{
+      width: 100%;
+      display: block;
+    }
+
+    /* Content */
+    .ai-content{
+      padding: 16px;
+      text-align: center;
+    }
+
+    .ai-content h3{
+      font-size: 20px;
       margin-bottom: 4px;
+    }
+
+    .ai-content p{
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 4px;
+    }
+
+    /* Price */
+    .price{
+      margin: 10px 0;
+    }
+
+    .price del{
+      color: #ff6b6b;
+      margin-right: 6px;
+    }
+
+    .price strong{
+      font-size: 18px;
+    }
+
+    /* Buttons */
+    .details-btn{
+      width: 100%;
+      padding: 12px;
+      border-radius: 30px;
+      border: 2px solid #3b82f6;
+      background: transparent;
+      color: #3b82f6;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .buy-btn{
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      border-radius: 30px;
+      background: #ffd400;
+      border: none;
+      font-weight: 700;
+      font-size: 16px;
+      color: #000;
     }
   </style>
 </head>
 
-<body onload="requireLogin()">
+<body>
+
+<!-- 🔹 LOGIN CHECK (FIX) -->
+<script>
+  if (!localStorage.getItem("userLoggedIn")) {
+    alert("Please login first to continue");
+    window.location.href = "login.html";
+  }
+</script>
 
 <!-- 🔹 PAGE HEADING -->
 <h2 class="page-title">🤖 AI & Editing Packs</h2>
 
-<!-- 🔹 AI PRODUCTS -->
+<!-- 🔹 AI PRODUCT CARD -->
 <div class="ai-wrapper">
 
-  <div class="glass-card">
-    <h3>AI Reel Prompts Bundle</h3>
-    <p>100+ Viral Prompts</p>
-    <p>₹49 Only</p>
-    <button class="buy-btn" onclick="buyProduct('ai-prompts',49)">Buy Now</button>
-  </div>
+  <div class="ai-card">
 
-  <div class="glass-card">
-    <h3>AI Image Generator Pack</h3>
-    <p>Midjourney + Leonardo</p>
-    <p>₹59 Only</p>
-    <button class="buy-btn" onclick="buyProduct('ai-image',59)">Buy Now</button>
+    <div class="ai-card-header">
+      <span>Only M.7 Limited</span>
+      <img src="assets/logo.png" alt="Logo">
+    </div>
+
+    <img src="assets/editing-pack.jpg" class="ai-image" alt="Editing Pack">
+
+    <div class="ai-content">
+      <h3>15 GB Editing Pack</h3>
+      <p>15 GB Pack</p>
+
+      <p class="price">
+        <del>₹1999</del>
+        <strong>₹99 Only</strong>
+      </p>
+
+      <button class="details-btn">View Details</button>
+      <button class="buy-btn" onclick="buyProduct('editing-pack',99)">
+        Buy Now
+      </button>
+    </div>
+
   </div>
 
 </div>
 
-<!-- 🔹 BOTTOM NAVIGATION -->
+<!-- 🔹 BOTTOM NAV -->
 <div class="bottom-nav">
-
-  <button class="nav-item" data-page="index.html" onclick="location.href='index.html'">
-    Bundle
-  </button>
-
-  <button class="nav-item active" data-page="ai-editing.html" onclick="location.href='ai-editing.html'">
-    AI & Editing
-  </button>
-
-  <button class="nav-item" data-page="social.html" onclick="location.href='social.html'">
-    Social
-  </button>
-
-  <button class="nav-item" data-page="account.html" onclick="location.href='account.html'">
-    Account
-  </button>
-
+  <button class="nav-item" data-page="index.html" onclick="location.href='index.html'">Bundle</button>
+  <button class="nav-item active" data-page="ai-editing.html">AI & Editing</button>
+  <button class="nav-item" data-page="social.html" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item" data-page="account.html" onclick="location.href='account.html'">Account</button>
 </div>
 
 <!-- ACTIVE TAB -->
 <script>
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll(".nav-item").forEach(btn => {
-    if (btn.dataset.page === currentPage) {
-      btn.classList.add("active");
-    }
+    if (btn.dataset.page === currentPage) btn.classList.add("active");
   });
 </script>
 
@@ -102,7 +181,6 @@
 <script>
   let lastScroll = 0;
   const nav = document.querySelector(".bottom-nav");
-
   window.addEventListener("scroll", () => {
     const currentScroll = window.pageYOffset;
     if (currentScroll > lastScroll && currentScroll > 80) {
@@ -114,9 +192,9 @@
   });
 </script>
 
-<!-- 🔹 FIREBASE + AUTH (FINAL FIX) -->
+<!-- 🔹 JS FILES -->
 <script type="module" src="js/firebase-init.js"></script>
-<script type="module" src="js/auth.js"></script>
+<script src="js/products.js"></script>
 
 </body>
 </html>
