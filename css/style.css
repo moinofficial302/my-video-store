@@ -794,3 +794,10 @@ body{
     transform: translateY(0);
   }
 }
+
+
+
+.buy-btn.owned{
+  background:#3b82f6;
+  color:#fff;
+}
