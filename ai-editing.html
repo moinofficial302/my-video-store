@@ -132,8 +132,19 @@
           <strong>₹99 Only</strong>
         </p>
 
-        <button class="details-btn">View Details</button>
+        <button class="details-btn" onclick="toggleDetails(this)">
+  View Details
+        </button>
+<div class="details-box" style="display:none;">
+  <p><strong>Bundle:</strong> AI Generated Hulk Reels</p>
+  <p><strong>Total:</strong> 1000+ Videos</p>
+  <p><strong>Type:</strong> Short Reels</p>
+  <p><strong>Quality:</strong> Full HD</p>
+  <p><strong>Delivery:</strong> Instant</p>
+  <p>⭐ 4.7 / 5 Rating</p>
+</div>
 
+        
         <button class="buy-btn" onclick="buyProduct('editing-pack',99)">
           Buy Now
         </button>
@@ -150,6 +161,20 @@
     <button class="nav-item" onclick="location.href='social.html'">Social</button>
     <button class="nav-item" onclick="location.href='account.html'">Account</button>
   </div>
+
+
+<script>
+function toggleDetails(btn){
+  const box = btn.nextElementSibling;
+  if(box.style.display === "none"){
+    box.style.display = "block";
+    btn.innerText = "Hide Details";
+  }else{
+    box.style.display = "none";
+    btn.innerText = "View Details";
+  }
+}
+</script>
 
   
 
