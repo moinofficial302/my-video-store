@@ -1,3 +1,17 @@
+// ================================
+// PRODUCTS MASTER DATA
+// ================================
+const PRODUCTS = {
+  "editing-pack": {
+    id: "editing-pack",
+    name: "15 GB Editing Pack",
+    price: 99,
+    link: "https://t.me/your_channel_or_drive_link"
+  }
+};
+
+
+
 // ==================================
 // PRODUCTS BUY LOGIC (FIREBASE REAL)
 // ==================================
