@@ -601,23 +601,35 @@ body{
    AI & EDITING – BUNDLE STYLE
 ================================ */
 
-/* same glass card as bundle */
+/* wrapper */
+.ai-wrapper{
+  padding: 16px;
+  padding-bottom: 90px;
+}
+
+/* same card width as bundle */
+.card{
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+}
+
+/* glass card – exact bundle feel */
 .glass-card{
   background: linear-gradient(135deg, #eaf1ff, #f6f9ff);
   border-radius: 22px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.15);
   padding: 16px;
-  margin-bottom: 18px;
 }
 
-/* image like bundle */
+/* image */
 .ai-image{
   width: 100%;
   border-radius: 18px;
   margin-bottom: 14px;
 }
 
-/* text spacing */
+/* text */
 .ai-content h3{
   font-size: 18px;
   font-weight: 700;
@@ -629,18 +641,19 @@ body{
   margin-bottom: 4px;
 }
 
-/* price same as bundle */
+/* price */
 .price del{
   color: #e74c3c;
   margin-right: 6px;
 }
 
 .price strong{
-  color: #111;
   font-size: 16px;
+  font-weight: 700;
+  color: #111;
 }
 
-/* buttons – exact bundle feel */
+/* buttons */
 .details-btn{
   width: 100%;
   padding: 12px;
