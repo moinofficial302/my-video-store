@@ -1,20 +1,24 @@
 // ================================
-// MY ORDERS LOGIC
+// MY ORDERS – FIREBASE LOGIC
 // ================================
 
 function loadOrders() {
+
   firebase.auth().onAuthStateChanged(user => {
+
     if (!user) {
       window.location.href = "login.html";
       return;
     }
 
     const ordersList = document.getElementById("ordersList");
+    ordersList.innerHTML = ""; // reset
 
     firebase.firestore()
       .collection("orders")
       .doc(user.uid)
       .collection("items")
+      .orderBy("time", "desc")
       .get()
       .then(snapshot => {
 
@@ -31,28 +35,49 @@ function loadOrders() {
         snapshot.forEach(doc => {
           const data = doc.data();
 
-          const div = document.createElement("div");
-          div.className = "order-card";
+          const card = document.createElement("div");
+          card.className = "order-card";
 
-          div.innerHTML = `
+          card.innerHTML = `
             <h3>${data.name}</h3>
-            <p>Purchased with ${data.price} Coins</p>
-            <button class="open-btn" onclick="openProduct('${data.link}')">
+            <p>Paid: ${data.price} Coins</p>
+            <button 
+              class="open-btn"
+              data-link="${data.link}">
               Open Product
             </button>
           `;
 
-          ordersList.appendChild(div);
+          const btn = card.querySelector(".open-btn");
+          btn.addEventListener("click", () => {
+            openProduct(data.link);
+          });
+
+          ordersList.appendChild(card);
         });
 
       })
-      .catch(err => {
-        console.error(err);
-        ordersList.innerHTML = "<p>Error loading orders</p>";
+      .catch(error => {
+        console.error("Orders load error:", error);
+        ordersList.innerHTML = `
+          <div class="order-card">
+            <h3>Error</h3>
+            <p>Unable to load orders. Please try again.</p>
+          </div>
+        `;
       });
+
   });
 }
 
+
+// ================================
+// OPEN PRODUCT
+// ================================
 function openProduct(link) {
+  if (!link) {
+    alert("Product link not available");
+    return;
+  }
   window.open(link, "_blank");
 }
