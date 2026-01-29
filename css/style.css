@@ -566,3 +566,27 @@ body{
   font-size: 16px;
   color: #000;
 }
+
+
+/* ===== TOP HEADER (SAME AS BUNDLE) ===== */
+
+
+.header-box{
+  margin: 14px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg,#eaf1ff,#f6f9ff);
+  border-radius: 18px;
+}
+
+.header-box span{
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+
+.header-box img{
+  height: 38px;
+}
