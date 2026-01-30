@@ -15,12 +15,15 @@
   <div class="add-money-card">
     <h1>Add Money</h1>
 
-    <!-- Payment App Selector -->
+    <!-- Payment App -->
     <label>Payment App</label>
-    <div class="payment-selector" id="openPaymentSheet">
+    <div class="payment-select" id="openPaymentSheet">
       <span id="selectedApp">PhonePe</span>
-      <span>⌄</span>
+      <span class="arrow">▾</span>
     </div>
+
+    <!-- hidden value (IMPORTANT) -->
+    <input type="hidden" id="paymentApp" value="PhonePe">
 
     <!-- QR -->
     <div class="qr-wrapper">
@@ -56,7 +59,7 @@
     </div>
   </div>
 
-  <!-- BOTTOM SHEET (ONLY ONCE) -->
+  <!-- BOTTOM SHEET -->
   <div class="payment-sheet" id="paymentSheet">
     <div class="sheet-card">
 
