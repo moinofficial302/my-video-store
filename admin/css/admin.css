@@ -1,1 +1,259 @@
+/* ===============================
+   ROOT VARIABLES (THEME)
+================================ */
+:root {
+  --bg-dark: #0f172a;
+  --bg-dark-2: #111827;
+  --card-bg: rgba(255,255,255,0.08);
+  --border-soft: rgba(255,255,255,0.15);
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --primary: #38bdf8;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #facc15;
+}
 
+/* ===============================
+   GLOBAL RESET
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: "Poppins", system-ui, sans-serif;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+/* ===============================
+   ADMIN WRAPPER
+================================ */
+.admin-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ===============================
+   SIDEBAR
+================================ */
+.admin-sidebar {
+  width: 250px;
+  background: rgba(15,23,42,0.95);
+  border-right: 1px solid var(--border-soft);
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-sidebar h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.admin-sidebar button {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  padding: 12px 14px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  text-align: left;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.admin-sidebar button:hover,
+.admin-sidebar button.active {
+  background: rgba(56,189,248,0.15);
+  color: var(--primary);
+}
+
+/* ===============================
+   MAIN AREA
+================================ */
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.admin-header {
+  height: 64px;
+  background: rgba(15,23,42,0.9);
+  border-bottom: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+
+.admin-header h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.admin-profile {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ===============================
+   CONTENT AREA
+================================ */
+.admin-content {
+  padding: 18px;
+}
+
+/* ===============================
+   SECTION VISIBILITY
+================================ */
+.admin-section {
+  display: none;
+}
+
+.admin-section.active {
+  display: block;
+}
+
+/* ===============================
+   DASHBOARD STATS
+================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.stat-card h3 {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.stat-card p {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+
+
+
+/* ===============================
+   TABLES
+================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  background: var(--card-bg);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px;
+  font-size: 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+th {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.btn {
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-success {
+  background: var(--success);
+  color: #052e16;
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+
+  .admin-wrapper {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .admin-sidebar h2 {
+    display: none;
+  }
+
+  .admin-sidebar button {
+    flex: 1;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* ===============================
+   EXTRA SMALL DEVICES
+================================ */
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-header h1 {
+    font-size: 18px;
+  }
+}
