@@ -3,6 +3,10 @@
 // Allowed Admin: moinofficial302@gmail.com
 // =======================================
 
+
+console.log("ADMIN AUTH JS LOADED");
+
+
 import { auth } from "../../js/firebase-init.js";
 import {
   onAuthStateChanged,
@@ -90,6 +94,9 @@ admin/js/admin-auth.js
 // ADMIN NAVIGATION (FINAL FIX)
 // ===============================
 
+// ===============================
+// ADMIN NAVIGATION (FINAL FIX)
+// ===============================
 document.addEventListener("DOMContentLoaded", () => {
 
   const navItems = document.querySelectorAll(".nav-item");
@@ -98,7 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   navItems.forEach(btn => {
     btn.addEventListener("click", () => {
+
       const target = btn.dataset.section;
+      console.log("Clicked:", target); // ✅ debug
 
       // active button
       navItems.forEach(b => b.classList.remove("active"));
@@ -118,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sectionTitle.textContent =
           btn.innerText.replace(/^[^a-zA-Z]+/, "").trim();
       }
+
     });
   });
 
