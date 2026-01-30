@@ -1,1 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel | AKANS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/admin.css" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ===============================
+     ADMIN LAYOUT
+================================ -->
+<div class="admin-layout">
+
+  <!-- ===============================
+       SIDEBAR
+  ================================ -->
+  <aside class="admin-sidebar">
+
+    <div class="admin-logo">
+      <img src="../assets/logo.png" alt="AKANS Logo">
+      <span>AKANS Admin</span>
+    </div>
+
+    <nav class="admin-nav">
+      <button class="nav-item active" data-section="dashboard">📊 Dashboard</button>
+      <button class="nav-item" data-section="users">👥 Users</button>
+      <button class="nav-item" data-section="add-money">💰 Add Money Requests</button>
+      <button class="nav-item" data-section="withdrawals">🏦 Withdrawal Requests</button>
+      <button class="nav-item" data-section="orders">🧾 Orders / Sales</button>
+      <button class="nav-item" data-section="products">📦 Products</button>
+      <button class="nav-item" data-section="coupons">🎟 Coupons</button>
+      <button class="nav-item" data-section="analytics">📈 Analytics</button>
+    </nav>
+
+    <div class="admin-logout">
+      <button id="adminLogoutBtn">🚪 Logout</button>
+    </div>
+
+  </aside>
+
+  <!-- ===============================
+       MAIN CONTENT
+  ================================ -->
+  <main class="admin-main">
+
+    <!-- ===============================
+         TOP BAR
+    ================================ -->
+    <header class="admin-header">
+      <h1 id="sectionTitle">Dashboard</h1>
+      <div class="admin-profile">
+        <span id="adminEmail">admin@akans.in</span>
+      </div>
+    </header>
+
+    <!-- ===============================
+         CONTENT AREA
+    ================================ -->
+    <section class="admin-content">
+
+      <!-- PART 2 ME YAHAN SECTIONS AAYENGE -->
+
+      <!-- ===============================
+     DASHBOARD
+================================ -->
+<div class="admin-section active" id="dashboard">
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <h3>Total Users</h3>
+      <p id="totalUsers">0</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Total Coins</h3>
+      <p id="totalCoins">0</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Add Money Requests</h3>
+      <p id="pendingAddMoney">0</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Withdrawal Requests</h3>
+      <p id="pendingWithdrawals">0</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===============================
+     USERS
+================================ -->
+<div class="admin-section" id="users">
+  <h2>All Users</h2>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Coins</th>
+        <th>Joined</th>
+      </tr>
+    </thead>
+    <tbody id="usersTable">
+      <!-- JS se data -->
+    </tbody>
+  </table>
+</div>
+
+<!-- ===============================
+     ADD MONEY REQUESTS
+================================ -->
+<div class="admin-section" id="add-money">
+  <h2>Add Money Requests</h2>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Amount</th>
+        <th>UTR</th>
+        <th>App</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="addMoneyTable">
+      <!-- Approve / Reject -->
+    </tbody>
+  </table>
+</div>
+
+<!-- ===============================
+     WITHDRAWAL REQUESTS
+================================ -->
+<div class="admin-section" id="withdrawals">
+  <h2>Withdrawal Requests</h2>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Amount</th>
+        <th>Payment No.</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="withdrawTable">
+      <!-- Approve / Reject -->
+    </tbody>
+  </table>
+</div>
+
+<!-- ===============================
+     ORDERS / SALES
+================================ -->
+<div class="admin-section" id="orders">
+  <h2>Orders / Sales</h2>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Product</th>
+        <th>Coins</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="ordersTable">
+    </tbody>
+  </table>
+</div>
+
+<!-- ===============================
+     PRODUCTS
+================================ -->
+<div class="admin-section" id="products">
+  <h2>Products</h2>
+
+  <button class="primary-btn" id="addProductBtn">➕ Add Product</button>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Type</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="productsTable">
+    </tbody>
+  </table>
+</div>
+
+<!-- ===============================
+     COUPONS
+================================ -->
+<div class="admin-section" id="coupons">
+  <h2>Coupons</h2>
+
+  <button class="primary-btn" id="createCouponBtn">🎟 Create Coupon</button>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Value</th>
+        <th>Limit</th>
+        <th>Used</th>
+      </tr>
+    </thead>
+    <tbody id="couponsTable">
+    </tbody>
+  </table>
+</div>
+
+<!-- ===============================
+     ANALYTICS
+================================ -->
+<div class="admin-section" id="analytics">
+  <h2>Analytics</h2>
+
+  <div class="analytics-box">
+    <p>📈 Signup growth</p>
+    <p>💰 Revenue overview</p>
+    <p>🔥 Top selling products</p>
+    <p>(Charts JS me aayenge)</p>
+  </div>
+</div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<!-- ===============================
+     JS FILES
+================================ -->
+<script type="module" src="js/admin-auth.js"></script>
+<script type="module" src="js/admin-users.js"></script>
+<script type="module" src="js/admin-add-money.js"></script>
+<script type="module" src="js/admin-products.js"></script>
+<script type="module" src="js/admin-coupons.js"></script>
+<script type="module" src="js/admin-analytics.js"></script>
+
+</body>
+</html>
