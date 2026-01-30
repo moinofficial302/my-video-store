@@ -114,8 +114,10 @@ html, body {
 /* ===============================
    CONTENT AREA
 ================================ */
-.admin-content {
+
+ .admin-content {
   padding: 18px;
+  padding-top: 10px
 }
 
 /* ===============================
