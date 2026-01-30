@@ -82,3 +82,30 @@ sheet.addEventListener("click", (e) => {
     sheet.classList.remove("active");
   }
 });
+
+
+
+const paymentApp = document.getElementById("paymentApp");
+const sheet = document.getElementById("paymentSheet");
+const items = document.querySelectorAll(".sheet-item");
+
+paymentApp.addEventListener("click", () => {
+  sheet.classList.add("active");
+  document.body.classList.add("sheet-open");
+});
+
+items.forEach(item => {
+  item.addEventListener("click", () => {
+    paymentApp.value = item.dataset.app;
+    sheet.classList.remove("active");
+    document.body.classList.remove("sheet-open");
+  });
+});
+
+// Close on background tap
+sheet.addEventListener("click", (e) => {
+  if (e.target === sheet) {
+    sheet.classList.remove("active");
+    document.body.classList.remove("sheet-open");
+  }
+});
