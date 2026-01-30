@@ -346,3 +346,55 @@ aside img,
 body > img {
   display: none !important;
 }
+
+
+
+/* ===============================
+   MOBILE LAYOUT FIX (FINAL)
+================================ */
+@media (max-width: 900px) {
+
+  .admin-wrapper {
+    flex-direction: column;
+  }
+
+  /* SIDEBAR TOP BAR */
+  .admin-sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+
+    position: sticky;
+    top: 0;
+    z-index: 999;
+
+    overflow-x: auto;
+    white-space: nowrap;
+
+    padding: 10px;
+    background: rgba(15,23,42,0.98);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .admin-sidebar button {
+    flex: 0 0 auto;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 12px;
+  }
+
+  /* MAIN CONTENT FULL WIDTH */
+  .admin-main {
+    width: 100%;
+  }
+
+  .admin-content {
+    padding: 12px;
+  }
+
+  /* FIX TOP BOX WIDTH */
+  .admin-top-box {
+    margin: 12px 8px;
+  }
+}
