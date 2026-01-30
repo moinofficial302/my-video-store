@@ -31,9 +31,10 @@ html, body {
 }
 
 /* ===============================
-   ADMIN WRAPPER
+   ADMIN Layout 
 ================================ */
-.admin-wrapper {
+
+.admin-layout {
   display: flex;
   min-height: 100vh;
   width: 100%;
