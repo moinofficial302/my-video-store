@@ -267,57 +267,77 @@ tr:last-child td {
 
 
 /* ===============================
-   ADMIN LOGO FIX (MOBILE + DESKTOP)
+   ADMIN HEADER LOGO – FINAL FIX
+   (Same as Bundle Page Style)
 ================================ */
 
-/* Logo container fix */
-.admin-header img,
-.admin-logo img,
-header img {
-  max-width: 120px;
-  max-height: 50px;
-  object-fit: contain;
-}
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
-/* Agar logo direct body me ho */
-.admin-content > img,
-.admin-main > img {
-  display: none;
-}
+  background: linear-gradient(135deg, #eaf2ff, #f7fbff);
+  border-radius: 18px;
+  padding: 12px 14px;
+  margin: 12px;
 
-/* Premium logo box */
-.admin-logo-box {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 8px 14px;
-  border-radius: 14px;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
 }
 
-/* Logo image inside box */
-.admin-logo-box img {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-}
-
-/* Text next to logo (optional) */
-.admin-logo-box span {
-  font-size: 15px;
+/* Title */
+.admin-header h1 {
+  font-size: 16px;
   font-weight: 600;
-  color: #e5e7eb;
+  color: #0f172a;
+  margin: 0;
 }
 
-/* MOBILE EXTRA FIX */
+/* Admin email */
+#adminEmail {
+  font-size: 13px;
+  color: #475569;
+}
+
+/* LOGO SMALL BOX (IMPORTANT) */
+.admin-header img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 10px;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* Kill any accidental big logo */
+.admin-content img,
+.admin-main img,
+body > img {
+  display: none !important;
+}
+
+/* ===============================
+   MOBILE OPTIMIZATION
+================================ */
 @media (max-width: 600px) {
-  .admin-logo-box {
-    padding: 6px 10px;
+  .admin-header {
+    margin: 10px;
+    padding: 10px 12px;
   }
 
-  .admin-logo-box img {
+  .admin-header h1 {
+    font-size: 15px;
+  }
+
+  .admin-header img {
     width: 32px;
     height: 32px;
+    padding: 5px;
   }
 }
