@@ -14,15 +14,31 @@
   <div class="add-money-card">
     <h1>Add Money</h1>
 
-    <!-- Payment App -->
-    <label for="paymentApp">Payment App</label>
-    <select id="paymentApp">
-      <option value="PhonePe">PhonePe</option>
-      <option value="Paytm">Paytm</option>
-      <option value="Google Pay">Google Pay</option>
-      <option value="Airtel Pay">Airtel Pay</option>
-      <option value="Other">Other</option>
-    </select>
+
+
+<!-- Payment App -->
+<label>Payment App</label>
+
+<div class="payment-selector" id="openPaymentSheet">
+  <span id="selectedApp">PhonePe</span>
+  <span>⌄</span>
+</div>
+
+<!-- Bottom Sheet -->
+<div class="payment-sheet" id="paymentSheet">
+  <div class="sheet-card">
+    <div class="sheet-title">Select Payment App</div>
+
+    <div class="sheet-item active" data-app="PhonePe">PhonePe</div>
+    <div class="sheet-item" data-app="Paytm">Paytm</div>
+    <div class="sheet-item" data-app="Google Pay">Google Pay</div>
+    <div class="sheet-item" data-app="Airtel Pay">Airtel Pay</div>
+    <div class="sheet-item" data-app="Other">Other</div>
+  </div>
+</div>
+
+
+    
 
     <!-- QR -->
     <div class="qr-wrapper">
