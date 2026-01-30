@@ -5,12 +5,15 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+/* ===============================
+   SUBMIT REQUEST
+================================ */
 const submitBtn = document.getElementById("submitBtn");
 
 submitBtn.addEventListener("click", async () => {
-  const paymentApp = document.getElementById("paymentApp").value;
   const amount = document.getElementById("amount").value;
   const utr = document.getElementById("utr").value;
+  const paymentApp = document.getElementById("paymentApp").value;
 
   const user = auth.currentUser;
 
@@ -19,13 +22,13 @@ submitBtn.addEventListener("click", async () => {
     return;
   }
 
-  if (!amount || amount < 50) {
+  if (!amount || amount < 20) {
     alert("Minimum amount ₹20");
     return;
   }
 
   if (!utr || utr.length < 6) {
-    alert("Enter valid transaction / UTR ID");
+    alert("Enter valid Transaction / UTR ID");
     return;
   }
 
@@ -54,55 +57,36 @@ submitBtn.addEventListener("click", async () => {
 });
 
 
-
-
-
-// ===============================
-// PAYMENT APP BOTTOM SHEET
-// ===============================
-const openSheet = document.getElementById("openPaymentSheet");
+/* ===============================
+   PAYMENT APP BOTTOM SHEET
+================================ */
+const openPayment = document.getElementById("openPaymentSheet");
 const sheet = document.getElementById("paymentSheet");
-const selectedApp = document.getElementById("selectedApp");
-
-openSheet.addEventListener("click", () => {
-  sheet.classList.add("active");
-});
-
-sheet.addEventListener("click", (e) => {
-  if (e.target.classList.contains("sheet-item")) {
-    document.querySelectorAll(".sheet-item")
-      .forEach(item => item.classList.remove("active"));
-
-    e.target.classList.add("active");
-    selectedApp.textContent = e.target.dataset.app;
-    sheet.classList.remove("active");
-  }
-
-  if (e.target === sheet) {
-    sheet.classList.remove("active");
-  }
-});
-
-
-
-const paymentApp = document.getElementById("paymentApp");
-const sheet = document.getElementById("paymentSheet");
+const selectedText = document.getElementById("selectedApp");
+const hiddenInput = document.getElementById("paymentApp");
 const items = document.querySelectorAll(".sheet-item");
 
-paymentApp.addEventListener("click", () => {
+openPayment.addEventListener("click", () => {
   sheet.classList.add("active");
   document.body.classList.add("sheet-open");
 });
 
 items.forEach(item => {
   item.addEventListener("click", () => {
-    paymentApp.value = item.dataset.app;
+    const app = item.dataset.app;
+
+    selectedText.innerText = app;
+    hiddenInput.value = app;
+
+    items.forEach(i => i.classList.remove("active"));
+    item.classList.add("active");
+
     sheet.classList.remove("active");
     document.body.classList.remove("sheet-open");
   });
 });
 
-// Close on background tap
+// close on background click
 sheet.addEventListener("click", (e) => {
   if (e.target === sheet) {
     sheet.classList.remove("active");
