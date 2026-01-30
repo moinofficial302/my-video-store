@@ -16,15 +16,15 @@ body {
   /* 🔵 PREMIUM BLUE BACKGROUND */
   background: linear-gradient(
     135deg,
-    #0a3d62,
-    #0f6cc9,
-    #2fa4ff
+    #0b3c6f,
+    #1565c0,
+    #1e88e5
   );
 
-  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #ffffff;
 }
 
 /* ===============================
@@ -34,8 +34,8 @@ body {
   width: 92%;
   max-width: 420px;
   background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
+  backdrop-filter: blur(22px);
+  border-radius: 26px;
   padding: 24px;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -48,7 +48,7 @@ body {
   text-align: center;
   margin-bottom: 22px;
   font-weight: 600;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.4px;
 }
 
 /* ===============================
@@ -69,7 +69,7 @@ input {
   width: 100%;
   padding: 14px 16px;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.18);
   color: #ffffff;
   font-size: 15px;
@@ -95,31 +95,31 @@ input::placeholder {
 .qr-box {
   display: inline-flex;
   padding: 16px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  box-shadow: 0 20px 45px rgba(59, 130, 246, 0.65);
+  border-radius: 26px;
+  background: linear-gradient(135deg, #42a5f5, #7c4dff);
+  box-shadow: 0 20px 45px rgba(66, 165, 245, 0.65);
 }
 
 .qr-box img {
   width: 220px;
   height: 220px;
   background: #ffffff;
-  padding: 12px;
+  padding: 14px;
   border-radius: 18px;
 }
 
 .qr-text {
   margin-top: 12px;
   font-size: 14px;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 /* ===============================
-   INSTRUCTION BOX
+   INSTRUCTIONS
 ================================ */
 .instructions {
-  margin-top: 20px;
-  background: rgba(255, 255, 255, 0.14);
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 18px;
   padding: 14px;
   font-size: 14px;
@@ -149,7 +149,7 @@ input::placeholder {
 ================================ */
 .submit-btn {
   width: 100%;
-  margin-top: 24px;
+  margin-top: 22px;
   padding: 16px;
   border-radius: 20px;
   border: none;
@@ -163,15 +163,15 @@ input::placeholder {
 }
 
 .submit-btn:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
 }
 
 /* ===============================
-   FOOT NOTE
+   NOTE
 ================================ */
 .note {
   margin-top: 14px;
   text-align: center;
   font-size: 13px;
-  opacity: 0.8;
+  opacity: 0.85;
 }
