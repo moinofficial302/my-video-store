@@ -103,3 +103,106 @@ if (openPayment && sheet && items.length > 0) {
   });
 
 }
+
+
+// =======================================
+// APPLY COUPON (USER SIDE)
+// =======================================
+
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  updateDoc,
+  increment,
+  serverTimestamp,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import { auth, db } from "./firebase-init.js";
+
+// DOM
+const applyCouponBtn = document.getElementById("applyCouponBtn");
+const couponInput = document.getElementById("couponCode");
+const couponMsg = document.getElementById("couponMsg");
+
+// =======================================
+applyCouponBtn.addEventListener("click", async () => {
+
+  const code = couponInput.value.trim().toUpperCase();
+  if (!code) return showMsg("Enter coupon code", "red");
+
+  const user = auth.currentUser;
+  if (!user) return showMsg("Login required", "red");
+
+  try {
+    // 1️⃣ Check coupon exists
+    const q = query(
+      collection(db, "coupons"),
+      where("code", "==", code),
+      where("active", "==", true)
+    );
+
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      return showMsg("Invalid or expired coupon", "red");
+    }
+
+    let couponDoc, coupon;
+    snap.forEach(d => {
+      couponDoc = d.id;
+      coupon = d.data();
+    });
+
+    // 2️⃣ Limit check
+    if (coupon.used >= coupon.limit) {
+      return showMsg("Coupon limit reached", "red");
+    }
+
+    // 3️⃣ Check already used by this user
+    const usedQ = query(
+      collection(db, "coupon_usage"),
+      where("couponCode", "==", code),
+      where("uid", "==", user.uid)
+    );
+
+    const usedSnap = await getDocs(usedQ);
+    if (!usedSnap.empty) {
+      return showMsg("Coupon already used", "red");
+    }
+
+    // 4️⃣ Add coins to user
+    await updateDoc(doc(db, "users", user.uid), {
+      coins: increment(coupon.value)
+    });
+
+    // 5️⃣ Update coupon usage count
+    await updateDoc(doc(db, "coupons", couponDoc), {
+      used: increment(1)
+    });
+
+    // 6️⃣ Save usage record
+    await addDoc(collection(db, "coupon_usage"), {
+      couponCode: code,
+      uid: user.uid,
+      usedAt: serverTimestamp()
+    });
+
+    showMsg(`🎉 Coupon Applied! +${coupon.value} coins`, "green");
+
+  } catch (err) {
+    console.error(err);
+    showMsg("Something went wrong", "red");
+  }
+});
+
+// =======================================
+// MESSAGE HELPER
+// =======================================
+function showMsg(msg, color) {
+  couponMsg.textContent = msg;
+  couponMsg.style.color = color;
+}
+
