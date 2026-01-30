@@ -175,3 +175,68 @@ input::placeholder {
   font-size: 13px;
   opacity: 0.85;
 }
+
+
+
+/* ===============================
+   PAYMENT SELECTOR
+================================ */
+.payment-selector {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* ===============================
+   BOTTOM SHEET
+================================ */
+.payment-sheet {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: flex-end;
+  z-index: 999;
+}
+
+.payment-sheet.active {
+  display: flex;
+}
+
+.sheet-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 22px 22px 0 0;
+  padding: 16px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.sheet-title {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.sheet-item {
+  padding: 14px;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sheet-item.active {
+  background: #e3f2fd;
+  font-weight: 600;
+}
