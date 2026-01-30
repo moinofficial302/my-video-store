@@ -245,3 +245,24 @@ input::placeholder {
   background: #e3f2fd;
   font-weight: 600;
 }
+
+
+
+
+.payment-select {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.payment-select .arrow {
+  font-size: 18px;
+  opacity: 0.8;
+}
