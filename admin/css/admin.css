@@ -260,21 +260,64 @@ tr:last-child td {
 
 
 
+
+
+
+
+
+
 /* ===============================
-   ADMIN LOGO FIX (IMPORTANT)
+   ADMIN LOGO FIX (MOBILE + DESKTOP)
 ================================ */
-.admin-logo {
-  max-width: 140px;
-  max-height: 48px;
-  width: auto;
-  height: auto;
+
+/* Logo container fix */
+.admin-header img,
+.admin-logo img,
+header img {
+  max-width: 120px;
+  max-height: 50px;
   object-fit: contain;
 }
 
-/* Mobile */
+/* Agar logo direct body me ho */
+.admin-content > img,
+.admin-main > img {
+  display: none;
+}
+
+/* Premium logo box */
+.admin-logo-box {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 8px 14px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Logo image inside box */
+.admin-logo-box img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+/* Text next to logo (optional) */
+.admin-logo-box span {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+/* MOBILE EXTRA FIX */
 @media (max-width: 600px) {
-  .admin-logo {
-    max-width: 110px;
-    max-height: 40px;
+  .admin-logo-box {
+    padding: 6px 10px;
+  }
+
+  .admin-logo-box img {
+    width: 32px;
+    height: 32px;
   }
 }
