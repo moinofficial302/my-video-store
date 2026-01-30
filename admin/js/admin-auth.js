@@ -73,3 +73,66 @@ async function forceLogout() {
     redirectToLogin();
   }
 }
+
+
+admin/js/admin-auth.js
+
+
+
+
+// admin auth check
+// firebase auth logic
+// admin email check
+// logout logic
+
+// ===============================
+// ADMIN NAVIGATION (PASTE HERE)
+// ===============================
+
+const navItems = document.querySelectorAll(".nav-item");
+const sections = document.querySelectorAll(".admin-section");
+const sectionTitle = document.getElementById("sectionTitle");
+
+navItems.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const target = btn.dataset.section;
+
+    navItems.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    sections.forEach(sec => sec.classList.remove("active"));
+
+    const activeSection = document.getElementById(target);
+    if (activeSection) {
+      activeSection.classList.add("active");
+    }
+
+    if (sectionTitle) {
+      sectionTitle.textContent =
+        btn.innerText.replace(/^[^a-zA-Z]+/, "").trim();
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
