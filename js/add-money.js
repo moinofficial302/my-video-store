@@ -52,3 +52,33 @@ submitBtn.addEventListener("click", async () => {
     alert(error.message);
   }
 });
+
+
+
+
+
+// ===============================
+// PAYMENT APP BOTTOM SHEET
+// ===============================
+const openSheet = document.getElementById("openPaymentSheet");
+const sheet = document.getElementById("paymentSheet");
+const selectedApp = document.getElementById("selectedApp");
+
+openSheet.addEventListener("click", () => {
+  sheet.classList.add("active");
+});
+
+sheet.addEventListener("click", (e) => {
+  if (e.target.classList.contains("sheet-item")) {
+    document.querySelectorAll(".sheet-item")
+      .forEach(item => item.classList.remove("active"));
+
+    e.target.classList.add("active");
+    selectedApp.textContent = e.target.dataset.app;
+    sheet.classList.remove("active");
+  }
+
+  if (e.target === sheet) {
+    sheet.classList.remove("active");
+  }
+});
