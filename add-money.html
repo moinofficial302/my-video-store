@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Money</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/add-money.css">
+</head>
+<body>
+
+<div class="add-money-container">
+
+  <h2>Add Money</h2>
+
+  <!-- Payment App -->
+  <label>Payment App</label>
+  <select id="paymentApp">
+    <option value="PhonePe">PhonePe</option>
+    <option value="Paytm">Paytm</option>
+    <option value="Google Pay">Google Pay</option>
+    <option value="Airtel Pay">Airtel Pay</option>
+    <option value="Other">Other</option>
+  </select>
+
+  <!-- QR -->
+  <div class="qr-box">
+    <img src="assets/upi-qr.png" alt="UPI QR">
+    <p>Scan QR & Pay</p>
+  </div>
+
+  <!-- Amount -->
+  <label>Amount (₹)</label>
+  <input type="number" id="amount" placeholder="Enter amount">
+
+  <!-- UTR -->
+  <label>Transaction / UTR ID</label>
+  <input type="text" id="utr" placeholder="Enter transaction id">
+
+  <!-- Instructions -->
+  <div class="instructions">
+    <p>1️⃣ Pay using selected app</p>
+    <p>2️⃣ Copy Transaction / UTR ID</p>
+    <p>3️⃣ Enter amount & UTR</p>
+    <p>4️⃣ Submit request</p>
+  </div>
+
+  <button id="submitBtn">Submit Request</button>
+
+  <p class="note">
+    Coins will be added after admin verification.
+  </p>
+
+</div>
+
+<!-- JS -->
+<script type="module" src="js/add-money.js"></script>
+
+</body>
+</html>
