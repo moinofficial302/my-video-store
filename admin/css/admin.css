@@ -257,3 +257,24 @@ tr:last-child td {
     font-size: 18px;
   }
 }
+
+
+
+/* ===============================
+   ADMIN LOGO FIX (IMPORTANT)
+================================ */
+.admin-logo {
+  max-width: 140px;
+  max-height: 48px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .admin-logo {
+    max-width: 110px;
+    max-height: 40px;
+  }
+}
