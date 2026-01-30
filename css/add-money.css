@@ -1,61 +1,169 @@
-.add-money-container {
-  max-width: 420px;
-  margin: 20px auto;
-  padding: 20px;
+/* ===============================
+   GLOBAL
+================================ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
 }
 
-.add-money-container h2 {
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===============================
+   MAIN CARD
+================================ */
+.add-money-card {
+  width: 92%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ===============================
+   TITLE
+================================ */
+.add-money-card h1 {
   text-align: center;
   margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
+/* ===============================
+   LABELS
+================================ */
 label {
   display: block;
-  margin-top: 12px;
-  font-weight: 600;
+  margin: 14px 0 6px;
+  font-size: 14px;
+  opacity: 0.9;
 }
 
-input, select {
+/* ===============================
+   SELECT & INPUT
+================================ */
+select,
+input {
   width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  padding: 14px 15px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+}
+
+select option {
+  color: #000;
+}
+
+input::placeholder {
+  color: #cbd5f5;
+}
+
+/* ===============================
+   QR SECTION
+================================ */
+.qr-wrapper {
+  margin: 22px 0;
+  text-align: center;
 }
 
 .qr-box {
-  text-align: center;
-  margin: 15px 0;
+  display: inline-flex;
+  padding: 14px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #6366f1, #9333ea);
+  box-shadow: 0 18px 40px rgba(99, 102, 241, 0.6);
 }
 
 .qr-box img {
-  width: 200px;
-  border-radius: 10px;
+  width: 220px;
+  height: 220px;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 16px;
 }
 
-.instructions {
-  background: #f4f6f8;
-  padding: 10px;
-  border-radius: 8px;
+.qr-text {
   margin-top: 12px;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* ===============================
+   INSTRUCTION BOX
+================================ */
+.instructions {
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 14px;
   font-size: 14px;
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 10px;
-  background: #f7c600;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+.instructions div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
+.instructions span {
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, #38bdf8, #6366f1);
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+/* ===============================
+   SUBMIT BUTTON
+================================ */
+.submit-btn {
+  width: 100%;
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: 18px;
+  border: none;
+  background: linear-gradient(135deg, #facc15, #f97316);
+  color: #111827;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 14px 35px rgba(250, 204, 21, 0.65);
+  transition: 0.25s ease;
+}
+
+.submit-btn:active {
+  transform: scale(0.97);
+}
+
+/* ===============================
+   FOOT NOTE
+================================ */
 .note {
+  margin-top: 14px;
   text-align: center;
   font-size: 13px;
-  margin-top: 10px;
-  color: #555;
+  opacity: 0.75;
 }
