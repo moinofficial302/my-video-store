@@ -85,36 +85,43 @@ admin/js/admin-auth.js
 // admin email check
 // logout logic
 
+
 // ===============================
-// ADMIN NAVIGATION (PASTE HERE)
+// ADMIN NAVIGATION (FINAL FIX)
 // ===============================
 
-const navItems = document.querySelectorAll(".nav-item");
-const sections = document.querySelectorAll(".admin-section");
-const sectionTitle = document.getElementById("sectionTitle");
+document.addEventListener("DOMContentLoaded", () => {
 
-navItems.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const target = btn.dataset.section;
+  const navItems = document.querySelectorAll(".nav-item");
+  const sections = document.querySelectorAll(".admin-section");
+  const sectionTitle = document.getElementById("sectionTitle");
 
-    navItems.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
+  navItems.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = btn.dataset.section;
 
-    sections.forEach(sec => sec.classList.remove("active"));
+      // active button
+      navItems.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
 
-    const activeSection = document.getElementById(target);
-    if (activeSection) {
-      activeSection.classList.add("active");
-    }
+      // hide all sections
+      sections.forEach(sec => sec.classList.remove("active"));
 
-    if (sectionTitle) {
-      sectionTitle.textContent =
-        btn.innerText.replace(/^[^a-zA-Z]+/, "").trim();
-    }
+      // show target section
+      const activeSection = document.getElementById(target);
+      if (activeSection) {
+        activeSection.classList.add("active");
+      }
+
+      // update title
+      if (sectionTitle) {
+        sectionTitle.textContent =
+          btn.innerText.replace(/^[^a-zA-Z]+/, "").trim();
+      }
+    });
   });
+
 });
-
-
 
 
 
