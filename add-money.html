@@ -5,40 +5,22 @@
   <title>Add Money</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Common & Add Money CSS -->
+  <!-- CSS -->
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/add-money.css">
 </head>
 <body>
 
+  <!-- MAIN CARD -->
   <div class="add-money-card">
     <h1>Add Money</h1>
 
-
-
-<!-- Payment App -->
-<label>Payment App</label>
-
-<div class="payment-selector" id="openPaymentSheet">
-  <span id="selectedApp">PhonePe</span>
-  <span>⌄</span>
-</div>
-
-<!-- Bottom Sheet -->
-<div class="payment-sheet" id="paymentSheet">
-  <div class="sheet-card">
-    <div class="sheet-title">Select Payment App</div>
-
-    <div class="sheet-item active" data-app="PhonePe">PhonePe</div>
-    <div class="sheet-item" data-app="Paytm">Paytm</div>
-    <div class="sheet-item" data-app="Google Pay">Google Pay</div>
-    <div class="sheet-item" data-app="Airtel Pay">Airtel Pay</div>
-    <div class="sheet-item" data-app="Other">Other</div>
-  </div>
-</div>
-
-
-    
+    <!-- Payment App Selector -->
+    <label>Payment App</label>
+    <div class="payment-selector" id="openPaymentSheet">
+      <span id="selectedApp">PhonePe</span>
+      <span>⌄</span>
+    </div>
 
     <!-- QR -->
     <div class="qr-wrapper">
@@ -74,27 +56,23 @@
     </div>
   </div>
 
+  <!-- BOTTOM SHEET (ONLY ONCE) -->
+  <div class="payment-sheet" id="paymentSheet">
+    <div class="sheet-card">
 
+      <div class="sheet-title">Select Payment App</div>
 
+      <div class="sheet-item active" data-app="PhonePe">PhonePe</div>
+      <div class="sheet-item" data-app="Paytm">Paytm</div>
+      <div class="sheet-item" data-app="Google Pay">Google Pay</div>
+      <div class="sheet-item" data-app="Airtel Pay">Airtel Pay</div>
+      <div class="sheet-item" data-app="Other">Other</div>
 
-
-  <!-- PAYMENT BOTTOM SHEET -->
-<div class="payment-sheet" id="paymentSheet">
-  <div class="sheet-card">
-
-    <div class="sheet-title">Select Payment App</div>
-
-    <div class="sheet-item active" data-app="PhonePe">PhonePe</div>
-    <div class="sheet-item" data-app="Paytm">Paytm</div>
-    <div class="sheet-item" data-app="Google Pay">Google Pay</div>
-    <div class="sheet-item" data-app="Airtel Pay">Airtel Pay</div>
-    <div class="sheet-item" data-app="Other">Other</div>
-
+    </div>
   </div>
-</div>
-  
+
   <!-- JS -->
   <script type="module" src="js/add-money.js"></script>
 
 </body>
-  </html>
+</html>
