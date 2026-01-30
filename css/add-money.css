@@ -196,13 +196,15 @@ input::placeholder {
 /* ===============================
    BOTTOM SHEET
 ================================ */
+
 .payment-sheet {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.55);
   display: none;
-  justify-content: flex-end;
-  z-index: 999;
+  align-items: flex-end;   /* 👈 IMPORTANT */
+  justify-content: center; /* 👈 IMPORTANT */
+  z-index: 9999;
 }
 
 .payment-sheet.active {
@@ -211,11 +213,14 @@ input::placeholder {
 
 .sheet-card {
   width: 100%;
+  max-height: 55vh;
   background: #ffffff;
   border-radius: 22px 22px 0 0;
-  padding: 16px;
-  animation: slideUp 0.3s ease;
+  padding: 18px;
+  overflow-y: auto;
+  animation: slideUp 0.25s ease-out;
 }
+
 
 @keyframes slideUp {
   from { transform: translateY(100%); }
