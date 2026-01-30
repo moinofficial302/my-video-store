@@ -152,12 +152,9 @@
   onclick="buyProduct('editing-pack', 99)">
   Buy Now
         </button>
-        <script>
-  checkOwnership(
-    'editing-pack',
-    document.getElementById('buy-editing')
-  );
-        </script>
+
+        
+
       </div>
 
     </div>
@@ -184,6 +181,18 @@ function toggleDetails(btn){
     btn.innerText = "View Details";
   }
 }
+</script>
+
+
+<script type="module">
+  import { checkOwnership } from "./js/products.js";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("buy-editing");
+    if (btn) {
+      checkOwnership("editing-pack", btn);
+    }
+  });
 </script>
 
   
