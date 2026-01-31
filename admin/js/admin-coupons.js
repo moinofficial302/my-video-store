@@ -1,12 +1,12 @@
 // =======================================
-// ADMIN COUPONS SYSTEM
+// ADMIN COUPON SYSTEM (FIXED & REAL)
 // =======================================
 
 import { db } from "../../js/firebase-init.js";
 import {
   collection,
-  addDoc,
   getDocs,
+  setDoc,
   updateDoc,
   doc,
   serverTimestamp
@@ -24,15 +24,27 @@ async function loadCoupons() {
 
   const snapshot = await getDocs(collection(db, "coupons"));
 
+  if (snapshot.empty) {
+    couponsTable.innerHTML = `
+      <tr><td colspan="5">No Coupons Found</td></tr>
+    `;
+    return;
+  }
+
   snapshot.forEach(docSnap => {
     const d = docSnap.data();
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${d.code}</td>
-      <td>${d.value}</td>
+      <td>${docSnap.id}</td>
+      <td>${d.coins}</td>
       <td>${d.limit}</td>
       <td>${d.used || 0}</td>
+      <td>
+        <button onclick="toggleCoupon('${docSnap.id}', ${d.active})">
+          ${d.active ? "Disable" : "Enable"}
+        </button>
+      </td>
     `;
 
     couponsTable.appendChild(tr);
@@ -47,23 +59,28 @@ createBtn.addEventListener("click", async () => {
   const code = prompt("Coupon Code (e.g. AKANS50)");
   if (!code) return;
 
-  const value = Number(prompt("Coins Value"));
-  if (!value) return alert("Invalid value");
+  const coins = Number(prompt("Coins to Add"));
+  if (!coins || coins <= 0) {
+    alert("Invalid coins value");
+    return;
+  }
 
   const limit = Number(prompt("Usage Limit"));
-  if (!limit) return alert("Invalid limit");
+  if (!limit || limit <= 0) {
+    alert("Invalid limit");
+    return;
+  }
 
   try {
-    await addDoc(collection(db, "coupons"), {
-      code: code.toUpperCase(),
-      value,
+    await setDoc(doc(db, "coupons", code.toUpperCase()), {
+      coins,
       limit,
       used: 0,
       active: true,
       createdAt: serverTimestamp()
     });
 
-    alert("Coupon Created Successfully");
+    alert("Coupon Created Successfully ✅");
     loadCoupons();
 
   } catch (err) {
@@ -71,6 +88,22 @@ createBtn.addEventListener("click", async () => {
     alert("Error creating coupon");
   }
 });
+
+// =======================================
+// ENABLE / DISABLE COUPON
+// =======================================
+window.toggleCoupon = async function (code, currentState) {
+  try {
+    await updateDoc(doc(db, "coupons", code), {
+      active: !currentState
+    });
+
+    loadCoupons();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to update coupon");
+  }
+};
 
 // INIT
 loadCoupons();
