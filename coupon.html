@@ -1,1 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Coupon Code | Akans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- TOP HEADER -->
+<div class="header-box">
+  <span>Coupon Code</span>
+  <img src="assets/logo.png" alt="Logo">
+</div>
+
+<!-- COUPON CARD -->
+<div class="ai-wrapper">
+
+  <div class="card glass-card">
+    <h3>Apply Coupon</h3>
+
+    <input
+      type="text"
+      id="couponInput"
+      placeholder="Enter Coupon Code"
+      style="
+        width:100%;
+        padding:14px;
+        border-radius:14px;
+        border:1px solid #ddd;
+        margin:14px 0;
+        font-size:16px;
+      "
+    />
+
+    <button class="buy-btn" onclick="applyCoupon()">
+      Apply Coupon
+    </button>
+
+    <p id="couponMsg" style="margin-top:12px;"></p>
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
+  <button class="nav-item" onclick="location.href='ai-editing.html'">AI & Editing</button>
+  <button class="nav-item" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item active">Account</button>
+</div>
+
+<script type="module" src="js/coupon.js"></script>
+
+</body>
+</html>
