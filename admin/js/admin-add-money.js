@@ -11,7 +11,9 @@ import {
   doc,
   updateDoc,
   increment,
-  serverTimestamp
+  serverTimestamp,
+  addDoc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // DOM
@@ -83,15 +85,14 @@ async function approveRequest(requestId) {
 
   try {
     const reqRef = doc(db, "add_money_requests", requestId);
-    const reqSnap = await getDocs(query(
-      collection(db, "add_money_requests"),
-      where("__name__", "==", requestId)
-    ));
+    const reqSnap = await getDoc(reqRef);
 
-    let requestData;
-    reqSnap.forEach(d => requestData = d.data());
+    if (!reqSnap.exists()) {
+      alert("Request not found");
+      return;
+    }
 
-    if (!requestData) return alert("Request not found");
+    const requestData = reqSnap.data();
 
     // 1️⃣ Add coins to user
     const userRef = doc(db, "users", requestData.uid);
@@ -99,7 +100,10 @@ async function approveRequest(requestId) {
       coins: increment(requestData.amount)
     });
 
-    // 2️⃣ Update request status
+    // 🔥 2️⃣ SUPER REFER REWARD (40%) — YAHI ADD KIYA HAI
+    await handleSuperReferral(requestData.uid, requestData.amount);
+
+    // 3️⃣ Update request status
     await updateDoc(reqRef, {
       status: "approved",
       approvedAt: serverTimestamp()
@@ -111,6 +115,59 @@ async function approveRequest(requestId) {
   } catch (error) {
     console.error("Approve error:", error);
     alert("Error approving request");
+  }
+}
+
+// =======================================
+// SUPER REFER LOGIC (40%)
+// =======================================
+async function handleSuperReferral(userUid, amount) {
+  const userRef = doc(db, "users", userUid);
+  const userSnap = await getDoc(userRef);
+  if (!userSnap.exists()) return;
+
+  const user = userSnap.data();
+
+  // ✅ CONDITIONS
+  if (
+    user.referredBy &&
+    user.referralMode === "super" &&
+    user.superRewardGiven === false
+  ) {
+    // Find referrer
+    const q = query(
+      collection(db, "users"),
+      where("myReferralCode", "==", user.referredBy)
+    );
+
+    const refSnap = await getDocs(q);
+    if (refSnap.empty) return;
+
+    const refDoc = refSnap.docs[0];
+    const referrerUid = refDoc.id;
+
+    const rewardAmount = Math.floor(amount * 0.4);
+
+    // Add referral reward
+    await updateDoc(doc(db, "users", referrerUid), {
+      referralBalance: increment(rewardAmount)
+    });
+
+    // Mark used
+    await updateDoc(userRef, {
+      superRewardGiven: true
+    });
+
+    // Save history
+    await addDoc(collection(db, "referral_earnings"), {
+      referrerUid: referrerUid,
+      fromUserUid: userUid,
+      amount: rewardAmount,
+      percent: 40,
+      type: "super",
+      paymentNumber: 1,
+      createdAt: serverTimestamp()
+    });
   }
 }
 
