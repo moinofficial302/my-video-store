@@ -108,6 +108,9 @@ await setDoc(doc(db, "users", user.uid), {
   // referral system
   myReferralCode: myReferralCode,
   referredBy: window.referralCodeFromUrl || null,
+
+  // STEP 2 support
+  referralMode: window.referralCodeFromUrl ? "super" : null,
   referralBalance: 0,
 
   // tracking
@@ -117,7 +120,8 @@ await setDoc(doc(db, "users", user.uid), {
   createdAt: serverTimestamp()
 });
 
-window.location.href = "index.html";
+
+
     
 
     window.location.href = "index.html";
