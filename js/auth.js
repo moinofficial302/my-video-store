@@ -1,3 +1,22 @@
+// 🔗 Read referral code from URL
+const params = new URLSearchParams(window.location.search);
+const referralFromUrl = params.get("ref");
+
+window.referralCodeFromUrl = null;
+
+if (referralFromUrl) {
+  const refInput = document.getElementById("referralCode");
+  if (refInput) {
+    refInput.value = referralFromUrl;
+    refInput.readOnly = true;
+    window.referralCodeFromUrl = referralFromUrl;
+  }
+}
+
+
+
+
+
 /* ===============================
    FIREBASE IMPORTS
 =============================== */
