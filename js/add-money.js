@@ -190,7 +190,7 @@ applyCouponBtn.addEventListener("click", async () => {
       usedAt: serverTimestamp()
     });
 
-    showMsg(`🎉 Coupon Applied! +${coupon.value} coins`, "green");
+    showMsg(`🎉 Coupon Applied! +₹{coupon.value} coins`, "green");
 
   } catch (err) {
     console.error(err);
