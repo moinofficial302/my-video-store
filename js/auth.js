@@ -89,16 +89,36 @@ window.signupUser = async function () {
   }
 
   try {
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
-    const user = cred.user;
+    
 
-    await setDoc(doc(db, "users", user.uid), {
-      username,
-      email,
-      whatsapp,
-      coins: 0,
-      createdAt: serverTimestamp()
-    });
+const cred = await createUserWithEmailAndPassword(auth, email, password);
+const user = cred.user;
+
+// default referral code generate
+const myReferralCode = "M7" + user.uid.substring(0, 4).toUpperCase();
+
+await setDoc(doc(db, "users", user.uid), {
+  username,
+  email,
+  whatsapp,
+
+  // main wallet
+  coins: 0,
+
+  // referral system
+  myReferralCode: myReferralCode,
+  referredBy: window.referralCodeFromUrl || null,
+  referralBalance: 0,
+
+  // tracking
+  normalReferralCount: 0,
+  superRewardGiven: false,
+
+  createdAt: serverTimestamp()
+});
+
+window.location.href = "index.html";
+    
 
     window.location.href = "index.html";
   } catch (err) {
