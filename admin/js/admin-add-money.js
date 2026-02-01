@@ -103,6 +103,9 @@ async function approveRequest(requestId) {
     // 🔥 2️⃣ SUPER REFER REWARD (40%) — YAHI ADD KIYA HAI
     await handleSuperReferral(requestData.uid, requestData.amount);
 
+await handleNormalReferral(requestData.uid, requestData.amount);
+
+    
     // 3️⃣ Update request status
     await updateDoc(reqRef, {
       status: "approved",
@@ -211,3 +214,65 @@ function formatDate(ts) {
 // INIT
 // =======================================
 loadAddMoneyRequests();
+
+
+
+// =======================================
+// NORMAL REFER LOGIC (15% → 10% ONLY)
+// =======================================
+async function handleNormalReferral(userUid, amount) {
+  const userRef = doc(db, "users", userUid);
+  const userSnap = await getDoc(userRef);
+  if (!userSnap.exists()) return;
+
+  const user = userSnap.data();
+
+  // ❌ Agar super refer laga hai → normal skip
+  if (user.referralMode === "super") return;
+
+  // ❌ Referral hi nahi hai
+  if (!user.referredBy) return;
+
+  // Count check
+  let percent = 0;
+  let paymentNumber = user.normalReferralCount + 1;
+
+  if (paymentNumber === 1) percent = 15;
+  else if (paymentNumber === 2) percent = 10;
+  else return; // ❌ 3rd time kuch bhi nahi
+
+  // Find referrer
+  const q = query(
+    collection(db, "users"),
+    where("myReferralCode", "==", user.referredBy)
+  );
+
+  const refSnap = await getDocs(q);
+  if (refSnap.empty) return;
+
+  const refDoc = refSnap.docs[0];
+  const referrerUid = refDoc.id;
+
+  const rewardAmount = Math.floor(amount * (percent / 100));
+
+  // Add referral reward
+  await updateDoc(doc(db, "users", referrerUid), {
+    referralBalance: increment(rewardAmount)
+  });
+
+  // Update count
+  await updateDoc(userRef, {
+    normalReferralCount: increment(1)
+  });
+
+  // Save history
+  await addDoc(collection(db, "referral_earnings"), {
+    referrerUid: referrerUid,
+    fromUserUid: userUid,
+    amount: rewardAmount,
+    percent: percent,
+    type: "normal",
+    paymentNumber: paymentNumber,
+    createdAt: serverTimestamp()
+  });
+}
