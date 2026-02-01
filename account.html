@@ -69,6 +69,11 @@ html, body{
     <h2 id="coinBalance">0</h2>
   </div>
 
+  <div class="wallet-card">
+  <span>🤝 Referral Wallet</span>
+  <h2 id="referralBalance">0</h2>
+  </div>
+  
   <!-- =====================
        MENU OPTIONS
   ====================== -->
@@ -89,11 +94,17 @@ html, body{
 </div>
     
     
-    <div class="menu-item">🤝 Refer & Earn</div>
+    <div class="menu-item" onclick="location.href='refer.html'">
+  🤝 Refer & Earn
+    </div>
     
-    <div class="menu-item">💰 Super Refer & Earn</div>
+    <div class="menu-item" onclick="location.href='super-refer.html'">
+  💰 Super Refer & Earn
+    </div>
     
-    <div class="menu-item">💸 Withdraw Amount</div>
+    <div class="menu-item" onclick="location.href='withdraw.html'">
+  💸 Withdraw Amount
+    </div>
     
     <div class="menu-item">👥 Community</div>
     
@@ -134,6 +145,13 @@ html, body{
     if (snap.exists() && snap.data().username) {
       document.getElementById("userName").innerText =
         snap.data().username;
+      
+if (snap.data().referralBalance !== undefined) {
+  document.getElementById("referralBalance").innerText =
+    snap.data().referralBalance;
+}
+
+      
     } else if (user.displayName) {
       document.getElementById("userName").innerText =
         user.displayName;
