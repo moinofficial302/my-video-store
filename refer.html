@@ -1,1 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Refer & Earn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Common CSS (tumhari existing theme wali) -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .refer-container {
+      padding: 16px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .card h2 {
+      margin-bottom: 8px;
+    }
+
+    .ref-box {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .ref-box input {
+      flex: 1;
+      padding: 10px;
+      font-size: 15px;
+    }
+
+    .ref-box button {
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    .rules li {
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .withdraw-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background: #ffc107;
+      cursor: pointer;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===============================
+       REFER & EARN PAGE
+  ================================ -->
+
+  <div class="refer-container">
+
+    <!-- Referral Code -->
+    <div class="card">
+      <h2>Your Referral Code</h2>
+      <div class="ref-box">
+        <input type="text" id="myReferralCode" readonly value="Loading...">
+        <button onclick="copyCode()">Copy</button>
+      </div>
+    </div>
+
+    <!-- Referral Link -->
+    <div class="card">
+      <h2>Your Referral Link</h2>
+      <div class="ref-box">
+        <input type="text" id="myReferralLink" readonly value="Loading...">
+        <button onclick="copyLink()">Copy</button>
+      </div>
+      <p class="note">
+        Share this link with friends. Referral applies only on first signup.
+      </p>
+    </div>
+
+    <!-- Rules -->
+    <div class="card">
+      <h2>Refer & Earn Rules</h2>
+      <ul class="rules">
+        <li>1st Add Money → <b>15%</b> referral reward</li>
+        <li>2nd Add Money → <b>10%</b> referral reward</li>
+        <li>3rd time onwards → <b>No reward</b></li>
+        <li>Reward goes to Referral Wallet</li>
+      </ul>
+    </div>
+
+    <!-- Withdraw Button -->
+    <div class="card">
+      <button class="withdraw-btn" onclick="goToWithdraw()">
+        Go to Withdraw Amount
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ===============================
+       BASIC PAGE JS (NO LOGIC)
+       Actual logic refer.js me aayega
+  ================================ -->
+  <script>
+    function copyCode() {
+      const input = document.getElementById("myReferralCode");
+      input.select();
+      document.execCommand("copy");
+      alert("Referral code copied");
+    }
+
+    function copyLink() {
+      const input = document.getElementById("myReferralLink");
+      input.select();
+      document.execCommand("copy");
+      alert("Referral link copied");
+    }
+
+    function goToWithdraw() {
+      window.location.href = "withdraw.html";
+    }
+  </script>
+
+  <!-- Page JS (Step 2 me aayega) -->
+  <script type="module" src="js/refer.js"></script>
+
+</body>
+</html>
