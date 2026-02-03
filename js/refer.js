@@ -1,4 +1,9 @@
+/* =====================================================
+   🔥 REFER PAGE FULL FIXED (PRODUCTION SAFE)
+===================================================== */
+
 import { auth, db } from "./firebase-init.js";
+
 import {
   doc,
   getDoc,
@@ -9,61 +14,103 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-auth.onAuthStateChanged(async user => {
+
+/* =====================================================
+   LOAD USER DATA
+===================================================== */
+
+auth.onAuthStateChanged(async (user) => {
+
   if (!user) {
     window.location.href = "login.html";
     return;
   }
-  loadReferralData(user.uid);
-});
 
-async function loadReferralData(uid) {
-  const snap = await getDoc(doc(db, "users", uid));
+  const snap = await getDoc(doc(db, "users", user.uid));
+
   if (!snap.exists()) {
     alert("User data not found");
     return;
   }
 
   const data = snap.data();
-  document.getElementById("myReferralCode").value =
-    data.myReferralCode || "";
 
-  document.getElementById("myReferralLink").value =
-    location.origin + "/login.html?ref=" + data.myReferralCode;
-}
+  const codeInput = document.getElementById("myReferralCode");
+  const linkInput = document.getElementById("myReferralLink");
 
-// 🔥 SAVE CUSTOM REFERRAL CODE
+  const code = data.myReferralCode || "";
+
+  /* 🔥 SET VALUES */
+  codeInput.value = code;
+
+  linkInput.value =
+    location.origin + "/login.html?ref=" + code;
+
+});
+
+
+
+/* =====================================================
+   SAVE CUSTOM CODE (GLOBAL FOR BUTTON)
+===================================================== */
+
 window.saveReferralCode = async function () {
+
   const user = auth.currentUser;
   if (!user) return;
 
-  let code = document.getElementById("myReferralCode").value
-    .trim()
-    .toUpperCase();
+  const codeInput = document.getElementById("myReferralCode");
+  const linkInput = document.getElementById("myReferralLink");
 
-  if (!code.startsWith("M7") || code.length < 4) {
-    alert("Referral code must start with M7");
+  let code = codeInput.value.trim().toUpperCase();
+
+  if (!code.startsWith("M7")) {
+    alert("Code must start with M7");
     return;
   }
 
-  // check uniqueness
+  /* 🔥 CHECK DUPLICATE */
   const q = query(
     collection(db, "users"),
     where("myReferralCode", "==", code)
   );
+
   const snap = await getDocs(q);
 
   if (!snap.empty) {
-    alert("Referral code already taken");
+    alert("Code already taken");
     return;
   }
 
+  /* 🔥 SAVE */
   await updateDoc(doc(db, "users", user.uid), {
     myReferralCode: code
   });
 
-  document.getElementById("myReferralLink").value =
+  /* 🔥 INSTANT UPDATE LINK */
+  linkInput.value =
     location.origin + "/login.html?ref=" + code;
 
-  alert("Referral code updated successfully");
+  alert("Referral code saved ✅");
+};
+
+
+
+
+/* =====================================================
+   COPY HELPERS
+===================================================== */
+
+window.copyCode = function () {
+  const el = document.getElementById("myReferralCode");
+  el.select();
+  document.execCommand("copy");
+  alert("Copied");
+};
+
+window.copyLink = function () {
+  const el = document.getElementById("myReferralLink");
+  el.select();
+  document.execCommand("copy");
+  alert("Copied");
 };
