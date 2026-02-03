@@ -1,64 +1,69 @@
-// =======================================
-// REFER & EARN PAGE LOGIC
-// FILE: js/refer.js
-// =======================================
-
 import { auth, db } from "./firebase-init.js";
 import {
   doc,
-  getDoc
+  getDoc,
+  updateDoc,
+  collection,
+  query,
+  where,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// =======================================
-// AUTH CHECK
-// =======================================
-auth.onAuthStateChanged(async (user) => {
+auth.onAuthStateChanged(async user => {
   if (!user) {
-    // Login nahi hai to login page par bhej do
     window.location.href = "login.html";
     return;
   }
-
-  // Login hai to referral data load karo
   loadReferralData(user.uid);
 });
 
-// =======================================
-// LOAD REFERRAL DATA
-// =======================================
 async function loadReferralData(uid) {
-  try {
-    const userRef = doc(db, "users", uid);
-    const userSnap = await getDoc(userRef);
-
-    if (!userSnap.exists()) {
-      alert("User data not found");
-      return;
-    }
-
-    const userData = userSnap.data();
-
-    // DOM elements
-    const codeInput = document.getElementById("myReferralCode");
-    const linkInput = document.getElementById("myReferralLink");
-
-    // Safety check
-    if (!codeInput || !linkInput) return;
-
-    const referralCode = userData.myReferralCode;
-
-    // Referral link generate
-    const referralLink =
-      window.location.origin +
-      "/login.html?ref=" +
-      referralCode;
-
-    // Set values
-    codeInput.value = referralCode;
-    linkInput.value = referralLink;
-
-  } catch (error) {
-    console.error("Referral load error:", error);
-    alert("Error loading referral data");
+  const snap = await getDoc(doc(db, "users", uid));
+  if (!snap.exists()) {
+    alert("User data not found");
+    return;
   }
+
+  const data = snap.data();
+  document.getElementById("myReferralCode").value =
+    data.myReferralCode || "";
+
+  document.getElementById("myReferralLink").value =
+    location.origin + "/login.html?ref=" + data.myReferralCode;
 }
+
+// 🔥 SAVE CUSTOM REFERRAL CODE
+window.saveReferralCode = async function () {
+  const user = auth.currentUser;
+  if (!user) return;
+
+  let code = document.getElementById("myReferralCode").value
+    .trim()
+    .toUpperCase();
+
+  if (!code.startsWith("M7") || code.length < 4) {
+    alert("Referral code must start with M7");
+    return;
+  }
+
+  // check uniqueness
+  const q = query(
+    collection(db, "users"),
+    where("myReferralCode", "==", code)
+  );
+  const snap = await getDocs(q);
+
+  if (!snap.empty) {
+    alert("Referral code already taken");
+    return;
+  }
+
+  await updateDoc(doc(db, "users", user.uid), {
+    myReferralCode: code
+  });
+
+  document.getElementById("myReferralLink").value =
+    location.origin + "/login.html?ref=" + code;
+
+  alert("Referral code updated successfully");
+};
