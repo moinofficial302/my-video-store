@@ -97,23 +97,20 @@ const user = cred.user;
 // default referral code generate
 const myReferralCode = "M7" + user.uid.substring(0, 4).toUpperCase();
 
+    
+    
 await setDoc(doc(db, "users", user.uid), {
   username,
   email,
   whatsapp,
 
-  // main wallet
   coins: 0,
-
-  // referral system
-  myReferralCode: myReferralCode,
-  referredBy: window.referralCodeFromUrl || null,
-
-  // STEP 2 support
-  referralMode: window.referralCodeFromUrl ? "super" : null,
   referralBalance: 0,
 
-  // tracking
+  myReferralCode: "M7" + user.uid.substring(0,4).toUpperCase(),
+  referredBy: window.referralCodeFromUrl || null,
+
+  referralMode: window.referralCodeFromUrl ? "super" : null,
   normalReferralCount: 0,
   superRewardGiven: false,
 
