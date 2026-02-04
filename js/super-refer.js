@@ -1,6 +1,7 @@
 /* =====================================================
-   🚀 SUPER REFER SYSTEM – FINAL PROFESSIONAL LOGIC
-   Chapter 2
+   🚀 SUPER REFER SYSTEM – FINAL PRODUCTION VERSION
+   Jarvis Clean + Stable + Bug Free
+   DELETE OLD FILE → PASTE THIS COMPLETE FILE
 ===================================================== */
 
 import { auth, db } from "./firebase-init.js";
@@ -14,7 +15,51 @@ import {
 
 
 /* =====================================================
-   DOM READY
+   🔥 CODE GENERATOR  (A_1234 style)
+===================================================== */
+
+function generateCode() {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const letter = letters[Math.floor(Math.random() * letters.length)];
+  const num = Math.floor(1000 + Math.random() * 9000);
+  return letter + "_" + num;
+}
+
+
+/* =====================================================
+   🔥 ENSURE USER HAS CODES (OLD USER FIX)
+===================================================== */
+
+async function ensureCodes(userRef, data) {
+
+  let updateData = {};
+
+  // 🟢 normalCode missing → create
+  if (!data.normalCode) {
+    updateData.normalCode = generateCode();
+  }
+
+  // 🟢 superCode missing → create
+  if (!data.superCode) {
+    updateData.superCode = generateCode();
+  }
+
+  // 🟢 superUnlocked missing → default false
+  if (data.superUnlocked === undefined) {
+    updateData.superUnlocked = false;
+  }
+
+  if (Object.keys(updateData).length > 0) {
+    await updateDoc(userRef, updateData);
+    return { ...data, ...updateData };
+  }
+
+  return data;
+}
+
+
+/* =====================================================
+   🔥 MAIN LOGIC
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =====================================================
-     AUTH CHECK + LOAD USER
+     AUTH STATE
   ===================================================== */
 
   auth.onAuthStateChanged(async (user) => {
@@ -41,45 +86,57 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const snap = await getDoc(doc(db, "users", user.uid));
+    const userRef = doc(db, "users", user.uid);
+    const snap = await getDoc(userRef);
 
     if (!snap.exists()) return;
 
-    const data = snap.data();
+    let data = snap.data();
 
-    const normalCode = data.normalCode;
-    const superCode = data.superCode;
-    const unlocked = data.superUnlocked;
+    /* 🔥 FIX OLD USERS */
+    data = await ensureCodes(userRef, data);
+
     const coins = data.coins || 0;
 
 
-    /* ===============================
-       SET NORMAL LINK
-    =============================== */
+    /* =================================================
+       NORMAL LINK
+    ================================================= */
 
     normalInput.value =
-      location.origin + "/login.html?ref=" + normalCode + "&type=normal";
+      location.origin +
+      "/login.html?ref=" +
+      data.normalCode +
+      "&type=normal";
 
 
-    /* ===============================
-       SET SUPER LINK
-    =============================== */
+    /* =================================================
+       SUPER LINK
+    ================================================= */
 
     superInput.value =
-      location.origin + "/login.html?ref=" + superCode + "&type=super";
+      location.origin +
+      "/login.html?ref=" +
+      data.superCode +
+      "&type=super";
 
 
-    /* ===============================
-       LOCK / UNLOCK UI
-    =============================== */
+    /* =================================================
+       LOCK / UNLOCK
+    ================================================= */
 
-    if (!unlocked) {
+    if (!data.superUnlocked) {
+
       superCard.classList.add("locked");
+
       superInput.disabled = true;
       copySuper.disabled = true;
+
     } else {
+
       unlockBtn.style.display = "none";
     }
+
   });
 
 
@@ -113,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =====================================================
-     UNLOCK SUPER LINK
+     UNLOCK SUPER (99 coins)
   ===================================================== */
 
   unlockBtn.addEventListener("click", async () => {
@@ -121,11 +178,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const user = auth.currentUser;
     if (!user) return;
 
-    const ref = doc(db, "users", user.uid);
-    const snap = await getDoc(ref);
+    const userRef = doc(db, "users", user.uid);
+    const snap = await getDoc(userRef);
+
+    if (!snap.exists()) return;
 
     const data = snap.data();
-
     const coins = data.coins || 0;
 
     if (coins < 99) {
@@ -134,12 +192,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const confirmUnlock = confirm("Spend 99 coins to unlock Super Refer?");
-
     if (!confirmUnlock) return;
 
-    /* 🔥 DEDUCT COINS + UNLOCK */
-
-    await updateDoc(ref, {
+    await updateDoc(userRef, {
       coins: increment(-99),
       superUnlocked: true
     });
