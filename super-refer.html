@@ -1,161 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Super Refer & Earn</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Super Refer & Earn | AKANS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Common CSS (existing theme) -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 
   <style>
-    .super-container {
-      padding: 16px;
-      max-width: 500px;
-      margin: auto;
+    body{
+      background:#f3f5f9;
+      font-family:sans-serif;
+      margin:0;
     }
 
-    .card {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    .wrap{
+      max-width:520px;
+      margin:auto;
+      padding:16px;
     }
 
-    .highlight {
-      background: #fff3cd;
-      border-left: 4px solid #ffc107;
-      padding: 12px;
-      font-size: 14px;
-      margin-top: 10px;
+    .card{
+      background:#fff;
+      padding:16px;
+      border-radius:14px;
+      margin-bottom:16px;
+      box-shadow:0 6px 14px rgba(0,0,0,.06);
     }
 
-    .ref-box {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
+    h2{
+      margin-bottom:10px;
+      font-size:18px;
     }
 
-    .ref-box input {
-      flex: 1;
-      padding: 10px;
-      font-size: 15px;
+    .ref-box{
+      display:flex;
+      gap:8px;
+      margin-top:10px;
     }
 
-    .ref-box button {
-      padding: 10px 14px;
-      cursor: pointer;
+    .ref-box input{
+      flex:1;
+      padding:12px;
+      border-radius:8px;
+      border:1px solid #ddd;
+      font-size:14px;
     }
 
-    .rules li {
-      margin-bottom: 6px;
-      font-size: 14px;
+    .btn{
+      padding:12px 14px;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
     }
 
-    .withdraw-btn {
-      width: 100%;
-      padding: 14px;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      background: #28a745;
-      color: #ffffff;
-      cursor: pointer;
+    .copy-btn{
+      background:#888;
+      color:#fff;
     }
 
-    .note {
-      font-size: 13px;
-      color: #555;
-      margin-top: 8px;
+    .unlock-btn{
+      width:100%;
+      margin-top:10px;
+      background:#ff9800;
+      color:#fff;
+    }
+
+    .locked{
+      opacity:.5;
+    }
+
+    .rules li{
+      margin-bottom:6px;
+      font-size:14px;
+    }
+
+    .note{
+      font-size:13px;
+      color:#666;
+      margin-top:6px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ===============================
-       SUPER REFER & EARN PAGE
-  ================================ -->
+<div class="wrap">
 
-  <div class="super-container">
+  <!-- ===========================
+       NORMAL REFER
+  ============================ -->
+  <div class="card">
+    <h2>🤝 Normal Refer</h2>
 
-    <!-- Referral Code -->
-    <div class="card">
-      <h2>Your Super Referral Code</h2>
-      <div class="ref-box">
-        <input type="text" id="myReferralCode" readonly value="Loading...">
-        <button onclick="copyCode()">Copy</button>
-      </div>
+    <div class="ref-box">
+      <input type="text" id="normalLink" readonly>
+      <button class="btn copy-btn" id="copyNormal">Copy</button>
     </div>
 
-    <!-- Referral Link -->
-    <div class="card">
-      <h2>Your Super Referral Link</h2>
-      <div class="ref-box">
-        <input type="text" id="myReferralLink" readonly value="Loading...">
-        <button onclick="copyLink()">Copy</button>
-      </div>
-      <p class="note">
-        Share this link to get <b>40%</b> reward on your friend's first add money.
-      </p>
+    <p class="note">
+      1st Add Money → 15% reward<br>
+      2nd Add Money → 10% reward
+    </p>
+  </div>
+
+
+  <!-- ===========================
+       SUPER REFER
+  ============================ -->
+  <div class="card" id="superCard">
+
+    <h2>🚀 Super Refer (Premium)</h2>
+
+    <div class="ref-box">
+      <input type="text" id="superLink" readonly>
+      <button class="btn copy-btn" id="copySuper">Copy</button>
     </div>
 
-    <!-- Highlight -->
-    <div class="card">
-      <h2>Super Refer Benefit</h2>
-      <div class="highlight">
-        🎉 Get <b>40% referral reward</b> on <b>FIRST Add Money only</b><br>
-        ⛔ Second time se koi reward nahi milega
-      </div>
-    </div>
+    <button class="btn unlock-btn" id="unlockBtn">
+      🔓 Unlock for 99 Coins
+    </button>
 
-    <!-- Rules -->
-    <div class="card">
-      <h2>Super Refer Rules</h2>
-      <ul class="rules">
-        <li>Reward sirf first add money par milega</li>
-        <li>One-time only (ek hi baar)</li>
-        <li>Reward Referral Wallet me add hoga</li>
-        <li>Withdraw ya coins me convert kar sakte ho</li>
-      </ul>
-    </div>
-
-    <!-- Withdraw Button -->
-    <div class="card">
-      <button class="withdraw-btn" onclick="goToWithdraw()">
-        Go to Withdraw Amount
-      </button>
-    </div>
+    <p class="note">
+      1st Add Money → 40% reward<br>
+      2nd Add Money → 25% reward
+    </p>
 
   </div>
 
-  <!-- ===============================
-       BASIC PAGE JS (NO LOGIC)
-       Actual logic super-refer.js me aayega
-  ================================ -->
-  <script>
-    function copyCode() {
-      const input = document.getElementById("myReferralCode");
-      input.select();
-      document.execCommand("copy");
-      alert("Super referral code copied");
-    }
 
-    function copyLink() {
-      const input = document.getElementById("myReferralLink");
-      input.select();
-      document.execCommand("copy");
-      alert("Super referral link copied");
-    }
+  <!-- ===========================
+       RULES
+  ============================ -->
+  <div class="card">
+    <h2>📜 Rules</h2>
 
-    function goToWithdraw() {
-      window.location.href = "withdraw.html";
-    }
-  </script>
+    <ul class="rules">
+      <li>Referral reward only on approved payments</li>
+      <li>Super link unlock costs 99 coins</li>
+      <li>Reward goes to Referral Wallet</li>
+      <li>Unlimited sharing allowed</li>
+    </ul>
+  </div>
 
-  <!-- Page JS (next step) -->
-  <script type="module" src="js/super-refer.js"></script>
+</div>
+
+
+
+<!-- 🔥 ONLY JS -->
+<script type="module" src="js/super-refer.js"></script>
 
 </body>
 </html>
