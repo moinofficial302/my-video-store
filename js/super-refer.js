@@ -1,65 +1,152 @@
-
-// =======================================
-// SUPER REFER & EARN PAGE LOGIC
-// FILE: js/super-refer.js
-// =======================================
+/* =====================================================
+   🚀 SUPER REFER SYSTEM – FINAL PROFESSIONAL LOGIC
+   Chapter 2
+===================================================== */
 
 import { auth, db } from "./firebase-init.js";
+
 import {
   doc,
-  getDoc
+  getDoc,
+  updateDoc,
+  increment
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// =======================================
-// AUTH CHECK
-// =======================================
-auth.onAuthStateChanged(async (user) => {
-  if (!user) {
-    // Login nahi hai to login page par bhejo
-    window.location.href = "login.html";
-    return;
-  }
 
-  // Login hai → Super referral data load karo
-  loadSuperReferralData(user.uid);
-});
+/* =====================================================
+   DOM READY
+===================================================== */
 
-// =======================================
-// LOAD SUPER REFERRAL DATA
-// =======================================
-async function loadSuperReferralData(uid) {
-  try {
-    const userRef = doc(db, "users", uid);
-    const userSnap = await getDoc(userRef);
+document.addEventListener("DOMContentLoaded", () => {
 
-    if (!userSnap.exists()) {
-      alert("User data not found");
+  const normalInput = document.getElementById("normalLink");
+  const superInput = document.getElementById("superLink");
+
+  const copyNormal = document.getElementById("copyNormal");
+  const copySuper = document.getElementById("copySuper");
+
+  const unlockBtn = document.getElementById("unlockBtn");
+  const superCard = document.getElementById("superCard");
+
+
+
+  /* =====================================================
+     AUTH CHECK + LOAD USER
+  ===================================================== */
+
+  auth.onAuthStateChanged(async (user) => {
+
+    if (!user) {
+      window.location.href = "login.html";
       return;
     }
 
-    const userData = userSnap.data();
+    const snap = await getDoc(doc(db, "users", user.uid));
 
-    // DOM elements
-    const codeInput = document.getElementById("myReferralCode");
-    const linkInput = document.getElementById("myReferralLink");
+    if (!snap.exists()) return;
 
-    // Safety check
-    if (!codeInput || !linkInput) return;
+    const data = snap.data();
 
-    const referralCode = userData.myReferralCode;
+    const normalCode = data.normalCode;
+    const superCode = data.superCode;
+    const unlocked = data.superUnlocked;
+    const coins = data.coins || 0;
 
-    // Super referral link generate
-    const superReferralLink =
-      window.location.origin +
-      "/login.html?ref=" +
-      referralCode;
 
-    // Set values
-    codeInput.value = referralCode;
-    linkInput.value = superReferralLink;
+    /* ===============================
+       SET NORMAL LINK
+    =============================== */
 
-  } catch (error) {
-    console.error("Super referral load error:", error);
-    alert("Error loading super referral data");
-  }
-}
+    normalInput.value =
+      location.origin + "/login.html?ref=" + normalCode + "&type=normal";
+
+
+    /* ===============================
+       SET SUPER LINK
+    =============================== */
+
+    superInput.value =
+      location.origin + "/login.html?ref=" + superCode + "&type=super";
+
+
+    /* ===============================
+       LOCK / UNLOCK UI
+    =============================== */
+
+    if (!unlocked) {
+      superCard.classList.add("locked");
+      superInput.disabled = true;
+      copySuper.disabled = true;
+    } else {
+      unlockBtn.style.display = "none";
+    }
+  });
+
+
+
+  /* =====================================================
+     COPY NORMAL
+  ===================================================== */
+
+  copyNormal.addEventListener("click", () => {
+
+    normalInput.select();
+    document.execCommand("copy");
+
+    alert("Normal link copied ✅");
+  });
+
+
+
+  /* =====================================================
+     COPY SUPER
+  ===================================================== */
+
+  copySuper.addEventListener("click", () => {
+
+    superInput.select();
+    document.execCommand("copy");
+
+    alert("Super link copied ✅");
+  });
+
+
+
+  /* =====================================================
+     UNLOCK SUPER LINK
+  ===================================================== */
+
+  unlockBtn.addEventListener("click", async () => {
+
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const ref = doc(db, "users", user.uid);
+    const snap = await getDoc(ref);
+
+    const data = snap.data();
+
+    const coins = data.coins || 0;
+
+    if (coins < 99) {
+      alert("Need minimum 99 coins to unlock Super Refer");
+      return;
+    }
+
+    const confirmUnlock = confirm("Spend 99 coins to unlock Super Refer?");
+
+    if (!confirmUnlock) return;
+
+    /* 🔥 DEDUCT COINS + UNLOCK */
+
+    await updateDoc(ref, {
+      coins: increment(-99),
+      superUnlocked: true
+    });
+
+    alert("Super Refer unlocked 🚀");
+
+    location.reload();
+  });
+
+});
