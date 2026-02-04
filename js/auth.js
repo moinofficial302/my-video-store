@@ -1,29 +1,7 @@
 /* =====================================================
-   🔥 AUTH + REFERRAL SYSTEM (FULL FIXED VERSION)
-   Jarvis Professional Clean Build
+   🚀 AKANS AUTH SYSTEM (FINAL PRODUCTION VERSION)
+   Clean • Fast • No old referral garbage • Stable
 ===================================================== */
-
-
-/* ===============================
-   🔗 READ REFERRAL FROM URL
-=============================== */
-
-const params = new URLSearchParams(window.location.search);
-const referralFromUrl = params.get("ref");
-
-window.referralCodeFromUrl = null;
-
-if (referralFromUrl) {
-  const refInput = document.getElementById("referralCode");
-
-  if (refInput) {
-    refInput.value = referralFromUrl;
-    refInput.readOnly = true;
-  }
-
-  window.referralCodeFromUrl = referralFromUrl;
-}
-
 
 
 /* ===============================
@@ -37,9 +15,8 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-  sendPasswordResetEmail,
-  onAuthStateChanged,
-  signOut
+  signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import {
@@ -52,6 +29,36 @@ import {
   getDocs,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+
+/* =====================================================
+   🔥 RANDOM REFERRAL CODE GENERATOR
+   Example → A_4839
+===================================================== */
+
+function generateCode() {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const letter = letters[Math.floor(Math.random() * letters.length)];
+  const number = Math.floor(1000 + Math.random() * 9000);
+  return letter + "_" + number;
+}
+
+
+
+/* =====================================================
+   🔥 GET REF FROM URL
+   login.html?ref=A_1234&type=normal
+===================================================== */
+
+function getReferralFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+
+  return {
+    code: params.get("ref"),
+    type: params.get("type")
+  };
+}
 
 
 
@@ -79,30 +86,38 @@ if (loginTab && signupTab) {
     signupForm.classList.remove("hidden");
     loginForm.classList.add("hidden");
   };
-
 }
 
 
 
 /* =====================================================
-   🟢 EMAIL SIGNUP (FULL REFERRAL SUPPORT)
+   🟢 SIGNUP
 ===================================================== */
 
 window.signupUser = async function () {
 
-  const username = document.getElementById("signup-username").value.trim();
-  const email = document.getElementById("signup-email").value.trim();
-  const whatsapp = document.getElementById("signup-whatsapp").value.trim();
-  const password = document.getElementById("signupPassword").value;
-  const confirmPassword = document.getElementById("signupConfirmPassword").value;
+  const username =
+    document.getElementById("signup-username").value.trim();
 
-  if (!username || !email || !password || !confirmPassword) {
-    alert("Please fill all fields");
+  const email =
+    document.getElementById("signup-email").value.trim();
+
+  const whatsapp =
+    document.getElementById("signup-whatsapp").value.trim();
+
+  const password =
+    document.getElementById("signupPassword").value;
+
+  const confirm =
+    document.getElementById("signupConfirmPassword").value;
+
+  if (!username || !email || !password) {
+    alert("Fill all fields");
     return;
   }
 
-  if (password !== confirmPassword) {
-    alert("Password and Confirm Password do not match");
+  if (password !== confirm) {
+    alert("Passwords not match");
     return;
   }
 
@@ -111,12 +126,9 @@ window.signupUser = async function () {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     const user = cred.user;
 
-    /* 🔥 AUTO REFERRAL CODE */
-    const myReferralCode =
-      "M7" + user.uid.substring(0, 4).toUpperCase();
+    const refData = getReferralFromUrl();
 
-
-    /* 🔥 COMPLETE USER DOC (NO BUG VERSION) */
+    /* 🔥 CREATE USER DOC */
     await setDoc(doc(db, "users", user.uid), {
 
       username,
@@ -126,12 +138,15 @@ window.signupUser = async function () {
       coins: 0,
       referralBalance: 0,
 
-      myReferralCode: myReferralCode,
-      referredBy: window.referralCodeFromUrl || null,
+      /* 🔥 NEW REFERRAL SYSTEM */
+      normalCode: generateCode(),
+      superCode: generateCode(),
+      superUnlocked: false,
 
-      referralMode: window.referralCodeFromUrl ? "super" : null,
-      normalReferralCount: 0,
-      superRewardGiven: false,
+      referredBy: refData.code || null,
+      referredType: refData.type || null,
+
+      refCount: 0,
 
       createdAt: serverTimestamp()
     });
@@ -151,20 +166,14 @@ window.signupUser = async function () {
 
 window.loginUser = async function () {
 
-  const identifier =
+  let identifier =
     document.getElementById("loginIdentifier").value.trim();
 
   const password =
     document.getElementById("loginPassword").value;
 
-  if (!identifier || !password) {
-    alert("Enter Username/Email and Password");
-    return;
-  }
-
   let email = identifier;
 
-  /* username -> email lookup */
   if (!identifier.includes("@")) {
 
     const q = query(
@@ -182,189 +191,91 @@ window.loginUser = async function () {
     email = snap.docs[0].data().email;
   }
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    window.location.href = "index.html";
-  }
-  catch {
-    alert("Invalid username/email or password");
-  }
+  await signInWithEmailAndPassword(auth, email, password);
+
+  window.location.href = "index.html";
 };
 
 
 
 /* =====================================================
-   🔴 GOOGLE LOGIN (FULL REFERRAL SUPPORT FIXED)
-   🔥 MOST IMPORTANT SECTION
+   🔴 GOOGLE LOGIN
 ===================================================== */
 
 window.googleLogin = async function () {
 
   const provider = new GoogleAuthProvider();
 
-  try {
+  const result = await signInWithPopup(auth, provider);
+  const user = result.user;
 
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
 
-    const ref = doc(db, "users", user.uid);
-    const snap = await getDoc(ref);
+  if (!snap.exists()) {
 
-    /* =================================================
-       🔥 IF FIRST TIME USER → CREATE FULL DOC
-       (OLD BUG: only coins saved ❌)
-       (NOW: FULL referral system saved ✅)
-    ================================================= */
+    const refData = getReferralFromUrl();
 
-    if (!snap.exists()) {
+    await setDoc(ref, {
 
-      const myReferralCode =
-        "M7" + user.uid.substring(0, 4).toUpperCase();
+      username: user.displayName || "User",
+      email: user.email,
+      whatsapp: "",
 
-      await setDoc(ref, {
+      coins: 0,
+      referralBalance: 0,
 
-        username: user.displayName || "User",
-        email: user.email,
-        whatsapp: "",
+      normalCode: generateCode(),
+      superCode: generateCode(),
+      superUnlocked: false,
 
-        coins: 0,
-        referralBalance: 0,
+      referredBy: refData.code || null,
+      referredType: refData.type || null,
 
-        myReferralCode: myReferralCode,
-        referredBy: window.referralCodeFromUrl || null,
+      refCount: 0,
 
-        referralMode: window.referralCodeFromUrl ? "super" : null,
-        normalReferralCount: 0,
-        superRewardGiven: false,
-
-        createdAt: serverTimestamp()
-      });
-    }
-
-    window.location.href = "index.html";
-
+      createdAt: serverTimestamp()
+    });
   }
-  catch {
-    alert("Google login failed");
-  }
+
+  window.location.href = "index.html";
 };
 
 
 
-
 /* =====================================================
-   👁 PASSWORD TOGGLE
-===================================================== */
-
-window.togglePassword = function (id, el) {
-
-  const input = document.getElementById(id);
-
-  if (input.type === "password") {
-    input.type = "text";
-    el.textContent = "🙈";
-  } else {
-    input.type = "password";
-    el.textContent = "👁️";
-  }
-};
-
-
-
-
-/* =====================================================
-   🔵 FORGOT PASSWORD (USERNAME OR EMAIL)
-===================================================== */
-
-window.resetPassword = async function () {
-
-  const identifier =
-    document.getElementById("loginIdentifier").value.trim();
-
-  if (!identifier) {
-    alert("Enter Username or Email first");
-    return;
-  }
-
-  let email = identifier;
-
-  if (!identifier.includes("@")) {
-
-    const q = query(
-      collection(db, "users"),
-      where("username", "==", identifier)
-    );
-
-    const snap = await getDocs(q);
-
-    if (snap.empty) {
-      alert("Username not found");
-      return;
-    }
-
-    email = snap.docs[0].data().email;
-  }
-
-  try {
-    await sendPasswordResetEmail(auth, email);
-    alert("Password reset link sent to your email");
-  }
-  catch (err) {
-    alert(err.message);
-  }
-};
-
-
-
-
-/* =====================================================
-   🟢 AUTH STATE LISTENER
-   🔥 AUTO LOAD COINS + REFERRAL BALANCE
+   🔵 AUTH STATE (COINS LOAD)
 ===================================================== */
 
 onAuthStateChanged(auth, async (user) => {
 
-  if (user) {
+  if (!user) return;
 
-    localStorage.setItem("loggedIn", "true");
+  const snap = await getDoc(doc(db, "users", user.uid));
 
-    const ref = doc(db, "users", user.uid);
-    const snap = await getDoc(ref);
+  if (!snap.exists()) return;
 
-    if (snap.exists()) {
+  const data = snap.data();
 
-      const data = snap.data();
+  const coinsEl = document.getElementById("coinBalance");
+  const refEl = document.getElementById("referralBalance");
 
-      const coinsEl = document.getElementById("coinBalance");
-      const refEl = document.getElementById("referralBalance");
-
-      if (coinsEl) coinsEl.innerText = data.coins || 0;
-      if (refEl) refEl.innerText = data.referralBalance || 0;
-    }
-
-  }
-  else {
-    localStorage.removeItem("loggedIn");
-  }
-
+  if (coinsEl) coinsEl.innerText = data.coins || 0;
+  if (refEl) refEl.innerText = data.referralBalance || 0;
 });
 
 
 
-
 /* =====================================================
-   🔐 PROTECTED PAGE GUARD
+   🔐 PAGE GUARD
 ===================================================== */
 
 window.requireLogin = function () {
 
-  const loggedIn = localStorage.getItem("loggedIn");
-
-  if (!loggedIn) {
-    window.location.href = "login.html";
-  }
+  onAuthStateChanged(auth, (user) => {
+    if (!user) window.location.href = "login.html";
+  });
 };
-
 
 
 
@@ -373,24 +284,6 @@ window.requireLogin = function () {
 ===================================================== */
 
 window.logoutUser = async function () {
-
-  try {
-
-    await signOut(auth);
-
-    localStorage.removeItem("loggedIn");
-
-    window.location.href = "login.html";
-
-  }
-  catch {
-    alert("Logout failed");
-  }
+  await signOut(auth);
+  window.location.href = "login.html";
 };
-
-
-
-
-/* =====================================================
-   ✅ END OF FILE
-===================================================== */
