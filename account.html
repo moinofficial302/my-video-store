@@ -1,118 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Account | AKANS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 🔗 MAIN CSS (IMPORTANT) -->
-  <link rel="stylesheet" href="css/login.css">
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="css/login.css" />
+  <link rel="stylesheet" href="css/nav.css" />
 
-  <style>
-/* 🔥 FORCE FULL WIDTH – ACCOUNT PAGE FIX */
-html, body{
-  width:100% !important;
-  max-width:100% !important;
-  margin:0 !important;
-  padding:0 !important;
-  display:block !important;
-}
-
-.account-wrap{
-  width:100% !important;
-  max-width:100% !important;
-  margin:0 !important;
-  padding:14px !important;
-}
-
-.profile-card,
-.wallet-card,
-.menu-list{
-  width:100% !important;
-  max-width:100% !important;
-}
-  </style>
-  
-  <!-- 🔥 FIREBASE + AUTH -->
+  <!-- 🔥 ONLY AUTH + FIREBASE -->
   <script type="module" src="js/firebase-init.js"></script>
   <script type="module" src="js/auth.js"></script>
 
+  <style>
+    html,body{
+      margin:0;
+      padding:0;
+      background:#f3f5f9;
+      font-family:sans-serif;
+    }
 
-  
+    .account-wrap{
+      padding:16px;
+      max-width:520px;
+      margin:auto;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:14px;
+      padding:16px;
+      margin-bottom:14px;
+      box-shadow:0 6px 14px rgba(0,0,0,.06);
+    }
+
+    .profile{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .profile img{
+      width:44px;
+    }
+
+    .wallet{
+      text-align:center;
+    }
+
+    .wallet h2{
+      margin:6px 0 0;
+    }
+
+    .menu-item{
+      padding:14px;
+      border-bottom:1px solid #eee;
+      cursor:pointer;
+    }
+
+    .menu-item:last-child{
+      border:none;
+    }
+
+    .logout{
+      color:#e53935;
+      font-weight:600;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ❌ KOI page-wrap / container NAHI -->
-<!-- ✅ DIRECT account-wrap -->
-
 <div class="account-wrap">
 
-  <!-- =====================
-       PROFILE SECTION
-  ====================== -->
-  
-<div class="profile-card profile-flex">
-  <div class="profile-text">
-    <h3 id="userName">AKANS User</h3>
-    <p id="userEmail">user@gmail.com</p>
+  <!-- ===========================
+       PROFILE
+  ============================ -->
+  <div class="card profile">
+    <div>
+      <h3 id="userName">User</h3>
+      <p id="userEmail">user@email.com</p>
+    </div>
+    <img src="assets/logo.png" />
   </div>
 
-  <img src="assets/logo.png" class="profile-logo">
-</div>
 
-  <!-- =====================
-       WALLET / COINS
-  ====================== -->
-  <div class="wallet-card">
-    <span>💰 Coins</span>
+  <!-- ===========================
+       COINS
+  ============================ -->
+  <div class="card wallet">
+    <div>💰 Coins</div>
     <h2 id="coinBalance">0</h2>
   </div>
 
-  <div class="wallet-card">
-  <span>🤝 Referral Wallet</span>
-  <h2 id="referralBalance">0</h2>
+
+  <!-- ===========================
+       REFERRAL WALLET
+  ============================ -->
+  <div class="card wallet">
+    <div>🤝 Referral Wallet</div>
+    <h2 id="referralBalance">0</h2>
   </div>
-  
-  <!-- =====================
-       MENU OPTIONS
-  ====================== -->
-  <div class="menu-list">
+
+
+  <!-- ===========================
+       MENU
+  ============================ -->
+  <div class="card">
 
     <div class="menu-item" onclick="location.href='add-money.html'">
       ➕ Add Money
     </div>
 
-    
     <div class="menu-item" onclick="location.href='my-orders.html'">
-  📦 My Orders
+      📦 My Orders
     </div>
 
-    
-<div class="menu-item" onclick="location.href='coupon.html'">
-  🎟 Coupon Code
-</div>
-    
-    
-    <div class="menu-item" onclick="location.href='refer.html'">
-  🤝 Refer & Earn
+    <div class="menu-item" onclick="location.href='coupon.html'">
+      🎟 Coupon Code
     </div>
-    
+
+    <!-- 🔥 ONLY ONE REFERRAL PAGE -->
     <div class="menu-item" onclick="location.href='super-refer.html'">
-  💰 Super Refer & Earn
+      🚀 Super Refer & Earn
     </div>
-    
+
     <div class="menu-item" onclick="location.href='withdraw.html'">
-  💸 Withdraw Amount
+      💸 Withdraw Amount
     </div>
-    
-    <div class="menu-item">👥 Community</div>
-    
-    <div class="menu-item">⬇ Download App</div>
-    
-    <div class="menu-item">⭐ Rating</div>
-    
-    <div class="menu-item">ℹ About Information</div>
 
     <div class="menu-item logout" onclick="logoutUser()">
       🚪 Logout
@@ -122,124 +138,57 @@ html, body{
 
 </div>
 
+
+
+<!-- ===========================
+     USER LOAD
+=========================== -->
 <script type="module">
   import { auth, db } from "./js/firebase-init.js";
-  import { onAuthStateChanged } from
-    "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import { doc, getDoc } from
-    "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { doc, getDoc }
+    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   onAuthStateChanged(auth, async (user) => {
+
     if (!user) {
       window.location.href = "login.html";
       return;
     }
 
-    // ✅ Email
     document.getElementById("userEmail").innerText = user.email;
 
-    // 🔍 Username priority
-    const userRef = doc(db, "users", user.uid);
-    const snap = await getDoc(userRef);
+    const snap = await getDoc(doc(db,"users",user.uid));
 
-    if (snap.exists() && snap.data().username) {
-      document.getElementById("userName").innerText =
-        snap.data().username;
-      
-if (snap.data().referralBalance !== undefined) {
-  document.getElementById("referralBalance").innerText =
-    snap.data().referralBalance;
-}
+    if (!snap.exists()) return;
 
-      
-    } else if (user.displayName) {
-      document.getElementById("userName").innerText =
-        user.displayName;
-    } else {
-      document.getElementById("userName").innerText =
-        "AKANS User";
-    }
+    const data = snap.data();
+
+    document.getElementById("userName").innerText =
+      data.username || "User";
+
+    document.getElementById("coinBalance").innerText =
+      data.coins || 0;
+
+    document.getElementById("referralBalance").innerText =
+      data.referralBalance || 0;
   });
 </script>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 🔻 BOTTOM NAVIGATION -->
+<!-- ===========================
+     BOTTOM NAV
+=========================== -->
 <div class="bottom-nav">
 
-  <button class="nav-item" data-page="index.html"
-          onclick="location.href='index.html'">
-    Bundle
-  </button>
-
-  <button class="nav-item" data-page="ai-editing.html"
-          onclick="location.href='ai-editing.html'">
-    AI & Editing
-  </button>
-
-  <button class="nav-item" data-page="social.html"
-          onclick="location.href='social.html'">
-    Social
-  </button>
-
-  <button class="nav-item active" data-page="account.html"
-          onclick="location.href='account.html'">
-    Account
-  </button>
+  <button onclick="location.href='index.html'">Bundle</button>
+  <button onclick="location.href='ai-editing.html'">AI & Editing</button>
+  <button onclick="location.href='social.html'">Social</button>
+  <button class="active">Account</button>
 
 </div>
 
-
-
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const currentPage =
-    window.location.pathname.split("/").pop() || "index.html";
-
-  document.querySelectorAll(".nav-item").forEach(btn => {
-    if (btn.dataset.page === currentPage) {
-      btn.classList.add("active");
-    }
-  });
-
-});
-  </script>
-
-
-  <script>
-let lastScroll = 0;
-const nav = document.querySelector(".bottom-nav");
-
-if (nav) {
-  window.addEventListener("scroll", () => {
-    const currentScroll = window.pageYOffset;
-
-    if (currentScroll > lastScroll && currentScroll > 80) {
-      nav.classList.add("hide");
-    } else {
-      nav.classList.remove("hide");
-    }
-
-    lastScroll = currentScroll;
-  });
-}
-  </script>
-
-
-<link rel="stylesheet" href="css/nav.css">
-  
 </body>
 </html>
