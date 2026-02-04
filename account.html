@@ -3,111 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <title>Account | AKANS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- MAIN CSS -->
-  <link rel="stylesheet" href="css/login.css" />
-  <link rel="stylesheet" href="css/nav.css" />
-
-  <!-- 🔥 ONLY AUTH + FIREBASE -->
-  <script type="module" src="js/firebase-init.js"></script>
-  <script type="module" src="js/auth.js"></script>
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/nav.css">
 
   <style>
-    html,body{
+    html, body{
+      width:100%;
       margin:0;
       padding:0;
-      background:#f3f5f9;
-      font-family:sans-serif;
     }
 
     .account-wrap{
-      padding:16px;
-      max-width:520px;
-      margin:auto;
-    }
-
-    .card{
-      background:#fff;
-      border-radius:14px;
-      padding:16px;
-      margin-bottom:14px;
-      box-shadow:0 6px 14px rgba(0,0,0,.06);
-    }
-
-    .profile{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-
-    .profile img{
-      width:44px;
-    }
-
-    .wallet{
-      text-align:center;
-    }
-
-    .wallet h2{
-      margin:6px 0 0;
-    }
-
-    .menu-item{
+      width:100%;
       padding:14px;
-      border-bottom:1px solid #eee;
-      cursor:pointer;
     }
 
-    .menu-item:last-child{
-      border:none;
-    }
-
-    .logout{
-      color:#e53935;
-      font-weight:600;
+    .profile-card,
+    .wallet-card,
+    .menu-list{
+      width:100%;
     }
   </style>
+
+  <!-- Firebase + Auth -->
+  <script type="module" src="js/firebase-init.js"></script>
+  <script type="module" src="js/auth.js"></script>
 </head>
+
 
 <body>
 
 <div class="account-wrap">
 
-  <!-- ===========================
-       PROFILE
-  ============================ -->
-  <div class="card profile">
-    <div>
-      <h3 id="userName">User</h3>
-      <p id="userEmail">user@email.com</p>
+  <!-- ================= PROFILE ================= -->
+
+  <div class="profile-card profile-flex">
+    <div class="profile-text">
+      <h3 id="userName">AKANS User</h3>
+      <p id="userEmail">user@gmail.com</p>
     </div>
-    <img src="assets/logo.png" />
+
+    <img src="assets/logo.png" class="profile-logo">
   </div>
 
 
-  <!-- ===========================
-       COINS
-  ============================ -->
-  <div class="card wallet">
-    <div>💰 Coins</div>
+
+  <!-- ================= WALLET ================= -->
+
+  <div class="wallet-card">
+    <span>💰 Coins</span>
     <h2 id="coinBalance">0</h2>
   </div>
 
-
-  <!-- ===========================
-       REFERRAL WALLET
-  ============================ -->
-  <div class="card wallet">
-    <div>🤝 Referral Wallet</div>
+  <div class="wallet-card">
+    <span>🤝 Referral Wallet</span>
     <h2 id="referralBalance">0</h2>
   </div>
 
 
-  <!-- ===========================
-       MENU
-  ============================ -->
-  <div class="card">
+
+  <!-- ================= MENU ================= -->
+
+  <div class="menu-list">
 
     <div class="menu-item" onclick="location.href='add-money.html'">
       ➕ Add Money
@@ -121,7 +81,7 @@
       🎟 Coupon Code
     </div>
 
-    <!-- 🔥 ONLY ONE REFERRAL PAGE -->
+    <!-- 🔥 ONLY NEW REFERRAL PAGE -->
     <div class="menu-item" onclick="location.href='super-refer.html'">
       🚀 Super Refer & Earn
     </div>
@@ -129,6 +89,11 @@
     <div class="menu-item" onclick="location.href='withdraw.html'">
       💸 Withdraw Amount
     </div>
+
+    <div class="menu-item">👥 Community</div>
+    <div class="menu-item">⬇ Download App</div>
+    <div class="menu-item">⭐ Rating</div>
+    <div class="menu-item">ℹ About Information</div>
 
     <div class="menu-item logout" onclick="logoutUser()">
       🚪 Logout
@@ -140,55 +105,92 @@
 
 
 
-<!-- ===========================
-     USER LOAD
-=========================== -->
+<!-- ================= USER INFO LOAD ================= -->
+
 <script type="module">
-  import { auth, db } from "./js/firebase-init.js";
-  import { onAuthStateChanged }
-    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import { doc, getDoc }
-    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { auth, db } from "./js/firebase-init.js";
+import { onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { doc, getDoc }
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, async (user) => {
 
-    if (!user) {
-      window.location.href = "login.html";
-      return;
-    }
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
 
-    document.getElementById("userEmail").innerText = user.email;
+  document.getElementById("userEmail").innerText = user.email;
 
-    const snap = await getDoc(doc(db,"users",user.uid));
+  const snap = await getDoc(doc(db, "users", user.uid));
 
-    if (!snap.exists()) return;
+  if (!snap.exists()) return;
 
-    const data = snap.data();
+  const data = snap.data();
 
-    document.getElementById("userName").innerText =
-      data.username || "User";
+  document.getElementById("userName").innerText =
+    data.username || user.displayName || "AKANS User";
 
-    document.getElementById("coinBalance").innerText =
-      data.coins || 0;
+  document.getElementById("coinBalance").innerText =
+    data.coins || 0;
 
-    document.getElementById("referralBalance").innerText =
-      data.referralBalance || 0;
-  });
+  document.getElementById("referralBalance").innerText =
+    data.referralBalance || 0;
+});
 </script>
 
 
 
-<!-- ===========================
-     BOTTOM NAV
-=========================== -->
+<!-- ================= BOTTOM NAV ================= -->
+
 <div class="bottom-nav">
 
-  <button onclick="location.href='index.html'">Bundle</button>
-  <button onclick="location.href='ai-editing.html'">AI & Editing</button>
-  <button onclick="location.href='social.html'">Social</button>
-  <button class="active">Account</button>
+  <button class="nav-item" onclick="location.href='index.html'">
+    Bundle
+  </button>
+
+  <button class="nav-item" onclick="location.href='ai-editing.html'">
+    AI & Editing
+  </button>
+
+  <button class="nav-item" onclick="location.href='social.html'">
+    Social
+  </button>
+
+  <button class="nav-item active" onclick="location.href='account.html'">
+    Account
+  </button>
 
 </div>
+
+
+
+<!-- NAV ACTIVE + HIDE -->
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const current = window.location.pathname.split("/").pop();
+
+  document.querySelectorAll(".nav-item").forEach(btn=>{
+    if(btn.textContent.toLowerCase().includes(current?.replace(".html","")))
+      btn.classList.add("active");
+  });
+
+  let lastScroll = 0;
+  const nav = document.querySelector(".bottom-nav");
+
+  window.addEventListener("scroll", () => {
+    const y = window.pageYOffset;
+
+    if(y > lastScroll && y > 80) nav.classList.add("hide");
+    else nav.classList.remove("hide");
+
+    lastScroll = y;
+  });
+});
+</script>
 
 </body>
 </html>
