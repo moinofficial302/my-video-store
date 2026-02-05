@@ -1,6 +1,6 @@
 /* =====================================================
-   🔥 SUPER REFER – FINAL BULLETPROOF VERSION
-   undefined bug NEVER AGAIN
+   🔥 SUPER REFER – DEFINITIVE FINAL FIX
+   Never undefined again
 ===================================================== */
 
 import { auth, db } from "./firebase-init.js";
@@ -8,14 +8,14 @@ import { auth, db } from "./firebase-init.js";
 import {
   doc,
   getDoc,
+  setDoc,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
 /* =====================================================
-   CODE GENERATOR
+   GENERATE RANDOM CODE
 ===================================================== */
-
 function generateCode() {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const letter = letters[Math.floor(Math.random() * 26)];
@@ -27,7 +27,6 @@ function generateCode() {
 /* =====================================================
    MAIN
 ===================================================== */
-
 document.addEventListener("DOMContentLoaded", () => {
 
   const normalInput = document.getElementById("normalLink");
@@ -37,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const copySuper  = document.getElementById("copySuper");
 
   const unlockBtn  = document.getElementById("unlockBtn");
-  const superCard = document.getElementById("superCard");
+  const superCard  = document.getElementById("superCard");
 
 
   auth.onAuthStateChanged(async (user) => {
@@ -50,57 +49,50 @@ document.addEventListener("DOMContentLoaded", () => {
     const userRef = doc(db, "users", user.uid);
     const snap = await getDoc(userRef);
 
-    if (!snap.exists()) return;
-
-    let data = snap.data();
-
-
-    /* 🔥 AUTO FIX OLD USERS (MOST IMPORTANT) */
-
-    let changed = false;
-
-    if (!data.normalCode) {
-      data.normalCode = generateCode();
-      changed = true;
-    }
-
-    if (!data.superCode) {
-      data.superCode = generateCode();
-      changed = true;
-    }
-
-    if (data.superUnlocked === undefined) {
-      data.superUnlocked = false;
-      changed = true;
-    }
-
-    if (changed) {
-      await updateDoc(userRef, {
-        normalCode: data.normalCode,
-        superCode: data.superCode,
-        superUnlocked: data.superUnlocked
+    /* ===============================
+       IF USER DOC MISSING (safety)
+    =============================== */
+    if (!snap.exists()) {
+      await setDoc(userRef, {
+        coins: 0,
+        referralBalance: 0,
+        normalCode: generateCode(),
+        superCode: generateCode(),
+        superUnlocked: false
       });
     }
 
+    let data = (await getDoc(userRef)).data();
 
-    /* 🔥 SET LINKS */
 
+    /* ===============================
+       FORCE CREATE CODES (IMPORTANT)
+    =============================== */
+    let normalCode = data.normalCode || generateCode();
+    let superCode  = data.superCode  || generateCode();
+    let unlocked   = data.superUnlocked ?? false;
+
+    await updateDoc(userRef, {
+      normalCode,
+      superCode,
+      superUnlocked: unlocked
+    });
+
+
+    /* ===============================
+       SET LINKS
+    =============================== */
     normalInput.value =
-      location.origin +
-      "/login.html?ref=" +
-      data.normalCode +
-      "&type=normal";
+      location.origin + "/login.html?ref=" + normalCode + "&type=normal";
 
     superInput.value =
-      location.origin +
-      "/login.html?ref=" +
-      data.superCode +
-      "&type=super";
+      location.origin + "/login.html?ref=" + superCode + "&type=super";
 
 
-    /* 🔥 LOCK UI */
-
-    if (!data.superUnlocked) {
+    /* ===============================
+       LOCK UI
+    =============================== */
+    if (!unlocked) {
       superCard.classList.add("locked");
       superInput.disabled = true;
       copySuper.disabled = true;
@@ -112,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* COPY BUTTONS */
-
   copyNormal.onclick = () => {
     normalInput.select();
     document.execCommand("copy");
