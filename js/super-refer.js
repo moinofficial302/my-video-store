@@ -1,45 +1,54 @@
 /* =====================================================
-   🔥 SUPER REFER – DEFINITIVE FINAL FIX
-   Never undefined again
+   🚀 SUPER REFER SYSTEM – FINAL WORKING VERSION
+   Jarvis Stable Build ❤️
 ===================================================== */
 
 import { auth, db } from "./firebase-init.js";
 
 import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+import {
   doc,
   getDoc,
-  setDoc,
-  updateDoc
+  updateDoc,
+  increment
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
 /* =====================================================
-   GENERATE RANDOM CODE
+   RANDOM CODE GENERATOR
 ===================================================== */
 function generateCode() {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const letter = letters[Math.floor(Math.random() * 26)];
-  const num = Math.floor(1000 + Math.random() * 9000);
-  return letter + "_" + num;
+  const letter = letters[Math.floor(Math.random() * letters.length)];
+  const number = Math.floor(1000 + Math.random() * 9000);
+  return letter + "_" + number;
 }
 
 
 /* =====================================================
-   MAIN
+   MAIN LOGIC
 ===================================================== */
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const normalInput = document.getElementById("normalLink");
-  const superInput  = document.getElementById("superLink");
+  const superInput = document.getElementById("superLink");
 
   const copyNormal = document.getElementById("copyNormal");
-  const copySuper  = document.getElementById("copySuper");
+  const copySuper = document.getElementById("copySuper");
 
-  const unlockBtn  = document.getElementById("unlockBtn");
-  const superCard  = document.getElementById("superCard");
+  const unlockBtn = document.getElementById("unlockBtn");
+  const superCard = document.getElementById("superCard");
 
 
-  auth.onAuthStateChanged(async (user) => {
+  /* ===============================
+     AUTH LISTENER (MAIN FIX)
+  =============================== */
+
+  onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
       window.location.href = "login.html";
@@ -49,71 +58,90 @@ document.addEventListener("DOMContentLoaded", () => {
     const userRef = doc(db, "users", user.uid);
     const snap = await getDoc(userRef);
 
-    /* ===============================
-       IF USER DOC MISSING (safety)
-    =============================== */
-    if (!snap.exists()) {
-      await setDoc(userRef, {
-        coins: 0,
-        referralBalance: 0,
-        normalCode: generateCode(),
-        superCode: generateCode(),
-        superUnlocked: false
-      });
+    if (!snap.exists()) return;
+
+    let data = snap.data();
+
+    let updates = {};
+
+    if (!data.normalCode) updates.normalCode = generateCode();
+    if (!data.superCode) updates.superCode = generateCode();
+    if (data.superUnlocked === undefined) updates.superUnlocked = false;
+
+    if (Object.keys(updates).length > 0) {
+      await updateDoc(userRef, updates);
+      data = { ...data, ...updates };
     }
 
-    let data = (await getDoc(userRef)).data();
-
 
     /* ===============================
-       FORCE CREATE CODES (IMPORTANT)
+       SET LINKS (FINAL)
     =============================== */
-    let normalCode = data.normalCode || generateCode();
-    let superCode  = data.superCode  || generateCode();
-    let unlocked   = data.superUnlocked ?? false;
 
-    await updateDoc(userRef, {
-      normalCode,
-      superCode,
-      superUnlocked: unlocked
-    });
-
-
-    /* ===============================
-       SET LINKS
-    =============================== */
     normalInput.value =
-      location.origin + "/login.html?ref=" + normalCode + "&type=normal";
+      location.origin + "/login.html?ref=" + data.normalCode + "&type=normal";
 
     superInput.value =
-      location.origin + "/login.html?ref=" + superCode + "&type=super";
+      location.origin + "/login.html?ref=" + data.superCode + "&type=super";
 
 
     /* ===============================
        LOCK UI
     =============================== */
-    if (!unlocked) {
-      superCard.classList.add("locked");
+
+    if (!data.superUnlocked) {
       superInput.disabled = true;
       copySuper.disabled = true;
+      superCard.classList.add("locked");
     } else {
       unlockBtn.style.display = "none";
     }
   });
 
 
+  /* ===============================
+     COPY
+  =============================== */
 
-  /* COPY BUTTONS */
   copyNormal.onclick = () => {
     normalInput.select();
     document.execCommand("copy");
-    alert("Copied ✅");
+    alert("Normal link copied ✅");
   };
 
   copySuper.onclick = () => {
     superInput.select();
     document.execCommand("copy");
-    alert("Copied ✅");
+    alert("Super link copied ✅");
+  };
+
+
+  /* ===============================
+     UNLOCK
+  =============================== */
+
+  unlockBtn.onclick = async () => {
+
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const userRef = doc(db, "users", user.uid);
+    const snap = await getDoc(userRef);
+
+    const coins = snap.data().coins || 0;
+
+    if (coins < 99) {
+      alert("Need 99 coins");
+      return;
+    }
+
+    await updateDoc(userRef, {
+      coins: increment(-99),
+      superUnlocked: true
+    });
+
+    alert("Unlocked 🚀");
+    location.reload();
   };
 
 });
