@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Refer & Earn | AKANS</title>
+
+  <!-- Same theme CSS -->
+  <link rel="stylesheet" href="css/login.css">
+
+  <style>
+    body{
+      background:#f6f7fb;
+      margin:0;
+      font-family:system-ui;
+    }
+
+    .wrap{
+      padding:16px;
+      max-width:520px;
+      margin:auto;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:14px;
+      padding:16px;
+      margin-bottom:16px;
+      box-shadow:0 4px 12px rgba(0,0,0,.05);
+    }
+
+    .title{
+      font-size:18px;
+      font-weight:600;
+      margin-bottom:8px;
+    }
+
+    .row{
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    input{
+      flex:1;
+      padding:10px;
+      border-radius:8px;
+      border:1px solid #ddd;
+      font-size:14px;
+    }
+
+    button{
+      padding:10px 14px;
+      border:none;
+      border-radius:8px;
+      background:#ffc107;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    ul{
+      margin:8px 0 0 18px;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .note{
+      font-size:13px;
+      color:#666;
+      margin-top:6px;
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+<div class="wrap">
+
+  <!-- ================= REFERRAL LINK ================= -->
+
+  <div class="card">
+    <div class="title">🔗 Your Referral Link</div>
+
+    <div class="row">
+      <!-- 🔥 IMPORTANT ID (refer.js use karega) -->
+      <input id="refLink" readonly value="Loading...">
+      <button id="copyBtn">Copy</button>
+    </div>
+
+    <p class="note">
+      Share this link with friends to earn rewards 💰
+    </p>
+  </div>
+
+
+
+  <!-- ================= RULES ================= -->
+
+  <div class="card">
+    <div class="title">📜 Referral Rules</div>
+
+    <ul>
+      <li><b>Normal Users</b> → 15% first deposit, 10% second</li>
+      <li><b>Premium Users (99+ coins spent)</b> → 40% first, 25% second</li>
+      <li>Reward goes to your Referral Wallet</li>
+      <li>Only first 2 deposits count</li>
+    </ul>
+  </div>
+
+
+
+  <!-- ================= WITHDRAW ================= -->
+
+  <div class="card">
+    <button style="width:100%" onclick="location.href='withdraw.html'">
+      💸 Withdraw Referral Earnings
+    </button>
+  </div>
+
+</div>
+
+
+
+<!-- 🔥 ONLY LOGIC FILE -->
+<script type="module" src="js/refer.js"></script>
+
+</body>
+</html>
