@@ -1,6 +1,6 @@
 /* =====================================================
-   🚀 REFER PAGE LOGIC (Single Smart Referral)
-   Professional • Clean • Future Safe
+   🚀 REFER PAGE LOGIC – FINAL FIXED
+   No Loading copy bug • Production Safe
 ===================================================== */
 
 import { auth, db } from "./firebase-init.js";
@@ -17,14 +17,14 @@ import {
 
 
 /* =====================================================
-   🔥 RANDOM CODE GENERATOR (A_1234 style)
+   RANDOM CODE
 ===================================================== */
 
 function generateCode() {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const letter = letters[Math.floor(Math.random() * letters.length)];
-  const num = Math.floor(1000 + Math.random() * 9000);
-  return letter + "_" + num;
+  const number = Math.floor(1000 + Math.random() * 9000);
+  return letter + "_" + number;
 }
 
 
@@ -38,10 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const linkInput = document.getElementById("refLink");
   const copyBtn   = document.getElementById("copyBtn");
 
+  /* 🔥 disable until loaded */
+  copyBtn.disabled = true;
+
 
 
   /* =====================================================
-     AUTH STATE
+     AUTH
   ===================================================== */
 
   onAuthStateChanged(auth, async (user) => {
@@ -58,44 +61,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let data = snap.data();
 
-
-
-    /* =====================================================
-       🔥 ENSURE REFERRAL CODE (OLD USER FIX)
-    ===================================================== */
-
     let referralCode = data.referralCode;
 
+    /* 🔥 create if missing */
     if (!referralCode) {
       referralCode = generateCode();
-
-      await updateDoc(userRef, {
-        referralCode: referralCode
-      });
+      await updateDoc(userRef, { referralCode });
     }
 
+    const link =
+      location.origin + "/login.html?ref=" + referralCode;
 
+    /* ✅ set value */
+    linkInput.value = link;
 
-    /* =====================================================
-       🔥 BUILD LINK
-    ===================================================== */
-
-    linkInput.value =
-      location.origin +
-      "/login.html?ref=" +
-      referralCode;
+    /* ✅ enable copy */
+    copyBtn.disabled = false;
   });
 
 
 
   /* =====================================================
-     COPY BUTTON
+     COPY
   ===================================================== */
 
-  copyBtn.addEventListener("click", () => {
+  copyBtn.addEventListener("click", async () => {
 
-    linkInput.select();
-    document.execCommand("copy");
+    const value = linkInput.value;
+
+    if (!value || value === "Loading...") {
+      alert("Link still loading... wait 1 sec");
+      return;
+    }
+
+    /* modern clipboard */
+    await navigator.clipboard.writeText(value);
 
     alert("Referral link copied ✅");
   });
