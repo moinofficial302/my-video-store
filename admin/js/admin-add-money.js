@@ -1,6 +1,6 @@
 /* =====================================================
-   🚀 ADMIN ADD MONEY – FINAL REFERRAL ENGINE
-   Clean • Fast • New System Only
+   🚀 ADMIN ADD MONEY SYSTEM (SMART REFERRAL ENGINE)
+   Single Link • Dynamic Reward • Production Safe
 ===================================================== */
 
 import { db } from "../../js/firebase-init.js";
@@ -14,8 +14,8 @@ import {
   updateDoc,
   increment,
   serverTimestamp,
-  getDoc,
-  addDoc
+  addDoc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
@@ -30,45 +30,43 @@ const pendingAddMoneyEl = document.getElementById("pendingAddMoney");
 
 
 /* =====================================================
-   LOAD PENDING
+   LOAD REQUESTS
 ===================================================== */
 
 async function loadAddMoneyRequests() {
 
-  const q = query(
-    collection(db, "add_money_requests"),
-    where("status", "==", "pending")
-  );
+  const ref = collection(db, "add_money_requests");
+  const q = query(ref, where("status", "==", "pending"));
 
-  const snap = await getDocs(q);
+  const snapshot = await getDocs(q);
 
   tableBody.innerHTML = "";
   let count = 0;
 
-  snap.forEach(d => {
+  snapshot.forEach(docSnap => {
 
     count++;
 
-    const data = d.data();
+    const d = docSnap.data();
 
     const tr = document.createElement("tr");
 
     tr.innerHTML = `
-      <td>${data.name || "User"}</td>
-      <td>₹${data.amount}</td>
-      <td>${data.utr}</td>
-      <td>${data.paymentApp}</td>
-      <td>${formatDate(data.createdAt)}</td>
+      <td>${d.name || "User"}</td>
+      <td>₹${d.amount}</td>
+      <td>${d.utr}</td>
+      <td>${d.paymentApp}</td>
+      <td>${formatDate(d.createdAt)}</td>
       <td>
-        <button class="approve" data-id="${d.id}">Approve</button>
-        <button class="reject" data-id="${d.id}">Reject</button>
+        <button class="approve-btn" data-id="${docSnap.id}">Approve</button>
+        <button class="reject-btn" data-id="${docSnap.id}">Reject</button>
       </td>
     `;
 
     tableBody.appendChild(tr);
   });
 
-  if (pendingAddMoneyEl) pendingAddMoneyEl.textContent = count;
+  pendingAddMoneyEl.textContent = count;
 
   bindActions();
 }
@@ -76,18 +74,20 @@ async function loadAddMoneyRequests() {
 
 
 /* =====================================================
-   BUTTON BIND
+   BUTTON EVENTS
 ===================================================== */
 
 function bindActions() {
 
-  document.querySelectorAll(".approve").forEach(btn =>
-    btn.onclick = () => approveRequest(btn.dataset.id)
-  );
+  document.querySelectorAll(".approve-btn")
+    .forEach(btn =>
+      btn.onclick = () => approveRequest(btn.dataset.id)
+    );
 
-  document.querySelectorAll(".reject").forEach(btn =>
-    btn.onclick = () => rejectRequest(btn.dataset.id)
-  );
+  document.querySelectorAll(".reject-btn")
+    .forEach(btn =>
+      btn.onclick = () => rejectRequest(btn.dataset.id)
+    );
 }
 
 
@@ -96,43 +96,50 @@ function bindActions() {
    APPROVE PAYMENT
 ===================================================== */
 
-async function approveRequest(id) {
+async function approveRequest(requestId) {
 
   if (!confirm("Approve this payment?")) return;
 
-  const reqRef = doc(db, "add_money_requests", id);
+  const reqRef = doc(db, "add_money_requests", requestId);
   const reqSnap = await getDoc(reqRef);
 
   if (!reqSnap.exists()) return;
 
-  const data = reqSnap.data();
+  const request = reqSnap.data();
 
-  const userRef = doc(db, "users", data.uid);
+  const userRef = doc(db, "users", request.uid);
 
-  /* ===============================
-     1️⃣ ADD COINS
-  =============================== */
+
+
+  /* =====================================================
+     1️⃣ ADD COINS + COINS SPENT
+  ===================================================== */
 
   await updateDoc(userRef, {
-    coins: increment(data.amount)
+    coins: increment(request.amount),
+    coinsSpent: increment(request.amount)
   });
 
-  /* ===============================
-     2️⃣ HANDLE REFERRAL REWARD
-  =============================== */
 
-  await processReferralReward(data.uid, data.amount);
 
-  /* ===============================
-     3️⃣ UPDATE STATUS
-  =============================== */
+  /* =====================================================
+     2️⃣ SMART REFERRAL REWARD
+  ===================================================== */
+
+  await handleReferralReward(request.uid, request.amount);
+
+
+
+  /* =====================================================
+     3️⃣ MARK APPROVED
+  ===================================================== */
 
   await updateDoc(reqRef, {
     status: "approved",
     approvedAt: serverTimestamp()
   });
 
-  alert("Approved ✅");
+  alert("Payment approved ✅");
 
   loadAddMoneyRequests();
 }
@@ -140,73 +147,96 @@ async function approveRequest(id) {
 
 
 /* =====================================================
-   🚀 NEW REFERRAL ENGINE
+   🔥 SMART REFERRAL LOGIC
 ===================================================== */
 
-async function processReferralReward(userUid, amount) {
+async function handleReferralReward(userUid, amount) {
 
-  const userSnap = await getDoc(doc(db, "users", userUid));
+  const userRef = doc(db, "users", userUid);
+  const userSnap = await getDoc(userRef);
+
   if (!userSnap.exists()) return;
 
   const user = userSnap.data();
 
-  /* ❌ no referral */
+  /* ❌ no referrer */
   if (!user.referredBy) return;
 
-  /* find referrer */
+
+
+  /* =====================================================
+     FIND REFERRER BY CODE
+  ===================================================== */
+
   const q = query(
     collection(db, "users"),
-    where(
-      user.referredType === "super" ? "superCode" : "normalCode",
-      "==",
-      user.referredBy
-    )
+    where("referralCode", "==", user.referredBy)
   );
 
   const refSnap = await getDocs(q);
+
   if (refSnap.empty) return;
 
   const refDoc = refSnap.docs[0];
-  const refId = refDoc.id;
-  const refData = refDoc.data();
+  const referrerUid = refDoc.id;
+  const referrer = refDoc.data();
 
-  let count = refData.refCount || 0;
+
+
+  /* =====================================================
+     CALCULATE %
+  ===================================================== */
+
+  const paymentNumber = (user.refCount || 0) + 1;
 
   let percent = 0;
 
-  /* ===============================
-     NORMAL
-  =============================== */
-  if (user.referredType === "normal") {
-    if (count === 0) percent = 15;
-    else if (count === 1) percent = 10;
-    else return;
-  }
+  const isPremium = (referrer.coinsSpent || 0) >= 99;
 
-  /* ===============================
-     SUPER
-  =============================== */
-  if (user.referredType === "super") {
-    if (count === 0) percent = 40;
-    else if (count === 1) percent = 25;
-    else return;
-  }
+  if (paymentNumber === 1)
+    percent = isPremium ? 40 : 15;
+
+  else if (paymentNumber === 2)
+    percent = isPremium ? 25 : 10;
+
+  else
+    return; // only 2 times
+
+
 
   const reward = Math.floor(amount * percent / 100);
 
-  /* add reward */
-  await updateDoc(doc(db, "users", refId), {
-    referralBalance: increment(reward),
+
+
+  /* =====================================================
+     GIVE REWARD
+  ===================================================== */
+
+  await updateDoc(doc(db, "users", referrerUid), {
+    referralBalance: increment(reward)
+  });
+
+
+
+  /* =====================================================
+     UPDATE USER COUNT
+  ===================================================== */
+
+  await updateDoc(userRef, {
     refCount: increment(1)
   });
 
-  /* history */
+
+
+  /* =====================================================
+     SAVE HISTORY
+  ===================================================== */
+
   await addDoc(collection(db, "referral_earnings"), {
-    referrerUid: refId,
+    referrerUid,
     fromUserUid: userUid,
     amount: reward,
     percent,
-    type: user.referredType,
     createdAt: serverTimestamp()
   });
 }
@@ -224,8 +254,7 @@ async function rejectRequest(id) {
 
   await updateDoc(doc(db, "add_money_requests", id), {
     status: "rejected",
-    rejectedReason: reason,
-    rejectedAt: serverTimestamp()
+    rejectedReason: reason
   });
 
   loadAddMoneyRequests();
