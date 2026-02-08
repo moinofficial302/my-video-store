@@ -1,11 +1,11 @@
 /* =====================================================
-   🚀 AKANS AUTH SYSTEM (FINAL PRODUCTION VERSION)
-   Clean • Fast • No old referral garbage • Stable
+   🚀 AKANS AUTH SYSTEM (Single Smart Referral)
+   Final • Clean • Production Safe
 ===================================================== */
 
 
 /* ===============================
-   🔥 FIREBASE IMPORTS
+   FIREBASE
 =============================== */
 
 import { auth, db } from "./firebase-init.js";
@@ -33,8 +33,8 @@ import {
 
 
 /* =====================================================
-   🔥 RANDOM REFERRAL CODE GENERATOR
-   Example → A_4839
+   🔥 RANDOM REFERRAL CODE
+   Example → A_4821
 ===================================================== */
 
 function generateCode() {
@@ -47,69 +47,28 @@ function generateCode() {
 
 
 /* =====================================================
-   🔥 GET REF FROM URL
-   login.html?ref=A_1234&type=normal
+   🔥 READ REF FROM URL
+   login.html?ref=A_1234
 ===================================================== */
 
 function getReferralFromUrl() {
   const params = new URLSearchParams(window.location.search);
-
-  return {
-    code: params.get("ref"),
-    type: params.get("type")
-  };
+  return params.get("ref");
 }
 
 
 
 /* =====================================================
-   🔵 TAB SWITCH (LOGIN / SIGNUP)
-===================================================== */
-
-const loginTab = document.getElementById("loginTab");
-const signupTab = document.getElementById("signupTab");
-const loginForm = document.getElementById("loginForm");
-const signupForm = document.getElementById("signupForm");
-
-if (loginTab && signupTab) {
-
-  loginTab.onclick = () => {
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
-    loginForm.classList.remove("hidden");
-    signupForm.classList.add("hidden");
-  };
-
-  signupTab.onclick = () => {
-    signupTab.classList.add("active");
-    loginTab.classList.remove("active");
-    signupForm.classList.remove("hidden");
-    loginForm.classList.add("hidden");
-  };
-}
-
-
-
-/* =====================================================
-   🟢 SIGNUP
+   🔵 SIGNUP
 ===================================================== */
 
 window.signupUser = async function () {
 
-  const username =
-    document.getElementById("signup-username").value.trim();
-
-  const email =
-    document.getElementById("signup-email").value.trim();
-
-  const whatsapp =
-    document.getElementById("signup-whatsapp").value.trim();
-
-  const password =
-    document.getElementById("signupPassword").value;
-
-  const confirm =
-    document.getElementById("signupConfirmPassword").value;
+  const username = document.getElementById("signup-username").value.trim();
+  const email = document.getElementById("signup-email").value.trim();
+  const whatsapp = document.getElementById("signup-whatsapp").value.trim();
+  const password = document.getElementById("signupPassword").value;
+  const confirm = document.getElementById("signupConfirmPassword").value;
 
   if (!username || !email || !password) {
     alert("Fill all fields");
@@ -126,9 +85,8 @@ window.signupUser = async function () {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     const user = cred.user;
 
-    const refData = getReferralFromUrl();
+    const referredBy = getReferralFromUrl();
 
-    /* 🔥 CREATE USER DOC */
     await setDoc(doc(db, "users", user.uid), {
 
       username,
@@ -138,39 +96,33 @@ window.signupUser = async function () {
       coins: 0,
       referralBalance: 0,
 
-      /* 🔥 NEW REFERRAL SYSTEM */
-      normalCode: generateCode(),
-      superCode: generateCode(),
-      superUnlocked: false,
-
-      referredBy: refData.code || null,
-      referredType: refData.type || null,
-
+      /* 🔥 SMART SYSTEM */
+      referralCode: generateCode(),
+      coinsSpent: 0,
       refCount: 0,
+
+      referredBy: referredBy || null,
 
       createdAt: serverTimestamp()
     });
 
     window.location.href = "index.html";
 
-  } catch (err) {
-    alert(err.message);
+  } catch (e) {
+    alert(e.message);
   }
 };
 
 
 
 /* =====================================================
-   🔵 LOGIN (USERNAME OR EMAIL)
+   🔵 LOGIN (username/email)
 ===================================================== */
 
 window.loginUser = async function () {
 
-  let identifier =
-    document.getElementById("loginIdentifier").value.trim();
-
-  const password =
-    document.getElementById("loginPassword").value;
+  let identifier = document.getElementById("loginIdentifier").value.trim();
+  const password = document.getElementById("loginPassword").value;
 
   let email = identifier;
 
@@ -205,18 +157,17 @@ window.loginUser = async function () {
 window.googleLogin = async function () {
 
   const provider = new GoogleAuthProvider();
-
   const result = await signInWithPopup(auth, provider);
   const user = result.user;
 
-  const ref = doc(db, "users", user.uid);
-  const snap = await getDoc(ref);
+  const userRef = doc(db, "users", user.uid);
+  const snap = await getDoc(userRef);
 
   if (!snap.exists()) {
 
-    const refData = getReferralFromUrl();
+    const referredBy = getReferralFromUrl();
 
-    await setDoc(ref, {
+    await setDoc(userRef, {
 
       username: user.displayName || "User",
       email: user.email,
@@ -225,14 +176,11 @@ window.googleLogin = async function () {
       coins: 0,
       referralBalance: 0,
 
-      normalCode: generateCode(),
-      superCode: generateCode(),
-      superUnlocked: false,
-
-      referredBy: refData.code || null,
-      referredType: refData.type || null,
-
+      referralCode: generateCode(),
+      coinsSpent: 0,
       refCount: 0,
+
+      referredBy: referredBy || null,
 
       createdAt: serverTimestamp()
     });
@@ -244,7 +192,7 @@ window.googleLogin = async function () {
 
 
 /* =====================================================
-   🔵 AUTH STATE (COINS LOAD)
+   🔵 AUTH STATE (coins load)
 ===================================================== */
 
 onAuthStateChanged(auth, async (user) => {
@@ -267,12 +215,11 @@ onAuthStateChanged(auth, async (user) => {
 
 
 /* =====================================================
-   🔐 PAGE GUARD
+   🔐 GUARD
 ===================================================== */
 
 window.requireLogin = function () {
-
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, user => {
     if (!user) window.location.href = "login.html";
   });
 };
