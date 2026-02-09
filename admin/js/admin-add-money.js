@@ -70,12 +70,17 @@ window.approve = async function(id) {
 
   const userRef = doc(db, "users", req.uid);
 
-  /* add coins */
-  await updateDoc(userRef, {
-    coins: increment(req.amount),
-    coinsSpent: increment(req.amount)
-  });
 
+
+   
+  await updateDoc(userRef, {
+  coins: increment(req.amount),
+  addMoneyTotal: increment(req.amount)
+});
+
+
+
+   
   /* referral reward */
   await handleReferralReward(req.uid, req.amount);
 
@@ -116,8 +121,8 @@ async function handleReferralReward(userUid, amount) {
   const paymentNumber = (user.refCount || 0) + 1;
 
   let percent = 0;
-  const isPremium = (referrer.coinsSpent || 0) >= 99;
-
+  const isPremium = (referrer.addMoneyTotal || 0) >= 99;
+   
   if (paymentNumber === 1)
     percent = isPremium ? 40 : 15;
   else if (paymentNumber === 2)
