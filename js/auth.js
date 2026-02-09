@@ -1,6 +1,7 @@
 /* =====================================================
-   🚀 AKANS AUTH SYSTEM (Single Smart Referral)
-   Final • Clean • Production Safe
+   🚀 AKANS AUTH SYSTEM
+   Single Smart Referral • 2FA SAFE • Production Ready
+   Jarvis Final Version 💛
 ===================================================== */
 
 
@@ -14,7 +15,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -34,7 +36,6 @@ import {
 
 /* =====================================================
    🔥 RANDOM REFERRAL CODE
-   Example → A_4821
 ===================================================== */
 
 function generateCode() {
@@ -47,8 +48,7 @@ function generateCode() {
 
 
 /* =====================================================
-   🔥 READ REF FROM URL
-   login.html?ref=A_1234
+   🔥 GET REF FROM URL
 ===================================================== */
 
 function getReferralFromUrl() {
@@ -59,7 +59,7 @@ function getReferralFromUrl() {
 
 
 /* =====================================================
-   🔵 SIGNUP
+   🟢 SIGNUP
 ===================================================== */
 
 window.signupUser = async function () {
@@ -96,7 +96,6 @@ window.signupUser = async function () {
       coins: 0,
       referralBalance: 0,
 
-      /* 🔥 SMART SYSTEM */
       referralCode: generateCode(),
       coinsSpent: 0,
       refCount: 0,
@@ -151,13 +150,22 @@ window.loginUser = async function () {
 
 
 /* =====================================================
-   🔴 GOOGLE LOGIN
+   🔴 GOOGLE LOGIN (🔥 REDIRECT BASED – 2FA SAFE)
 ===================================================== */
 
-window.googleLogin = async function () {
+const provider = new GoogleAuthProvider();
 
-  const provider = new GoogleAuthProvider();
-  const result = await signInWithPopup(auth, provider);
+/* button click */
+window.googleLogin = async function () {
+  await signInWithRedirect(auth, provider);
+};
+
+
+/* after redirect back */
+getRedirectResult(auth).then(async (result) => {
+
+  if (!result) return;
+
   const user = result.user;
 
   const userRef = doc(db, "users", user.uid);
@@ -187,12 +195,13 @@ window.googleLogin = async function () {
   }
 
   window.location.href = "index.html";
-};
+
+}).catch(()=>{});
 
 
 
 /* =====================================================
-   🔵 AUTH STATE (coins load)
+   🔵 AUTH STATE (wallet load)
 ===================================================== */
 
 onAuthStateChanged(auth, async (user) => {
