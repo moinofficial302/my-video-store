@@ -89,7 +89,7 @@ window.signupUser = async function () {
       referralBalance: 0,
 
       referralCode: generateCode(),
-      coinsSpent: 0,
+      addMoneyTotal: 0,
       refCount: 0,
       referredBy: referredBy || null,
 
