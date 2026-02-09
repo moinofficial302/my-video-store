@@ -154,53 +154,52 @@ window.location.href = "index.html";
 
 
 /* =====================================================
-   🔴 GOOGLE LOGIN (🔥 REDIRECT BASED – 2FA SAFE)
+
+/* =====================================================
+   🔴 GOOGLE LOGIN (POPUP SAFE VERSION)
 ===================================================== */
 
-const provider = new GoogleAuthProvider();
-
-/* button click */
 window.googleLogin = async function () {
-  await signInWithRedirect(auth, provider);
+  try {
+    const provider = new GoogleAuthProvider();
+
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    const userRef = doc(db, "users", user.uid);
+    const snap = await getDoc(userRef);
+
+    if (!snap.exists()) {
+
+      const referredBy = getReferralFromUrl();
+
+      await setDoc(userRef, {
+        username: user.displayName || "User",
+        email: user.email,
+        whatsapp: "",
+
+        coins: 0,
+        referralBalance: 0,
+
+        referralCode: generateCode(),
+        coinsSpent: 0,
+        refCount: 0,
+
+        referredBy: referredBy || null,
+
+        createdAt: serverTimestamp()
+      });
+    }
+
+    window.location.href = "index.html";
+
+  } catch (e) {
+    alert(e.message);
+  }
 };
 
 
-/* after redirect back */
-getRedirectResult(auth).then(async (result) => {
 
-  if (!result) return;
-
-  const user = result.user;
-
-  const userRef = doc(db, "users", user.uid);
-  const snap = await getDoc(userRef);
-
-  if (!snap.exists()) {
-
-    const referredBy = getReferralFromUrl();
-
-    await setDoc(userRef, {
-
-      username: user.displayName || "User",
-      email: user.email,
-      whatsapp: "",
-
-      coins: 0,
-      referralBalance: 0,
-
-      referralCode: generateCode(),
-      coinsSpent: 0,
-      refCount: 0,
-
-      referredBy: referredBy || null,
-
-      createdAt: serverTimestamp()
-    });
-  }
-
-  window.location.href = "index.html";
-
-}).catch(()=>{});
 
 
 
