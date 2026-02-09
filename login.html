@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Login | AKANS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  <link rel="stylesheet" href="css/login.css">  <style>
-    .hidden { display:none; }
+    .hidden{display:none}
 
     .input-group{
       position:relative;
@@ -23,7 +22,6 @@
       transform:translateY(-50%);
       cursor:pointer;
       font-size:18px;
-      opacity:.7;
     }
   </style></head><body><div class="auth-wrapper">  <div class="logo-top">
     <img src="assets/logo.png">
@@ -34,29 +32,24 @@
   <button id="signupTab" class="tab">Sign Up</button>
 </div>
 
-<!-- ================= LOGIN ================= -->
 
+<!-- ================= LOGIN ================= -->
 <div id="loginForm" class="form-box">
 
   <input id="loginIdentifier" placeholder="Username or Email">
 
   <div class="input-group">
     <input type="password" id="loginPassword" placeholder="Password">
-    <span class="eye" onclick="togglePassword('loginPassword',this)">👁️</span>
+    <span class="eye" onclick="togglePassword('loginPassword')">👁️</span>
   </div>
 
-  <!-- 🔥 JS binding style (NO inline bug) -->
   <button id="loginBtn" class="primary-btn">Login</button>
-
-  <button id="googleBtn" class="google-btn">
-    Continue with Google
-  </button>
+  <button id="googleBtn" class="google-btn">Continue with Google</button>
 
 </div>
 
 
 <!-- ================= SIGNUP ================= -->
-
 <div id="signupForm" class="form-box hidden">
 
   <input id="signup-username" placeholder="Username">
@@ -64,49 +57,52 @@
 
   <div class="input-group">
     <input type="password" id="signupPassword" placeholder="Password">
-    <span class="eye" onclick="togglePassword('signupPassword',this)">👁️</span>
+    <span class="eye" onclick="togglePassword('signupPassword')">👁️</span>
   </div>
 
   <div class="input-group">
     <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
-    <span class="eye" onclick="togglePassword('signupConfirmPassword',this)">👁️</span>
+    <span class="eye" onclick="togglePassword('signupConfirmPassword')">👁️</span>
   </div>
 
-  <!-- 🔥 renamed to avoid conflict -->
   <input id="refInput" placeholder="Referral Code (Optional)">
   <input id="signup-whatsapp" placeholder="WhatsApp (Optional)">
 
-  <button id="signupBtn" class="primary-btn">
-    Create Account
-  </button>
+  <button id="signupBtn" class="primary-btn">Create Account</button>
 
 </div>
 
   </div>
-</div><!-- ================= FIREBASE ================= --><script type="module">
-import "./js/firebase-init.js";
-import "./js/auth.js";
+</div><!-- ================= ONLY LOAD AUTH ================= --><script type="module">
+import "./js/auth.js";   // 🔥 ONLY THIS (no firebase-init duplicate)
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* 🔥 SAFE button binding */
+  /* buttons */
+  loginBtn.onclick = () => window.loginUser();
+  signupBtn.onclick = () => window.signupUser();
+  googleBtn.onclick = () => window.googleLogin();
 
-  document.getElementById("loginBtn")
-    .addEventListener("click", () => window.loginUser());
+  /* tab switch */
+  loginTab.onclick = () => {
+    loginTab.classList.add("active");
+    signupTab.classList.remove("active");
+    loginForm.classList.remove("hidden");
+    signupForm.classList.add("hidden");
+  };
 
-  document.getElementById("signupBtn")
-    .addEventListener("click", () => window.signupUser());
-
-  document.getElementById("googleBtn")
-    .addEventListener("click", () => window.googleLogin());
-
+  signupTab.onclick = () => {
+    signupTab.classList.add("active");
+    loginTab.classList.remove("active");
+    signupForm.classList.remove("hidden");
+    loginForm.classList.add("hidden");
+  };
 });
 
-
 /* password toggle */
-window.togglePassword = (id, el) => {
-  const input = document.getElementById(id);
-  input.type = input.type === "password" ? "text" : "password";
+window.togglePassword = (id) => {
+  const el = document.getElementById(id);
+  el.type = el.type === "password" ? "text" : "password";
 };
 </script></body>
 </html>
