@@ -1,8 +1,10 @@
 // =======================================
-// ADMIN WITHDRAWAL REQUESTS
+// 🚀 AKANS ADMIN WITHDRAWAL PANEL (FINAL)
+// Jarvis Clean Version 💛
 // =======================================
 
 import { db } from "../../js/firebase-init.js";
+
 import {
   collection,
   getDocs,
@@ -10,132 +12,98 @@ import {
   where,
   doc,
   updateDoc,
+  getDoc,
   increment,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// DOM
+
+// ⭐ IMPORTANT (same as user side)
+const COLLECTION = "withdraw_requests";
+
 const tableBody = document.getElementById("withdrawTable");
-const pendingWithdrawalsEl = document.getElementById("pendingWithdrawals");
+const pendingEl = document.getElementById("pendingWithdrawals");
+
 
 // =======================================
-// LOAD WITHDRAWAL REQUESTS
+// LOAD PENDING REQUESTS
 // =======================================
 async function loadWithdrawals() {
-  try {
-    const ref = collection(db, "withdrawal_requests");
-    const q = query(ref, where("status", "==", "pending"));
-    const snapshot = await getDocs(q);
 
-    tableBody.innerHTML = "";
-    let pendingCount = 0;
+  tableBody.innerHTML = "";
 
-    snapshot.forEach(docSnap => {
-      pendingCount++;
-      const data = docSnap.data();
+  const q = query(
+    collection(db, COLLECTION),
+    where("status", "==", "pending")
+  );
 
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${data.name || "User"}</td>
-        <td>₹${data.amount}</td>
-        <td>${data.paymentNumber}</td>
-        <td><span style="color:#facc15">Pending</span></td>
-        <td>
-          <button class="btn btn-success approve-btn" data-id="${docSnap.id}">Approve</button>
-          <button class="btn btn-danger reject-btn" data-id="${docSnap.id}">Reject</button>
-        </td>
-      `;
+  const snap = await getDocs(q);
 
-      tableBody.appendChild(tr);
-    });
+  let count = 0;
 
-    if (pendingWithdrawalsEl) {
-      pendingWithdrawalsEl.textContent = pendingCount;
-    }
+  snap.forEach(d => {
 
-    bindActions();
+    count++;
 
-  } catch (err) {
-    console.error("Withdrawal load error:", err);
-  }
-}
+    const data = d.data();
 
-// =======================================
-// BUTTON ACTIONS
-// =======================================
-function bindActions() {
-  document.querySelectorAll(".approve-btn").forEach(btn => {
-    btn.addEventListener("click", () => approveWithdrawal(btn.dataset.id));
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${data.email || "User"}</td>
+      <td>₹${data.amount}</td>
+      <td>${data.upi || "-"}</td>
+      <td style="color:#facc15">Pending</td>
+      <td>
+        <button onclick="approveWithdraw('${d.id}')">Approve</button>
+        <button onclick="rejectWithdraw('${d.id}')">Reject</button>
+      </td>
+    `;
+
+    tableBody.appendChild(tr);
   });
 
-  document.querySelectorAll(".reject-btn").forEach(btn => {
-    btn.addEventListener("click", () => rejectWithdrawal(btn.dataset.id));
+  if (pendingEl) pendingEl.innerText = count;
+}
+
+
+// =======================================
+// APPROVE
+// =======================================
+window.approveWithdraw = async (id) => {
+
+  await updateDoc(doc(db, COLLECTION, id), {
+    status: "approved",
+    approvedAt: serverTimestamp()
   });
-}
+
+  alert("Approved ✅");
+  loadWithdrawals();
+};
+
 
 // =======================================
-// APPROVE WITHDRAWAL
+// REJECT + REFUND
 // =======================================
-async function approveWithdrawal(requestId) {
-  const ok = confirm("Payment sent? Approve withdrawal?");
-  if (!ok) return;
+window.rejectWithdraw = async (id) => {
 
-  try {
-    const ref = doc(db, "withdrawal_requests", requestId);
+  const snap = await getDoc(doc(db, COLLECTION, id));
+  const data = snap.data();
 
-    await updateDoc(ref, {
-      status: "approved",
-      approvedAt: serverTimestamp()
-    });
+  // refund referral balance
+  await updateDoc(doc(db, "users", data.uid), {
+    referralBalance: increment(data.amount)
+  });
 
-    alert("Withdrawal approved");
-    loadWithdrawals();
+  await updateDoc(doc(db, COLLECTION, id), {
+    status: "rejected",
+    rejectedAt: serverTimestamp()
+  });
 
-  } catch (err) {
-    console.error(err);
-    alert("Approve failed");
-  }
-}
+  alert("Rejected & refunded ✅");
+  loadWithdrawals();
+};
 
-// =======================================
-// REJECT WITHDRAWAL (REFUND COINS)
-// =======================================
-async function rejectWithdrawal(requestId) {
-  const reason = prompt("Rejection reason?");
-  if (!reason) return;
-
-  try {
-    // get request
-    const snap = await getDocs(
-      query(collection(db, "withdrawal_requests"),
-      where("__name__", "==", requestId))
-    );
-
-    let data;
-    snap.forEach(d => data = d.data());
-    if (!data) return alert("Request not found");
-
-    // refund coins
-    const userRef = doc(db, "users", data.uid);
-    await updateDoc(userRef, {
-      coins: increment(data.amount)
-    });
-
-    // update request
-    await updateDoc(doc(db, "withdrawal_requests", requestId), {
-      status: "rejected",
-      rejectedReason: reason,
-      rejectedAt: serverTimestamp()
-    });
-
-    alert("Withdrawal rejected & coins refunded");
-    loadWithdrawals();
-
-  } catch (err) {
-    console.error(err);
-    alert("Reject failed");
-  }
-}
 
 // =======================================
 // INIT
