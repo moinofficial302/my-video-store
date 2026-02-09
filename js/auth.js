@@ -1,7 +1,7 @@
 /* =====================================================
    🚀 AKANS AUTH SYSTEM
-   Single Smart Referral • 2FA SAFE • Production Ready
-   Jarvis Final Version 💛
+   FINAL • CLEAN • POPUP SAFE • PRODUCTION READY
+   Jarvis Ultimate Build 💛
 ===================================================== */
 
 
@@ -15,8 +15,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -48,7 +47,7 @@ function generateCode() {
 
 
 /* =====================================================
-   🔥 GET REF FROM URL
+   🔥 REF FROM URL
 ===================================================== */
 
 function getReferralFromUrl() {
@@ -63,32 +62,25 @@ function getReferralFromUrl() {
 ===================================================== */
 
 window.signupUser = async function () {
-
-  const username = document.getElementById("signup-username").value.trim();
-  const email = document.getElementById("signup-email").value.trim();
-  const whatsapp = document.getElementById("signup-whatsapp").value.trim();
-  const password = document.getElementById("signupPassword").value;
-  const confirm = document.getElementById("signupConfirmPassword").value;
-
-  if (!username || !email || !password) {
-    alert("Fill all fields");
-    return;
-  }
-
-  if (password !== confirm) {
-    alert("Passwords not match");
-    return;
-  }
-
   try {
 
+    const username = document.getElementById("signup-username").value.trim();
+    const email = document.getElementById("signup-email").value.trim();
+    const whatsapp = document.getElementById("signup-whatsapp").value.trim();
+    const password = document.getElementById("signupPassword").value;
+    const confirm = document.getElementById("signupConfirmPassword").value;
+
+    if (!username || !email || !password)
+      return alert("Fill all fields");
+
+    if (password !== confirm)
+      return alert("Passwords not match");
+
     const cred = await createUserWithEmailAndPassword(auth, email, password);
-    const user = cred.user;
 
     const referredBy = getReferralFromUrl();
 
-    await setDoc(doc(db, "users", user.uid), {
-
+    await setDoc(doc(db, "users", cred.user.uid), {
       username,
       email,
       whatsapp,
@@ -99,13 +91,12 @@ window.signupUser = async function () {
       referralCode: generateCode(),
       coinsSpent: 0,
       refCount: 0,
-
       referredBy: referredBy || null,
 
       createdAt: serverTimestamp()
     });
 
-    window.location.href = "index.html";
+    window.location.replace("index.html");
 
   } catch (e) {
     alert(e.message);
@@ -115,52 +106,51 @@ window.signupUser = async function () {
 
 
 /* =====================================================
-   🔵 LOGIN (username/email)
+   🔵 LOGIN
 ===================================================== */
 
 window.loginUser = async function () {
+  try {
 
-  let identifier = document.getElementById("loginIdentifier").value.trim();
-  const password = document.getElementById("loginPassword").value;
+    let identifier = document.getElementById("loginIdentifier").value.trim();
+    const password = document.getElementById("loginPassword").value;
 
-  let email = identifier;
+    let email = identifier;
 
-  if (!identifier.includes("@")) {
+    /* username → email */
+    if (!identifier.includes("@")) {
 
-    const q = query(
-      collection(db, "users"),
-      where("username", "==", identifier)
-    );
+      const q = query(
+        collection(db, "users"),
+        where("username", "==", identifier)
+      );
 
-    const snap = await getDocs(q);
+      const snap = await getDocs(q);
 
-    if (snap.empty) {
-      alert("Username not found");
-      return;
+      if (snap.empty)
+        return alert("Username not found");
+
+      email = snap.docs[0].data().email;
     }
 
-    email = snap.docs[0].data().email;
+    await signInWithEmailAndPassword(auth, email, password);
+
+    window.location.replace("index.html");
+
+  } catch (e) {
+    alert(e.message);
   }
-
-  await signInWithEmailAndPassword(auth, email, password);
-
-  window.location.href = "index.html";
 };
 
 
-await signInWithEmailAndPassword(auth, email, password);
-alert("Login success ✅");
-window.location.href = "index.html";
-
 
 /* =====================================================
-
-/* =====================================================
-   🔴 GOOGLE LOGIN (POPUP SAFE VERSION)
+   🔴 GOOGLE LOGIN (POPUP SAFE)
 ===================================================== */
 
 window.googleLogin = async function () {
   try {
+
     const provider = new GoogleAuthProvider();
 
     const result = await signInWithPopup(auth, provider);
@@ -169,6 +159,7 @@ window.googleLogin = async function () {
     const userRef = doc(db, "users", user.uid);
     const snap = await getDoc(userRef);
 
+    /* first time user */
     if (!snap.exists()) {
 
       const referredBy = getReferralFromUrl();
@@ -184,22 +175,18 @@ window.googleLogin = async function () {
         referralCode: generateCode(),
         coinsSpent: 0,
         refCount: 0,
-
         referredBy: referredBy || null,
 
         createdAt: serverTimestamp()
       });
     }
 
-    window.location.href = "index.html";
+    window.location.replace("index.html");
 
   } catch (e) {
     alert(e.message);
   }
 };
-
-
-
 
 
 
@@ -212,7 +199,6 @@ onAuthStateChanged(auth, async (user) => {
   if (!user) return;
 
   const snap = await getDoc(doc(db, "users", user.uid));
-
   if (!snap.exists()) return;
 
   const data = snap.data();
@@ -227,12 +213,13 @@ onAuthStateChanged(auth, async (user) => {
 
 
 /* =====================================================
-   🔐 GUARD
+   🔐 PAGE GUARD
+   ⚠️ CALL ONLY ON PROTECTED PAGES
 ===================================================== */
 
 window.requireLogin = function () {
   onAuthStateChanged(auth, user => {
-    if (!user) window.location.href = "login.html";
+    if (!user) window.location.replace("login.html");
   });
 };
 
@@ -244,5 +231,5 @@ window.requireLogin = function () {
 
 window.logoutUser = async function () {
   await signOut(auth);
-  window.location.href = "login.html";
+  window.location.replace("login.html");
 };
