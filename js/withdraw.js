@@ -153,15 +153,34 @@ async function loadHistory(uid) {
 
   wSnap.forEach(d => {
     const data = d.data();
-    historyBox.innerHTML += `
-      <div class="history-item">
-        <div>Withdraw ₹${data.amount}</div>
-        <div class="status ${data.status}">
-          ${data.status.toUpperCase()}
-        </div>
+
+
+
+wSnap.forEach(d => {
+
+  const data = d.data();
+
+  let statusText = "";
+
+  if (data.status === "approved")
+    statusText = "Withdrawal Successfully ✅";
+  else if (data.status === "pending")
+    statusText = "Pending ⏳";
+  else
+    statusText = "Rejected ❌";
+
+  historyBox.innerHTML += `
+    <div class="history-item">
+      <div>Withdraw ₹${data.amount}</div>
+      <div class="status ${data.status}">
+        ${statusText}
       </div>
-    `;
-  });
+    </div>
+  `;
+});
+
+    
+    
 
   // Convert history
   const cq = query(
