@@ -1,3 +1,8 @@
+// =======================================
+// 🚀 AKANS ADMIN WITHDRAW SYSTEM (FINAL)
+// Jarvis Fix Version 💛
+// =======================================
+
 import { db } from "../../js/firebase-init.js";
 import {
   collection,
@@ -12,9 +17,13 @@ import {
 
 const tableBody = document.getElementById("withdrawTable");
 
+
+// =======================================
+// LOAD PENDING REQUESTS
+// =======================================
 async function loadWithdrawals() {
 
-  // ⭐ FIXED NAME HERE
+  // ⭐ MUST MATCH USER SIDE
   const ref = collection(db, "withdraw_requests");
 
   const q = query(ref, where("status", "==", "pending"));
@@ -32,7 +41,7 @@ async function loadWithdrawals() {
       <td>${data.uid}</td>
       <td>₹${data.amount}</td>
       <td>${data.upi}</td>
-      <td style="color:orange">Pending</td>
+      <td style="color:#facc15">Pending</td>
       <td>
         <button onclick="approve('${d.id}')">Approve</button>
         <button onclick="reject('${d.id}','${data.uid}',${data.amount})">Reject</button>
@@ -43,6 +52,10 @@ async function loadWithdrawals() {
   });
 }
 
+
+// =======================================
+// APPROVE
+// =======================================
 window.approve = async function(id) {
 
   await updateDoc(doc(db, "withdraw_requests", id), {
@@ -52,10 +65,15 @@ window.approve = async function(id) {
 
   alert("Approved ✅");
   loadWithdrawals();
-}
+};
 
+
+// =======================================
+// REJECT + REFUND
+// =======================================
 window.reject = async function(id, uid, amount) {
 
+  // refund referral balance
   await updateDoc(doc(db, "users", uid), {
     referralBalance: increment(amount)
   });
@@ -65,8 +83,12 @@ window.reject = async function(id, uid, amount) {
     rejectedAt: serverTimestamp()
   });
 
-  alert("Rejected + refunded ✅");
+  alert("Rejected + Refunded ✅");
   loadWithdrawals();
-}
+};
 
+
+// =======================================
+// INIT
+// =======================================
 loadWithdrawals();
