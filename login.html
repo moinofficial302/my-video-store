@@ -3,135 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <title>Login | AKANS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/login.css">
-
-  <!-- Firebase -->
-  <script type="module" src="js/firebase-init.js"></script>
-  <script type="module" src="js/auth.js"></script>
-
-  <!-- EXTRA FIX CSS -->
-  <style>
-    .hidden { display: none; }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <link rel="stylesheet" href="css/login.css">  <style>
+    .hidden { display:none; }
 
     .input-group{
-      position: relative;
-      width: 100%;
+      position:relative;
+      width:100%;
     }
 
     .input-group input{
-      width: 100%;
-      padding-right: 45px;
+      width:100%;
+      padding-right:45px;
     }
 
     .eye{
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 18px;
-      opacity: .7;
+      position:absolute;
+      right:14px;
+      top:50%;
+      transform:translateY(-50%);
+      cursor:pointer;
+      font-size:18px;
+      opacity:.7;
     }
-
-    .eye:active{ opacity: 1; }
-  </style>
-</head>
-
-<body>
-
-<div class="auth-wrapper">
-
-  <!-- LOGO -->
-  <div class="logo-top">
-    <img src="assets/logo.png" alt="AKANS Logo">
+  </style></head><body><div class="auth-wrapper">  <div class="logo-top">
+    <img src="assets/logo.png">
     <p class="logo-text">Only M.7 Limited</p>
-  </div>
-
-  <!-- AUTH CARD -->
-  <div class="auth-card">
-
-    <!-- TABS -->
-    <div class="auth-tabs">
-      <button id="loginTab" class="tab active">Login</button>
-      <button id="signupTab" class="tab">Sign Up</button>
-    </div>
-
-    <!-- LOGIN FORM -->
-    <div id="loginForm" class="form-box">
-
-      <input
-        type="text"
-        id="loginIdentifier"
-        placeholder="Username or Email"
-      >
-
-      <div class="input-group">
-        <input
-          type="password"
-          id="loginPassword"
-          placeholder="Password"
-        >
-        <span class="eye"
-          onclick="togglePassword('loginPassword', this)">👁️</span>
-      </div>
-
-      <button class="primary-btn" onclick="loginUser()">
-        Login
-      </button>
-
-      <button class="google-btn" onclick="googleLogin()">
-        Continue with Google
-      </button>
-
-      <p class="link-text" onclick="resetPassword()">
-        Forgot password?
-      </p>
-
-    </div>
-    
-
-    <!-- SIGNUP FORM -->
-
-
-    
-    <div id="signupForm" class="form-box hidden">
-
-      <input type="text" id="signup-username" placeholder="Username">
-      <input type="email" id="signup-email" placeholder="Email">
-      
-
-      
-      <div class="input-group">
-        <input type="password" id="signupPassword" placeholder="Password">
-        <span class="eye"
-          onclick="togglePassword('signupPassword', this)">👁️</span>
-      </div>
-
-      <div class="input-group">
-        <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
-        <span class="eye"
-          onclick="togglePassword('signupConfirmPassword', this)">👁️</span>
-      </div>
-
-      <input type="text" id="referralCode" placeholder="Referral Code ( Optional )">
-      
-      
-
-       <input type="text" id="signup-whatsapp" placeholder="WhatsApp Number ( Optional )">
-        
-      
-
-      <button class="primary-btn" onclick="signupUser()">
-        Create Account
-      </button>
-
-    </div>
-
-  </div>
+  </div>  <div class="auth-card"><!-- TABS -->
+<div class="auth-tabs">
+  <button id="loginTab" class="tab active">Login</button>
+  <button id="signupTab" class="tab">Sign Up</button>
 </div>
 
-</body>
+<!-- ================= LOGIN ================= -->
+
+<div id="loginForm" class="form-box">
+
+  <input id="loginIdentifier" placeholder="Username or Email">
+
+  <div class="input-group">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <span class="eye" onclick="togglePassword('loginPassword',this)">👁️</span>
+  </div>
+
+  <!-- 🔥 JS binding style (NO inline bug) -->
+  <button id="loginBtn" class="primary-btn">Login</button>
+
+  <button id="googleBtn" class="google-btn">
+    Continue with Google
+  </button>
+
+</div>
+
+
+<!-- ================= SIGNUP ================= -->
+
+<div id="signupForm" class="form-box hidden">
+
+  <input id="signup-username" placeholder="Username">
+  <input id="signup-email" placeholder="Email">
+
+  <div class="input-group">
+    <input type="password" id="signupPassword" placeholder="Password">
+    <span class="eye" onclick="togglePassword('signupPassword',this)">👁️</span>
+  </div>
+
+  <div class="input-group">
+    <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
+    <span class="eye" onclick="togglePassword('signupConfirmPassword',this)">👁️</span>
+  </div>
+
+  <!-- 🔥 renamed to avoid conflict -->
+  <input id="refInput" placeholder="Referral Code (Optional)">
+  <input id="signup-whatsapp" placeholder="WhatsApp (Optional)">
+
+  <button id="signupBtn" class="primary-btn">
+    Create Account
+  </button>
+
+</div>
+
+  </div>
+</div><!-- ================= FIREBASE ================= --><script type="module">
+import "./js/firebase-init.js";
+import "./js/auth.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* 🔥 SAFE button binding */
+
+  document.getElementById("loginBtn")
+    .addEventListener("click", () => window.loginUser());
+
+  document.getElementById("signupBtn")
+    .addEventListener("click", () => window.signupUser());
+
+  document.getElementById("googleBtn")
+    .addEventListener("click", () => window.googleLogin());
+
+});
+
+
+/* password toggle */
+window.togglePassword = (id, el) => {
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
+};
+</script></body>
 </html>
