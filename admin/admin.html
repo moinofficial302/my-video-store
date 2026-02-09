@@ -3,293 +3,277 @@
 <head>
   <meta charset="UTF-8" />
   <title>Admin Panel | AKANS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/admin.css" />
+  <link rel="stylesheet" href="css/admin.css?v=2">
 
-  <!-- Fonts -->
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<!-- ===============================
-     ADMIN LAYOUT
-================================ -->
+<!-- =================================================
+     NEW LAYOUT (IMPORTANT: admin-layout)
+================================================= -->
 
-  <div class="admin-wrapper">
+<div class="admin-layout">
 
-  <!-- ===============================
+
+  <!-- =================================================
        SIDEBAR
-  ================================ -->
+  ================================================= -->
   <aside class="admin-sidebar">
 
-    
+    <h2>AKANS</h2>
 
-    <nav class="admin-nav">
-      
-<button type="button" class="nav-item active" data-section="dashboard">📊 Dashboard</button>
-      
-<button type="button" class="nav-item" data-section="users">👥 Users</button>
-      
-<button type="button" class="nav-item" data-section="add-money">💰 Add Money Requests</button>
-      
-<button type="button" class="nav-item" data-section="withdrawals">🏦 Withdrawal Requests</button>
-      
-<button type="button" class="nav-item" data-section="orders">🧾 Orders / Sales</button>
-      
-<button type="button" class="nav-item" data-section="products">📦 Products</button>
-      
-<button type="button" class="nav-item" data-section="coupons">🎟 Coupons</button>
-      
-<button type="button" class="nav-item" data-section="analytics">📈 Analytics</button>
+    <button class="active" data-section="dashboard">📊 Dashboard</button>
+    <button data-section="users">👥 Users</button>
+    <button data-section="add-money">💰 Add Money</button>
+    <button data-section="withdrawals">🏦 Withdrawals</button>
+    <button data-section="orders">🧾 Orders</button>
+    <button data-section="products">📦 Products</button>
+    <button data-section="coupons">🎟 Coupons</button>
+    <button data-section="analytics">📈 Analytics</button>
 
-
-      
-    </nav>
-
-    <div class="admin-logout">
-      <button id="adminLogoutBtn">🚪 Logout</button>
-    </div>
+    <button id="adminLogoutBtn">🚪 Logout</button>
 
   </aside>
 
-  <!-- ===============================
-       MAIN CONTENT
-  ================================ -->
+
+  <!-- =================================================
+       MAIN AREA
+  ================================================= -->
   <main class="admin-main">
 
-    
-    
-    <!-- ===============================
-     ADMIN TOP BOX (BUNDLE STYLE)
-================================ -->
-    
-<div class="admin-top-box">
-  <div class="admin-top-left">
-    <h2 id="sectionTitle">Dashboard</h2>
-    <span id="adminEmail">admin@akans.in</span>
-  </div>
 
-  <div class="admin-top-logo">
-    <img src="../assets/logo.png" alt="AKANS Logo">
-  </div>
-</div>
+    <!-- =================================================
+         HEADER BAR
+    ================================================= -->
+    <div class="admin-header">
+      <h1 id="sectionTitle">Dashboard</h1>
+      <div class="admin-profile" id="adminEmail">admin@akans.in</div>
+    </div>
 
-    <!-- ===============================
+
+    <!-- =================================================
          CONTENT AREA
-    ================================ -->
+    ================================================= -->
     <section class="admin-content">
 
-      <!-- PART 2 ME YAHAN SECTIONS AAYENGE -->
 
-      <!-- ===============================
-     DASHBOARD
-================================ -->
-<div class="admin-section active" id="dashboard">
-  <div class="stats-grid">
+      <!-- =================================================
+           DASHBOARD
+      ================================================= -->
+      <div class="admin-section active" id="dashboard">
 
-    <div class="stat-card">
-      <h3>Total Users</h3>
-      <p id="totalUsers">0</p>
-    </div>
+        <div class="stats-grid">
 
-    <div class="stat-card">
-      <h3>Total Coins</h3>
-      <p id="totalCoins">0</p>
-    </div>
+          <div class="stat-card">
+            <h3>Total Users</h3>
+            <p id="totalUsers">0</p>
+          </div>
 
-    <div class="stat-card">
-      <h3>Add Money Requests</h3>
-      <p id="pendingAddMoney">0</p>
-    </div>
+          <div class="stat-card">
+            <h3>Total Coins</h3>
+            <p id="totalCoins">0</p>
+          </div>
 
-    <div class="stat-card">
-      <h3>Withdrawal Requests</h3>
-      <p id="pendingWithdrawals">0</p>
-    </div>
+          <div class="stat-card">
+            <h3>Add Money Requests</h3>
+            <p id="pendingAddMoney">0</p>
+          </div>
 
-  </div>
-</div>
+          <div class="stat-card">
+            <h3>Withdrawal Requests</h3>
+            <p id="pendingWithdrawals">0</p>
+          </div>
 
-<!-- ===============================
-     USERS
-================================ -->
-<div class="admin-section" id="users">
-  <h2>All Users</h2>
-
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Coins</th>
-        <th>Joined</th>
-      </tr>
-    </thead>
-    <tbody id="usersTable">
-      <!-- JS se data -->
-    </tbody>
-  </table>
-</div>
-
-<!-- ===============================
-     ADD MONEY REQUESTS
-================================ -->
-
-      <div class="admin-section" id="add-money">
-  <h2>💰 Add Money Requests</h2>
-
-  <!-- TEMP TEST BOX (DELETE LATER) -->
-  <div style="
-    margin: 10px 0;
-    padding: 10px;
-    background: rgba(250,204,21,0.15);
-    border-radius: 10px;
-    color: #facc15;
-    font-size: 14px;
-  ">
-    🔥 ADD MONEY SECTION ACTIVE
-  </div>
-
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Amount</th>
-        <th>UTR</th>
-        <th>App</th>
-        <th>Date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="addMoneyTable">
-    </tbody>
-  </table>
+        </div>
       </div>
 
-<!-- ===============================
-     WITHDRAWAL REQUESTS
-================================ -->
-<div class="admin-section" id="withdrawals">
-  <h2>Withdrawal Requests</h2>
 
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Amount</th>
-        <th>Payment No.</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="withdrawTable">
-      <!-- Approve / Reject -->
-    </tbody>
-  </table>
-</div>
 
-<!-- ===============================
-     ORDERS / SALES
-================================ -->
-<div class="admin-section" id="orders">
-  <h2>Orders / Sales</h2>
+      <!-- =================================================
+           USERS
+      ================================================= -->
+      <div class="admin-section" id="users">
 
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Product</th>
-        <th>Coins</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody id="ordersTable">
-    </tbody>
-  </table>
-</div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Coins</th>
+                <th>Joined</th>
+              </tr>
+            </thead>
+            <tbody id="usersTable"></tbody>
+          </table>
+        </div>
 
-<!-- ===============================
-     PRODUCTS
-================================ -->
-<div class="admin-section" id="products">
-  <h2>Products</h2>
+      </div>
 
-  <button class="primary-btn" id="addProductBtn">➕ Add Product</button>
 
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Type</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="productsTable">
-    </tbody>
-  </table>
-</div>
 
-<!-- ===============================
-     COUPONS
-================================ -->
-<div class="admin-section" id="coupons">
-  <h2>Coupons</h2>
+      <!-- =================================================
+           ADD MONEY
+      ================================================= -->
+      <div class="admin-section" id="add-money">
 
-  <button class="primary-btn" id="createCouponBtn">🎟 Create Coupon</button>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Amount</th>
+                <th>UTR</th>
+                <th>App</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="addMoneyTable"></tbody>
+          </table>
+        </div>
 
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>Code</th>
-        <th>Value</th>
-        <th>Limit</th>
-        <th>Used</th>
-      </tr>
-    </thead>
-    <tbody id="couponsTable">
-    </tbody>
-  </table>
-</div>
+      </div>
 
-<!-- ===============================
-     ANALYTICS
-================================ -->
-<div class="admin-section" id="analytics">
-  <h2>Analytics</h2>
 
-  <div class="analytics-box">
-    <p>📈 Signup growth</p>
-    <p>💰 Revenue overview</p>
-    <p>🔥 Top selling products</p>
-    <p>(Charts JS me aayenge)</p>
-  </div>
-</div>
+
+      <!-- =================================================
+           WITHDRAWALS
+      ================================================= -->
+      <div class="admin-section" id="withdrawals">
+
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Payment No.</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="withdrawTable"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           ORDERS
+      ================================================= -->
+      <div class="admin-section" id="orders">
+
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Product</th>
+                <th>Coins</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTable"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           PRODUCTS
+      ================================================= -->
+      <div class="admin-section" id="products">
+
+        <button class="btn btn-primary" id="addProductBtn">➕ Add Product</button>
+
+        <div class="table-card" style="margin-top:10px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Type</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="productsTable"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           COUPONS
+      ================================================= -->
+      <div class="admin-section" id="coupons">
+
+        <button class="btn btn-primary" id="createCouponBtn">🎟 Create Coupon</button>
+
+        <div class="table-card" style="margin-top:10px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Value</th>
+                <th>Limit</th>
+                <th>Used</th>
+              </tr>
+            </thead>
+            <tbody id="couponsTable"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           ANALYTICS
+      ================================================= -->
+      <div class="admin-section" id="analytics">
+
+        <div class="table-card">
+          <p>📈 Signup growth</p>
+          <p>💰 Revenue overview</p>
+          <p>🔥 Top selling products</p>
+        </div>
+
+      </div>
+
+
 
     </section>
-
   </main>
-
 </div>
 
-<!-- ===============================
+
+
+<!-- =================================================
      JS FILES
-================================ -->
+================================================= -->
 
 <script type="module" src="js/admin-auth.js"></script>
 <script type="module" src="js/admin-nav.js"></script>
-
 <script type="module" src="js/admin-users.js"></script>
 <script type="module" src="js/admin-add-money.js"></script>
-<script type="module" src="js/admin-withdrawals.js"></script> <!-- ⭐ MOST IMPORTANT -->
+<script type="module" src="js/admin-withdrawals.js"></script>
 <script type="module" src="js/admin-orders.js"></script>
 <script type="module" src="js/admin-products.js"></script>
 <script type="module" src="js/admin-coupons.js"></script>
 <script type="module" src="js/admin-analytics.js"></script>
-  
+
 </body>
 </html>
-
