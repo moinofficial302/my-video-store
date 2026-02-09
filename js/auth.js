@@ -148,6 +148,10 @@ window.loginUser = async function () {
 };
 
 
+await signInWithEmailAndPassword(auth, email, password);
+alert("Login success ✅");
+window.location.href = "index.html";
+
 
 /* =====================================================
    🔴 GOOGLE LOGIN (🔥 REDIRECT BASED – 2FA SAFE)
