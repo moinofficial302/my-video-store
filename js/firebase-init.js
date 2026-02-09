@@ -1,19 +1,19 @@
-/* =====================================================
-   SINGLE FIREBASE SOURCE (ONLY ONE FILE)
-   NEVER CREATE firebase.js AGAIN
-===================================================== */
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+/* =====================================================
+🚀 AKANS FIREBASE INIT (FINAL CORRECT CONFIG)
+===================================================== */
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAdgT-GBSctb1xZyW1sVaH6ggB1hLYTAJQ", // ✅ original correct
-  authDomain: "akans-d2bdc.firebaseapp.com",
-  projectId: "akans-d2bdc",
-  storageBucket: "akans-d2bdc.appspot.com",
-  messagingSenderId: "588727557262",
-  appId: "1:588727557262:web:bdbe85977c97284837ddf"
+apiKey: "AIzaSyAdgT-GBSctb1xZyW1sVaH6ggB1hlYTAJQ",
+authDomain: "akans-d2bdc.firebaseapp.com",
+projectId: "akans-d2bdc",
+storageBucket: "akans-d2bdc.firebasestorage.app",
+messagingSenderId: "588727557262",
+appId: "1:588727557262:web:bdbe859770c97284837ddf",
+measurementId: "G-P2CF08HFQJ"
 };
 
 const app = initializeApp(firebaseConfig);
