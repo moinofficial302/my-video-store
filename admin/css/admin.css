@@ -1,128 +1,340 @@
-/* ===============================
-   ROOT VARIABLES (THEME)
-================================ */
+/* =================================================
+   AKANS ADMIN PANEL – PREMIUM LIGHT THEME (PART 1)
+   Base + Layout + Sidebar + Header
+================================================= */
+
+/* ========= ROOT THEME ========= */
 :root {
-  --bg-dark: #0f172a;
-  --bg-dark-2: #111827;
-  --card-bg: rgba(255,255,255,0.08);
-  --border-soft: rgba(255,255,255,0.15);
-  --text-main: #e5e7eb;
-  --text-muted: #9ca3af;
-  --primary: #38bdf8;
-  --success: #22c55e;
-  --danger: #ef4444;
-  --warning: #facc15;
+  --bg-main: #f1f5f9;
+  --sidebar-bg: #ffffff;
+  --card-bg: #ffffff;
+
+  --border: #e5e7eb;
+
+  --text-main: #111827;
+  --text-muted: #6b7280;
+
+  --primary: #2563eb;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #f59e0b;
 }
 
-/* ===============================
-   GLOBAL RESET
-================================ */
+/* ========= RESET ========= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", system-ui, sans-serif;
 }
 
+/* ========= BODY ========= */
 html, body {
-  font-family: "Poppins", system-ui, sans-serif;
-  background: linear-gradient(135deg, #020617, #0f172a);
+  background: var(--bg-main);
   color: var(--text-main);
   min-height: 100vh;
 }
 
-/* ===============================
-   ADMIN Layout 
-================================ */
+/* =================================================
+   MAIN LAYOUT
+================================================= */
 
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  width: 100%;
 }
 
-/* ===============================
-   SIDEBAR
-================================ */
+/* =================================================
+   SIDEBAR (LEFT MENU – CLEAN WHITE)
+================================================= */
+
 .admin-sidebar {
-  width: 250px;
-  background: rgba(15,23,42,0.95);
-  border-right: 1px solid var(--border-soft);
+  width: 240px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+
   padding: 18px 14px;
+
   display: flex;
   flex-direction: column;
 }
 
+/* LOGO / TITLE */
 .admin-sidebar h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   font-size: 20px;
   font-weight: 600;
   color: var(--primary);
 }
 
+/* MENU BUTTONS */
 .admin-sidebar button {
   background: transparent;
   border: none;
-  color: var(--text-main);
+
+  color: var(--text-muted);
   padding: 12px 14px;
   margin-bottom: 6px;
-  border-radius: 12px;
+
+  border-radius: 10px;
   text-align: left;
-  font-size: 15px;
+
+  font-size: 14px;
   cursor: pointer;
-  transition: 0.25s;
+
+  transition: 0.2s;
 }
 
-.admin-sidebar button:hover,
+/* hover */
+.admin-sidebar button:hover {
+  background: #f3f4f6;
+  color: var(--text-main);
+}
+
+/* active */
 .admin-sidebar button.active {
-  background: rgba(56,189,248,0.15);
+  background: #dbeafe;
   color: var(--primary);
+  font-weight: 600;
 }
 
-/* ===============================
+/* =================================================
    MAIN AREA
-================================ */
+================================================= */
+
 .admin-main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 18px;
 }
 
-/* ===============================
-   HEADER
-================================ */
+/* =================================================
+   HEADER (TOP BAR)
+================================================= */
+
 .admin-header {
-  height: 64px;
-  background: rgba(15,23,42,0.9);
-  border-bottom: 1px solid var(--border-soft);
+  height: 60px;
+
+  background: #ffffff;
+  border: 1px solid var(--border);
+
+  border-radius: 12px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 18px;
+
+  padding: 0 16px;
+  margin-bottom: 16px;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .admin-header h1 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 }
 
 .admin-profile {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-muted);
 }
 
-/* ===============================
-   CONTENT AREA
-================================ */
 
- .admin-content {
-  padding: 18px;
-  padding-top: 10px
+
+
+
+
+/* =================================================
+   AKANS ADMIN PANEL – PREMIUM LIGHT THEME (PART 2)
+   Stats + Content + Tables + Buttons
+================================================= */
+
+
+/* =================================================
+   CONTENT AREA
+================================================= */
+
+.admin-content {
+  padding: 6px 4px;
 }
 
-/* ===============================
-   SECTION VISIBILITY
-================================ */
+
+/* =================================================
+   DASHBOARD STATS CARDS
+================================================= */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  padding: 16px;
+
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+
+  transition: 0.2s;
+}
+
+/* small hover lift effect */
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-card h3 {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.stat-card p {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+
+/* =================================================
+   CARD CONTAINER (TABLE WRAPPER)
+================================================= */
+
+.table-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  padding: 14px;
+
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+
+/* =================================================
+   TABLE DESIGN (CLEAN PROFESSIONAL)
+================================================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+th {
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+
+  padding: 12px 10px;
+
+  background: #f3f4f6;
+  color: var(--text-muted);
+}
+
+td {
+  padding: 12px 10px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* zebra effect */
+tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* row hover */
+tbody tr:hover {
+  background: #f1f5f9;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =================================================
+   STATUS BADGES (Pending / Success / Cancel)
+================================================= */
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* green */
+.badge.success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* yellow */
+.badge.pending {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+/* red */
+.badge.cancel {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+
+/* =================================================
+   BUTTONS (Approve / Reject / Action)
+================================================= */
+
+.btn {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* approve */
+.btn-success {
+  background: var(--success);
+  color: #ffffff;
+}
+
+.btn-success:hover {
+  opacity: 0.9;
+}
+
+/* reject */
+.btn-danger {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  opacity: 0.9;
+}
+
+/* neutral */
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+
+/* =================================================
+   SECTION VISIBILITY (KEEP)
+================================================= */
+
 .admin-section {
   display: none;
 }
@@ -131,234 +343,81 @@ html, body {
   display: block;
 }
 
-/* ===============================
-   DASHBOARD STATS
-================================ */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-
-.stat-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-soft);
-  border-radius: 16px;
-  padding: 16px;
-}
-
-.stat-card h3 {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-}
-
-.stat-card p {
-  font-size: 24px;
-  font-weight: 600;
-}
-
-
-
-
-/* ===============================
-   TABLES
-================================ */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 14px;
-  background: var(--card-bg);
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-th, td {
-  padding: 12px;
-  font-size: 14px;
-  text-align: left;
-  border-bottom: 1px solid var(--border-soft);
-}
-
-th {
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-tr:last-child td {
-  border-bottom: none;
-}
-
-/* ===============================
-   BUTTONS
-================================ */
-.btn {
-  padding: 6px 12px;
-  border-radius: 10px;
-  font-size: 13px;
-  cursor: pointer;
-  border: none;
-}
-
-.btn-success {
-  background: var(--success);
-  color: #052e16;
-}
-
-.btn-danger {
-  background: var(--danger);
-  color: #fff;
-}
-
-/* ===============================
-   MOBILE RESPONSIVE
-================================ */
-@media (max-width: 900px) {
-
-  .admin-wrapper {
-    flex-direction: column;
-  }
-
-  .admin-sidebar {
-    width: 100%;
-    flex-direction: row;
-    overflow-x: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--border-soft);
-  }
-
-  .admin-sidebar h2 {
-    display: none;
-  }
-
-  .admin-sidebar button {
-    flex: 1;
-    white-space: nowrap;
-    font-size: 14px;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-}
-
-/* ===============================
-   EXTRA SMALL DEVICES
-================================ */
-@media (max-width: 480px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .admin-header h1 {
-    font-size: 18px;
-  }
-}
 
 
 
 
 
+/* =================================================
+   AKANS ADMIN PANEL – PREMIUM LIGHT THEME (PART 3)
+   Mobile + Top Box + Final Polish
+================================================= */
 
 
-
-/* ===============================
-   ADMIN TOP BOX – BUNDLE STYLE
-================================ */
+/* =================================================
+   ADMIN TOP BOX (HEADER CARD STYLE)
+================================================= */
 
 .admin-top-box {
-  margin: 14px;
-  padding: 14px 16px;
+  margin-bottom: 18px;
+  padding: 14px 18px;
 
-  background: linear-gradient(135deg, #eaf2ff, #f7fbff);
-  border-radius: 20px;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  border: 1px solid var(--border);
+  border-radius: 16px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
 /* LEFT TEXT */
 .admin-top-left h2 {
-  margin: 0;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--text-main);
 }
 
 .admin-top-left span {
   font-size: 13px;
-  color: #475569;
+  color: var(--text-muted);
 }
 
-/* LOGO BOX (same as bundle) */
+/* LOGO / ICON */
 .admin-top-logo {
   background: #ffffff;
+  border: 1px solid var(--border);
   padding: 6px;
-  border-radius: 12px;
+  border-radius: 10px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .admin-top-logo img {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
 }
 
-/* ===============================
-   MOBILE OPTIMIZATION
-================================ */
-@media (max-width: 600px) {
-  .admin-top-box {
-    margin: 10px;
-    padding: 12px 14px;
-  }
 
-  .admin-top-left h2 {
-    font-size: 16px;
-  }
+/* =================================================
+   MOBILE RESPONSIVE
+================================================= */
 
-  .admin-top-logo img {
-    width: 34px;
-    height: 34px;
-  }
-}
-
-/* ===============================
-   SAFETY: KILL BIG LOGOS
-================================ */
-.admin-content img,
-.admin-main img,
-aside img,
-body > img {
-  display: none !important;
-}
-
-
-
-/* ===============================
-   MOBILE LAYOUT FIX (FINAL)
-================================ */
 @media (max-width: 900px) {
 
-  .admin-wrapper {
+  /* LAYOUT STACK */
+  .admin-layout {
     flex-direction: column;
   }
 
-  /* SIDEBAR TOP BAR */
+  /* SIDEBAR -> TOP MENU */
   .admin-sidebar {
     width: 100%;
     flex-direction: row;
@@ -373,28 +432,104 @@ body > img {
     white-space: nowrap;
 
     padding: 10px;
-    background: rgba(15,23,42,0.98);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .admin-sidebar h2 {
+    display: none;
   }
 
   .admin-sidebar button {
     flex: 0 0 auto;
-    font-size: 14px;
+    font-size: 13px;
     padding: 10px 14px;
-    border-radius: 12px;
+    border-radius: 10px;
   }
 
-  /* MAIN CONTENT FULL WIDTH */
+  /* MAIN FULL WIDTH */
   .admin-main {
-    width: 100%;
-  }
-
-  .admin-content {
     padding: 12px;
   }
 
-  /* FIX TOP BOX WIDTH */
+  /* STATS */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* TABLE SCROLL */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* TOP BOX */
   .admin-top-box {
-    margin: 12px 8px;
+    padding: 12px 14px;
   }
 }
+
+
+/* =================================================
+   EXTRA SMALL DEVICES
+================================================= */
+
+@media (max-width: 480px) {
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-header h1 {
+    font-size: 16px;
+  }
+
+  .admin-top-left h2 {
+    font-size: 15px;
+  }
+}
+
+
+/* =================================================
+   FINAL SAFETY CLEANUP
+================================================= */
+
+/* remove any forced images/icons */
+.admin-content img,
+.admin-main img,
+aside img,
+body > img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* smoother fonts */
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
