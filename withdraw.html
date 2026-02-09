@@ -1,217 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Withdraw Amount</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Common Theme CSS -->
-  <link rel="stylesheet" href="css/style.css">
-
-  <style>
-    .withdraw-container {
-      padding: 16px;
-      max-width: 500px;
-      margin: auto;
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <link rel="stylesheet" href="css/style.css" />  <style>
+    .withdraw-container{
+      padding:16px;
+      max-width:500px;
+      margin:auto;
     }
 
-    .card {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    .card{
+      background:#fff;
+      border-radius:12px;
+      padding:16px;
+      margin-bottom:16px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.05);
     }
 
-    .balance {
-      font-size: 22px;
-      font-weight: bold;
-      color: #28a745;
+    .balance{
+      font-size:22px;
+      font-weight:bold;
+      color:#28a745;
     }
 
-    .min-note {
-      font-size: 13px;
-      color: #555;
-      margin-top: 4px;
+    .min-note{
+      font-size:13px;
+      color:#555;
+      margin-top:4px;
     }
 
-    .option-box {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
+    .option-box{
+      display:flex;
+      gap:10px;
+      margin-top:12px;
     }
 
-    .option-box button {
-      flex: 1;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      font-size: 15px;
+    .option-box button{
+      flex:1;
+      padding:12px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-size:15px;
     }
 
-    .withdraw-btn {
-      background: #ffc107;
-    }
+    .withdraw-btn{ background:#ffc107; }
+    .convert-btn{ background:#17a2b8; color:#fff; }
 
-    .convert-btn {
-      background: #17a2b8;
-      color: #fff;
-    }
-
-    .form-group {
-      margin-bottom: 12px;
-    }
-
-    .form-group label {
-      font-size: 14px;
-      display: block;
-      margin-bottom: 4px;
-    }
+    .form-group{ margin-bottom:12px; }
 
     .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
+    .form-group select{
+      width:100%;
+      padding:10px;
+      font-size:14px;
     }
 
-    .submit-btn {
-      width: 100%;
-      padding: 14px;
-      border-radius: 10px;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      background: #28a745;
-      color: #fff;
+    .submit-btn{
+      width:100%;
+      padding:14px;
+      border-radius:10px;
+      border:none;
+      font-size:16px;
+      cursor:pointer;
+      background:#28a745;
+      color:#fff;
     }
 
-    .history-item {
-      border-bottom: 1px solid #eee;
-      padding: 10px 0;
-      font-size: 14px;
+    .history-item{
+      border-bottom:1px solid #eee;
+      padding:10px 0;
+      font-size:14px;
     }
 
-    .history-item:last-child {
-      border-bottom: none;
-    }
-
-    .status {
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .status.pending { color: orange; }
-    .status.approved { color: green; }
-    .status.rejected { color: red; }
-  </style>
-</head>
-
-<body>
-
-  <!-- ===============================
-       WITHDRAW AMOUNT PAGE
-  ================================ -->
-
-  <div class="withdraw-container">
-
-    <!-- Balance -->
-    <div class="card">
-      <h2>Referral Wallet Balance</h2>
-      <div class="balance" id="referralBalance">₹0</div>
-      <div class="min-note">Minimum withdraw amount: ₹20</div>
+    .status{ font-weight:bold; }
+    .status.pending{ color:orange; }
+    .status.approved{ color:green; }
+    .status.rejected{ color:red; }
+  </style></head><body><div class="withdraw-container">  <!-- BALANCE -->  <div class="card">
+    <h2>Referral Wallet Balance</h2>
+    <div class="balance" id="referralBalance">₹0</div>
+    <div class="min-note">Minimum withdraw amount: ₹20</div>
+  </div>  <!-- OPTIONS -->  <div class="card">
+    <h2>Choose Option</h2>
+    <div class="option-box">
+      <button class="withdraw-btn" onclick="showWithdrawForm()">Withdraw to UPI</button>
+      <button class="convert-btn" onclick="showConvertForm()">Convert to Website Coins</button>
     </div>
+  </div>  <!-- WITHDRAW FORM -->  <div class="card" id="withdrawForm" style="display:none;">
+    <h2>Withdraw to UPI</h2><div class="form-group">
+  <input type="number" id="withdrawAmount" placeholder="Amount ₹ (min 20)">
+</div>
 
-    <!-- Options -->
-    <div class="card">
-      <h2>Choose Option</h2>
-      <div class="option-box">
-        <button class="withdraw-btn" onclick="showWithdrawForm()">
-          Withdraw to UPI
-        </button>
-        <button class="convert-btn" onclick="showConvertForm()">
-          Convert to Website Coins
-        </button>
-      </div>
-    </div>
+<div class="form-group">
+  <select id="paymentMethod">
+    <option value="UPI">UPI</option>
+    <option value="Paytm">Paytm</option>
+    <option value="PhonePe">PhonePe</option>
+    <option value="GPay">Google Pay</option>
+  </select>
+</div>
 
-    <!-- Withdraw Form -->
-    <div class="card" id="withdrawForm" style="display:none;">
-      <h2>Withdraw to UPI</h2>
+<div class="form-group">
+  <input type="text" id="upiInput" placeholder="UPI ID / Mobile">
+</div>
 
-      <div class="form-group">
-        <label>Amount (₹)</label>
-        <input type="number" id="withdrawAmount" placeholder="Minimum ₹20">
-      </div>
+<button class="submit-btn">Submit Withdrawal Request</button>
 
-      <div class="form-group">
-        <label>Payment Method</label>
-        <select id="paymentMethod">
-          <option value="UPI">UPI</option>
-          <option value="Paytm">Paytm</option>
-          <option value="PhonePe">PhonePe</option>
-          <option value="GPay">Google Pay</option>
-        </select>
-      </div>
+  </div>  <!-- CONVERT FORM -->  <div class="card" id="convertForm" style="display:none;">
+    <h2>Convert to Coins</h2><div class="form-group">
+  <input type="number" id="convertAmount" placeholder="Amount ₹">
+</div>
 
-      <div class="form-group">
-        <label>UPI ID / Mobile Number</label>
-        <input type="text" id="upiInput" placeholder="example@upi">
-      </div>
+<button class="submit-btn">Convert Now</button>
 
-      <button class="submit-btn">Submit Withdrawal Request</button>
-    </div>
+  </div>  <!-- ⭐⭐⭐ IMPORTANT FIX -->  <!-- HISTORY (EMPTY – JS FILLS THIS) -->  <div class="card" id="historyBox">
+    <h2>History</h2>
+  </div></div><script>
+function showWithdrawForm(){
+  withdrawForm.style.display="block";
+  convertForm.style.display="none";
+}
 
-    <!-- Convert Form -->
-    <div class="card" id="convertForm" style="display:none;">
-      <h2>Convert to Website Coins</h2>
-      <p>1 Referral ₹ = 1 Website Coin</p>
-
-      <div class="form-group">
-        <label>Amount (₹)</label>
-        <input type="number" id="convertAmount">
-      </div>
-
-      <button class="submit-btn">Convert Now</button>
-    </div>
-
-    <!-- History -->
-    <div class="card">
-      <h2>History</h2>
-
-      <div class="history-item">
-        <div>Withdraw ₹50</div>
-        <div class="status pending">Pending</div>
-      </div>
-
-      <div class="history-item">
-        <div>Converted ₹30 → Coins</div>
-        <div class="status approved">Completed</div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- ===============================
-       BASIC UI TOGGLE JS
-       Logic next step me aayega
-  ================================ -->
-  <script>
-    function showWithdrawForm() {
-      document.getElementById("withdrawForm").style.display = "block";
-      document.getElementById("convertForm").style.display = "none";
-    }
-
-    function showConvertForm() {
-      document.getElementById("convertForm").style.display = "block";
-      document.getElementById("withdrawForm").style.display = "none";
-    }
-  </script>
-
-  <!-- Page Logic (next step) -->
-  <script type="module" src="js/withdraw.js"></script>
-
-</body>
+function showConvertForm(){
+  convertForm.style.display="block";
+  withdrawForm.style.display="none";
+}
+</script><script type="module" src="js/withdraw.js"></script></body>
 </html>
