@@ -1,83 +1,98 @@
-// ================================
-// MY ORDERS – FIREBASE LOGIC
-// ================================
+/* ===================================================
+   🚀 MY ORDERS – AKANS FINAL (Firebase v10 Modular)
+   Jarvis Safe Version 💛
+=================================================== */
 
-function loadOrders() {
+import { auth, db } from "./firebase-init.js";
 
-  firebase.auth().onAuthStateChanged(user => {
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    if (!user) {
-      window.location.href = "login.html";
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+
+const ordersList = document.getElementById("ordersList");
+
+
+/* ===================================================
+   LOAD ORDERS
+=================================================== */
+
+onAuthStateChanged(auth, async (user) => {
+
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  try {
+
+    ordersList.innerHTML = "<p>Loading orders...</p>";
+
+    const q = query(
+      collection(db, "orders"),
+      where("uid", "==", user.uid),
+      orderBy("createdAt", "desc")
+    );
+
+    const snap = await getDocs(q);
+
+    ordersList.innerHTML = "";
+
+    /* no orders */
+    if (snap.empty) {
+      ordersList.innerHTML = `
+        <div class="order-card">
+          <h3>No Orders Found 😢</h3>
+          <p>You haven't purchased anything yet.</p>
+        </div>
+      `;
       return;
     }
 
-    const ordersList = document.getElementById("ordersList");
-    ordersList.innerHTML = ""; // reset
+    /* render orders */
+    snap.forEach(d => {
 
-    firebase.firestore()
-      .collection("orders")
-      .doc(user.uid)
-      .collection("items")
-      .orderBy("time", "desc")
-      .get()
-      .then(snapshot => {
+      const data = d.data();
 
-        if (snapshot.empty) {
-          ordersList.innerHTML = `
-            <div class="order-card">
-              <h3>No Orders Found</h3>
-              <p>You have not purchased any product yet.</p>
-            </div>
-          `;
-          return;
-        }
+      const card = document.createElement("div");
+      card.className = "order-card";
 
-        snapshot.forEach(doc => {
-          const data = doc.data();
+      card.innerHTML = `
+        <h3>${data.name}</h3>
+        <p>Paid: ${data.price} Coins</p>
 
-          const card = document.createElement("div");
-          card.className = "order-card";
+        <button class="open-btn">
+          Open Product
+        </button>
+      `;
 
-          card.innerHTML = `
-            <h3>${data.name}</h3>
-            <p>Paid: ${data.price} Coins</p>
-            <button 
-              class="open-btn"
-              data-link="${data.link}">
-              Open Product
-            </button>
-          `;
+      card.querySelector(".open-btn")
+        .onclick = () => window.open(data.link, "_blank");
 
-          const btn = card.querySelector(".open-btn");
-          btn.addEventListener("click", () => {
-            openProduct(data.link);
-          });
+      ordersList.appendChild(card);
+    });
 
-          ordersList.appendChild(card);
-        });
-
-      })
-      .catch(error => {
-        console.error("Orders load error:", error);
-        ordersList.innerHTML = `
-          <div class="order-card">
-            <h3>Error</h3>
-            <p>Unable to load orders. Please try again.</p>
-          </div>
-        `;
-      });
-
-  });
-}
-
-
-// ================================
-// OPEN PRODUCT
-// ================================
-function openProduct(link) {
-  if (!link) {
-    alert("Product link not available");
-    return;
   }
-  window.open(link, "_blank");
-}
+  catch (err) {
+
+    console.error(err);
+
+    ordersList.innerHTML = `
+      <div class="order-card">
+        <h3>Error ❌</h3>
+        <p>Unable to load orders. Try again.</p>
+      </div>
+    `;
+  }
+
+});
+
+
