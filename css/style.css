@@ -477,9 +477,15 @@ body{
 ========================= */
 
 .ai-wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 18px;          /* ⭐ cards ke beech perfect gap */
   padding: 16px;
-  padding-bottom: 90px;
+  padding-bottom: 20px; /* ⭐ bottom ka extra space kam */
 }
+
+
+
 
 /* Card */
 .ai-card{
