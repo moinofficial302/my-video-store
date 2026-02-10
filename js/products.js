@@ -75,10 +75,12 @@ window.buyProduct = async function (productId, price) {
       coins: increment(-price)
     });
 
+
+    
     // 🧾 SAVE ORDER
     await addDoc(
-      collection(db, "orders", user.uid, "items"),
-      {
+  collection(db, "orders"),
+        
         productId: product.id,
         name: product.name,
         price: product.price,
@@ -87,6 +89,8 @@ window.buyProduct = async function (productId, price) {
       }
     );
 
+
+  
     alert("Purchase Successful 🎉");
 
     // 🔁 BUTTON → OPEN PRODUCT
