@@ -233,3 +233,24 @@ window.logoutUser = async function () {
   await signOut(auth);
   window.location.replace("login.html");
 };
+
+
+
+
+/* =====================================================
+   🔗 AUTO FILL REFERRAL INPUT (LOGIN PAGE)
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const ref = getReferralFromUrl();
+
+  if (!ref)eeturn;
+
+  const input = document.querySelector("#referralCode");
+
+  if (input) {
+    input.value = ref;
+  }
+
+});
