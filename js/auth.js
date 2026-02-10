@@ -1,3 +1,4 @@
+
 /* =====================================================
    🚀 AKANS AUTH SYSTEM
    FINAL • CLEAN • POPUP SAFE • PRODUCTION READY
@@ -159,7 +160,6 @@ window.googleLogin = async function () {
     const userRef = doc(db, "users", user.uid);
     const snap = await getDoc(userRef);
 
-    /* first time user */
     if (!snap.exists()) {
 
       const referredBy = getReferralFromUrl();
@@ -214,7 +214,6 @@ onAuthStateChanged(auth, async (user) => {
 
 /* =====================================================
    🔐 PAGE GUARD
-   ⚠️ CALL ONLY ON PROTECTED PAGES
 ===================================================== */
 
 window.requireLogin = function () {
@@ -236,21 +235,21 @@ window.logoutUser = async function () {
 
 
 
-
 /* =====================================================
-   🔗 AUTO FILL REFERRAL INPUT (LOGIN PAGE)
+   🔗 AUTO FILL REFERRAL INPUT (FIXED + SAFE)
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
 
   const ref = getReferralFromUrl();
 
-  if (!ref)eeturn;
+  if (!ref) return;   // ✅ FIXED (was eeturn)
 
-  const input = document.querySelector("#referralCode");
+  const input = document.querySelector("#refInput"); // ✅ correct id
 
   if (input) {
     input.value = ref;
+    input.readOnly = true; // optional lock
   }
 
 });
