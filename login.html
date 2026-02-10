@@ -1,8 +1,13 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Login | AKANS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <link rel="stylesheet" href="css/login.css">  <style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="css/login.css">
+
+  <style>
     .hidden{display:none}
 
     .input-group{
@@ -23,58 +28,76 @@
       cursor:pointer;
       font-size:18px;
     }
-  </style></head><body><div class="auth-wrapper">  <div class="logo-top">
+  </style>
+</head>
+
+<body>
+
+<div class="auth-wrapper">
+
+  <div class="logo-top">
     <img src="assets/logo.png">
     <p class="logo-text">Only M.7 Limited</p>
-  </div>  <div class="auth-card"><!-- TABS -->
-<div class="auth-tabs">
-  <button id="loginTab" class="tab active">Login</button>
-  <button id="signupTab" class="tab">Sign Up</button>
+  </div>
+
+  <div class="auth-card">
+
+    <!-- TABS -->
+    <div class="auth-tabs">
+      <button id="loginTab" class="tab active">Login</button>
+      <button id="signupTab" class="tab">Sign Up</button>
+    </div>
+
+
+    <!-- ================= LOGIN ================= -->
+    <div id="loginForm" class="form-box">
+
+      <input id="loginIdentifier" placeholder="Username or Email">
+
+      <div class="input-group">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <span class="eye" onclick="togglePassword('loginPassword')">👁️</span>
+      </div>
+
+      <button id="loginBtn" class="primary-btn">Login</button>
+      <button id="googleBtn" class="google-btn">Continue with Google</button>
+
+    </div>
+
+
+    <!-- ================= SIGNUP ================= -->
+    <div id="signupForm" class="form-box hidden">
+
+      <input id="signup-username" placeholder="Username">
+      <input id="signup-email" placeholder="Email">
+
+      <div class="input-group">
+        <input type="password" id="signupPassword" placeholder="Password">
+        <span class="eye" onclick="togglePassword('signupPassword')">👁️</span>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
+        <span class="eye" onclick="togglePassword('signupConfirmPassword')">👁️</span>
+      </div>
+
+      <!-- ⭐⭐⭐ FIXED HERE ⭐⭐⭐ -->
+      <input id="referralCode" placeholder="Referral Code (Optional)">
+
+      <input id="signup-whatsapp" placeholder="WhatsApp (Optional)">
+
+      <button id="signupBtn" class="primary-btn">Create Account</button>
+
+    </div>
+
+  </div>
 </div>
 
 
-<!-- ================= LOGIN ================= -->
-<div id="loginForm" class="form-box">
 
-  <input id="loginIdentifier" placeholder="Username or Email">
-
-  <div class="input-group">
-    <input type="password" id="loginPassword" placeholder="Password">
-    <span class="eye" onclick="togglePassword('loginPassword')">👁️</span>
-  </div>
-
-  <button id="loginBtn" class="primary-btn">Login</button>
-  <button id="googleBtn" class="google-btn">Continue with Google</button>
-
-</div>
-
-
-<!-- ================= SIGNUP ================= -->
-<div id="signupForm" class="form-box hidden">
-
-  <input id="signup-username" placeholder="Username">
-  <input id="signup-email" placeholder="Email">
-
-  <div class="input-group">
-    <input type="password" id="signupPassword" placeholder="Password">
-    <span class="eye" onclick="togglePassword('signupPassword')">👁️</span>
-  </div>
-
-  <div class="input-group">
-    <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
-    <span class="eye" onclick="togglePassword('signupConfirmPassword')">👁️</span>
-  </div>
-
-  <input id="refInput" placeholder="Referral Code (Optional)">
-  <input id="signup-whatsapp" placeholder="WhatsApp (Optional)">
-
-  <button id="signupBtn" class="primary-btn">Create Account</button>
-
-</div>
-
-  </div>
-</div><!-- ================= ONLY LOAD AUTH ================= --><script type="module">
-import "./js/auth.js";   // 🔥 ONLY THIS (no firebase-init duplicate)
+<!-- ================= ONLY LOAD AUTH ================= -->
+<script type="module">
+import "./js/auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -83,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
   signupBtn.onclick = () => window.signupUser();
   googleBtn.onclick = () => window.googleLogin();
 
-  /* tab switch */
+  /* tabs */
   loginTab.onclick = () => {
     loginTab.classList.add("active");
     signupTab.classList.remove("active");
@@ -97,12 +120,29 @@ document.addEventListener("DOMContentLoaded", () => {
     signupForm.classList.remove("hidden");
     loginForm.classList.add("hidden");
   };
+
+
+
+  /* ========================================
+     ⭐ AUTO FILL REFERRAL FROM LINK
+  ======================================== */
+  const params = new URLSearchParams(window.location.search);
+  const ref = params.get("ref");
+
+  if(ref){
+    const input = document.getElementById("referralCode");
+    if(input) input.value = ref;
+  }
+
 });
+
 
 /* password toggle */
 window.togglePassword = (id) => {
   const el = document.getElementById(id);
   el.type = el.type === "password" ? "text" : "password";
 };
-</script></body>
+</script>
+
+</body>
 </html>
