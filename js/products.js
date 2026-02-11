@@ -21,7 +21,7 @@ import {
 
 
 // ================================
-// PRODUCTS MASTER DATA
+// PRODUCTS
 // ================================
 const PRODUCTS = {
   "editing-pack": {
@@ -34,7 +34,7 @@ const PRODUCTS = {
 
 
 // ===================================================
-// BUY PRODUCT (GLOBAL – HTML onclick compatible)
+// ✅ BUY PRODUCT
 // ===================================================
 window.buyProduct = async function (productId, price) {
 
@@ -53,34 +53,28 @@ window.buyProduct = async function (productId, price) {
   }
 
   try {
+
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
-
-    if (!userSnap.exists()) {
-      alert("Wallet not found");
-      return;
-    }
 
     const coins = userSnap.data().coins || 0;
 
     if (coins < price) {
-      alert(
-        `Insufficient Coins ❌\n\nRequired: ${price}\nAvailable: ${coins}`
-      );
+      alert("Not enough coins ❌");
       return;
     }
 
-    // 🔥 CUT COINS
+    // 🔥 deduct coins
     await updateDoc(userRef, {
       coins: increment(-price)
     });
 
-
-    
-    // 🧾 SAVE ORDER
+    // ✅ FIXED ORDER SAVE
     await addDoc(
-  collection(db, "orders"),
-        
+      collection(db, "orders"),
+      {
+        uid: user.uid,
+        userEmail: user.email,
         productId: product.id,
         name: product.name,
         price: product.price,
@@ -89,68 +83,51 @@ window.buyProduct = async function (productId, price) {
       }
     );
 
-
-  
     alert("Purchase Successful 🎉");
 
-    // 🔁 BUTTON → OPEN PRODUCT
     switchButtonToOpen(productId, product.link);
 
   } catch (err) {
-    console.error("Buy error:", err);
+    console.error(err);
     alert("Something went wrong. Try again.");
   }
 };
 
 
 // ===================================================
-// OWNERSHIP CHECK (AUTO BUTTON SWITCH)
+// OWNERSHIP CHECK
 // ===================================================
 window.checkOwnership = async function (productId, buttonEl) {
 
   const user = auth.currentUser;
   if (!user || !buttonEl) return;
 
-  try {
-    const q = query(
-      collection(db, "orders", user.uid, "items"),
-      where("productId", "==", productId),
-      limit(1)
-    );
+  const q = query(
+    collection(db, "orders"),
+    where("uid", "==", user.uid),
+    where("productId", "==", productId),
+    limit(1)
+  );
 
-    const snap = await getDocs(q);
+  const snap = await getDocs(q);
 
-    if (!snap.empty) {
-      const data = snap.docs[0].data();
-      buttonEl.innerText = "Open Product";
-      buttonEl.onclick = () => window.open(data.link, "_blank");
-      buttonEl.classList.add("owned");
-    }
+  if (!snap.empty) {
+    const data = snap.docs[0].data();
 
-  } catch (err) {
-    console.error("Ownership check error:", err);
+    buttonEl.innerText = "Open Product";
+    buttonEl.onclick = () => window.open(data.link, "_blank");
   }
 };
 
 
 // ===================================================
-// BUTTON SWITCH HELPER
-// ===================================================
 function switchButtonToOpen(productId, link) {
   document.querySelectorAll(".buy-btn").forEach(btn => {
-    const attr = btn.getAttribute("onclick") || "";
-    if (attr.includes(productId)) {
-      btn.innerText = "Open Product";
-      btn.onclick = () => window.open(link, "_blank");
-      btn.classList.add("owned");
-    }
+    btn.innerText = "Open Product";
+    btn.onclick = () => window.open(link, "_blank");
   });
 }
 
 
 // ===================================================
-// AUTO AUTH READY (ENSURE currentUser AVAILABLE)
-// ===================================================
-onAuthStateChanged(auth, () => {
-  // Just ensures auth is ready
-});
+onAuthStateChanged(auth, () => {});
