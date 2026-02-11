@@ -1,9 +1,9 @@
 // ================================
-// FIREBASE IMPORTS (V9)
+// FIREBASE IMPORTS
 // ================================
 import { auth, db } from "./firebase-init.js";
-import { onAuthStateChanged } from
-  "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import {
   doc,
@@ -21,7 +21,7 @@ import {
 
 
 // ================================
-// PRODUCTS
+// PRODUCTS DATA
 // ================================
 const PRODUCTS = {
   "editing-pack": {
@@ -33,78 +33,69 @@ const PRODUCTS = {
 };
 
 
-// ===================================================
-// ✅ BUY PRODUCT
-// ===================================================
-window.buyProduct = async function (productId, price) {
+// ================================
+// 🔥 BUY PRODUCT (SUPER STABLE)
+// ================================
+async function buyProduct(productId, price) {
+
+  if (!auth.currentUser) {
+    alert("Login first");
+    location.href = "login.html";
+    return;
+  }
 
   const user = auth.currentUser;
-
-  if (!user) {
-    alert("Please login first");
-    window.location.href = "login.html";
-    return;
-  }
-
   const product = PRODUCTS[productId];
-  if (!product) {
-    alert("Invalid product");
-    return;
-  }
 
   try {
 
     const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
+    const snap = await getDoc(userRef);
 
-    const coins = userSnap.data().coins || 0;
+    const coins = snap.data().coins || 0;
 
     if (coins < price) {
       alert("Not enough coins ❌");
       return;
     }
 
-    // 🔥 deduct coins
+    // deduct coins
     await updateDoc(userRef, {
       coins: increment(-price)
     });
 
-    // ✅ FIXED ORDER SAVE
-    await addDoc(
-      collection(db, "orders"),
-      {
-        uid: user.uid,
-        userEmail: user.email,
-        productId: product.id,
-        name: product.name,
-        price: product.price,
-        link: product.link,
-        createdAt: serverTimestamp()
-      }
-    );
+    // save order
+    await addDoc(collection(db, "orders"), {
+      uid: user.uid,
+      userEmail: user.email,
+      productId,
+      name: product.name,
+      price,
+      link: product.link,
+      createdAt: serverTimestamp()
+    });
 
     alert("Purchase Successful 🎉");
 
     switchButtonToOpen(productId, product.link);
 
   } catch (err) {
-    console.error(err);
+    console.error("Buy error:", err);
     alert("Something went wrong. Try again.");
   }
-};
+}
 
 
-// ===================================================
-// OWNERSHIP CHECK
-// ===================================================
-window.checkOwnership = async function (productId, buttonEl) {
+// ================================
+// 🔥 OWNERSHIP CHECK
+// ================================
+async function checkOwnership(productId, buttonEl) {
 
-  const user = auth.currentUser;
-  if (!user || !buttonEl) return;
+  if (!auth.currentUser) return;
 
   const q = query(
     collection(db, "orders"),
-    where("uid", "==", user.uid),
+    where("uid", "==", auth.currentUser.uid),
     where("productId", "==", productId),
     limit(1)
   );
@@ -116,18 +107,36 @@ window.checkOwnership = async function (productId, buttonEl) {
 
     buttonEl.innerText = "Open Product";
     buttonEl.onclick = () => window.open(data.link, "_blank");
+    buttonEl.classList.add("owned");
   }
-};
-
-
-// ===================================================
-function switchButtonToOpen(productId, link) {
-  document.querySelectorAll(".buy-btn").forEach(btn => {
-    btn.innerText = "Open Product";
-    btn.onclick = () => window.open(link, "_blank");
-  });
 }
 
 
-// ===================================================
+// ================================
+// 🔥 BUTTON SWITCH (SAFE)
+// ================================
+function switchButtonToOpen(productId, link) {
+
+  const btn = document.querySelector(
+    `[onclick*="${productId}"]`
+  );
+
+  if (!btn) return;
+
+  btn.innerText = "Open Product";
+  btn.onclick = () => window.open(link, "_blank");
+  btn.classList.add("owned");
+}
+
+
+// ================================
+// ⭐ MAKE GLOBAL (MOST IMPORTANT)
+// ================================
+window.buyProduct = buyProduct;
+window.checkOwnership = checkOwnership;
+
+
+// ================================
+// AUTH READY
+// ================================
 onAuthStateChanged(auth, () => {});
