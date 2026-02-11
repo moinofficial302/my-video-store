@@ -2,23 +2,14 @@
 <html lang="en">
 <head>
 
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI & Editing | Akans</title>
-  
 
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/style.css">
 
   <style>
-    .page-title{
-      padding: 18px;
-      font-size: 22px;
-      font-weight: 700;
-      text-align: center;
-    }
-
     .ai-wrapper{
       padding: 16px;
       padding-bottom: 90px;
@@ -26,25 +17,12 @@
 
     .ai-card{
       max-width: 420px;
-      margin: auto;
+      margin: 20px auto;
       background: rgba(255,255,255,0.08);
       backdrop-filter: blur(16px);
       border-radius: 22px;
       overflow: hidden;
       box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-    }
-
-    .ai-card-header{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 16px;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .ai-card-header img{
-      height: 32px;
     }
 
     .ai-image{
@@ -62,11 +40,6 @@
       margin-bottom: 4px;
     }
 
-    .ai-content p{
-      font-size: 14px;
-      opacity: 0.9;
-    }
-
     .price{
       margin: 10px 0;
     }
@@ -74,10 +47,6 @@
     .price del{
       color: #ff6b6b;
       margin-right: 6px;
-    }
-
-    .price strong{
-      font-size: 18px;
     }
 
     .details-btn{
@@ -101,25 +70,29 @@
       font-weight: 700;
       font-size: 16px;
       color: #000;
+      cursor: pointer;
+    }
+
+    .owned{
+      background: #22c55e !important;
+      color: white !important;
     }
   </style>
+
 </head>
 
-
-
-  
 <body onload="requireLogin()">
 
-  <!-- 🔹 TOP HEADER (SAME AS BUNDLE) -->
+  <!-- HEADER -->
   <div class="header-box">
     <span>Only M.7 Limited</span>
     <img src="assets/logo.png" alt="Logo">
   </div>
 
-  <!-- 🔹 AI EDITING CARD -->
+  <!-- AI SECTION -->
   <div class="ai-wrapper">
 
-    <div class="card glass-card">
+    <div class="ai-card">
 
       <img src="15gb.jpg" class="ai-image" alt="15 GB Editing Pack">
 
@@ -133,35 +106,38 @@
         </p>
 
         <button class="details-btn" onclick="toggleDetails(this)">
-  View Details
-</button>
-
-<div class="details-box" style="display:none;">
-  <p><strong>Bundle:</strong> AI Generated Hulk Reels</p>
-  <p><strong>Total:</strong> 1000+ Videos</p>
-  <p><strong>Type:</strong> Short Reels</p>
-  <p><strong>Quality:</strong> Full HD</p>
-  <p><strong>Delivery:</strong> Instant</p>
-  <p class="rating">⭐ 4.7 / 5 Rating</p>
-</div>
-
-        
-        <button
-  class="buy-btn"
-  id="buy-editing"
-  onclick="buyProduct('editing-pack', 99)">
-  Buy Now
+          View Details
         </button>
 
-        
+        <div class="details-box" style="display:none;">
+          <p><strong>Bundle:</strong> AI Generated Hulk Reels</p>
+          <p><strong>Total:</strong> 1000+ Videos</p>
+          <p><strong>Type:</strong> Short Reels</p>
+          <p><strong>Quality:</strong> Full HD</p>
+          <p><strong>Delivery:</strong> Instant</p>
+          <p>⭐ 4.7 / 5 Rating</p>
+        </div>
+
+        <button
+          class="buy-btn"
+          id="buy-editing"
+          onclick="buyProduct('editing-pack', 99)">
+          Buy Now
+        </button>
 
       </div>
-
     </div>
 
   </div>
 
-  <!-- 🔹 BOTTOM NAV -->
+
+
+
+
+
+
+
+  <!-- 🔻 BOTTOM NAV -->
   <div class="bottom-nav">
     <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
     <button class="nav-item active">AI & Editing</button>
@@ -170,114 +146,42 @@
   </div>
 
 
+  <!-- ===============================
+       SCRIPTS (VERY IMPORTANT ORDER)
+  ================================ -->
+
+  <!-- 1️⃣ AUTH FIRST -->
+  <script type="module" src="js/auth.js"></script>
+
+  <!-- 2️⃣ PRODUCTS (buyProduct function here) -->
+  <script type="module" src="js/products.js"></script>
 
 
-  
+  <!-- 3️⃣ PAGE LOGIC -->
+  <script type="module">
+    import { checkOwnership } from "./js/products.js";
 
+    /* details toggle */
+    window.toggleDetails = function(btn){
+      const box = btn.nextElementSibling;
 
+      if(box.style.display === "none"){
+        box.style.display = "block";
+        btn.innerText = "Hide Details";
+      } else {
+        box.style.display = "none";
+        btn.innerText = "View Details";
+      }
+    };
 
-    <div class="card glass-card">
-
-      <img src="15gb.jpg" class="ai-image" alt="15 GB Editing Pack">
-
-      <div class="ai-content">
-        <h3>15 GB Editing Pack</h3>
-        <p>15 GB Pack</p>
-
-        <p class="price">
-          <del>₹1999</del>
-          <strong>₹99 Only</strong>
-        </p>
-
-        <button class="details-btn" onclick="toggleDetails(this)">
-  View Details
-</button>
-
-<div class="details-box" style="display:none;">
-  <p><strong>Bundle:</strong> AI Generated Hulk Reels</p>
-  <p><strong>Total:</strong> 1000+ Videos</p>
-  <p><strong>Type:</strong> Short Reels</p>
-  <p><strong>Quality:</strong> Full HD</p>
-  <p><strong>Delivery:</strong> Instant</p>
-  <p class="rating">⭐ 4.7 / 5 Rating</p>
-</div>
-
-        
-        <button
-  class="buy-btn"
-  id="buy-editing"
-  onclick="buyProduct('editing-pack', 99)">
-  Buy Now
-        </button>
-
-        
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- 🔹 BOTTOM NAV -->
-  <div class="bottom-nav">
-    <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
-    <button class="nav-item active">AI & Editing</button>
-    <button class="nav-item" onclick="location.href='social.html'">Social</button>
-    <button class="nav-item" onclick="location.href='account.html'">Account</button>
-  </div>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-<script>
-function toggleDetails(btn){
-  const box = btn.nextElementSibling;
-  if(box.style.display === "none"){
-    box.style.display = "block";
-    btn.innerText = "Hide Details";
-  }else{
-    box.style.display = "none";
-    btn.innerText = "View Details";
-  }
-}
-</script>
-
-
-<script type="module">
-  import { checkOwnership } from "./js/products.js";
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("buy-editing");
-    if (btn) {
-      checkOwnership("editing-pack", btn);
-    }
-  });
-</script>
-
-  
-
-<script type="module" src="js/auth.js"></script>
-<script type="module" src="js/products.js"></script>
+    /* auto check ownership */
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("buy-editing");
+      if(btn){
+        checkOwnership("editing-pack", btn);
+      }
+    });
+  </script>
 
 </body>
 </html>
