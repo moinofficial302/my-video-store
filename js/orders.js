@@ -1,13 +1,9 @@
-/* ===================================================
-   🚀 MY ORDERS – FINAL FIXED (SUBCOLLECTION VERSION)
-   Jarvis Ultra Stable 💛
-=================================================== */
-
 import { auth, db } from "./firebase-init.js";
 
 import {
   collection,
   query,
+  where,
   orderBy,
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -16,47 +12,63 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-
 const ordersList = document.getElementById("ordersList");
 
 
-// ===================================================
-// LOAD ORDERS (CORRECT PATH)
-// ===================================================
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
-    window.location.href = "login.html";
+    location.href = "login.html";
     return;
   }
 
+  ordersList.innerHTML = "<p>Loading orders...</p>";
+
+  let allOrders = [];
+
   try {
 
-    ordersList.innerHTML = "<p>Loading orders...</p>";
-
-    // ✅ FIXED PATH
-    const q = query(
-      collection(db, "orders", user.uid, "items"),
-      orderBy("createdAt", "desc")
+    // =========================
+    // ⭐ NEW PATH
+    // =========================
+    const newSnap = await getDocs(
+      query(
+        collection(db, "orders", user.uid, "items"),
+        orderBy("createdAt", "desc")
+      )
     );
 
-    const snap = await getDocs(q);
+    newSnap.forEach(d => allOrders.push(d.data()));
 
+
+    // =========================
+    // ⭐ OLD PATH SUPPORT
+    // =========================
+    const oldSnap = await getDocs(
+      query(
+        collection(db, "orders"),
+        where("uid", "==", user.uid)
+      )
+    );
+
+    oldSnap.forEach(d => allOrders.push(d.data()));
+
+
+    // =========================
+    // RENDER
+    // =========================
     ordersList.innerHTML = "";
 
-    if (snap.empty) {
+    if (allOrders.length === 0) {
       ordersList.innerHTML = `
         <div class="order-card">
           <h3>No Orders Found 😢</h3>
-          <p>You haven't purchased anything yet.</p>
         </div>
       `;
       return;
     }
 
-    snap.forEach(doc => {
-
-      const data = doc.data();
+    allOrders.forEach(data => {
 
       const card = document.createElement("div");
       card.className = "order-card";
@@ -73,8 +85,8 @@ onAuthStateChanged(auth, async (user) => {
       ordersList.appendChild(card);
     });
 
-  }
-  catch (err) {
+  } catch (err) {
+
     console.error(err);
     ordersList.innerHTML = "<p>Error loading orders ❌</p>";
   }
