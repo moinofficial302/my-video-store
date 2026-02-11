@@ -1,6 +1,6 @@
 /* ===================================================
-   🚀 MY ORDERS – AKANS FINAL (Firebase v10 Modular)
-   Jarvis Safe Version 💛
+   🚀 MY ORDERS – FINAL FIX (SUBCOLLECTION VERSION)
+   Jarvis Safe 💛
 =================================================== */
 
 import { auth, db } from "./firebase-init.js";
@@ -8,7 +8,6 @@ import { auth, db } from "./firebase-init.js";
 import {
   collection,
   query,
-  where,
   orderBy,
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -28,7 +27,7 @@ const ordersList = document.getElementById("ordersList");
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
-    window.location.href = "login.html";
+    location.href = "login.html";
     return;
   }
 
@@ -36,9 +35,9 @@ onAuthStateChanged(auth, async (user) => {
 
     ordersList.innerHTML = "<p>Loading orders...</p>";
 
+    // ✅ ⭐⭐⭐ CORRECT PATH ⭐⭐⭐
     const q = query(
-      collection(db, "orders"),
-      where("uid", "==", user.uid),
+      collection(db, "orders", user.uid, "items"),
       orderBy("createdAt", "desc")
     );
 
@@ -46,7 +45,6 @@ onAuthStateChanged(auth, async (user) => {
 
     ordersList.innerHTML = "";
 
-    /* no orders */
     if (snap.empty) {
       ordersList.innerHTML = `
         <div class="order-card">
@@ -57,7 +55,6 @@ onAuthStateChanged(auth, async (user) => {
       return;
     }
 
-    /* render orders */
     snap.forEach(d => {
 
       const data = d.data();
@@ -68,10 +65,7 @@ onAuthStateChanged(auth, async (user) => {
       card.innerHTML = `
         <h3>${data.name}</h3>
         <p>Paid: ${data.price} Coins</p>
-
-        <button class="open-btn">
-          Open Product
-        </button>
+        <button class="open-btn">Open Product</button>
       `;
 
       card.querySelector(".open-btn")
@@ -88,11 +82,9 @@ onAuthStateChanged(auth, async (user) => {
     ordersList.innerHTML = `
       <div class="order-card">
         <h3>Error ❌</h3>
-        <p>Unable to load orders. Try again.</p>
+        <p>Unable to load orders.</p>
       </div>
     `;
   }
 
 });
-
-
