@@ -34,9 +34,9 @@ const PRODUCTS = {
 
 
 // ===================================================
-// 🔥 BUY PRODUCT (FINAL FIXED)
+// 🔥 BUY PRODUCT (ULTRA SAFE)
 // ===================================================
-async function buyProduct(productId, price){
+async function buyProduct(productId){
 
   const user = auth.currentUser;
 
@@ -47,35 +47,55 @@ async function buyProduct(productId, price){
   }
 
   const product = PRODUCTS[productId];
+  if(!product) return;
 
   try{
 
+    // ====================
+    // ⭐ ALREADY OWNED CHECK
+    // ====================
+    const ownedQuery = query(
+      collection(db,"orders"),
+      where("uid","==",user.uid),
+      where("productId","==",productId),
+      limit(1)
+    );
+
+    const ownedSnap = await getDocs(ownedQuery);
+
+    // already purchased → just open
+    if(!ownedSnap.empty){
+      window.open(product.link,"_blank");
+      return;
+    }
+
+    // ====================
+    // wallet check
+    // ====================
     const userRef = doc(db,"users",user.uid);
     const snap = await getDoc(userRef);
 
     const coins = snap.data().coins || 0;
 
-    if(coins < price){
+    if(coins < product.price){
       alert("Not enough coins ❌");
       return;
     }
 
-    // 1️⃣ deduct coins
+    // deduct coins
     await updateDoc(userRef,{
-      coins: increment(-price)
+      coins: increment(-product.price)
     });
 
-    // 2️⃣ SAVE ORDER (FIXED PATH)
-    await addDoc(
-      collection(db,"orders",user.uid,"items"),
-      {
-        productId,
-        name: product.name,
-        price,
-        link: product.link,
-        createdAt: serverTimestamp()
-      }
-    );
+    // ⭐ SAVE ORDER (SINGLE COLLECTION)
+    await addDoc(collection(db,"orders"),{
+      uid: user.uid,
+      productId,
+      name: product.name,
+      price: product.price,
+      link: product.link,
+      createdAt: serverTimestamp()
+    });
 
     alert("Purchase Successful 🎉");
 
@@ -89,7 +109,7 @@ async function buyProduct(productId, price){
 
 
 // ===================================================
-// OWNERSHIP CHECK
+// 🔥 OWNERSHIP CHECK (REFRESH SAFE)
 // ===================================================
 async function checkOwnership(productId, buttonEl){
 
@@ -97,7 +117,8 @@ async function checkOwnership(productId, buttonEl){
   if(!user) return;
 
   const q = query(
-    collection(db,"orders",user.uid,"items"),
+    collection(db,"orders"),
+    where("uid","==",user.uid),
     where("productId","==",productId),
     limit(1)
   );
@@ -109,6 +130,7 @@ async function checkOwnership(productId, buttonEl){
 
     buttonEl.innerText = "Open Product";
     buttonEl.onclick = ()=> window.open(data.link,"_blank");
+    buttonEl.classList.add("owned");
   }
 }
 
@@ -121,13 +143,23 @@ function switchButton(productId, link){
 
   btn.innerText = "Open Product";
   btn.onclick = ()=> window.open(link,"_blank");
+  btn.classList.add("owned");
 }
 
 
-// GLOBAL
+// ===================================================
+// GLOBAL EXPORT
+// ===================================================
 window.buyProduct = buyProduct;
 window.checkOwnership = checkOwnership;
 
 
-// AUTH READY
-onAuthStateChanged(auth,()=>{});
+// ===================================================
+// AUTO CHECK AFTER LOGIN (VERY IMPORTANT)
+// ===================================================
+onAuthStateChanged(auth,()=>{
+
+  const btn = document.getElementById("buy-editing");
+  if(btn) checkOwnership("editing-pack", btn);
+
+});
