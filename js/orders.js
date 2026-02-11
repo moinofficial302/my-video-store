@@ -1,6 +1,6 @@
 /* ===================================================
-   🚀 MY ORDERS – FINAL FIX (SUBCOLLECTION VERSION)
-   Jarvis Safe 💛
+   🚀 MY ORDERS – FINAL FIXED (SUBCOLLECTION VERSION)
+   Jarvis Ultra Stable 💛
 =================================================== */
 
 import { auth, db } from "./firebase-init.js";
@@ -20,14 +20,13 @@ import {
 const ordersList = document.getElementById("ordersList");
 
 
-/* ===================================================
-   LOAD ORDERS
-=================================================== */
-
+// ===================================================
+// LOAD ORDERS (CORRECT PATH)
+// ===================================================
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
-    location.href = "login.html";
+    window.location.href = "login.html";
     return;
   }
 
@@ -35,7 +34,7 @@ onAuthStateChanged(auth, async (user) => {
 
     ordersList.innerHTML = "<p>Loading orders...</p>";
 
-    // ✅ ⭐⭐⭐ CORRECT PATH ⭐⭐⭐
+    // ✅ FIXED PATH
     const q = query(
       collection(db, "orders", user.uid, "items"),
       orderBy("createdAt", "desc")
@@ -55,9 +54,9 @@ onAuthStateChanged(auth, async (user) => {
       return;
     }
 
-    snap.forEach(d => {
+    snap.forEach(doc => {
 
-      const data = d.data();
+      const data = doc.data();
 
       const card = document.createElement("div");
       card.className = "order-card";
@@ -76,15 +75,8 @@ onAuthStateChanged(auth, async (user) => {
 
   }
   catch (err) {
-
     console.error(err);
-
-    ordersList.innerHTML = `
-      <div class="order-card">
-        <h3>Error ❌</h3>
-        <p>Unable to load orders.</p>
-      </div>
-    `;
+    ordersList.innerHTML = "<p>Error loading orders ❌</p>";
   }
 
 });
