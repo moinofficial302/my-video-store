@@ -21,7 +21,7 @@ import {
 
 
 // ================================
-// PRODUCTS DATA
+// PRODUCTS
 // ================================
 const PRODUCTS = {
   "editing-pack": {
@@ -33,110 +33,101 @@ const PRODUCTS = {
 };
 
 
-// ================================
-// 🔥 BUY PRODUCT (SUPER STABLE)
-// ================================
-async function buyProduct(productId, price) {
+// ===================================================
+// 🔥 BUY PRODUCT (FINAL FIXED)
+// ===================================================
+async function buyProduct(productId, price){
 
-  if (!auth.currentUser) {
+  const user = auth.currentUser;
+
+  if(!user){
     alert("Login first");
     location.href = "login.html";
     return;
   }
 
-  const user = auth.currentUser;
   const product = PRODUCTS[productId];
 
-  try {
+  try{
 
-    const userRef = doc(db, "users", user.uid);
+    const userRef = doc(db,"users",user.uid);
     const snap = await getDoc(userRef);
 
     const coins = snap.data().coins || 0;
 
-    if (coins < price) {
+    if(coins < price){
       alert("Not enough coins ❌");
       return;
     }
 
-    // deduct coins
-    await updateDoc(userRef, {
+    // 1️⃣ deduct coins
+    await updateDoc(userRef,{
       coins: increment(-price)
     });
 
-    // save order
-    await addDoc(collection(db, "orders"), {
-      uid: user.uid,
-      userEmail: user.email,
-      productId,
-      name: product.name,
-      price,
-      link: product.link,
-      createdAt: serverTimestamp()
-    });
+    // 2️⃣ SAVE ORDER (FIXED PATH)
+    await addDoc(
+      collection(db,"orders",user.uid,"items"),
+      {
+        productId,
+        name: product.name,
+        price,
+        link: product.link,
+        createdAt: serverTimestamp()
+      }
+    );
 
     alert("Purchase Successful 🎉");
 
-    switchButtonToOpen(productId, product.link);
+    switchButton(productId, product.link);
 
-  } catch (err) {
-    console.error("Buy error:", err);
+  }catch(err){
+    console.error(err);
     alert("Something went wrong. Try again.");
   }
 }
 
 
-// ================================
-// 🔥 OWNERSHIP CHECK
-// ================================
-async function checkOwnership(productId, buttonEl) {
+// ===================================================
+// OWNERSHIP CHECK
+// ===================================================
+async function checkOwnership(productId, buttonEl){
 
-  if (!auth.currentUser) return;
+  const user = auth.currentUser;
+  if(!user) return;
 
   const q = query(
-    collection(db, "orders"),
-    where("uid", "==", auth.currentUser.uid),
-    where("productId", "==", productId),
+    collection(db,"orders",user.uid,"items"),
+    where("productId","==",productId),
     limit(1)
   );
 
   const snap = await getDocs(q);
 
-  if (!snap.empty) {
+  if(!snap.empty){
     const data = snap.docs[0].data();
 
     buttonEl.innerText = "Open Product";
-    buttonEl.onclick = () => window.open(data.link, "_blank");
-    buttonEl.classList.add("owned");
+    buttonEl.onclick = ()=> window.open(data.link,"_blank");
   }
 }
 
 
-// ================================
-// 🔥 BUTTON SWITCH (SAFE)
-// ================================
-function switchButtonToOpen(productId, link) {
+// ===================================================
+function switchButton(productId, link){
 
-  const btn = document.querySelector(
-    `[onclick*="${productId}"]`
-  );
-
-  if (!btn) return;
+  const btn = document.querySelector(`[onclick*="${productId}"]`);
+  if(!btn) return;
 
   btn.innerText = "Open Product";
-  btn.onclick = () => window.open(link, "_blank");
-  btn.classList.add("owned");
+  btn.onclick = ()=> window.open(link,"_blank");
 }
 
 
-// ================================
-// ⭐ MAKE GLOBAL (MOST IMPORTANT)
-// ================================
+// GLOBAL
 window.buyProduct = buyProduct;
 window.checkOwnership = checkOwnership;
 
 
-// ================================
 // AUTH READY
-// ================================
-onAuthStateChanged(auth, () => {});
+onAuthStateChanged(auth,()=>{});
