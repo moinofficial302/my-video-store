@@ -11,229 +11,191 @@
 
   <style>
     .ai-wrapper{
-      padding: 16px;
-      padding-bottom: 90px;
+      padding:16px;
+      padding-bottom:90px;
     }
 
     .ai-card{
-      max-width: 420px;
-      margin: 20px auto;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(16px);
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      max-width:420px;
+      margin:20px auto;
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(16px);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:0 15px 40px rgba(0,0,0,.5);
     }
 
     .ai-image{
-      width: 100%;
-      display: block;
+      width:100%;
+      display:block;
     }
 
     .ai-content{
-      padding: 16px;
-      text-align: center;
-    }
-
-    .ai-content h3{
-      font-size: 20px;
-      margin-bottom: 4px;
+      padding:16px;
+      text-align:center;
     }
 
     .price{
-      margin: 10px 0;
+      margin:10px 0;
     }
 
     .price del{
-      color: #ff6b6b;
-      margin-right: 6px;
+      color:#ff6b6b;
+      margin-right:6px;
     }
 
     .details-btn{
-      width: 100%;
-      padding: 12px;
-      border-radius: 30px;
-      border: 2px solid #3b82f6;
-      background: transparent;
-      color: #3b82f6;
-      font-weight: 600;
-      margin-top: 10px;
+      width:100%;
+      padding:12px;
+      border-radius:30px;
+      border:2px solid #3b82f6;
+      background:transparent;
+      color:#3b82f6;
+      font-weight:600;
+      margin-top:10px;
+      cursor:pointer;
     }
 
     .buy-btn{
-      width: 100%;
-      padding: 14px;
-      margin-top: 10px;
-      border-radius: 30px;
-      background: #ffd400;
-      border: none;
-      font-weight: 700;
-      font-size: 16px;
-      color: #000;
-      cursor: pointer;
+      width:100%;
+      padding:14px;
+      margin-top:10px;
+      border-radius:30px;
+      background:#ffd400;
+      border:none;
+      font-weight:700;
+      font-size:16px;
+      cursor:pointer;
     }
 
     .owned{
-      background: #22c55e !important;
-      color: white !important;
+      background:#22c55e !important;
+      color:#fff !important;
     }
-       .details-box{
-         display: none;
-       }
 
-    
+    .details-box{
+      display:none;
+      margin-top:10px;
+      font-size:14px;
+    }
   </style>
 
 </head>
 
 <body onload="requireLogin()">
 
-  <!-- HEADER -->
-  <div class="header-box">
-    <span>Only M.7 Limited</span>
-    <img src="assets/logo.png" alt="Logo">
-  </div>
-
-  <!-- AI SECTION -->
-  <div class="ai-wrapper">
-
-    <div class="ai-card">
-
-      <img src="15gb.jpg" class="ai-image" alt="15 GB Editing Pack">
-
-      <div class="ai-content">
-        <h3>15 GB Editing Pack</h3>
-        <p>15 GB Pack</p>
-
-        <p class="price">
-          <del>₹1999</del>
-          <strong>₹99 Only</strong>
-        </p>
-
-        <button class="details-btn">
-          View Details
-        </button>
-
-        <div class="details-box">
-          <p><strong>Bundle:</strong> AI Generated Hulk Reels</p>
-          <p><strong>Total:</strong> 1000+ Videos</p>
-          <p><strong>Type:</strong> Short Reels</p>
-          <p><strong>Quality:</strong> Full HD</p>
-          <p><strong>Delivery:</strong> Instant</p>
-          <p>⭐⭐⭐⭐ 4.7 / 5 Rating</p>
-        </div>
-
-        <button
-          class="buy-btn"
-          id="buy-editing"
-          onclick="buyProduct('editing-pack', 99)">
-          Buy Now
-        </button>
-
-      </div>
-    </div>
-
-
-    
-    <!-- 🔹 50 GB CARD -->
-
-    
-<div class="card glass-card">
-
-  <img src="50gb.jpg" class="ai-image" alt="50 GB Editing Pack">
-
-  <div class="ai-content">
-    <h3>50 GB Editing Pack</h3>
-    <p>50 GB Mega Pack</p>
-
-    <p class="price">
-      <del>₹4999</del>
-      <strong>₹199 Only</strong>
-    </p>
-
-    <button class="details-btn">
-      View Details
-    </button>
-
-    <div class="details-box">
-      <p><strong>Bundle:</strong> Premium Editing Assets</p>
-      <p><strong>Total:</strong> 5000+ Files</p>
-      <p><strong>Type:</strong> Effects, PNG, LUTs, Fonts</p>
-      <p><strong>Quality:</strong> Full HD / 4K</p>
-      <p><strong>Delivery:</strong> Instant</p>
-      <p class="rating">⭐⭐⭐⭐ 4.9 / 5 Rating</p>
-    </div>
-
-<button
-  class="buy-btn"
-  id="buy-editing-50"
-  onclick="buyProduct('editing-pack-50')">
-  Buy Now
-</button>
-
-  </div>
+<!-- HEADER -->
+<div class="header-box">
+  <span>Only M.7 Limited</span>
+  <img src="assets/logo.png">
 </div>
 
+<div class="ai-wrapper">
+
+  <!-- ================= 15GB ================= -->
+  <div class="ai-card">
+
+    <img src="15gb.jpg" class="ai-image">
+
+    <div class="ai-content">
+
+      <h3>15 GB Editing Pack</h3>
+
+      <p class="price">
+        <del>₹1999</del>
+        <strong>₹99 Only</strong>
+      </p>
+
+      <button class="details-btn">View Details</button>
+
+      <div class="details-box">
+        <p>AI Hulk Reels Bundle</p>
+        <p>1000+ Videos • Full HD</p>
+      </div>
+
+      <button
+        class="buy-btn"
+        id="buy-editing"
+        onclick="buyProduct('editing-pack')">
+        Buy Now
+      </button>
+
+    </div>
   </div>
 
+  <!-- ================= 50GB ================= -->
+  <div class="ai-card">
 
+    <img src="50gb.jpg" class="ai-image">
 
+    <div class="ai-content">
 
+      <h3>50 GB Editing Pack</h3>
 
+      <p class="price">
+        <del>₹4999</del>
+        <strong>₹199 Only</strong>
+      </p>
 
+      <button class="details-btn">View Details</button>
 
+      <div class="details-box">
+        <p>Premium Editing Assets</p>
+        <p>5000+ Files • Full HD / 4K</p>
+      </div>
 
-  <!-- 🔻 BOTTOM NAV -->
-  <div class="bottom-nav">
-    <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
-    <button class="nav-item active">AI & Editing</button>
-    <button class="nav-item" onclick="location.href='social.html'">Social</button>
-    <button class="nav-item" onclick="location.href='account.html'">Account</button>
+      <button
+        class="buy-btn"
+        id="buy-editing-50"
+        onclick="buyProduct('editing-pack-50')">
+        Buy Now
+      </button>
+
+    </div>
   </div>
 
-
-  <!-- ===============================
-       SCRIPTS (VERY IMPORTANT ORDER)
-  ================================ -->
-
-  <!-- 1️⃣ AUTH FIRST -->
-  <script type="module" src="js/auth.js"></script>
-
-  <!-- 2️⃣ PRODUCTS (buyProduct function here) -->
-  <script type="module" src="js/products.js"></script>
+</div>
 
 
-  <!-- 3️⃣ PAGE LOGIC -->
+<!-- ================= BOTTOM NAV ================= -->
+<div class="bottom-nav">
+  <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
+  <button class="nav-item active">AI & Editing</button>
+  <button class="nav-item" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item" onclick="location.href='account.html'">Account</button>
+</div>
 
-<script type="module">
-import { checkOwnership } from "./js/products.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+<!-- ================= SCRIPTS ================= -->
 
-  // ⭐ DETAILS BUTTON (WORKS 100%)
+<!-- AUTH -->
+<script type="module" src="js/auth.js"></script>
+
+<!-- PRODUCTS -->
+<script type="module" src="js/products.js"></script>
+
+<!-- PAGE LOGIC (NO MODULE – 100% WORKING) -->
+<script>
+
+  // ⭐ DETAILS BUTTON WORKING 100%
   document.querySelectorAll(".details-btn").forEach(btn => {
 
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", function(){
 
-      const box = btn.parentElement.querySelector(".details-box");
+      const box = this.nextElementSibling;
 
       if(box.style.display === "block"){
         box.style.display = "none";
-        btn.innerText = "View Details";
+        this.innerText = "View Details";
       } else {
         box.style.display = "block";
-        btn.innerText = "Hide Details";
+        this.innerText = "Hide Details";
       }
 
     });
 
   });
 
-  // ⭐ OWNERSHIP
-  checkOwnership("editing-pack", document.getElementById("buy-editing"));
-  checkOwnership("editing-pack-50", document.getElementById("buy-editing-50"));
-
-});
 </script>
 
 </body>
