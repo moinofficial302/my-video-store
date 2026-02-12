@@ -174,9 +174,13 @@ window.checkOwnership = checkOwnership;
 // ===================================================
 // AUTO CHECK AFTER LOGIN (VERY IMPORTANT)
 // ===================================================
+
 onAuthStateChanged(auth,()=>{
 
-  const btn = document.getElementById("buy-editing");
-  if(btn) checkOwnership("editing-pack", btn);
+  const btn1 = document.getElementById("buy-editing");
+  if(btn1) checkOwnership("editing-pack", btn1);
+
+  const btn2 = document.getElementById("buy-editing-50");
+  if(btn2) checkOwnership("editing-pack-50", btn2);
 
 });
