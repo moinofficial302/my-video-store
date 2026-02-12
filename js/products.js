@@ -30,9 +30,13 @@ const PRODUCTS = {
     id: "editing-pack",
     name: "15 GB Editing Pack",
     price: 99,
-    link: "https://drive.google.com/drive/folders/1GnAZnX64ObyQMW2eWHpyjxwNJANcAQcD"
+    link: "https://t.me/+IL4ujN1xwp83ZmVl"
   }
 };
+
+// ================================
+// 50 GB PRODUCTS
+// ================================
 
   // ⭐ NEW 50GB
   "editing-pack-50": {
