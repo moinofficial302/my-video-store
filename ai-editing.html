@@ -206,36 +206,36 @@
   <!-- 3️⃣ PAGE LOGIC -->
 
 <script type="module">
-  import { checkOwnership } from "./js/products.js";
+import { checkOwnership } from "./js/products.js";
 
-  // ⭐ toggle function (local)
-  function toggleDetails(btn){
-    const box = btn.nextElementSibling;
+document.addEventListener("DOMContentLoaded", () => {
 
-    if(box.style.display === "none"){
-      box.style.display = "block";
-      btn.innerText = "Hide Details";
-    } else {
-      box.style.display = "none";
-      btn.innerText = "View Details";
-    }
-  }
+  // ⭐ DETAILS BUTTON FIX
+  document.querySelectorAll(".details-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
 
-  // ⭐ make global
-  window.toggleDetails = toggleDetails;
+      const box = btn.nextElementSibling;
 
-  // ⭐ check ownership BOTH products
-  document.addEventListener("DOMContentLoaded", () => {
+      if(box.style.display === "block"){
+        box.style.display = "none";
+        btn.innerText = "View Details";
+      } else {
+        box.style.display = "block";
+        btn.innerText = "Hide Details";
+      }
 
-    const btn1 = document.getElementById("buy-editing");
-    if(btn1) checkOwnership("editing-pack", btn1);
-
-    const btn2 = document.getElementById("buy-editing-50");
-    if(btn2) checkOwnership("editing-pack-50", btn2);
-
+    });
   });
 
-  </script>
+  // ⭐ OWNERSHIP CHECK
+  const btn1 = document.getElementById("buy-editing");
+  if(btn1) checkOwnership("editing-pack", btn1);
 
+  const btn2 = document.getElementById("buy-editing-50");
+  if(btn2) checkOwnership("editing-pack-50", btn2);
+
+});
+</script>
+  
 </body>
 </html>
