@@ -20,25 +20,19 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
-// ================================
-// 15 GB PRODUCTS
-// ================================
 
-
+// ================================
+// PRODUCTS (FIXED)
+// ================================
 const PRODUCTS = {
+
   "editing-pack": {
     id: "editing-pack",
     name: "15 GB Editing Pack",
     price: 99,
     link: "https://t.me/+IL4ujN1xwp83ZmVl"
-  }
-};
+  },
 
-// ================================
-// 50 GB PRODUCTS
-// ================================
-
-  // ⭐ NEW 50GB
   "editing-pack-50": {
     id: "editing-pack-50",
     name: "50 GB Editing Pack",
@@ -47,8 +41,6 @@ const PRODUCTS = {
   }
 
 };
-
-
 
 
 
