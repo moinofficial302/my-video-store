@@ -21,8 +21,10 @@ import {
 
 
 // ================================
-// PRODUCTS
+// 15 GB PRODUCTS
 // ================================
+
+
 const PRODUCTS = {
   "editing-pack": {
     id: "editing-pack",
@@ -31,6 +33,25 @@ const PRODUCTS = {
     link: "https://drive.google.com/drive/folders/1GnAZnX64ObyQMW2eWHpyjxwNJANcAQcD"
   }
 };
+
+  // ⭐ NEW 50GB
+  "editing-pack-50": {
+    id: "editing-pack-50",
+    name: "50 GB Editing Pack",
+    price: 199,
+    link: "https://t.me/+s8atnzggnmsyZDhl"
+  }
+
+};
+
+
+
+
+
+
+
+
+
 
 
 // ===================================================
