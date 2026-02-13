@@ -322,15 +322,21 @@ body{
   display:flex;
   align-items:center;
   justify-content:flex-end;
-  gap:4px;
+  gap:6px;
 
-  font-size:28px;   /* number size */
   font-weight:700;
 }
 
+/* ⭐ NUMBER BIG */
+.amount #coinBalance,
+.amount #referralBalance{
+  font-size:32px;
+  font-weight:800;
+}
+
+/* ⭐ ₹ SMALL */
 .currency{
-  font-size:18px;   /* ₹ chhota */
-  font-weight:600;
+  font-size:16px;
   opacity:0.9;
 }
 
