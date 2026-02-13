@@ -53,7 +53,7 @@ const PRODUCTS = {
   id: "Food",
   name: "Food Cutting Bundle",
   price: 39,
-  link: "https://t.me/+YOUR_FOOD_LINK"
+  link: "https://t.me/+c3hgz5tNXW85YTdl"
 },
 
 "Car": {
