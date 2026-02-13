@@ -22,7 +22,7 @@ import {
 
 
 // ================================
-// PRODUCTS (FIXED)
+//     Ai-Editing.HTML (FIXED)
 // ================================
 const PRODUCTS = {
 
@@ -33,15 +33,37 @@ const PRODUCTS = {
     link: "https://t.me/+IL4ujN1xwp83ZmVl"
   },
 
-  "editing-pack-50": {
-    id: "editing-pack-50",
-    name: "50 GB Editing Pack",
-    price: 199,
-    link: "https://t.me/+s8atnzggnmsyZDhl"
-  }
+"editing-pack-50": {
+  id: "editing-pack-50",
+  name: "50 GB Editing Pack",
+  price: 199,
+  link: "https://t.me/+s8atnzggnmsyZDhl"
+},
+
+// ================= Indec.HTML =================
+
+"hulk": {
+  id: "hulk",
+  name: "Hulk Videos Bundle",
+  price: 39,
+  link: "https://t.me/+dGMtUHj_-01mMWJl"
+},
+
+"Food": {
+  id: "Food",
+  name: "Food Cutting Bundle",
+  price: 39,
+  link: "https://t.me/+YOUR_FOOD_LINK"
+},
+
+"Car": {
+  id: "Car",
+  name: "Car Videos Bundle",
+  price: 45,
+  link: "https://t.me/+YOUR_CAR_LINK"
+}
 
 };
-
 
 
 
