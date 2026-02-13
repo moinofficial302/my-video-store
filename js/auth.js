@@ -218,12 +218,8 @@ onAuthStateChanged(auth, async (user) => {
 
 
    
-if (coinsEl)
-  coinsEl.textContent = "₹ " + (data.coins || 0);
-
-if (refEl)
-  refEl.textContent = "₹ " + (data.referralBalance || 0);
-
+coinsEl.textContent = (data.coins || 0);
+refEl.textContent = (data.referralBalance || 0);
    
 /* =====================================================
    🔐 PAGE GUARD
