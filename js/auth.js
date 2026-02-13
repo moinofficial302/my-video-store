@@ -218,8 +218,8 @@ onAuthStateChanged(auth, async (user) => {
 
 
    
-coinsEl.textContent = (data.coins || 0);
-refEl.textContent = (data.referralBalance || 0);
+coinsEl.textContent = (data.coins || 0).toLocaleString("en-IN");
+refEl.textContent = (data.referralBalance || 0).toLocaleString("en-IN");
    
 /* =====================================================
    🔐 PAGE GUARD
