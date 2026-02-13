@@ -215,10 +215,11 @@ onAuthStateChanged(auth, async (user) => {
   const coinsEl = document.getElementById("coinBalance");
   const refEl = document.getElementById("referralBalance");
 
-  if (coinsEl) coinsEl.innerText = data.coins || 0;
-  if (refEl) refEl.innerText = data.referralBalance || 0;
-});
+  if (coinsEl)
+  coinsEl.innerText = "₹ " + (data.coins || 0).toLocaleString("en-IN");
 
+if (refEl)
+  refEl.innerText = "₹ " + (data.referralBalance || 0).toLocaleString("en-IN");
 
 
 /* =====================================================
