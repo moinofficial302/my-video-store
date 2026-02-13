@@ -197,6 +197,8 @@ window.checkOwnership = checkOwnership;
 // AUTO CHECK AFTER LOGIN (VERY IMPORTANT)
 // ===================================================
 
+// ===== ai Editing Page =====
+
 onAuthStateChanged(auth,()=>{
 
   const btn1 = document.getElementById("buy-editing");
@@ -205,4 +207,16 @@ onAuthStateChanged(auth,()=>{
   const btn2 = document.getElementById("buy-editing-50");
   if(btn2) checkOwnership("editing-pack-50", btn2);
 
+// ===== index.HTML  BUNDLE  =====
+  
+  const bh = document.getElementById("buy-hulk");
+  if(bh) checkOwnership("hulk", bh);
+
+  const bf = document.getElementById("buy-food");
+  if(bf) checkOwnership("Food", bf);
+
+  const bc = document.getElementById("buy-car");
+  if(bc) checkOwnership("Car", bc);
+
+  
 });
