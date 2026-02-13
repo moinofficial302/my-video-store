@@ -97,6 +97,12 @@ window.signupUser = async function () {
       createdAt: serverTimestamp()
     });
 
+// ⭐ referral signup bonus
+if (referredBy) {
+  await giveReferralSignupBonus(cred.user, referredBy);
+}
+
+     
     window.location.replace("index.html");
 
   } catch (e) {
@@ -253,3 +259,30 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+
+
+
+/* =========================
+   REFERRAL SIGNUP BONUS
+========================= */
+
+async function giveReferralSignupBonus(user, referralCode) {
+
+  if (!referralCode) return;
+
+  const userRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) return;
+
+  const data = userSnap.data();
+
+  if (data.signupBonusGiven) return;
+
+  await updateDoc(userRef, {
+    coins: (data.coins || 0) + 5,
+    referralBalance: (data.referralBalance || 0) + 5,
+    signupBonusGiven: true
+  });
+}
