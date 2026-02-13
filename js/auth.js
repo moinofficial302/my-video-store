@@ -219,12 +219,10 @@ onAuthStateChanged(auth, async (user) => {
 
    
 if (coinsEl)
-  coinsEl.innerText = "₹ " + (data.coins || 0).toLocaleString("en-IN");
+  coinsEl.textContent = "₹ " + (data.coins || 0);
 
 if (refEl)
-  refEl.innerText = "₹ " + (data.referralBalance || 0).toLocaleString("en-IN");
-
-
+  refEl.textContent = "₹ " + (data.referralBalance || 0);
 
    
 /* =====================================================
