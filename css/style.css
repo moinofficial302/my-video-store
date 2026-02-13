@@ -314,6 +314,27 @@ body{
   margin-right: auto;
 }
 
+/* ===============================
+   WALLET ₹ AMOUNT FIX
+================================ */
+
+.amount{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:4px;
+
+  font-size:28px;   /* number size */
+  font-weight:700;
+}
+
+.currency{
+  font-size:18px;   /* ₹ chhota */
+  font-weight:600;
+  opacity:0.9;
+}
+
+
 /* ==================================================
    AI & EDITING PAGE CENTER
 ================================================== */
