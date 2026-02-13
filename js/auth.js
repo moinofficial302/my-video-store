@@ -25,6 +25,7 @@ import {
   doc,
   setDoc,
   getDoc,
+   updateDoc,
   collection,
   query,
   where,
