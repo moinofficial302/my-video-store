@@ -327,15 +327,18 @@ body{
   font-weight:700;
 }
 
-/* ⭐ NUMBER BIG */
 
-.amount #coinBalance,
-.amount #referralBalance{
-   
-  font-size:46px;   /* 🔥 bada number */
-  font-weight:900;
-  letter-spacing:1px;
+.wallet-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
+
+.wallet-card .amount{
+  font-size:48px !important;
+  font-weight:900 !important;
+}
+
 
 /* ⭐ ₹ SMALL */
 .currency{
