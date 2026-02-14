@@ -225,7 +225,8 @@ if (coinsEl) {
 if (refEl) {
   refEl.textContent = (data.referralBalance || 0).toLocaleString("en-IN");
 }
-   
+   });
+
 /* =====================================================
    🔐 PAGE GUARD
 ===================================================== */
