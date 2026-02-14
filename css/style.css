@@ -835,12 +835,11 @@ body{
 /* 🔥 FINAL BIG NUMBER */
 #coinBalance,
 #referralBalance{
-  font-size:52px !important;
-  font-weight:900 !important;
+  font-size:36px !important;
+  font-weight:800 !important;
 }
 
 /* ₹ small */
 .currency{
-  font-size:18px;
-  opacity:0.9;
+  font-size:18px !important;
 }
