@@ -318,33 +318,6 @@ body{
    WALLET ₹ AMOUNT FIX
 ================================ */
 
-.amount{
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  gap:6px;
-
-  font-weight:700;
-}
-
-
-.wallet-card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.wallet-card .amount{
-  font-size:48px !important;
-  font-weight:900 !important;
-}
-
-
-/* ⭐ ₹ SMALL */
-.currency{
-  font-size:16px;
-  opacity:0.9;
-}
 
 
 /* ==================================================
@@ -839,4 +812,35 @@ body{
 .buy-btn.owned{
   background:#3b82f6;
   color:#fff;
+}
+
+
+
+/* ===============================
+   💰 WALLET FINAL BIG NUMBER FIX
+================================ */
+
+.wallet-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.wallet-card .amount{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* 🔥 FINAL BIG NUMBER */
+#coinBalance,
+#referralBalance{
+  font-size:52px !important;
+  font-weight:900 !important;
+}
+
+/* ₹ small */
+.currency{
+  font-size:18px;
+  opacity:0.9;
 }
