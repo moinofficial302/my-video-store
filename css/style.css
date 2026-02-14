@@ -71,7 +71,10 @@ body{
 
 .card-top img{
   width: 110px;
-  border-radius: 16px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 22px;
+  display: block;
 }
 
 .card-top .text h3{
