@@ -820,26 +820,21 @@ body{
    💰 WALLET FINAL BIG NUMBER FIX
 ================================ */
 
-.wallet-card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+/* 🔥 CLEAN FINAL WALLET SIZE */
 
-.wallet-card .amount{
+.wallet-card h2{
   display:flex;
   align-items:center;
+  justify-content:flex-end;
   gap:6px;
 }
 
-/* 🔥 FINAL BIG NUMBER */
-#coinBalance,
-#referralBalance{
-  font-size:36px !important;
+.wallet-card h2 span:last-child{
+  font-size:34px !important;
   font-weight:800 !important;
 }
 
-/* ₹ small */
-.currency{
+.wallet-card .currency{
   font-size:18px !important;
+  opacity:0.9;
 }
