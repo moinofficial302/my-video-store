@@ -328,10 +328,13 @@ body{
 }
 
 /* ⭐ NUMBER BIG */
+
 .amount #coinBalance,
 .amount #referralBalance{
-  font-size:32px;
-  font-weight:800;
+  font-size:42px;   /* 🔥 bada number */
+  font-weight:900;
+  letter-spacing:1px;
+   font-size:46px;
 }
 
 /* ⭐ ₹ SMALL */
