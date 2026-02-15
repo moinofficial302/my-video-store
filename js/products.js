@@ -62,7 +62,20 @@ const PRODUCTS = {
   price: 45,
   link: "https://t.me/+2IyBE_5HnSM4OGZl"
 }
+  
+"anime": {
+  id: "anime",
+  name: "3000+ Anime Videos Bundle",
+  price: 59,
+  link: "https://t.me/+7lmwXA75UXk0NjE9"
+},
 
+"moral": {
+  id: "moral",
+  name: "500+ 2D Moral Story Bundle",
+  price: 49,
+  link: "https://t.me/+uO57638rM7tmNDVl"
+},
 };
 
 
