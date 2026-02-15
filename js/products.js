@@ -233,4 +233,10 @@ onAuthStateChanged(auth,()=>{
   if(bc) checkOwnership("Car", bc);
 
   
+  const btnAnime = document.getElementById("buy-anime");
+  if(btnAnime) checkOwnership("anime", btnAnime);
+
+  const btnMoral = document.getElementById("buy-moral");
+  if(btnMoral) checkOwnership("moral", btnMoral);
+
 });
