@@ -221,7 +221,9 @@ onAuthStateChanged(auth,()=>{
   const btn2 = document.getElementById("buy-editing-50");
   if(btn2) checkOwnership("editing-pack-50", btn2);
 
+  
 // ===== index.HTML  BUNDLE  =====
+
   
   const bh = document.getElementById("buy-hulk");
   if(bh) checkOwnership("hulk", bh);
