@@ -74,7 +74,7 @@ const PRODUCTS = {
   id: "moral",
   name: "500+ 2D Moral Story Bundle",
   price: 49,
-  link: "https://t.me/+uO57638rM7tmNDVl"
+  link: "https://t.me/+zF3wqqFXB5g5ZDU1"
 }
 
 };
