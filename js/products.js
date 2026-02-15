@@ -75,6 +75,13 @@ const PRODUCTS = {
   name: "500+ 2D Moral Story Bundle",
   price: 49,
   link: "https://t.me/+zF3wqqFXB5g5ZDU1"
+},
+
+  "monkey": {
+  id: "monkey",
+  name: "1000+ Monkey Vlog Videos Bundle",
+  price: 49,
+  link: "https://t.me/YOUR_MONKEY_LINK"
 }
 
 };
@@ -241,4 +248,7 @@ onAuthStateChanged(auth,()=>{
   const btnMoral = document.getElementById("buy-moral");
   if(btnMoral) checkOwnership("moral", btnMoral);
 
+  const btn6 = document.getElementById("buy-monkey");
+  if(btn6) checkOwnership("monkey", btn6);
+  
 });
