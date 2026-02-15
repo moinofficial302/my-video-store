@@ -81,7 +81,7 @@ const PRODUCTS = {
   id: "monkey",
   name: "1000+ Monkey Vlog Videos Bundle",
   price: 49,
-  link: "https://t.me/YOUR_MONKEY_LINK"
+  link: "https://t.me/+pzhVW_ZuE6FkYjc1"
 }
 
 };
