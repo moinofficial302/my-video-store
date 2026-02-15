@@ -892,3 +892,14 @@ body{
 .menu-item:active {
   transform: scale(0.97);
 }
+
+
+/* ============================
+   OWNED BUTTON – GREEN FIX
+============================ */
+
+.buy-btn.owned{
+  background: #22c55e !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(34,197,94,0.4) !important;
+}
