@@ -56,13 +56,13 @@ const PRODUCTS = {
   link: "https://t.me/+c3hgz5tNXW85YTdl"
 },
 
-"Car": {
+  "Car": {
   id: "Car",
   name: "Car Videos Bundle",
   price: 45,
-  link: "https://t.me/+2IyBE_5HnSM4OGZl"
-}
-  
+  link: "https://t.me/+2IyBE_5hNsM4OGZl"
+},
+
 "anime": {
   id: "anime",
   name: "3000+ Anime Videos Bundle",
@@ -74,8 +74,9 @@ const PRODUCTS = {
   id: "moral",
   name: "500+ 2D Moral Story Bundle",
   price: 49,
-  link: "https://t.me/+uO57638rM7tmNDVl"
-},
+  link: "https://t.me/+u057638rM7tmNDVl"
+}
+
 };
 
 
