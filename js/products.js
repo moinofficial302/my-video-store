@@ -88,21 +88,21 @@ const PRODUCTS = {
   id: "lifehack",
   name: "3000+ Daily Life Hacks Videos",
   price: 55,
-  link: "YOUR_TELEGRAM_LINK"
+  link: "https://t.me/+RRsxLF1CDAE4OGY1"
 },
 
 "nature": {
   id: "nature",
   name: "1000+ Nature Videos Bundle",
   price: 49,
-  link: "YOUR_TELEGRAM_LINK"
+  link: "https://t.me/+LDwQyWtgRmVhMjll"
 },
 
 "horror": {
   id: "horror",
   name: "800+ Horror Videos Bundle",
   price: 49,
-  link: "YOUR_TELEGRAM_LINK"
+  link: "https://t.me/+oH4QIbUwnwI1ZDg1"
 },
 };
 
