@@ -269,4 +269,13 @@ onAuthStateChanged(auth, () => {
   const btn6 = document.getElementById("buy-monkey");
   if (btn6) checkOwnership("monkey", btn6);
 
+  const btn7 = document.getElementById("buy-lifehack");
+ if (btn7) checkOwnership("lifehack", btn7);
+
+ const btn8 = document.getElementById("buy-nature");
+ if (btn8) checkOwnership("nature", btn8);
+
+ const btn9 = document.getElementById("buy-horror");
+ if (btn9) checkOwnership("horror", btn9);
+  
 });
