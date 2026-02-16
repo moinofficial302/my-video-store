@@ -82,8 +82,28 @@ const PRODUCTS = {
   name: "1000+ Monkey Vlog Videos Bundle",
   price: 49,
   link: "https://t.me/+pzhVW_ZuE6FkYjc1"
-}
+},
 
+  "lifehack": {
+  id: "lifehack",
+  name: "3000+ Daily Life Hacks Videos",
+  price: 55,
+  link: "YOUR_TELEGRAM_LINK"
+},
+
+"nature": {
+  id: "nature",
+  name: "1000+ Nature Videos Bundle",
+  price: 49,
+  link: "YOUR_TELEGRAM_LINK"
+},
+
+"horror": {
+  id: "horror",
+  name: "800+ Horror Videos Bundle",
+  price: 49,
+  link: "YOUR_TELEGRAM_LINK"
+},
 };
 
 
