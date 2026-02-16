@@ -901,6 +901,7 @@ body{
 
 .buy-btn.owned{
   background: #22c55e !important;
+  background-image: none !important;
   color: #ffffff !important;
   box-shadow: 0 6px 16px rgba(34,197,94,0.4) !important;
 }
