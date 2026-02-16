@@ -214,41 +214,39 @@ window.buyProduct = buyProduct;
 window.checkOwnership = checkOwnership;
 
 
-// ===================================================
+// ===============================
 // AUTO CHECK AFTER LOGIN (VERY IMPORTANT)
-// ===================================================
+// ===============================
+
 
 // ===== ai Editing Page =====
-
-onAuthStateChanged(auth,()=>{
+onAuthStateChanged(auth, () => {
 
   const btn1 = document.getElementById("buy-editing");
-  if(btn1) checkOwnership("editing-pack", btn1);
+  if (btn1) checkOwnership("editing-pack", btn1);
 
   const btn2 = document.getElementById("buy-editing-50");
-  if(btn2) checkOwnership("editing-pack-50", btn2);
+  if (btn2) checkOwnership("editing-pack-50", btn2);
 
-  
-// ===== index.HTML  BUNDLE  =====
 
-  
-  const btn1 = document.getElementById("buy-hulk");
-  if(btn1) checkOwnership("hulk", btn1);
+  // ===== index.HTML BUNDLE =====
 
-  const btn2 = document.getElementById("buy-food");
-  if(btn2) checkOwnership("Food", btn2);
+  const bh = document.getElementById("buy-hulk");
+  if (bh) checkOwnership("hulk", bh);
 
-  const btn3 = document.getElementById("buy-car");
-  if(btn3) checkOwnership("Car", btn3);
+  const bf = document.getElementById("buy-food");
+  if (bf) checkOwnership("Food", bf);
 
-  
-  const btn4 = document.getElementById("buy-anime");
-  if(btn4) checkOwnership("anime", btn4);
+  const bc = document.getElementById("buy-car");
+  if (bc) checkOwnership("Car", bc);
 
-  const btn5 = document.getElementById("buy-moral");
-  if(btn5) checkOwnership("moral", btn5);
+  const btnAnime = document.getElementById("buy-anime");
+  if (btnAnime) checkOwnership("anime", btnAnime);
+
+  const btnMoral = document.getElementById("buy-moral");
+  if (btnMoral) checkOwnership("moral", btnMoral);
 
   const btn6 = document.getElementById("buy-monkey");
-  if(btn6) checkOwnership("monkey", btn6);
-  
+  if (btn6) checkOwnership("monkey", btn6);
+
 });
