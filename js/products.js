@@ -223,29 +223,29 @@ window.checkOwnership = checkOwnership;
 onAuthStateChanged(auth,()=>{
 
   const btn1 = document.getElementById("buy-editing");
-  if(btn01) checkOwnership("editing-pack", btn01);
+  if(btn1) checkOwnership("editing-pack", btn1);
 
   const btn2 = document.getElementById("buy-editing-50");
-  if(btn02) checkOwnership("editing-pack-50", btn02);
+  if(btn2) checkOwnership("editing-pack-50", btn2);
 
   
 // ===== index.HTML  BUNDLE  =====
 
   
-  const bh = document.getElementById("buy-hulk");
+  const btn1 = document.getElementById("buy-hulk");
   if(btn1) checkOwnership("hulk", btn1);
 
-  const bf = document.getElementById("buy-food");
+  const btn2 = document.getElementById("buy-food");
   if(btn2) checkOwnership("Food", btn2);
 
-  const bc = document.getElementById("buy-car");
+  const btn3 = document.getElementById("buy-car");
   if(btn3) checkOwnership("Car", btn3);
 
   
-  const btnAnime = document.getElementById("buy-anime");
+  const btn4 = document.getElementById("buy-anime");
   if(btn4) checkOwnership("anime", btn4);
 
-  const btnMoral = document.getElementById("buy-moral");
+  const btn5 = document.getElementById("buy-moral");
   if(btn5) checkOwnership("moral", btn5);
 
   const btn6 = document.getElementById("buy-monkey");
