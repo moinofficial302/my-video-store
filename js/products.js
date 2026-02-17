@@ -125,10 +125,6 @@ const PRODUCTS = {
   price: 69,
   link: "https://t.me/+67WGMiWvUvc1M2M9"
 },  
-};
-
-
-
 
 
 // Trending 🔥 
@@ -154,13 +150,14 @@ const PRODUCTS = {
   link: "https://t.me/+arh3HN21b1dkOTk9"
 },
 
+
 "stock": {
   id: "stock",
   name: "Stock Market Bundle",
   price: 49,
   link: "https://t.me/+mqdMzFHqoPdlYWNl"
 },
-
+};
 
 // ===================================================
 // 🔥 BUY PRODUCT (ULTRA SAFE)
@@ -337,18 +334,19 @@ const btn12 = document.getElementById("buy-romantic");
 if (btn12) checkOwnership("romantic", btn12);
 
 
-  // Trending 🔥 
+  
 
   const btnCat = document.getElementById("buy-cat");
 if (btnCat) checkOwnership("cat", btnCat);
 
-const btnWomanGym = document.getElementById("buy-womangym");
-if (btnWomanGym) checkOwnership("womangym", btnWomanGym);
+const btnWoman = document.getElementById("buy-womangym");
+if (btnWoman) checkOwnership("womangym", btnWoman);
 
 const btnSanatani = document.getElementById("buy-sanatani");
 if (btnSanatani) checkOwnership("sanatani", btnSanatani);
 
 const btnStock = document.getElementById("buy-stock");
 if (btnStock) checkOwnership("stock", btnStock);
+
   
 });
