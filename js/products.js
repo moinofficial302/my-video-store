@@ -262,16 +262,16 @@ async function checkOwnership(productId, buttonEl){
 
 
 // ===================================================
+
 function switchButton(productId, link){
 
-  const btn = document.querySelector(`[onclick*="${productId}"]`);
+  const btn = document.getElementById("buy-" + productId);
   if(!btn) return;
 
   btn.innerText = "Open Product";
   btn.onclick = ()=> window.open(link,"_blank");
   btn.classList.add("owned");
 }
-
 
 // ===================================================
 // GLOBAL EXPORT
