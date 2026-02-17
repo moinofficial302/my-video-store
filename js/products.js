@@ -131,7 +131,35 @@ const PRODUCTS = {
 
 
 
+// Trending 🔥 
 
+"cat": {
+  id: "cat",
+  name: "Cat Story's Bundle",
+  price: 49,
+  link: "YOUR_TELEGRAM_LINK"
+},
+
+"womangym": {
+  id: "womangym",
+  name: "Woman Gym Bundle",
+  price: 49,
+  link: "YOUR_TELEGRAM_LINK"
+},
+
+"sanatani": {
+  id: "sanatani",
+  name: "Sanatani AI Reel Bundle",
+  price: 49,
+  link: "YOUR_TELEGRAM_LINK"
+},
+
+"stock": {
+  id: "stock",
+  name: "Stock Market Bundle",
+  price: 49,
+  link: "YOUR_TELEGRAM_LINK"
+},
 
 
 // ===================================================
@@ -307,5 +335,20 @@ if (btn11) checkOwnership("gym", btn11);
 
 const btn12 = document.getElementById("buy-romantic");
 if (btn12) checkOwnership("romantic", btn12);
+
+
+  // Trending 🔥 
+
+  const btnCat = document.getElementById("buy-cat");
+if (btnCat) checkOwnership("cat", btnCat);
+
+const btnWomanGym = document.getElementById("buy-womangym");
+if (btnWomanGym) checkOwnership("womangym", btnWomanGym);
+
+const btnSanatani = document.getElementById("buy-sanatani");
+if (btnSanatani) checkOwnership("sanatani", btnSanatani);
+
+const btnStock = document.getElementById("buy-stock");
+if (btnStock) checkOwnership("stock", btnStock);
   
 });
