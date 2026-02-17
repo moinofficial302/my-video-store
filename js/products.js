@@ -137,28 +137,28 @@ const PRODUCTS = {
   id: "cat",
   name: "Cat Story's Bundle",
   price: 49,
-  link: "YOUR_TELEGRAM_LINK"
+  link: "https://t.me/+nZFG56dvOtllYWM1"
 },
 
 "womangym": {
   id: "womangym",
   name: "Woman Gym Bundle",
   price: 49,
-  link: "YOUR_TELEGRAM_LINK"
+  link: "https://t.me/+mvcCrk4Cs4RlZGZl"
 },
 
 "sanatani": {
   id: "sanatani",
   name: "Sanatani AI Reel Bundle",
   price: 49,
-  link: "YOUR_TELEGRAM_LINK"
+  link: "https://t.me/+arh3HN21b1dkOTk9"
 },
 
 "stock": {
   id: "stock",
   name: "Stock Market Bundle",
   price: 49,
-  link: "YOUR_TELEGRAM_LINK"
+  link: "https://t.me/+mqdMzFHqoPdlYWNl"
 },
 
 
