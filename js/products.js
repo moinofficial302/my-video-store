@@ -103,7 +103,28 @@ const PRODUCTS = {
   name: "800+ Horror Videos Bundle",
   price: 49,
   link: "https://t.me/+oH4QIbUwnwI1ZDg1"
+  
 },
+"art": {
+  id: "art",
+  name: "ART & Satisfying Videos Bundle",
+  price: 49,
+  link: "https://t.me/+lEOyW0QunpMwNjQ1"
+},
+
+"gym": {
+  id: "gym",
+  name: "Gym Boy & Attitude Videos",
+  price: 55,
+  link: "https://t.me/+fiDbbBaF_o80ZTY1"
+},
+
+"romantic": {
+  id: "romantic",
+  name: "2D Romantic Short Videos",
+  price: 69,
+  link: "https://t.me/+67WGMiWvUvc1M2M9"
+},  
 };
 
 
@@ -277,5 +298,14 @@ onAuthStateChanged(auth, () => {
 
  const btn9 = document.getElementById("buy-horror");
  if (btn9) checkOwnership("horror", btn9);
+
+  const btn10 = document.getElementById("buy-art");
+if (btn10) checkOwnership("art", btn10);
+
+const btn11 = document.getElementById("buy-gym");
+if (btn11) checkOwnership("gym", btn11);
+
+const btn12 = document.getElementById("buy-romantic");
+if (btn12) checkOwnership("romantic", btn12);
   
 });
