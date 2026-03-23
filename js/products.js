@@ -60,7 +60,7 @@ const PRODUCTS = {
   id: "Car",
   name: "Car Videos Bundle",
   price: 45,
-  link: "https://t.me/+2IyBE_5hNsM4OGZl"
+  link: "https://t.me/+2IyBE_5HnSM4OGZl"
 },
 
 "anime": {
