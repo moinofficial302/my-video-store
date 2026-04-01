@@ -56,7 +56,10 @@
 
 
 
-<div class="wallet-card">
+<div class="wallet-card" 
+  onclick="goToAddMoney()" 
+  style="cursor:pointer;">
+  
   <span>💰 Coins</span>
   <h2 class="amount">
     <span class="currency">₹</span>
@@ -205,5 +208,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+  <script>
+function goToAddMoney() {
+  window.location.href = "add-money.html";
+}
+  </script>
+  
 </body>
 </html>
