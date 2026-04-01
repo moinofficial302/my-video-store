@@ -112,7 +112,13 @@ async function convertCoins() {
 
   const userRef = doc(db, "users", user.uid);
   const snap = await getDoc(userRef);
-  const balance = snap.data().referralBalance || 0;
+  
+  const data = snap.data();
+const balance =
+  data.referralBalance ||
+  data.referralWallet ||
+  data.referralCoins ||
+  0;
 
   if (amount > balance) {
     alert("Insufficient referral balance");
