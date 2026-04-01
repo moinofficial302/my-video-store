@@ -37,7 +37,14 @@ async function loadReferralBalance(uid) {
   const snap = await getDoc(userRef);
   if (!snap.exists()) return;
 
-  const balance = snap.data().referralBalance || 0;
+  const data = snap.data();
+
+const balance =
+  data.referralBalance ||
+  data.referralWallet ||
+  data.referralCoins ||
+  0;
+  
   document.getElementById("referralBalance").innerText = "₹" + balance;
 }
 
@@ -67,8 +74,15 @@ async function submitWithdraw() {
 
   const userRef = doc(db, "users", user.uid);
   const snap = await getDoc(userRef);
-  const balance = snap.data().referralBalance || 0;
+  
+  const data = snap.data();
 
+const balance =
+  data.referralBalance ||
+  data.referralWallet ||
+  data.referralCoins ||
+  0;
+  
   if (amount > balance) {
     alert("Insufficient referral balance");
     return;
