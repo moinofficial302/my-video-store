@@ -171,46 +171,53 @@ async function loadHistory(uid) {
   );
   const wSnap = await getDocs(wq);
 
+  
+  async function loadHistory(uid) {
+  const historyBox = document.querySelector(".card:last-child");
+  historyBox.innerHTML = "<h2>History</h2>";
+
+  // Withdraw history
+  const wq = query(
+    collection(db, "withdraw_requests"),
+    where("uid", "==", uid)
+  );
+
+  const wSnap = await getDocs(wq);
+
   wSnap.forEach(d => {
+
     const data = d.data();
 
+    let statusText = "";
 
+    if (data.status === "approved")
+      statusText = "Withdrawal Successfully ✅";
+    else if (data.status === "pending")
+      statusText = "Pending ⏳";
+    else
+      statusText = "Rejected ❌";
 
-wSnap.forEach(d => {
-
-  const data = d.data();
-
-  let statusText = "";
-
-  if (data.status === "approved")
-    statusText = "Withdrawal Successfully ✅";
-  else if (data.status === "pending")
-    statusText = "Pending ⏳";
-  else
-    statusText = "Rejected ❌";
-
-  historyBox.innerHTML += `
-    <div class="history-item">
-      <div>Withdraw ₹${data.amount}</div>
-      <div class="status ${data.status}">
-        ${statusText}
+    historyBox.innerHTML += `
+      <div class="history-item">
+        <div>Withdraw ₹${data.amount}</div>
+        <div class="status ${data.status}">
+          ${statusText}
+        </div>
       </div>
-    </div>
-  `;
-});
-
-    
-    
+    `;
+  });
 
   // Convert history
   const cq = query(
     collection(db, "referral_conversions"),
     where("uid", "==", uid)
   );
+
   const cSnap = await getDocs(cq);
 
   cSnap.forEach(d => {
     const data = d.data();
+
     historyBox.innerHTML += `
       <div class="history-item">
         <div>Converted ₹${data.amount} → Coins</div>
@@ -218,4 +225,4 @@ wSnap.forEach(d => {
       </div>
     `;
   });
-}
+  }
