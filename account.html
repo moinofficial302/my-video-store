@@ -67,7 +67,11 @@
   </h2>
 </div>
 
-<div class="wallet-card">
+  
+<div class="wallet-card" 
+  onclick="goToWithdraw()" 
+  style="cursor:pointer;">
+  
   <span>🤝 Referral Wallet</span>
   <h2 class="amount">
     <span class="currency">₹</span>
@@ -211,6 +215,12 @@ document.addEventListener("DOMContentLoaded", () => {
   <script>
 function goToAddMoney() {
   window.location.href = "add-money.html";
+}
+  </script>
+  
+  <script>
+function goToWithdraw() {
+  window.location.href = "withdraw.html";
 }
   </script>
   
