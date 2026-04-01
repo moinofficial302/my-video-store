@@ -1,5 +1,5 @@
 // ================================
-// APPLY COUPON (FIXED & SAFE)
+// APPLY COUPON (FULL SECURE)
 // ================================
 
 import { auth, db } from "./firebase-init.js";
@@ -7,7 +7,8 @@ import {
   doc,
   getDoc,
   updateDoc,
-  increment
+  increment,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import {
   onAuthStateChanged
@@ -24,29 +25,31 @@ window.applyCoupon = function () {
   const msg = document.getElementById("couponMsg");
 
   if (!code) {
-    msg.innerText = "❌ Please enter a coupon code";
+    msg.innerText = "❌ Enter coupon code";
     return;
   }
 
   onAuthStateChanged(auth, async (user) => {
+
     if (!user) {
-      alert("Please login first");
+      alert("Login first");
       window.location.href = "login.html";
       return;
     }
 
     try {
+
+      // 🔍 GET COUPON
       const couponRef = doc(db, "coupons", code);
       const couponSnap = await getDoc(couponRef);
 
       if (!couponSnap.exists()) {
-        msg.innerText = "❌ Invalid coupon code";
+        msg.innerText = "❌ Invalid coupon";
         return;
       }
 
       const coupon = couponSnap.data();
 
-      // SAFETY FALLBACKS
       const used = coupon.used || 0;
       const limit = coupon.limit || 0;
       const coins = coupon.coins || 0;
@@ -57,28 +60,45 @@ window.applyCoupon = function () {
       }
 
       if (used >= limit) {
-        msg.innerText = "❌ Coupon limit reached";
+        msg.innerText = "❌ Limit reached";
         return;
       }
 
-      // ADD COINS TO USER
+      // 🚫 CHECK ALREADY USED
+      const usageRef = doc(db, "coupon_usage", user.uid + "_" + code);
+      const usageSnap = await getDoc(usageRef);
+
+      if (usageSnap.exists()) {
+        msg.innerText = "❌ Already used";
+        return;
+      }
+
+      // 💰 ADD COINS
       await updateDoc(doc(db, "users", user.uid), {
         coins: increment(coins)
       });
 
-      // UPDATE COUPON USED COUNT
+      // 📊 UPDATE COUPON COUNT
       await updateDoc(couponRef, {
         used: increment(1)
       });
 
-      msg.innerText = `✅ Coupon applied! ${coins} coins added 🎉`;
+      // 🔐 SAVE USAGE (MAIN SECURITY)
+      await setDoc(usageRef, {
+        uid: user.uid,
+        code: code,
+        time: new Date()
+      });
+
+      msg.innerText = `✅ ${coins} coins added 🎉`;
       msg.style.color = "green";
 
       document.getElementById("couponInput").value = "";
 
     } catch (err) {
       console.error(err);
-      msg.innerText = "❌ Something went wrong";
+      msg.innerText = "❌ Error occurred";
     }
+
   });
 };
