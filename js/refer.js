@@ -1,6 +1,9 @@
 /* =====================================================
-   🚀 REFER PAGE LOGIC – FINAL FIXED
-   No Loading copy bug • Production Safe
+   🚀 REFER SYSTEM – FINAL PRO VERSION
+   ✔ Unique Code (no duplicate)
+   ✔ Clipboard fallback
+   ✔ v9 Firebase correct
+   ✔ Conversion optimized link
 ===================================================== */
 
 import { auth, db } from "./firebase-init.js";
@@ -12,12 +15,16 @@ import {
 import {
   doc,
   getDoc,
-  updateDoc
+  updateDoc,
+  collection,
+  query,
+  where,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
 /* =====================================================
-   RANDOM CODE
+   RANDOM CODE GENERATOR
 ===================================================== */
 
 function generateCode() {
@@ -27,6 +34,30 @@ function generateCode() {
   return letter + "_" + number;
 }
 
+
+/* =====================================================
+   UNIQUE CODE CHECK (NO DUPLICATE)
+===================================================== */
+
+async function generateUniqueCode() {
+  let code;
+  let exists = true;
+
+  while (exists) {
+    code = generateCode();
+
+    const q = query(
+      collection(db, "users"),
+      where("referralCode", "==", code)
+    );
+
+    const snap = await getDocs(q);
+
+    exists = !snap.empty;
+  }
+
+  return code;
+}
 
 
 /* =====================================================
@@ -38,14 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const linkInput = document.getElementById("refLink");
   const copyBtn   = document.getElementById("copyBtn");
 
-  /* 🔥 disable until loaded */
   copyBtn.disabled = true;
 
 
-
-  /* =====================================================
-     AUTH
-  ===================================================== */
+  /* ================= AUTH ================= */
 
   onAuthStateChanged(auth, async (user) => {
 
@@ -60,30 +87,31 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!snap.exists()) return;
 
     let data = snap.data();
-
     let referralCode = data.referralCode;
 
-    /* 🔥 create if missing */
+
+    /* 🔥 CREATE CODE IF NOT EXISTS */
     if (!referralCode) {
-      referralCode = generateCode();
+      referralCode = await generateUniqueCode();
       await updateDoc(userRef, { referralCode });
     }
 
-    const link =
-      location.origin + "/login.html?ref=" + referralCode;
 
-    /* ✅ set value */
+    /* 🔥 HIGH CONVERSION LINK */
+    const link =
+      location.origin + "/index.html?ref=" + referralCode;
+
+
+    /* SET VALUE */
     linkInput.value = link;
 
-    /* ✅ enable copy */
+    /* ENABLE COPY */
     copyBtn.disabled = false;
   });
 
 
 
-  /* =====================================================
-     COPY
-  ===================================================== */
+  /* ================= COPY ================= */
 
   copyBtn.addEventListener("click", async () => {
 
@@ -94,8 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    /* modern clipboard */
-    await navigator.clipboard.writeText(value);
+    try {
+      await navigator.clipboard.writeText(value);
+    } catch {
+      linkInput.select();
+      document.execCommand("copy");
+    }
 
     alert("Referral link copied ✅");
   });
