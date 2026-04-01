@@ -156,7 +156,11 @@ onAuthStateChanged(auth, async (user) => {
     data.coins || 0;
 
   document.getElementById("referralBalance").innerText =
-    data.referralBalance || 0;
+  data.referralBalance ||
+  data.referralWallet ||
+  data.referralCoins ||
+  0;
+  
 });
 </script>
 
