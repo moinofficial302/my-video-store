@@ -1,5 +1,5 @@
 // =======================================
-// ADMIN COUPON SYSTEM (FIXED & REAL)
+// ADMIN COUPON SYSTEM (FINAL PERFECT)
 // =======================================
 
 import { db } from "../../js/firebase-init.js";
@@ -32,17 +32,25 @@ async function loadCoupons() {
   }
 
   snapshot.forEach(docSnap => {
+
     const d = docSnap.data();
 
+    // ✅ SAFE VALUES
+    const coins = d.coins ?? d.value ?? 0;
+    const limit = d.limit ?? 0;
+    const used = d.used ?? 0;
+    const active = d.active ?? false;
+
     const tr = document.createElement("tr");
+
     tr.innerHTML = `
       <td>${docSnap.id}</td>
-      <td>${d.coins}</td>
-      <td>${d.limit}</td>
-      <td>${d.used || 0}</td>
+      <td>${coins}</td>
+      <td>${limit}</td>
+      <td>${used}</td>
       <td>
-        <button onclick="toggleCoupon('${docSnap.id}', ${d.active})">
-          ${d.active ? "Disable" : "Enable"}
+        <button onclick="toggleCoupon('${docSnap.id}', ${active})">
+          ${active ? "Disable" : "Enable"}
         </button>
       </td>
     `;
@@ -73,8 +81,12 @@ createBtn.addEventListener("click", async () => {
 
   try {
     await setDoc(doc(db, "coupons", code.toUpperCase()), {
-      coins,
-      limit,
+
+      // ✅ STORE BOTH (future safe)
+      coins: coins,
+      value: coins,
+
+      limit: limit,
       used: 0,
       active: true,
       createdAt: serverTimestamp()
@@ -93,12 +105,15 @@ createBtn.addEventListener("click", async () => {
 // ENABLE / DISABLE COUPON
 // =======================================
 window.toggleCoupon = async function (code, currentState) {
+
   try {
+
     await updateDoc(doc(db, "coupons", code), {
       active: !currentState
     });
 
     loadCoupons();
+
   } catch (err) {
     console.error(err);
     alert("Failed to update coupon");
