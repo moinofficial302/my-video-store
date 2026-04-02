@@ -108,7 +108,7 @@ window.applyCoupon = async function () {
     await setDoc(usageRef, {
       uid: user.uid,
       code: code,
-      createdAt: new Date()
+      createdAt: Date.now()
     });
 
     msg.innerText = `✅ ${coins} coins added 🎉`;
