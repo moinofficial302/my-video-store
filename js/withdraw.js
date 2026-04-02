@@ -1,6 +1,5 @@
 // =======================================
-// WITHDRAW PAGE LOGIC
-// FILE: js/withdraw.js
+// WITHDRAW PAGE LOGIC (FINAL FIXED)
 // =======================================
 
 import { auth, db } from "./firebase-init.js";
@@ -30,6 +29,18 @@ auth.onAuthStateChanged(user => {
 });
 
 // =======================================
+// COMMON BALANCE GETTER (🔥 MAIN FIX)
+// =======================================
+function getReferralBalance(data) {
+  return (
+    data.referralBalance ??
+    data.referralWallet ??
+    data.referralCoins ??
+    0
+  );
+}
+
+// =======================================
 // LOAD REFERRAL BALANCE
 // =======================================
 async function loadReferralBalance(uid) {
@@ -38,13 +49,8 @@ async function loadReferralBalance(uid) {
   if (!snap.exists()) return;
 
   const data = snap.data();
+  const balance = getReferralBalance(data);
 
-const balance =
-  data.referralBalance ||
-  data.referralWallet ||
-  data.referralCoins ||
-  0;
-  
   document.getElementById("referralBalance").innerText = "₹" + balance;
 }
 
@@ -74,31 +80,26 @@ async function submitWithdraw() {
 
   const userRef = doc(db, "users", user.uid);
   const snap = await getDoc(userRef);
-  
   const data = snap.data();
 
-const balance =
-  data.referralBalance ||
-  data.referralWallet ||
-  data.referralCoins ||
-  0;
-  
+  const balance = getReferralBalance(data);
+
   if (amount > balance) {
     alert("Insufficient referral balance");
     return;
   }
 
-  // Deduct referral balance
+  // Deduct
   await updateDoc(userRef, {
     referralBalance: increment(-amount)
   });
 
-  // Create withdraw request
+  // Save request
   await addDoc(collection(db, "withdraw_requests"), {
     uid: user.uid,
-    amount: amount,
-    method: method,
-    upi: upi,
+    amount,
+    method,
+    upi,
     status: "pending",
     createdAt: serverTimestamp()
   });
@@ -109,7 +110,7 @@ const balance =
 }
 
 // =======================================
-// CONVERT TO WEBSITE COINS
+// CONVERT TO COINS
 // =======================================
 document.querySelector("#convertForm .submit-btn")
   .addEventListener("click", convertCoins);
@@ -119,6 +120,7 @@ async function convertCoins() {
   if (!user) return;
 
   const amount = Number(document.getElementById("convertAmount").value);
+
   if (amount <= 0) {
     alert("Enter valid amount");
     return;
@@ -126,29 +128,23 @@ async function convertCoins() {
 
   const userRef = doc(db, "users", user.uid);
   const snap = await getDoc(userRef);
-  
   const data = snap.data();
-const balance =
-  data.referralBalance ||
-  data.referralWallet ||
-  data.referralCoins ||
-  0;
+
+  const balance = getReferralBalance(data);
 
   if (amount > balance) {
     alert("Insufficient referral balance");
     return;
   }
 
-  // Update balances
   await updateDoc(userRef, {
     referralBalance: increment(-amount),
     coins: increment(amount)
   });
 
-  // Save history
   await addDoc(collection(db, "referral_conversions"), {
     uid: user.uid,
-    amount: amount,
+    amount,
     createdAt: serverTimestamp()
   });
 
@@ -158,44 +154,25 @@ const balance =
 }
 
 // =======================================
-// LOAD HISTORY
+// LOAD HISTORY (🔥 CLEAN FIX)
 // =======================================
 async function loadHistory(uid) {
   const historyBox = document.querySelector(".card:last-child");
   historyBox.innerHTML = "<h2>History</h2>";
 
-  // Withdraw history
-  const wq = query(
+  // Withdraw
+  const wSnap = await getDocs(query(
     collection(db, "withdraw_requests"),
     where("uid", "==", uid)
-  );
-  const wSnap = await getDocs(wq);
-
-  
-  async function loadHistory(uid) {
-  const historyBox = document.querySelector(".card:last-child");
-  historyBox.innerHTML = "<h2>History</h2>";
-
-  // Withdraw history
-  const wq = query(
-    collection(db, "withdraw_requests"),
-    where("uid", "==", uid)
-  );
-
-  const wSnap = await getDocs(wq);
+  ));
 
   wSnap.forEach(d => {
-
     const data = d.data();
 
-    let statusText = "";
-
-    if (data.status === "approved")
-      statusText = "Withdrawal Successfully ✅";
-    else if (data.status === "pending")
-      statusText = "Pending ⏳";
-    else
-      statusText = "Rejected ❌";
+    let statusText =
+      data.status === "approved" ? "Withdrawal Successfully ✅" :
+      data.status === "pending" ? "Pending ⏳" :
+      "Rejected ❌";
 
     historyBox.innerHTML += `
       <div class="history-item">
@@ -207,13 +184,11 @@ async function loadHistory(uid) {
     `;
   });
 
-  // Convert history
-  const cq = query(
+  // Convert
+  const cSnap = await getDocs(query(
     collection(db, "referral_conversions"),
     where("uid", "==", uid)
-  );
-
-  const cSnap = await getDocs(cq);
+  ));
 
   cSnap.forEach(d => {
     const data = d.data();
@@ -225,4 +200,4 @@ async function loadHistory(uid) {
       </div>
     `;
   });
-  }
+}
