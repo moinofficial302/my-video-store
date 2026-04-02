@@ -1,5 +1,5 @@
 // =======================================
-// ADMIN COUPON SYSTEM (FINAL PERFECT)
+// ADMIN COUPON SYSTEM (100% FINAL FIXED)
 // =======================================
 
 import { db } from "../../js/firebase-init.js";
@@ -9,7 +9,8 @@ import {
   setDoc,
   updateDoc,
   doc,
-  serverTimestamp
+  serverTimestamp,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // DOM
@@ -35,11 +36,10 @@ async function loadCoupons() {
 
     const d = docSnap.data();
 
-    // ✅ SAFE VALUES
-    const coins = d.coins ?? d.value ?? 0;
-    const limit = d.limit ?? 0;
-    const used = d.used ?? 0;
-    const active = d.active ?? false;
+    const coins = Number(d.coins ?? d.value ?? 0);
+    const limit = Number(d.limit ?? 0);
+    const used = Number(d.used ?? 0);
+    const active = d.active === true;
 
     const tr = document.createElement("tr");
 
@@ -49,7 +49,7 @@ async function loadCoupons() {
       <td>${limit}</td>
       <td>${used}</td>
       <td>
-        <button onclick="toggleCoupon('${docSnap.id}', ${active})">
+        <button onclick="toggleCoupon('${docSnap.id}', ${active ? "true" : "false"})">
           ${active ? "Disable" : "Enable"}
         </button>
       </td>
@@ -60,32 +60,45 @@ async function loadCoupons() {
 }
 
 // =======================================
-// CREATE COUPON
+// CREATE COUPON (SAFE)
 // =======================================
 createBtn.addEventListener("click", async () => {
 
-  const code = prompt("Coupon Code (e.g. AKANS50)");
-  if (!code) return;
+  const codeInput = prompt("Coupon Code (e.g. AKANS50)");
+  if (!codeInput) return;
 
-  const coins = Number(prompt("Coins to Add"));
-  if (!coins || coins <= 0) {
-    alert("Invalid coins value");
+  const code = codeInput.trim().toUpperCase();
+
+  // 🔒 CHECK ALREADY EXISTS
+  const existing = await getDoc(doc(db, "coupons", code));
+  if (existing.exists()) {
+    alert("Coupon already exists ❌");
     return;
   }
 
-  const limit = Number(prompt("Usage Limit"));
-  if (!limit || limit <= 0) {
-    alert("Invalid limit");
+  // 🔒 COINS VALIDATION
+  const coinsInput = prompt("Coins to Add");
+  const coins = Number(coinsInput);
+
+  if (isNaN(coins) || coins <= 0) {
+    alert("Invalid coins value ❌");
+    return;
+  }
+
+  // 🔒 LIMIT VALIDATION
+  const limitInput = prompt("Usage Limit");
+  const limit = Number(limitInput);
+
+  if (isNaN(limit) || limit <= 0) {
+    alert("Invalid limit ❌");
     return;
   }
 
   try {
-    await setDoc(doc(db, "coupons", code.toUpperCase()), {
 
-      // ✅ STORE BOTH (future safe)
+    await setDoc(doc(db, "coupons", code), {
       coins: coins,
       value: coins,
-
       limit: limit,
       used: 0,
       active: true,
@@ -96,27 +109,29 @@ createBtn.addEventListener("click", async () => {
     loadCoupons();
 
   } catch (err) {
-    console.error(err);
-    alert("Error creating coupon");
+    console.error("CREATE ERROR:", err);
+    alert("Error creating coupon ❌");
   }
 });
 
 // =======================================
-// ENABLE / DISABLE COUPON
+// ENABLE / DISABLE COUPON (SAFE)
 // =======================================
 window.toggleCoupon = async function (code, currentState) {
 
   try {
 
+    const newState = currentState === true || currentState === "true";
+
     await updateDoc(doc(db, "coupons", code), {
-      active: !currentState
+      active: !newState
     });
 
     loadCoupons();
 
   } catch (err) {
-    console.error(err);
-    alert("Failed to update coupon");
+    console.error("TOGGLE ERROR:", err);
+    alert("Failed to update coupon ❌");
   }
 };
 
