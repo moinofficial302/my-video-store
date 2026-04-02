@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* 🔥 HIGH CONVERSION LINK */
     const link =
-      location.origin + "/index.html?ref=" + referralCode;
+      location.origin + "/login.html?ref=" + referralCode;
 
 
     /* SET VALUE */
