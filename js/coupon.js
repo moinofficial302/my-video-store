@@ -1,5 +1,5 @@
 // ================================
-// APPLY COUPON (FULL SECURE)
+// APPLY COUPON (FINAL FIXED)
 // ================================
 
 import { auth, db } from "./firebase-init.js";
@@ -10,11 +10,8 @@ import {
   increment,
   setDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-window.applyCoupon = function () {
+window.applyCoupon = async function () {
 
   const code = document
     .getElementById("couponInput")
@@ -29,76 +26,82 @@ window.applyCoupon = function () {
     return;
   }
 
-  onAuthStateChanged(auth, async (user) => {
+  const user = auth.currentUser;
 
-    if (!user) {
-      alert("Login first");
-      window.location.href = "login.html";
+  if (!user) {
+    alert("Login first");
+    window.location.href = "login.html";
+    return;
+  }
+
+  try {
+
+    // 🔍 GET COUPON
+    const couponRef = doc(db, "coupons", code);
+    const couponSnap = await getDoc(couponRef);
+
+    if (!couponSnap.exists()) {
+      msg.innerText = "❌ Invalid coupon";
       return;
     }
 
-    try {
+    const coupon = couponSnap.data();
 
-      // 🔍 GET COUPON
-      const couponRef = doc(db, "coupons", code);
-      const couponSnap = await getDoc(couponRef);
+    // ✅ FIXED FIELD SUPPORT
+    const used = coupon.used || 0;
+    const limit = coupon.limit || 1;
 
-      if (!couponSnap.exists()) {
-        msg.innerText = "❌ Invalid coupon";
-        return;
-      }
+    // 🔥 IMPORTANT FIX
+    const coins =
+      coupon.coins ||
+      coupon.value ||
+      0;
 
-      const coupon = couponSnap.data();
-
-      const used = coupon.used || 0;
-      const limit = coupon.limit || 0;
-      const coins = coupon.coins || 0;
-
-      if (!coupon.active) {
-        msg.innerText = "❌ Coupon expired";
-        return;
-      }
-
-      if (used >= limit) {
-        msg.innerText = "❌ Limit reached";
-        return;
-      }
-
-      // 🚫 CHECK ALREADY USED
-      const usageRef = doc(db, "coupon_usage", user.uid + "_" + code);
-      const usageSnap = await getDoc(usageRef);
-
-      if (usageSnap.exists()) {
-        msg.innerText = "❌ Already used";
-        return;
-      }
-
-      // 💰 ADD COINS
-      await updateDoc(doc(db, "users", user.uid), {
-        coins: increment(coins)
-      });
-
-      // 📊 UPDATE COUPON COUNT
-      await updateDoc(couponRef, {
-        used: increment(1)
-      });
-
-      // 🔐 SAVE USAGE (MAIN SECURITY)
-      await setDoc(usageRef, {
-        uid: user.uid,
-        code: code,
-        time: new Date()
-      });
-
-      msg.innerText = `✅ ${coins} coins added 🎉`;
-      msg.style.color = "green";
-
-      document.getElementById("couponInput").value = "";
-
-    } catch (err) {
-      console.error(err);
-      msg.innerText = "❌ Error occurred";
+    // ✅ ACTIVE CHECK (SAFE)
+    if (coupon.active === false) {
+      msg.innerText = "❌ Coupon disabled";
+      return;
     }
 
-  });
+    // ✅ LIMIT CHECK
+    if (used >= limit) {
+      msg.innerText = "❌ Coupon expired";
+      return;
+    }
+
+    // 🚫 CHECK ALREADY USED
+    const usageRef = doc(db, "coupon_usage", user.uid + "_" + code);
+    const usageSnap = await getDoc(usageRef);
+
+    if (usageSnap.exists()) {
+      msg.innerText = "❌ Already used";
+      return;
+    }
+
+    // 💰 ADD COINS
+    await updateDoc(doc(db, "users", user.uid), {
+      coins: increment(coins)
+    });
+
+    // 📊 UPDATE COUPON COUNT
+    await updateDoc(couponRef, {
+      used: increment(1)
+    });
+
+    // 🔐 SAVE USAGE
+    await setDoc(usageRef, {
+      uid: user.uid,
+      code: code,
+      time: new Date()
+    });
+
+    msg.innerText = `✅ ${coins} coins added 🎉`;
+    msg.style.color = "green";
+
+    document.getElementById("couponInput").value = "";
+
+  } catch (err) {
+    console.error(err);
+    msg.innerText = "❌ Error occurred";
+  }
 };
