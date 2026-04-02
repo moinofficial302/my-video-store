@@ -1,5 +1,5 @@
 // ================================
-// APPLY COUPON (FINAL FIXED)
+// APPLY COUPON (100% FINAL FIXED)
 // ================================
 
 import { auth, db } from "./firebase-init.js";
@@ -41,23 +41,30 @@ window.applyCoupon = async function () {
     const couponSnap = await getDoc(couponRef);
 
     if (!couponSnap.exists()) {
-      msg.innerText = "❌ Invalid coupon";
+      msg.innerText = "🚫 Invalid coupon";
       return;
     }
 
     const coupon = couponSnap.data();
 
-    // ✅ FIXED FIELD SUPPORT
-    const used = coupon.used || 0;
-    const limit = coupon.limit || 1;
+    // ✅ SAFE VALUES (STRICT)
+    const used = Number(coupon.used ?? 0);
+    const limit = Number(coupon.limit ?? 0);
 
-    // 🔥 IMPORTANT FIX
-    const coins =
-      coupon.coins ||
-      coupon.value ||
-      0;
+    const coins = Number(coupon.coins ?? coupon.value);
 
-    // ✅ ACTIVE CHECK (SAFE)
+    // ❌ INVALID DATA PROTECTION
+    if (isNaN(coins) || coins <= 0) {
+      msg.innerText = "❌ Coupon data invalid";
+      return;
+    }
+
+    if (isNaN(limit) || limit <= 0) {
+      msg.innerText = "❌ Coupon limit invalid";
+      return;
+    }
+
+    // ✅ ACTIVE CHECK
     if (coupon.active === false) {
       msg.innerText = "❌ Coupon disabled";
       return;
@@ -74,12 +81,21 @@ window.applyCoupon = async function () {
     const usageSnap = await getDoc(usageRef);
 
     if (usageSnap.exists()) {
-      msg.innerText = "❌ Already used";
+      msg.innerText = "🫣 Already used";
+      return;
+    }
+
+    // 👤 CHECK USER EXISTS
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      msg.innerText = "❌ User data not found";
       return;
     }
 
     // 💰 ADD COINS
-    await updateDoc(doc(db, "users", user.uid), {
+    await updateDoc(userRef, {
       coins: increment(coins)
     });
 
@@ -92,7 +108,7 @@ window.applyCoupon = async function () {
     await setDoc(usageRef, {
       uid: user.uid,
       code: code,
-      time: new Date()
+      createdAt: new Date()
     });
 
     msg.innerText = `✅ ${coins} coins added 🎉`;
@@ -101,7 +117,7 @@ window.applyCoupon = async function () {
     document.getElementById("couponInput").value = "";
 
   } catch (err) {
-    console.error(err);
+    console.error("COUPON ERROR:", err);
     msg.innerText = "❌ Error occurred";
   }
 };
