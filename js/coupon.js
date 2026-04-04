@@ -1,5 +1,5 @@
 // ================================
-// APPLY COUPON (100% FINAL FIXED)
+// APPLY COUPON (ULTIMATE FINAL FIX)
 // ================================
 
 import { auth, db } from "./firebase-init.js";
@@ -47,13 +47,11 @@ window.applyCoupon = async function () {
 
     const coupon = couponSnap.data();
 
-    // ✅ SAFE VALUES (STRICT)
+    // ✅ SAFE VALUES
     const used = Number(coupon.used ?? 0);
     const limit = Number(coupon.limit ?? 0);
-
     const coins = Number(coupon.coins ?? coupon.value);
 
-    // ❌ INVALID DATA PROTECTION
     if (isNaN(coins) || coins <= 0) {
       msg.innerText = "❌ Coupon data invalid";
       return;
@@ -64,13 +62,11 @@ window.applyCoupon = async function () {
       return;
     }
 
-    // ✅ ACTIVE CHECK
     if (coupon.active === false) {
       msg.innerText = "❌ Coupon disabled";
       return;
     }
 
-    // ✅ LIMIT CHECK
     if (used >= limit) {
       msg.innerText = "❌ Coupon expired";
       return;
@@ -85,19 +81,13 @@ window.applyCoupon = async function () {
       return;
     }
 
-    // 👤 CHECK USER EXISTS
+    // 👤 USER REF
     const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
 
-    if (!userSnap.exists()) {
-      msg.innerText = "❌ User data not found";
-      return;
-    }
-
-    // 💰 ADD COINS
-    await updateDoc(userRef, {
+    // 💰 ADD COINS (FIXED)
+    await setDoc(userRef, {
       coins: increment(coins)
-    });
+    }, { merge: true });
 
     // 📊 UPDATE COUPON COUNT
     await updateDoc(couponRef, {
