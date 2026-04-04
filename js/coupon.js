@@ -1,14 +1,13 @@
 // ================================
-// APPLY COUPON (ULTIMATE FINAL FIX)
+// APPLY COUPON (FINAL PRO SYSTEM)
 // ================================
 
 import { auth, db } from "./firebase-init.js";
 import {
   doc,
   getDoc,
-  updateDoc,
-  increment,
-  setDoc
+  runTransaction,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 window.applyCoupon = async function () {
@@ -36,78 +35,84 @@ window.applyCoupon = async function () {
 
   try {
 
-    // 🔍 GET COUPON
     const couponRef = doc(db, "coupons", code);
-    const couponSnap = await getDoc(couponRef);
-
-    if (!couponSnap.exists()) {
-      msg.innerText = "🚫 Invalid coupon";
-      return;
-    }
-
-    const coupon = couponSnap.data();
-
-    // ✅ SAFE VALUES
-    const used = Number(coupon.used ?? 0);
-    const limit = Number(coupon.limit ?? 0);
-    const coins = Number(coupon.coins ?? coupon.value);
-
-    if (isNaN(coins) || coins <= 0) {
-      msg.innerText = "❌ Coupon data invalid";
-      return;
-    }
-
-    if (isNaN(limit) || limit <= 0) {
-      msg.innerText = "❌ Coupon limit invalid";
-      return;
-    }
-
-    if (coupon.active === false) {
-      msg.innerText = "❌ Coupon disabled";
-      return;
-    }
-
-    if (used >= limit) {
-      msg.innerText = "❌ Coupon expired";
-      return;
-    }
-
-    // 🚫 CHECK ALREADY USED
-    const usageRef = doc(db, "coupon_usage", user.uid + "_" + code);
-    const usageSnap = await getDoc(usageRef);
-
-    if (usageSnap.exists()) {
-      msg.innerText = "🫣 Already used";
-      return;
-    }
-
-    // 👤 USER REF
     const userRef = doc(db, "users", user.uid);
+    const usageRef = doc(db, "coupon_usage", user.uid + "_" + code);
 
-    // 💰 ADD COINS (FIXED)
-    await setDoc(userRef, {
-      coins: increment(coins)
-    }, { merge: true });
+    await runTransaction(db, async (transaction) => {
 
-    // 📊 UPDATE COUPON COUNT
-    await updateDoc(couponRef, {
-      used: increment(1)
+      // 🔍 GET COUPON
+      const couponSnap = await transaction.get(couponRef);
+
+      if (!couponSnap.exists()) {
+        throw new Error("🚫 Invalid coupon");
+      }
+
+      const coupon = couponSnap.data();
+
+      // ✅ VALIDATE DATA
+      const coins = Number(coupon.coins ?? coupon.value);
+      const limit = Number(coupon.limit ?? 0);
+      const used = Number(coupon.used ?? 0);
+
+      if (isNaN(coins) || coins <= 0) {
+        throw new Error("❌ Invalid coupon data");
+      }
+
+      if (isNaN(limit) || limit <= 0) {
+        throw new Error("❌ Invalid coupon limit");
+      }
+
+      // 🚫 DISABLED
+      if (coupon.active === false) {
+        throw new Error("❌ Coupon disabled");
+      }
+
+      // 🚫 LIMIT FULL
+      if (used >= limit) {
+        throw new Error("❌ Coupon expired");
+      }
+
+      // 🚫 ALREADY USED
+      const usageSnap = await transaction.get(usageRef);
+      if (usageSnap.exists()) {
+        throw new Error("🫣 Already used");
+      }
+
+      // 👤 USER CHECK
+      const userSnap = await transaction.get(userRef);
+      if (!userSnap.exists()) {
+        throw new Error("❌ User not found");
+      }
+
+      // 💰 ADD COINS
+      transaction.update(userRef, {
+        coins: (userSnap.data().coins || 0) + coins
+      });
+
+      // 📊 UPDATE COUPON USED
+      transaction.update(couponRef, {
+        used: used + 1
+      });
+
+      // 🔐 SAVE USAGE
+      transaction.set(usageRef, {
+        uid: user.uid,
+        code: code,
+        createdAt: serverTimestamp()
+      });
+
     });
 
-    // 🔐 SAVE USAGE
-    await setDoc(usageRef, {
-      uid: user.uid,
-      code: code,
-      createdAt: Date.now()
-    });
-
-    msg.innerText = `✅ ${coins} coins added 🎉`;
+    // ✅ SUCCESS
+    msg.innerText = "✅ Coupon applied successfully 🎉";
     msg.style.color = "green";
 
     document.getElementById("couponInput").value = "";
 
   } catch (err) {
     console.error("COUPON ERROR:", err);
-    msg.innerText = "❌ Error occurred";
+    msg.innerText = err.message || "❌ Error occurred";
+    msg.style.color = "red";
   }
 };
