@@ -16,7 +16,8 @@ import {
   where,
   getDocs,
   limit,
-  serverTimestamp
+  serverTimestamp,
+  runTransaction,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
@@ -208,51 +209,41 @@ if(!existingSnap.empty){
     // ====================
     // 💰 WALLET CHECK
     // ====================
-    const snap = await getDoc(userRef);
 
-    if(!snap.exists()){
-      alert("User data not found");
-      return;
-    }
+await runTransaction(db, async (transaction) => {
 
-    const coins = Number(snap.data()?.coins ?? 0);
+  const userDoc = await transaction.get(userRef);
 
-    if(coins < product.price){
-      showLowBalancePopup(product.price, coins);
-      return;
-    }
+  if(!userDoc.exists()){
+    alert("User data not found");
+    throw "User not found";
+  }
 
-    // ====================
-    // 🔒 DOUBLE CHECK (ANTI RACE)
-    // ====================
-    const latestSnap = await getDoc(userRef);
-    const latestCoins = Number(latestSnap.data()?.coins ?? 0);
+  const coins = Number(userDoc.data()?.coins ?? 0);
 
-    if(latestCoins < product.price){
-      showLowBalancePopup(product.price, latestCoins);
-      return;
-    }
+  if(coins < product.price){
+    showLowBalancePopup(product.price, coins);
+    throw "Insufficient balance";
+  }
 
+  // 💰 deduct
+  transaction.update(userRef, {
+    coins: coins - product.price
+  });
   
-    // ====================
-// 💰 DEDUCT FIRST (SAFE)
 // ====================
-await updateDoc(userRef,{
-  coins: increment(-product.price)
-});
-
-// ====================
-// 🧾 SAVE ORDER
-// ====================
-await addDoc(collection(db,"orders"),{
-  uid: user.uid,
-  productId,
-  name: product.name,
-  price: product.price,
-  link: product.link,
-  createdAt: serverTimestamp()
-});
-
+  // 🧾 order
+  // ====================
+  
+  const orderRef = doc(collection(db,"orders"));
+  transaction.set(orderRef,{
+    uid: user.uid,
+    productId,
+    name: product.name,
+    price: product.price,
+    link: product.link,
+    createdAt: serverTimestamp()
+  });
 
     // ====================
     // ✅ SUCCESS
