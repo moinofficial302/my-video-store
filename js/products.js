@@ -201,10 +201,12 @@ async function buyProduct(productId){
     const userRef = doc(db,"users",user.uid);
     const snap = await getDoc(userRef);
 
-    const coins = snap.data().coins || 0;
+    
+    const coins = Number(snap.data()?.coins ?? 0);
 
+    
     if(coins < product.price){
-      alert("Not enough coins ❌");
+      showLowBalancePopup(product.price, coins);
       return;
     }
 
@@ -348,5 +350,72 @@ if (btnSanatani) checkOwnership("sanatani", btnSanatani);
 const btnStock = document.getElementById("buy-stock");
 if (btnStock) checkOwnership("stock", btnStock);
 
+
+  function showLowBalancePopup(price, coins){
+
+  const needed = price - coins;
+
+  const modal = document.createElement("div");
+
+  modal.innerHTML = `
+    <div style="
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.6);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+    ">
+      <div style="
+        background:#fff;
+        padding:20px;
+        border-radius:16px;
+        width:90%;
+        max-width:320px;
+        text-align:center;
+      ">
+        <p style="margin-bottom:10px;">
+          Oops 😅 Insufficient Balance
+        </p>
+
+        <p style="font-size:14px; color:#666;">
+          You need ${needed} more coins
+        </p>
+
+        <div style="display:flex; justify-content:space-between; margin-top:20px;">
+          
+          <button id="closePopup" style="
+            padding:10px 16px;
+            border:none;
+            border-radius:10px;
+            background:#ccc;
+          ">OK</button>
+
+          <button id="addMoneyBtn" style="
+            padding:10px 16px;
+            border:none;
+            border-radius:10px;
+            background:#FFD700;
+          ">Add Money</button>
+
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  document.getElementById("closePopup").onclick = () => {
+    modal.remove();
+  };
+
+  document.getElementById("addMoneyBtn").onclick = () => {
+    window.location.href = "add-money.html";
+  };
+  }
   
 });
