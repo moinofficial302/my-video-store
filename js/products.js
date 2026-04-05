@@ -198,44 +198,65 @@ async function buyProduct(productId){
     // ====================
     // wallet check
     // ====================
-    const userRef = doc(db,"users",user.uid);
-    const snap = await getDoc(userRef);
-
     
-    const coins = Number(snap.data()?.coins ?? 0);
+// ====================
+// wallet check (FINAL SAFE)
+// ====================
+const userRef = doc(db,"users",user.uid);
+const snap = await getDoc(userRef);
 
-    
-    if(coins < product.price){
-      showLowBalancePopup(product.price, coins);
-      return;
-    }
-
-    // deduct coins
-    await updateDoc(userRef,{
-      coins: increment(-product.price)
-    });
-
-    // ⭐ SAVE ORDER (SINGLE COLLECTION)
-    await addDoc(collection(db,"orders"),{
-      uid: user.uid,
-      productId,
-      name: product.name,
-      price: product.price,
-      link: product.link,
-      createdAt: serverTimestamp()
-    });
-
-    alert("Purchase Successful 🎉");
-
-    switchButton(productId, product.link);
-
-  }catch(err){
-    console.error(err);
-    alert("Something went wrong. Try again.");
-  }
+// ❌ user doc missing fix
+if(!snap.exists()){
+  alert("User data not found");
+  return;
 }
 
+// ✅ safe coins
+const coins = Number(snap.data()?.coins ?? 0);
 
+// ❌ insufficient balance
+if(coins < product.price){
+  showLowBalancePopup(product.price, coins);
+  return;
+}
+
+// ====================
+// 🔒 DOUBLE CHECK (ANTI RACE)
+// ====================
+const latestSnap = await getDoc(userRef);
+const latestCoins = Number(latestSnap.data()?.coins ?? 0);
+
+if(latestCoins < product.price){
+  showLowBalancePopup(product.price, latestCoins);
+  return;
+}
+
+// ====================
+// 💰 DEDUCT COINS
+// ====================
+await updateDoc(userRef,{
+  coins: increment(-product.price)
+});
+
+// ====================
+// 🧾 SAVE ORDER
+// ====================
+await addDoc(collection(db,"orders"),{
+  uid: user.uid,
+  productId,
+  name: product.name,
+  price: product.price,
+  link: product.link,
+  createdAt: serverTimestamp()
+});
+
+// ====================
+// ✅ SUCCESS
+// ====================
+alert("Purchase Successful 🎉");
+
+switchButton(productId, product.link);
+    
 // ===================================================
 // 🔥 OWNERSHIP CHECK (REFRESH SAFE)
 // ===================================================
@@ -338,7 +359,8 @@ if (btn12) checkOwnership("romantic", btn12);
 
   
 
-  const btnCat = document.getElementById("buy-cat");
+  // ===== BUTTON CHECKS =====
+const btnCat = document.getElementById("buy-cat");
 if (btnCat) checkOwnership("cat", btnCat);
 
 const btnWoman = document.getElementById("buy-womangym");
@@ -351,11 +373,19 @@ const btnStock = document.getElementById("buy-stock");
 if (btnStock) checkOwnership("stock", btnStock);
 
 
-  function showLowBalancePopup(price, coins){
+// ==========================================
+// 🔥 LOW BALANCE POPUP (GLOBAL FUNCTION)
+// ==========================================
+function showLowBalancePopup(price, coins){
 
-  const needed = price - coins;
+  const needed = Math.max(price - coins, 0);
+
+  // 🧹 remove old popup if exists
+  const old = document.getElementById("lowBalanceModal");
+  if(old) old.remove();
 
   const modal = document.createElement("div");
+  modal.id = "lowBalanceModal";
 
   modal.innerHTML = `
     <div style="
@@ -378,28 +408,33 @@ if (btnStock) checkOwnership("stock", btnStock);
         max-width:320px;
         text-align:center;
       ">
-        <p style="margin-bottom:10px;">
+        <p style="margin-bottom:10px; font-weight:600;">
           Oops 😅 Insufficient Balance
         </p>
 
         <p style="font-size:14px; color:#666;">
-          You need ${needed} more coins
+          You need ₹${needed} more coins
         </p>
 
         <div style="display:flex; justify-content:space-between; margin-top:20px;">
           
           <button id="closePopup" style="
-            padding:10px 16px;
+            flex:1;
+            margin-right:8px;
+            padding:10px;
             border:none;
             border-radius:10px;
             background:#ccc;
           ">OK</button>
 
           <button id="addMoneyBtn" style="
-            padding:10px 16px;
+            flex:1;
+            margin-left:8px;
+            padding:10px;
             border:none;
             border-radius:10px;
             background:#FFD700;
+            font-weight:bold;
           ">Add Money</button>
 
         </div>
@@ -416,6 +451,4 @@ if (btnStock) checkOwnership("stock", btnStock);
   document.getElementById("addMoneyBtn").onclick = () => {
     window.location.href = "add-money.html";
   };
-  }
-  
-});
+}
