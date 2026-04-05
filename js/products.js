@@ -189,19 +189,21 @@ async function buyProduct(productId){
     // ====================
     // ⭐ ALREADY OWNED CHECK
     // ====================
-    const ownedQuery = query(
-      collection(db,"orders"),
-      where("uid","==",user.uid),
-      where("productId","==",productId),
-      limit(1)
-    );
+    
+    // 🔒 FINAL SAFE CHECK (SERVER-LIKE)
+const existingOrderQuery = query(
+  collection(db,"orders"),
+  where("uid","==",user.uid),
+  where("productId","==",productId),
+  limit(1)
+);
 
-    const ownedSnap = await getDocs(ownedQuery);
+const existingSnap = await getDocs(existingOrderQuery);
 
-    if(!ownedSnap.empty){
-      window.open(product.link,"_blank");
-      return;
-    }
+if(!existingSnap.empty){
+  window.open(product.link,"_blank");
+  return;
+}
 
     // ====================
     // 💰 WALLET CHECK
