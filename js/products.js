@@ -163,7 +163,6 @@ const PRODUCTS = {
 // 🔥 BUY PRODUCT (ULTRA SAFE)
 // ===================================================
 
-
 async function buyProduct(productId){
 
   const user = auth.currentUser;
@@ -179,15 +178,11 @@ async function buyProduct(productId){
 
   const userRef = doc(db,"users",user.uid);
 
-  // 🔒 prevent double click
   if(window.__buyLock) return;
   window.__buyLock = true;
 
   try{
 
-    // ====================
-    // ⭐ ALREADY OWNED CHECK
-    // ====================
     const ownedQuery = query(
       collection(db,"orders"),
       where("uid","==",user.uid),
@@ -199,18 +194,13 @@ async function buyProduct(productId){
 
     if(!ownedSnap.empty){
       window.open(product.link,"_blank");
-      window.__buyLock = false;
       return;
     }
 
-    // ====================
-    // 💰 WALLET CHECK
-    // ====================
     const snap = await getDoc(userRef);
 
     if(!snap.exists()){
       alert("User data not found");
-      window.__buyLock = false;
       return;
     }
 
@@ -218,32 +208,21 @@ async function buyProduct(productId){
 
     if(coins < product.price){
       showLowBalancePopup(product.price, coins);
-      window.__buyLock = false;
       return;
     }
 
-    // ====================
-    // 🔒 DOUBLE CHECK
-    // ====================
     const latestSnap = await getDoc(userRef);
     const latestCoins = Number(latestSnap.data()?.coins ?? 0);
 
     if(latestCoins < product.price){
       showLowBalancePopup(product.price, latestCoins);
-      window.__buyLock = false;
       return;
     }
 
-    // ====================
-    // 💰 DEDUCT FIRST (SAFE)
-    // ====================
     await updateDoc(userRef,{
       coins: increment(-product.price)
     });
 
-    // ====================
-    // 🧾 SAVE ORDER
-    // ====================
     await addDoc(collection(db,"orders"),{
       uid: user.uid,
       productId,
@@ -253,9 +232,6 @@ async function buyProduct(productId){
       createdAt: serverTimestamp()
     });
 
-    // ====================
-    // ✅ SUCCESS
-    // ====================
     alert("Purchase Successful 🎉");
 
     switchButton(productId, product.link);
@@ -264,11 +240,12 @@ async function buyProduct(productId){
     console.error("BUY ERROR:", err);
     alert("Something went wrong. Try again.");
   }
-
-  // 🔓 unlock
-  window.__buyLock = false;
+  finally{
+    window.__buyLock = false;
+  }
 }
-    
+
+      
 // ===================================================
 // 🔥 OWNERSHIP CHECK (REFRESH SAFE)
 // ===================================================
