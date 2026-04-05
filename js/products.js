@@ -231,24 +231,27 @@ async function buyProduct(productId){
       return;
     }
 
-    // ====================
-    // 💰 DEDUCT FIRST
-    // ====================
-    await updateDoc(userRef,{
-      coins: increment(-product.price)
-    });
+    
 
     // ====================
     // 🧾 SAVE ORDER
     // ====================
-    await addDoc(collection(db,"orders"),{
-      uid: user.uid,
-      productId,
-      name: product.name,
-      price: product.price,
-      link: product.link,
-      createdAt: serverTimestamp()
-    });
+    
+await addDoc(collection(db,"orders"),{
+  uid: user.uid,
+  productId,
+  name: product.name,
+  price: product.price,
+  link: product.link,
+  createdAt: serverTimestamp()
+});
+    // ====================
+    // 💰 DEDUCT FIRST
+    // ====================
+
+await updateDoc(userRef,{
+  coins: increment(-product.price)
+});
 
     // ====================
     // ✅ SUCCESS
