@@ -191,71 +191,87 @@ async function buyProduct(productId){
 
     // already purchased → just open
     if(!ownedSnap.empty){
+      
+// ====================
+// wallet check (FINAL PRO)
+// ====================
+const userRef = doc(db, "users", user.uid);
+
+// 🔒 prevent double click
+if (window.__buyLock) return;
+window.__buyLock = true;
+
+try {
+
+  const snap = await getDoc(userRef);
+
+  // ❌ user doc missing
+  if (!snap.exists()) {
+    alert("User data not found");
+    window.__buyLock = false;
+    return;
+  }
+
+  const data = snap.data();
+
+  // ✅ safe coins
+  const coins = Number(data?.coins ?? 0);
+
+  // ❌ insufficient balance
+  if (coins < product.price) {
+    showLowBalancePopup(product.price, coins);
+    window.__buyLock = false;
+    return;
+  }
+
+  // ====================
+  // 🔒 FINAL DOUBLE CHECK (ANTI RACE)
+  // ====================
+  const latestSnap = await getDoc(userRef);
+  const latestCoins = Number(latestSnap.data()?.coins ?? 0);
+
+  if (latestCoins < product.price) {
+    showLowBalancePopup(product.price, latestCoins);
+    window.__buyLock = false;
+    return;
+  }
+
+  // ====================
+  // 💰 DEDUCT + SAVE (ORDER FIRST SAFETY)
+  // ====================
+
+  // 🧾 SAVE ORDER FIRST (important)
+  await addDoc(collection(db, "orders"), {
+    uid: user.uid,
+    productId,
+    name: product.name,
+    price: product.price,
+    link: product.link,
+    createdAt: serverTimestamp()
+  });
+
+  // 💰 THEN DEDUCT COINS
+  await updateDoc(userRef, {
+    coins: increment(-product.price)
+  });
+
+  // ====================
+  // ✅ SUCCESS
+  // ====================
+  alert("Purchase Successful 🎉");
+
+  switchButton(productId, product.link);
+
+} catch (err) {
+  console.error("BUY ERROR:", err);
+  alert("Something went wrong. Try again.");
+}
+
+// 🔓 unlock
+window.__buyLock = false;   
       window.open(product.link,"_blank");
       return;
     }
-
-    // ====================
-    // wallet check
-    // ====================
-    
-// ====================
-// wallet check (FINAL SAFE)
-// ====================
-const userRef = doc(db,"users",user.uid);
-const snap = await getDoc(userRef);
-
-// ❌ user doc missing fix
-if(!snap.exists()){
-  alert("User data not found");
-  return;
-}
-
-// ✅ safe coins
-const coins = Number(snap.data()?.coins ?? 0);
-
-// ❌ insufficient balance
-if(coins < product.price){
-  showLowBalancePopup(product.price, coins);
-  return;
-}
-
-// ====================
-// 🔒 DOUBLE CHECK (ANTI RACE)
-// ====================
-const latestSnap = await getDoc(userRef);
-const latestCoins = Number(latestSnap.data()?.coins ?? 0);
-
-if(latestCoins < product.price){
-  showLowBalancePopup(product.price, latestCoins);
-  return;
-}
-
-// ====================
-// 💰 DEDUCT COINS
-// ====================
-await updateDoc(userRef,{
-  coins: increment(-product.price)
-});
-
-// ====================
-// 🧾 SAVE ORDER
-// ====================
-await addDoc(collection(db,"orders"),{
-  uid: user.uid,
-  productId,
-  name: product.name,
-  price: product.price,
-  link: product.link,
-  createdAt: serverTimestamp()
-});
-
-// ====================
-// ✅ SUCCESS
-// ====================
-alert("Purchase Successful 🎉");
-
-switchButton(productId, product.link);
     
 // ===================================================
 // 🔥 OWNERSHIP CHECK (REFRESH SAFE)
@@ -356,7 +372,6 @@ if (btn11) checkOwnership("gym", btn11);
 const btn12 = document.getElementById("buy-romantic");
 if (btn12) checkOwnership("romantic", btn12);
 
-
   
 
   // ===== BUTTON CHECKS =====
@@ -376,7 +391,8 @@ if (btnStock) checkOwnership("stock", btnStock);
 // ==========================================
 // 🔥 LOW BALANCE POPUP (GLOBAL FUNCTION)
 // ==========================================
-function showLowBalancePopup(price, coins){
+  
+   function showLowBalancePopup(price, coins){
 
   const needed = Math.max(price - coins, 0);
 
@@ -384,11 +400,14 @@ function showLowBalancePopup(price, coins){
   const old = document.getElementById("lowBalanceModal");
   if(old) old.remove();
 
+  // 🔒 lock background scroll
+  document.body.style.overflow = "hidden";
+
   const modal = document.createElement("div");
   modal.id = "lowBalanceModal";
 
   modal.innerHTML = `
-    <div style="
+    <div id="overlay" style="
       position:fixed;
       top:0;
       left:0;
@@ -399,16 +418,19 @@ function showLowBalancePopup(price, coins){
       justify-content:center;
       align-items:center;
       z-index:9999;
+      animation:fadeIn 0.2s ease;
     ">
       <div style="
         background:#fff;
-        padding:20px;
-        border-radius:16px;
+        padding:22px;
+        border-radius:18px;
         width:90%;
         max-width:320px;
         text-align:center;
+        box-shadow:0 10px 30px rgba(0,0,0,0.25);
+        animation:scaleIn 0.2s ease;
       ">
-        <p style="margin-bottom:10px; font-weight:600;">
+        <p style="margin-bottom:10px; font-weight:600; font-size:16px;">
           Oops 😅 Insufficient Balance
         </p>
 
@@ -416,39 +438,68 @@ function showLowBalancePopup(price, coins){
           You need ₹${needed} more coins
         </p>
 
-        <div style="display:flex; justify-content:space-between; margin-top:20px;">
+        <div style="display:flex; gap:8px; margin-top:20px;">
           
           <button id="closePopup" style="
             flex:1;
-            margin-right:8px;
-            padding:10px;
+            padding:11px;
             border:none;
             border-radius:10px;
-            background:#ccc;
+            background:#ddd;
+            font-weight:500;
           ">OK</button>
 
           <button id="addMoneyBtn" style="
             flex:1;
-            margin-left:8px;
-            padding:10px;
+            padding:11px;
             border:none;
             border-radius:10px;
-            background:#FFD700;
-            font-weight:bold;
+            background:linear-gradient(135deg,#FFD700,#facc15);
+            font-weight:600;
           ">Add Money</button>
 
         </div>
       </div>
     </div>
+
+    <style>
+      @keyframes fadeIn {
+        from { opacity:0 }
+        to { opacity:1 }
+      }
+
+      @keyframes scaleIn {
+        from { transform:scale(0.9); opacity:0 }
+        to { transform:scale(1); opacity:1 }
+      }
+    </style>
   `;
 
   document.body.appendChild(modal);
 
-  document.getElementById("closePopup").onclick = () => {
+  const close = () => {
     modal.remove();
+    document.body.style.overflow = ""; // unlock scroll
   };
 
+  // ✅ button close
+  document.getElementById("closePopup").onclick = close;
+
+  // ✅ redirect
   document.getElementById("addMoneyBtn").onclick = () => {
     window.location.href = "add-money.html";
   };
-}
+
+  // ✅ click outside close
+  document.getElementById("overlay").onclick = (e) => {
+    if(e.target.id === "overlay") close();
+  };
+
+  // ✅ ESC key close
+  document.addEventListener("keydown", function esc(e){
+    if(e.key === "Escape"){
+      close();
+      document.removeEventListener("keydown", esc);
+    }
+  });
+  }
