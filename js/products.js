@@ -233,12 +233,17 @@ if(!existingSnap.empty){
       return;
     }
 
-    
+  
+    // ====================
+// 💰 DEDUCT FIRST (SAFE)
+// ====================
+await updateDoc(userRef,{
+  coins: increment(-product.price)
+});
 
-    // ====================
-    // 🧾 SAVE ORDER
-    // ====================
-    
+// ====================
+// 🧾 SAVE ORDER
+// ====================
 await addDoc(collection(db,"orders"),{
   uid: user.uid,
   productId,
@@ -247,13 +252,7 @@ await addDoc(collection(db,"orders"),{
   link: product.link,
   createdAt: serverTimestamp()
 });
-    // ====================
-    // 💰 DEDUCT FIRST
-    // ====================
 
-await updateDoc(userRef,{
-  coins: increment(-product.price)
-});
 
     // ====================
     // ✅ SUCCESS
