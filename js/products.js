@@ -21,6 +21,7 @@ import {
 
 
 
+
 // ================================
 //     Ai-Editing.HTML (FIXED)
 // ================================
@@ -159,10 +160,11 @@ const PRODUCTS = {
 },
 };
 
-// ===================================================
-// 🔥 BUY PRODUCT (ULTRA SAFE)
-// ===================================================
 
+
+// ===================================================
+// 🔥 BUY PRODUCT (FINAL PRODUCTION SAFE)
+// ===================================================
 async function buyProduct(productId){
 
   const user = auth.currentUser;
@@ -178,11 +180,15 @@ async function buyProduct(productId){
 
   const userRef = doc(db,"users",user.uid);
 
+  // 🔒 prevent double click
   if(window.__buyLock) return;
   window.__buyLock = true;
 
   try{
 
+    // ====================
+    // ⭐ ALREADY OWNED CHECK
+    // ====================
     const ownedQuery = query(
       collection(db,"orders"),
       where("uid","==",user.uid),
@@ -197,6 +203,9 @@ async function buyProduct(productId){
       return;
     }
 
+    // ====================
+    // 💰 WALLET CHECK
+    // ====================
     const snap = await getDoc(userRef);
 
     if(!snap.exists()){
@@ -211,6 +220,9 @@ async function buyProduct(productId){
       return;
     }
 
+    // ====================
+    // 🔒 DOUBLE CHECK (ANTI RACE)
+    // ====================
     const latestSnap = await getDoc(userRef);
     const latestCoins = Number(latestSnap.data()?.coins ?? 0);
 
@@ -219,10 +231,16 @@ async function buyProduct(productId){
       return;
     }
 
+    // ====================
+    // 💰 DEDUCT FIRST
+    // ====================
     await updateDoc(userRef,{
       coins: increment(-product.price)
     });
 
+    // ====================
+    // 🧾 SAVE ORDER
+    // ====================
     await addDoc(collection(db,"orders"),{
       uid: user.uid,
       productId,
@@ -232,8 +250,10 @@ async function buyProduct(productId){
       createdAt: serverTimestamp()
     });
 
+    // ====================
+    // ✅ SUCCESS
+    // ====================
     alert("Purchase Successful 🎉");
-
     switchButton(productId, product.link);
 
   }catch(err){
@@ -241,40 +261,46 @@ async function buyProduct(productId){
     alert("Something went wrong. Try again.");
   }
   finally{
+    // 🔓 ALWAYS UNLOCK
     window.__buyLock = false;
   }
 }
 
-      
+
 // ===================================================
-// 🔥 OWNERSHIP CHECK (REFRESH SAFE)
+// 🔥 OWNERSHIP CHECK (OPTIMIZED)
 // ===================================================
 async function checkOwnership(productId, buttonEl){
 
   const user = auth.currentUser;
-  if(!user) return;
+  if(!user || !buttonEl) return;
 
-  const q = query(
-    collection(db,"orders"),
-    where("uid","==",user.uid),
-    where("productId","==",productId),
-    limit(1)
-  );
+  try{
+    const q = query(
+      collection(db,"orders"),
+      where("uid","==",user.uid),
+      where("productId","==",productId),
+      limit(1)
+    );
 
-  const snap = await getDocs(q);
+    const snap = await getDocs(q);
 
-  if(!snap.empty){
-    const data = snap.docs[0].data();
+    if(!snap.empty){
+      const data = snap.docs[0].data();
 
-    buttonEl.innerText = "Open Product";
-    buttonEl.onclick = ()=> window.open(data.link,"_blank");
-    buttonEl.classList.add("owned");
+      buttonEl.innerText = "Open Product";
+      buttonEl.onclick = ()=> window.open(data.link,"_blank");
+      buttonEl.classList.add("owned");
+    }
+  }catch(err){
+    console.error("Ownership Error:", err);
   }
 }
 
 
 // ===================================================
-
+// 🔄 BUTTON SWITCH
+// ===================================================
 function switchButton(productId, link){
 
   const btn = document.getElementById("buy-" + productId);
@@ -285,95 +311,70 @@ function switchButton(productId, link){
   btn.classList.add("owned");
 }
 
+
 // ===================================================
 // GLOBAL EXPORT
 // ===================================================
 window.buyProduct = buyProduct;
 window.checkOwnership = checkOwnership;
 
+// ===================================================
+// 🔥 AUTO OWNERSHIP CHECK (SMART VERSION)
+// ===================================================
+onAuthStateChanged(auth, async (user) => {
 
-// ===============================
-// AUTO CHECK AFTER LOGIN (VERY IMPORTANT)
-// ===============================
+  if(!user) return;
 
+  try{
+    // 🔥 ek hi query me sab orders fetch (FAST)
+    const ordersSnap = await getDocs(
+      query(
+        collection(db,"orders"),
+        where("uid","==",user.uid)
+      )
+    );
 
-// ===== ai Editing Page =====
-onAuthStateChanged(auth, () => {
+    // 🔥 purchased products ka set
+    const ownedProducts = new Set();
 
-  const btn1 = document.getElementById("buy-editing");
-  if (btn1) checkOwnership("editing-pack", btn1);
+    ordersSnap.forEach(doc=>{
+      ownedProducts.add(doc.data().productId);
+    });
 
-  const btn2 = document.getElementById("buy-editing-50");
-  if (btn2) checkOwnership("editing-pack-50", btn2);
+    // 🔥 ALL buttons auto detect
+    Object.keys(PRODUCTS).forEach(productId => {
 
+      const btn = document.getElementById("buy-" + productId);
+      if(!btn) return;
 
-  // ===== index.HTML BUNDLE =====
+      if(ownedProducts.has(productId)){
+        const product = PRODUCTS[productId];
 
-  const bh = document.getElementById("buy-hulk");
-  if (bh) checkOwnership("hulk", bh);
+        btn.innerText = "Open Product";
+        btn.onclick = ()=> window.open(product.link,"_blank");
+        btn.classList.add("owned");
+      }
+    });
 
-  const bf = document.getElementById("buy-food");
-  if (bf) checkOwnership("Food", bf);
+  }catch(err){
+    console.error("Auto Ownership Error:", err);
+  }
 
-  const bc = document.getElementById("buy-car");
-  if (bc) checkOwnership("Car", bc);
-
-  const btnAnime = document.getElementById("buy-anime");
-  if (btnAnime) checkOwnership("anime", btnAnime);
-
-  const btnMoral = document.getElementById("buy-moral");
-  if (btnMoral) checkOwnership("moral", btnMoral);
-
-  const btn6 = document.getElementById("buy-monkey");
-  if (btn6) checkOwnership("monkey", btn6);
-
-  const btn7 = document.getElementById("buy-lifehack");
- if (btn7) checkOwnership("lifehack", btn7);
-
- const btn8 = document.getElementById("buy-nature");
- if (btn8) checkOwnership("nature", btn8);
-
- const btn9 = document.getElementById("buy-horror");
- if (btn9) checkOwnership("horror", btn9);
-
-  const btn10 = document.getElementById("buy-art");
-if (btn10) checkOwnership("art", btn10);
-
-const btn11 = document.getElementById("buy-gym");
-if (btn11) checkOwnership("gym", btn11);
-
-const btn12 = document.getElementById("buy-romantic");
-if (btn12) checkOwnership("romantic", btn12);
-
-  
-
-  // ===== BUTTON CHECKS =====
-const btnCat = document.getElementById("buy-cat");
-if (btnCat) checkOwnership("cat", btnCat);
-
-const btnWoman = document.getElementById("buy-womangym");
-if (btnWoman) checkOwnership("womangym", btnWoman);
-
-const btnSanatani = document.getElementById("buy-sanatani");
-if (btnSanatani) checkOwnership("sanatani", btnSanatani);
-
-const btnStock = document.getElementById("buy-stock");
-if (btnStock) checkOwnership("stock", btnStock);
+});
 
 
-// ==========================================
-// 🔥 LOW BALANCE POPUP (GLOBAL FUNCTION)
-// ==========================================
-  
-   function showLowBalancePopup(price, coins){
+// ===================================================
+// 🔥 LOW BALANCE POPUP (FINAL PRO)
+// ===================================================
+function showLowBalancePopup(price, coins){
 
   const needed = Math.max(price - coins, 0);
 
-  // 🧹 remove old popup if exists
+  // 🧹 remove old popup
   const old = document.getElementById("lowBalanceModal");
   if(old) old.remove();
 
-  // 🔒 lock background scroll
+  // 🔒 lock scroll
   document.body.style.overflow = "hidden";
 
   const modal = document.createElement("div");
@@ -391,7 +392,6 @@ if (btnStock) checkOwnership("stock", btnStock);
       justify-content:center;
       align-items:center;
       z-index:9999;
-      animation:fadeIn 0.2s ease;
     ">
       <div style="
         background:#fff;
@@ -401,9 +401,8 @@ if (btnStock) checkOwnership("stock", btnStock);
         max-width:320px;
         text-align:center;
         box-shadow:0 10px 30px rgba(0,0,0,0.25);
-        animation:scaleIn 0.2s ease;
       ">
-        <p style="margin-bottom:10px; font-weight:600; font-size:16px;">
+        <p style="margin-bottom:10px; font-weight:600;">
           Oops 😅 Insufficient Balance
         </p>
 
@@ -419,7 +418,6 @@ if (btnStock) checkOwnership("stock", btnStock);
             border:none;
             border-radius:10px;
             background:#ddd;
-            font-weight:500;
           ">OK</button>
 
           <button id="addMoneyBtn" style="
@@ -427,52 +425,39 @@ if (btnStock) checkOwnership("stock", btnStock);
             padding:11px;
             border:none;
             border-radius:10px;
-            background:linear-gradient(135deg,#FFD700,#facc15);
+            background:#FFD700;
             font-weight:600;
           ">Add Money</button>
 
         </div>
       </div>
     </div>
-
-    <style>
-      @keyframes fadeIn {
-        from { opacity:0 }
-        to { opacity:1 }
-      }
-
-      @keyframes scaleIn {
-        from { transform:scale(0.9); opacity:0 }
-        to { transform:scale(1); opacity:1 }
-      }
-    </style>
   `;
 
   document.body.appendChild(modal);
 
   const close = () => {
     modal.remove();
-    document.body.style.overflow = ""; // unlock scroll
+    document.body.style.overflow = "";
   };
 
-  // ✅ button close
+  // ✅ buttons
   document.getElementById("closePopup").onclick = close;
 
-  // ✅ redirect
   document.getElementById("addMoneyBtn").onclick = () => {
     window.location.href = "add-money.html";
   };
 
-  // ✅ click outside close
-  document.getElementById("overlay").onclick = (e) => {
+  // ✅ outside click
+  document.getElementById("overlay").onclick = (e)=>{
     if(e.target.id === "overlay") close();
   };
 
-  // ✅ ESC key close
+  // ✅ ESC close
   document.addEventListener("keydown", function esc(e){
     if(e.key === "Escape"){
       close();
       document.removeEventListener("keydown", esc);
     }
   });
-  }
+       }
