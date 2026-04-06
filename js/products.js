@@ -248,13 +248,36 @@ await runTransaction(db, async (transaction) => {
     // ====================
     // ✅ SUCCESS
     // ====================
-    alert("Purchase Successful 🎉");
-    switchButton(productId, product.link);
+alert("Purchase Successful 🎉");
+
+// 🔥 STRONG UI UPDATE
+const btn = document.getElementById("buy-" + productId);
+
+if(btn){
+  btn.innerText = "Open Product";
+  btn.onclick = ()=> window.open(product.link,"_blank");
+  btn.classList.add("owned");
+}
+
+// 🔥 BACKUP (delay fix)
+setTimeout(()=>{
+  const btn = document.getElementById("buy-" + productId);
+  if(btn){
+    btn.innerText = "Open Product";
+    btn.onclick = ()=> window.open(product.link,"_blank");
+    btn.classList.add("owned");
+  }
+},200);
+    
 
   }catch(err){
-    console.error("BUY ERROR:", err);
+  console.error("BUY ERROR:", err);
+
+  if(err !== "Insufficient balance" && err !== "User not found"){
     alert("Something went wrong. Try again.");
   }
+  }
+    
   finally{
     // 🔓 ALWAYS UNLOCK
     window.__buyLock = false;
