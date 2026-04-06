@@ -244,7 +244,7 @@ await runTransaction(db, async (transaction) => {
     link: product.link,
     createdAt: serverTimestamp()
   });
-
+});
     // ====================
     // ✅ SUCCESS
     // ====================
