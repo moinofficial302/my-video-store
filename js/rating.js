@@ -1,4 +1,4 @@
-import { db } from "./firebase-init.js";
+import { db, auth } from "./firebase-init.js";
 
 import {
 collection,
@@ -37,6 +37,15 @@ const submitBtn = document.getElementById("submitReview");
 
 submitBtn.addEventListener("click", async () => {
 
+const user = auth.currentUser;
+
+if(!user){
+alert("Login required ❌");
+return;
+}
+
+const username = user.displayName || user.email || "User";
+
 const feedbackInput = document.getElementById("feedback");
 const feedback = feedbackInput.value.trim();
 
@@ -52,12 +61,30 @@ return;
 
 try{
 
+// 🚫 Duplicate review check
+const qCheck = query(collection(db, "reviews"));
+const snap = await getDocs(qCheck);
+
+let alreadyReviewed = false;
+
+snap.forEach(doc => {
+  if(doc.data().username === username){
+    alreadyReviewed = true;
+  }
+});
+
+if(alreadyReviewed){
+  alert("You already submitted review ⚠️");
+  return;
+}
+
+// ✅ Save review
 await addDoc(collection(db, "reviews"), {
-  username: "User",
+  username: username,
   rating: selectedRating,
   feedback: feedback,
   createdAt: serverTimestamp(),
-  verified: false
+  verified: true
 });
 
 alert("Review Submitted ✅");
@@ -102,7 +129,6 @@ if(snapshot.empty){
   return;
 }
 
-// 📊 Calculation variables
 let total = 0;
 let count = 0;
 
@@ -113,12 +139,24 @@ let starCount = {
 snapshot.forEach(doc => {
   const data = doc.data();
 
-  // Calculation
   total += data.rating;
   count++;
   starCount[data.rating]++;
 
-  // UI render
+  // 🕒 Time ago logic
+  const time = data.createdAt?.toDate();
+
+  let timeText = "Just now";
+
+  if(time){
+    const diff = Math.floor((Date.now() - time) / 60000);
+
+    if(diff < 1) timeText = "Just now";
+    else if(diff < 60) timeText = diff + " min ago";
+    else if(diff < 1440) timeText = Math.floor(diff/60) + " hr ago";
+    else timeText = Math.floor(diff/1440) + " days ago";
+  }
+
   const div = document.createElement("div");
   div.classList.add("review-card");
 
@@ -126,19 +164,17 @@ snapshot.forEach(doc => {
     <h4>${data.username} ${data.verified ? "✅" : ""}</h4>
     <div>${"⭐".repeat(data.rating)}</div>
     <p>${data.feedback}</p>
-    <small>Just now</small>
+    <small>${timeText}</small>
   `;
 
   reviewsContainer.appendChild(div);
 });
 
-// 📊 Update UI
 const avg = (total / count).toFixed(1);
 
 document.getElementById("avgRating").innerText = avg;
 document.getElementById("totalReviews").innerText = count + " reviews";
 
-// Bars update
 for(let i=1; i<=5; i++){
   const percent = (starCount[i] / count) * 100;
   const bar = document.getElementById("bar"+i);
