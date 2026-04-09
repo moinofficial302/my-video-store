@@ -106,9 +106,15 @@ margin-bottom:10px;
 cursor:pointer;
 }
 
+
 .star-select span{
 opacity:0.4;
 transition:0.3s;
+}
+
+.star-select span.active{
+opacity:1;
+transform:scale(1.2);
 }
 
 .star-select span:hover{
@@ -116,10 +122,7 @@ opacity:1;
 transform:scale(1.2);
 }
 
-.star-select span.active{
-opacity:1;
-transform:scale(1.2);
-}
+
 
 textarea{
 width:100%;
