@@ -35,6 +35,7 @@
     <button data-section="orders">🧾 Orders</button>
     <button data-section="products">📦 Products</button>
     <button data-section="coupons">🎟 Coupons</button>
+    <button data-section="reviews">⭐ Reviews</button>
     <button data-section="analytics">📈 Analytics</button>
 
     <button id="adminLogoutBtn">🚪 Logout</button>
@@ -238,7 +239,25 @@
 
       </div>
 
-
+<!-- =================================================
+     REVIEWS
+================================================= -->
+      
+      <div class="admin-section" id="reviews">  
+        <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Rating</th>
+          <th>Feedback</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="reviewsTable"></tbody>
+    </table>
+  </div></div>
+      
 
       <!-- =================================================
            ANALYTICS
@@ -273,6 +292,7 @@
 <script type="module" src="js/admin-orders.js"></script>
 <script type="module" src="js/admin-products.js"></script>
 <script type="module" src="js/admin-coupons.js"></script>
+<script type="module" src="js/admin-reviews.js"></script>
 <script type="module" src="js/admin-analytics.js"></script>
 
 </body>
