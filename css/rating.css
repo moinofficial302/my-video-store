@@ -111,6 +111,11 @@ opacity:0.4;
 transition:0.3s;
 }
 
+.star-select span:hover{
+opacity:1;
+transform:scale(1.2);
+}
+
 .star-select span.active{
 opacity:1;
 transform:scale(1.2);
