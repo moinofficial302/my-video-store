@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AKANS Rating</title>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">  <!-- CSS -->  <link rel="stylesheet" href="css/rating.css">
+</head><body><!-- 🔝 TOP HEADER --><div class="header-card">
+  <h2>⭐ User Ratings</h2>
+  <p>Trusted by 1000+ users</p>
+</div><!-- ⭐ SUMMARY --><div class="card rating-summary">
+  <h1 id="avgRating">4.7</h1>
+  <div id="stars">★★★★★</div>
+  <p id="totalReviews">Based on 1200 reviews</p>
+</div><!-- 📊 BREAKDOWN --><div class="card breakdown">
+  <div class="bar"><span>5 ⭐</span><div class="progress"><div style="width:80%"></div></div></div>
+  <div class="bar"><span>4 ⭐</span><div class="progress"><div style="width:12%"></div></div></div>
+  <div class="bar"><span>3 ⭐</span><div class="progress"><div style="width:5%"></div></div></div>
+  <div class="bar"><span>2 ⭐</span><div class="progress"><div style="width:2%"></div></div></div>
+  <div class="bar"><span>1 ⭐</span><div class="progress"><div style="width:1%"></div></div></div>
+</div><!-- ✍️ GIVE RATING --><div class="card give-rating">
+  <h3>Give Your Rating</h3>  <div class="star-select" id="starSelect">
+    <span data-value="1">⭐</span>
+    <span data-value="2">⭐</span>
+    <span data-value="3">⭐</span>
+    <span data-value="4">⭐</span>
+    <span data-value="5">⭐</span>
+  </div>  <textarea id="feedback" placeholder="Write your feedback..."></textarea><button id="submitReview">Submit Review</button>
+
+</div><!-- 🔽 FILTER --><div class="filter">
+  <select id="sort">
+    <option value="latest">Latest</option>
+    <option value="top">Top Rated</option>
+  </select>
+</div><!-- 💬 REVIEWS LIST --><div id="reviewsContainer">  <!-- Example Review -->  <div class="review-card">
+    <h4>Moin Khan ✅</h4>
+    <div>⭐⭐⭐⭐⭐</div>
+    <p>Bahut smooth experience 🔥</p>
+    <small>2 days ago</small>
+  </div></div><!-- 🛡 TRUST --><div class="card trust">
+  <p>✅ 1000+ Happy Users</p>
+  <p>⚡ Instant Delivery</p>
+  <p>🔒 Secure Payments</p>
+  <p>💬 Active Community</p>
+</div><!-- JS --><script type="module" src="js/rating.js"></script></body>
+</html>
