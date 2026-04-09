@@ -3,7 +3,10 @@ import { db } from "./firebase-init.js";
 import {
 collection,
 addDoc,
-serverTimestamp
+serverTimestamp,
+getDocs,
+query,
+orderBy
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 /* =========================
@@ -54,7 +57,7 @@ return;
 try{
 
 await addDoc(collection(db, "reviews"), {
-  username: "User", // next chapter me dynamic karenge
+  username: "User",
   rating: selectedRating,
   feedback: feedback,
   createdAt: serverTimestamp(),
@@ -66,8 +69,10 @@ alert("Review Submitted ✅");
 // Reset form
 feedbackInput.value = "";
 selectedRating = 0;
-
 stars.forEach(s => s.classList.remove("active"));
+
+// 🔥 Reload reviews instantly
+loadReviews();
 
 }catch(err){
 console.error(err);
@@ -75,3 +80,56 @@ alert("Error submitting review ❌");
 }
 
 });
+
+/* =========================
+📥 LOAD REVIEWS
+========================= */
+const reviewsContainer = document.getElementById("reviewsContainer");
+
+async function loadReviews(){
+
+reviewsContainer.innerHTML = "Loading...";
+
+try{
+
+const q = query(
+  collection(db, "reviews"),
+  orderBy("createdAt", "desc")
+);
+
+const snapshot = await getDocs(q);
+
+reviewsContainer.innerHTML = "";
+
+if(snapshot.empty){
+  reviewsContainer.innerHTML = "<p>No reviews yet 😶</p>";
+  return;
+}
+
+snapshot.forEach(doc => {
+  const data = doc.data();
+
+  const div = document.createElement("div");
+  div.classList.add("review-card");
+
+  div.innerHTML = `
+    <h4>${data.username} ${data.verified ? "✅" : ""}</h4>
+    <div>${"⭐".repeat(data.rating)}</div>
+    <p>${data.feedback}</p>
+    <small>Just now</small>
+  `;
+
+  reviewsContainer.appendChild(div);
+});
+
+}catch(err){
+console.error(err);
+reviewsContainer.innerHTML = "Error loading reviews ❌";
+}
+
+}
+
+/* =========================
+🚀 INIT
+========================= */
+loadReviews();
