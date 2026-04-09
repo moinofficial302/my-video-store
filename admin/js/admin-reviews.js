@@ -1,4 +1,4 @@
-import { db } from "../../js/firebase-init.js";
+import { db, auth } from "../../js/firebase-init.js";
 
 import {
 collection,
@@ -10,60 +10,117 @@ updateDoc
 
 const list = document.getElementById("reviewsList");
 
-// 🔥 Load Reviews
+/* =========================
+🔐 ADMIN SECURITY
+========================= */
+auth.onAuthStateChanged(user => {
+if(!user || user.email !== "moinofficial302@gmail.com"){
+alert("Access Denied ❌");
+window.location.href = "../index.html";
+} else {
+loadAdminReviews();
+}
+});
+
+/* =========================
+🔥 LOAD REVIEWS
+========================= */
 async function loadAdminReviews(){
 
 list.innerHTML = "Loading...";
+
+try{
 
 const snapshot = await getDocs(collection(db, "reviews"));
 
 list.innerHTML = "";
 
+if(snapshot.empty){
+  list.innerHTML = "<p>No reviews found 😶</p>";
+  return;
+}
+
 snapshot.forEach(docSnap => {
 
-const data = docSnap.data();
-const id = docSnap.id;
+  const data = docSnap.data();
+  const id = docSnap.id;
 
-const div = document.createElement("div");
+  const div = document.createElement("div");
+  div.style.padding = "10px";
+  div.style.marginBottom = "10px";
+  div.style.borderRadius = "10px";
+  div.style.background = "#f5f7fb";
 
-div.innerHTML = `
-  <hr>
-  <h4>${data.username}</h4>
-  <p>⭐ ${data.rating}</p>
-  <p>${data.feedback}</p>
+  div.innerHTML = `
+    <h4>${data.username || "User"} ${data.verified ? "✅" : ""}</h4>
+    <p>⭐ ${data.rating}</p>
+    <p>${data.feedback}</p>
 
-  <button onclick="deleteReview('${id}')">Delete ❌</button>
-  <button onclick="editReview('${id}', '${data.feedback}', ${data.rating})">Edit ✏️</button>
-`;
+    <button onclick="deleteReview('${id}')" style="margin-right:10px;">Delete ❌</button>
+    <button onclick="editReview('${id}', \`${data.feedback}\`, ${data.rating})">Edit ✏️</button>
+  `;
 
-list.appendChild(div);
+  list.appendChild(div);
 
 });
+
+}catch(err){
+console.error(err);
+list.innerHTML = "Error loading reviews ❌";
 }
 
-// ❌ Delete
-window.deleteReview = async (id) => {
-if(confirm("Delete this review?")){
-await deleteDoc(doc(db, "reviews", id));
-loadAdminReviews();
 }
+
+/* =========================
+❌ DELETE REVIEW
+========================= */
+window.deleteReview = async (id) => {
+
+if(confirm("Delete this review? ❌")){
+
+try{
+  await deleteDoc(doc(db, "reviews", id));
+  loadAdminReviews();
+}catch(err){
+  console.error(err);
+  alert("Delete failed ❌");
+}
+
+}
+
 };
 
-// ✏️ Edit
+/* =========================
+✏️ EDIT REVIEW
+========================= */
 window.editReview = async (id, oldFeedback, oldRating) => {
 
 const newFeedback = prompt("Edit Feedback:", oldFeedback);
 const newRating = prompt("Edit Rating (1-5):", oldRating);
 
-if(!newFeedback || !newRating) return;
+// 🔥 Validation
+if(!newFeedback || !newRating){
+alert("Invalid input ❌");
+return;
+}
+
+if(newRating < 1 || newRating > 5){
+alert("Rating must be between 1-5 ⭐");
+return;
+}
+
+try{
 
 await updateDoc(doc(db, "reviews", id), {
-feedback: newFeedback,
-rating: Number(newRating)
+  feedback: newFeedback,
+  rating: Number(newRating)
 });
 
 loadAdminReviews();
-};
 
-// INIT
-loadAdminReviews();
+}catch(err){
+console.error(err);
+alert("Update failed ❌");
+}
+
+};
