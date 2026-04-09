@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Community • AKANS</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css?v=5">
+
+  <style>
+
+    body{
+      background: linear-gradient(180deg,#eaf2ff,#f7faff);
+    }
+
+    .community-wrap{
+      max-width: 430px;
+      margin: auto;
+      padding: 16px;
+    }
+
+    /* 🔥 TOP BRAND */
+    .community-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .community-header h2{
+      font-size:18px;
+      font-weight:700;
+    }
+
+    .community-header img{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+    }
+
+    /* 🔥 CARD */
+    .community-card{
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(18px);
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      text-align:center;
+
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeUp{
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .community-card img{
+      width:60px;
+      margin-bottom:10px;
+    }
+
+    .community-card h3{
+      font-size:20px;
+      margin-bottom:6px;
+    }
+
+    .community-card p{
+      font-size:14px;
+      opacity:0.7;
+      margin-bottom:14px;
+    }
+
+    /* 🔥 BUTTON */
+    .join-btn{
+      display:block;
+      width:100%;
+      padding:14px;
+      border-radius:30px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:15px;
+      color:#fff;
+    }
+
+    .telegram{
+      background: linear-gradient(135deg,#3b82f6,#60a5fa);
+    }
+
+    .whatsapp{
+      background: linear-gradient(135deg,#22c55e,#4ade80);
+    }
+
+    .join-btn:active{
+      transform:scale(0.96);
+    }
+
+  </style>
+
+</head>
+<body>
+
+<div class="community-wrap">
+
+  <!-- 🔥 HEADER -->
+  <div class="community-header">
+    <h2>AKANS Community</h2>
+    <img src="assets/logo.png">
+  </div>
+
+  <!-- 🔥 TELEGRAM -->
+  <div class="community-card">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
+    <h3>Join Telegram</h3>
+    <p>Real-time updates, drops & discussion</p>
+
+    <a href="https://t.me/Only_M7" class="join-btn telegram">
+      Join Telegram
+    </a>
+  </div>
+
+  <!-- 🔥 WHATSAPP -->
+  <div class="community-card">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+    <h3>Join WhatsApp</h3>
+    <p>Fast support & community help</p>
+
+    <a href="https://whatsapp.com/channel/0029VbCB5O6Dp2Q5rvsm7O3g" class="join-btn whatsapp">
+      Join WhatsApp
+    </a>
+  </div>
+
+</div>
+
+</body>
+</html>
