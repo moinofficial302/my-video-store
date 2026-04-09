@@ -51,15 +51,15 @@ const PRODUCTS = {
   link: "https://t.me/+dGMtUHj_-01mMWJl"
 },
 
-"Food": {
-  id: "Food",
+"food": {
+  id: "food",
   name: "Food Cutting Bundle",
   price: 39,
   link: "https://t.me/+c3hgz5tNXW85YTdl"
 },
 
-  "Car": {
-  id: "Car",
+  "car": {
+  id: "car",
   name: "Car Videos Bundle",
   price: 45,
   link: "https://t.me/+2IyBE_5HnSM4OGZl"
