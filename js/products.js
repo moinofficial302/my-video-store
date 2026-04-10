@@ -42,6 +42,14 @@ const PRODUCTS = {
   link: "https://t.me/+s8atnzggnmsyZDhl"
 },
 
+  // 🆕 CAPCUT PRO
+  "capcut-pro": {
+    id: "capcut-pro",
+    name: "CapCut Pro",
+    price: 99,
+    link: "https://t.me/+GNjj1PuOfCkyOTZl"
+  },
+
 // ================= Indec.HTML =================
 
 "hulk": {
