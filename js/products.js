@@ -59,6 +59,13 @@ const PRODUCTS = {
   link: "https://t.me/+dGMtUHj_-01mMWJl"
 },
 
+  "cricket": {
+  id: "cricket",
+  name: "cricket Videos Bundle",
+  price: 39,
+  link: "https://t.me/+6aVXXw918OU0Yzk1"
+},
+
 "food": {
   id: "food",
   name: "Food Cutting Bundle",
