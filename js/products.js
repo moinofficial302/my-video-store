@@ -62,7 +62,7 @@ const PRODUCTS = {
   "cricket": {
   id: "cricket",
   name: "cricket Videos Bundle",
-  price: 39,
+  price: 49,
   link: "https://t.me/+6aVXXw918OU0Yzk1"
 },
 
