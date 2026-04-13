@@ -3,10 +3,10 @@ const soundDetails = document.getElementById("sound-details");
 const soundBuy = document.getElementById("sound-buy");
 const soundNav = document.getElementById("sound-nav");
 
-// Function (clean play)
+// Function
 function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
+  const clone = sound.cloneNode(); // smooth play
+  clone.play();
 }
 
 // Details button
@@ -23,8 +23,8 @@ document.querySelectorAll(".btn-buy").forEach(btn => {
   });
 });
 
-// Nav buttons
-document.querySelectorAll(".btn-nav").forEach(btn => {
+// Nav buttons (FIXED)
+document.querySelectorAll(".nav-item").forEach(btn => {
   btn.addEventListener("click", () => {
     playSound(soundNav);
   });
