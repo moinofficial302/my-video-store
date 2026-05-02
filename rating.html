@@ -1,74 +1,104 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AKANS Rating</title>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">  <!-- CSS -->  <link rel="stylesheet" href="css/rating.css">
+  <title>AKANS Rating</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/rating.css">
 </head>
-  <body>
-    
-<!-- 🔝 BRAND HEADER --><div class="brand-card">
-  <h3>Only M.7 Limited</h3>
-  <img src="assets/logo.png" alt="logo">
-</div>
-    
-    <!-- 🔝 TOP HEADER --><div class="header-card">
-  <h2>⭐ User Ratings</h2>
-  <p>Trusted by 1000+ users</p>
-</div><!-- ⭐ SUMMARY --><div class="card rating-summary">
-  <h1 id="avgRating">4.7</h1>
-  <div id="stars">★★★★★</div>
-  <p id="totalReviews">Based on 1200 reviews</p>
-</div>
-    
-    <!-- 📊 BREAKDOWN -->
-    
-    <div class="card breakdown">
-  <div class="bar"><span>5 ⭐</span><div class="progress"><div style="width:80%"></div></div></div>
-  <div class="bar"><span>4 ⭐</span><div class="progress"><div style="width:12%"></div></div></div>
-  <div class="bar"><span>3 ⭐</span><div class="progress"><div style="width:5%"></div></div></div>
-  <div class="bar"><span>2 ⭐</span><div class="progress"><div style="width:2%"></div></div></div>
-  <div class="bar"><span>1 ⭐</span><div class="progress"><div style="width:1%"></div></div></div>
-</div>
-    
-    <!-- ✍️ GIVE RATING -->
-    
-    <div class="card give-rating">
-  <h3>Give Your Rating</h3>  
-  <div class="star-select" id="starSelect">
-    <span data-value="1">⭐</span>
-    <span data-value="2">⭐</span>
-    <span data-value="3">⭐</span>
-    <span data-value="4">⭐</span>
-    <span data-value="5">⭐</span>
-  </div>  <textarea id="feedback" placeholder="Write your feedback..."></textarea><button id="submitReview">Submit Review</button>
+<body>
 
-</div><!-- 🔽 FILTER -->
-    <div class="filter">
+<!-- 🔔 TOAST NOTIFICATION -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- 🔝 BRAND HEADER -->
+<div class="brand-card">
+  <div class="brand-info">
+    <div class="brand-logo">OM</div>
+    <div>
+      <h3>Only M.7 Limited</h3>
+      <span class="verified-badge">✓ Verified Business</span>
+    </div>
+  </div>
+  <div class="brand-meta">
+    <span class="online-dot"></span>
+    <span style="font-size:12px;color:#666;">Active</span>
+  </div>
+</div>
+
+<!-- 🔝 TOP HEADER -->
+<div class="header-card">
+  <h2>⭐ User Ratings</h2>
+  <p>Trusted by 1000+ users worldwide</p>
+</div>
+
+<!-- ⭐ SUMMARY -->
+<div class="card rating-summary">
+  <div class="summary-left">
+    <h1 id="avgRating">—</h1>
+    <div id="stars" class="star-display">☆☆☆☆☆</div>
+    <p id="totalReviews">Loading...</p>
+  </div>
+  <div class="summary-right">
+    <!-- 📊 BREAKDOWN — BUG FIX: Added id="bar1" to bar5 -->
+    <div class="bar"><span>5⭐</span><div class="progress"><div id="bar5" style="width:0%"></div></div><span id="cnt5" class="bar-cnt">0</span></div>
+    <div class="bar"><span>4⭐</span><div class="progress"><div id="bar4" style="width:0%"></div></div><span id="cnt4" class="bar-cnt">0</span></div>
+    <div class="bar"><span>3⭐</span><div class="progress"><div id="bar3" style="width:0%"></div></div><span id="cnt3" class="bar-cnt">0</span></div>
+    <div class="bar"><span>2⭐</span><div class="progress"><div id="bar2" style="width:0%"></div></div><span id="cnt2" class="bar-cnt">0</span></div>
+    <div class="bar"><span>1⭐</span><div class="progress"><div id="bar1" style="width:0%"></div></div><span id="cnt1" class="bar-cnt">0</span></div>
+  </div>
+</div>
+
+<!-- ✍️ GIVE RATING -->
+<div class="card give-rating">
+  <h3>✍️ Give Your Rating</h3>
+  <div class="star-select" id="starSelect">
+    <span data-value="1" title="Terrible">⭐</span>
+    <span data-value="2" title="Poor">⭐</span>
+    <span data-value="3" title="Okay">⭐</span>
+    <span data-value="4" title="Good">⭐</span>
+    <span data-value="5" title="Excellent">⭐</span>
+  </div>
+  <div class="rating-label" id="ratingLabel">Tap a star to rate</div>
+  <div class="textarea-wrap">
+    <textarea id="feedback" placeholder="Write your feedback..." maxlength="300"></textarea>
+    <span class="char-count" id="charCount">0/300</span>
+  </div>
+  <button id="submitReview">
+    <span id="btnText">Submit Review</span>
+    <span id="btnSpinner" class="spinner hidden"></span>
+  </button>
+</div>
+
+<!-- 🔽 FILTER + SEARCH — BUG FIX: Sort filter now works -->
+<div class="filter-bar">
+  <input type="text" id="searchInput" placeholder="🔍 Search reviews..." class="search-input">
   <select id="sort">
-    <option value="latest">Latest</option>
-    <option value="top">Top Rated</option>
+    <option value="latest">🕐 Latest</option>
+    <option value="top">⭐ Top Rated</option>
+    <option value="lowest">👎 Lowest Rated</option>
   </select>
 </div>
-    
-    <!-- 💬 REVIEWS LIST -->
-    <div id="reviewsContainer"> 
-      <!-- Example Review --> 
-      <div class="review-card">
-    <h4>Moin Khan ✅</h4>
-    <div>🥺🥹🙂😃🤩</div>
-    <p>Bahut smooth experience 🔥</p>
-    <small>2 days ago</small>
-  </div></div>
-    
-    <!-- 🛡 TRUST -->
-    <div class="card trust">
-  <p>✅ 1000+ Happy Users</p>
-  <p>⚡ Instant Delivery</p>
-  <p>🔒 Secure Payments</p>
-  <p>💬 Active Community</p>
+
+<!-- 💬 REVIEWS LIST -->
+<div id="reviewsContainer">
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
 </div>
-    <!-- JS -->
-    <script type="module" src="js/rating.js"></script>
-  
-  </body>
+
+<!-- 🛡 TRUST -->
+<div class="card trust">
+  <div class="trust-grid">
+    <div class="trust-item">✅ <span>1000+ Happy Users</span></div>
+    <div class="trust-item">⚡ <span>Instant Delivery</span></div>
+    <div class="trust-item">🔒 <span>Secure Payments</span></div>
+    <div class="trust-item">💬 <span>Active Community</span></div>
+  </div>
+</div>
+
+<!-- JS -->
+<script type="module" src="js/rating.js"></script>
+</body>
 </html>
