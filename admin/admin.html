@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Admin Panel | AKANS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="admin.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -58,7 +58,7 @@
         <div class="admin-avatar">A</div>
         <div class="admin-info">
           <p class="admin-name">Admin</p>
-          <p class="admin-email">admin@akans.in</p>
+          <p class="admin-email" id="adminEmail">admin@akans.in</p>
         </div>
       </div>
       <button class="logout-btn" id="adminLogoutBtn">⬅ Logout</button>
@@ -83,7 +83,7 @@
           <input type="text" placeholder="Search anything..." />
         </div>
         <div class="notif-btn">🔔</div>
-        <div class="topbar-avatar">A</div>
+        <div class="topbar-avatar" id="adminEmail" title="">A</div>
       </div>
     </div>
 
@@ -434,53 +434,6 @@
       document.getElementById('sectionTitle').textContent = btn.textContent.trim().replace(/^./,'').trim();
       if(window.innerWidth < 900) closeSidebar();
     });
-  });
-
-  // PRODUCT MODAL
-  const productModal = document.getElementById('productModalBackdrop');
-  document.getElementById('addProductBtn').addEventListener('click', () => {
-    productModal.classList.add('open');
-  });
-  document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
-  document.getElementById('cancelProductModal').addEventListener('click', closeProductModal);
-  productModal.addEventListener('click', (e) => { if(e.target === productModal) closeProductModal(); });
-
-  function closeProductModal() {
-    productModal.classList.remove('open');
-    document.getElementById('pName').value = '';
-    document.getElementById('pPrice').value = '';
-    document.getElementById('pType').value = '';
-    document.getElementById('pStock').value = '';
-    document.getElementById('pDesc').value = '';
-    document.getElementById('pImage').value = '';
-  }
-
-  document.getElementById('saveProductBtn').addEventListener('click', () => {
-    const name  = document.getElementById('pName').value.trim();
-    const price = document.getElementById('pPrice').value.trim();
-    const type  = document.getElementById('pType').value;
-    const stock = document.getElementById('pStock').value.trim();
-    if (!name || !price || !type) {
-      alert('Please fill in Name, Price, and Type.');
-      return;
-    }
-    const tbody = document.getElementById('productsTable');
-    // Remove empty-row if present
-    const emptyRow = tbody.querySelector('.empty-row');
-    if (emptyRow) emptyRow.parentElement.remove();
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${name}</td>
-      <td>${price} coins</td>
-      <td><span class="badge pending">${type}</span></td>
-      <td>${stock || '—'}</td>
-      <td>
-        <button class="btn btn-danger" style="font-size:12px;padding:5px 10px;" onclick="this.closest('tr').remove()">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-    closeProductModal();
   });
 
   // HAMBURGER
