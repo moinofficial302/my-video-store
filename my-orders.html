@@ -1,52 +1,466 @@
-<!DOCTYPE html><html lang="en">  
-<head>  
-  <meta charset="UTF-8">  
-  <title>My Orders | Akans</title>  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <link rel="stylesheet" href="css/nav.css">  
-  <link rel="stylesheet" href="css/style.css">  <style>  
-    .orders-wrapper{  
-      padding:16px;  
-      padding-bottom:90px;  
-    }  
-  
-    .order-card{  
-      max-width:420px;  
-      margin:0 auto 18px;  
-      background:linear-gradient(135deg,#eaf1ff,#f6f9ff);  
-      border-radius:22px;  
-      padding:16px;  
-      box-shadow:0 12px 30px rgba(0,0,0,.15);  
-    }  
-  
-    .order-card h3{  
-      font-size:18px;  
-      margin-bottom:6px;  
-      font-weight:700;  
-    }  
-  
-    .order-card p{  
-      font-size:14px;  
-      margin-bottom:12px;  
-    }  
-  
-    .open-btn{  
-      width:100%;  
-      padding:14px;  
-      border-radius:30px;  
-      border:none;  
-      background:#3b82f6;  
-      color:#fff;  
-      font-weight:700;  
-      font-size:16px;  
-    }  
-  </style></head><!-- ❌ REMOVE onload --><body>  <!-- HEADER -->  <div class="header-box">  
-    <span>My Orders</span>  
-    <img src="assets/logo.png" alt="Logo">  
-  </div>  <!-- ORDERS LIST -->  <div class="orders-wrapper" id="ordersList"></div>  <!-- NAV -->  <div class="bottom-nav">  
-    <button class="nav-item" onclick="location.href='index.html'">Bundle</button>  
-    <button class="nav-item" onclick="location.href='ai-editing.html'">AI & Editing</button>  
-    <button class="nav-item" onclick="location.href='social.html'">Social</button>  
-    <button class="nav-item active">Account</button>  
-  </div>  <!-- ✅ IMPORTANT (MODULE TYPE MUST BE HERE) -->  <script type="module" src="js/orders.js"></script></body>  
-</html>  
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Orders | Akans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/nav.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== ROOT ===== */
+    :root {
+      --bg: #f0f4ff;
+      --surface: #ffffff;
+      --primary: #3b5bdb;
+      --primary-light: #dbe4ff;
+      --accent: #f03e3e;
+      --success: #2f9e44;
+      --warning: #e67700;
+      --text: #1a1f36;
+      --text-muted: #6c757d;
+      --border: #e9ecef;
+      --radius: 20px;
+      --shadow: 0 8px 32px rgba(59,91,219,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== HEADER ===== */
+    .header-box {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+    }
+
+    .header-box span {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    .header-box img {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+
+    /* ===== SUMMARY STRIP ===== */
+    .summary-strip {
+      display: flex;
+      gap: 10px;
+      padding: 16px 16px 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .summary-strip::-webkit-scrollbar { display: none; }
+
+    .summary-chip {
+      flex-shrink: 0;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .summary-chip.active,
+    .summary-chip:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* ===== ORDERS WRAPPER ===== */
+    .orders-wrapper {
+      padding: 16px 16px 110px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: 8px 0 12px 4px;
+    }
+
+    /* ===== ORDER CARD ===== */
+    .order-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(59,91,219,0.08);
+      animation: cardIn 0.4s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .order-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px 0 0 4px;
+    }
+
+    .order-card.status-delivered::before { background: var(--success); }
+    .order-card.status-cancelled::before { background: var(--accent); }
+    .order-card.status-processing::before { background: var(--warning); }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARD TOP */
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .product-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .card-info {
+      flex: 1;
+      padding: 0 10px;
+    }
+
+    .card-info h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+
+    .card-info .order-id {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* STATUS BADGE */
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 50px;
+      flex-shrink: 0;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-delivered  { background: #d3f9d8; color: #2b8a3e; }
+    .badge-processing { background: #fff3bf; color: #e67700; }
+    .badge-pending    { background: #dbe4ff; color: #3b5bdb; }
+    .badge-cancelled  { background: #ffe3e3; color: #c92a2a; }
+
+    /* CARD DETAILS */
+    .card-details {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .detail-pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--bg);
+      border-radius: 50px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .detail-pill span { font-size: 13px; }
+
+    /* OPEN BUTTON */
+    .open-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #3b5bdb, #4c6ef5);
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(59,91,219,0.30);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .open-btn:hover   { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(59,91,219,0.38); }
+    .open-btn:active  { transform: translateY(0); }
+
+    .open-btn.disabled {
+      background: #e9ecef;
+      color: #adb5bd;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      display: none;
+    }
+
+    .empty-state .empty-icon {
+      font-size: 56px;
+      margin-bottom: 16px;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+
+    .empty-state h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .empty-state .shop-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      font-family: 'Sora', sans-serif;
+    }
+
+    /* ===== SKELETON LOADER ===== */
+    .skeleton {
+      background: #e9ecef;
+      border-radius: 12px;
+      animation: shimmer 1.4s infinite;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .skeleton-card {
+      border-radius: var(--radius);
+      height: 140px;
+      margin-bottom: 14px;
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+      display: flex;
+      padding: 8px 8px 20px;
+      gap: 4px;
+      z-index: 50;
+    }
+
+    .nav-item {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 10px 4px 6px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-item .nav-emoji { font-size: 18px; }
+
+    .nav-item:hover { color: var(--primary); }
+
+    .nav-item.active {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header-box">
+    <span>My Orders</span>
+    <img src="assets/logo.png" alt="Logo">
+  </div>
+
+  <!-- FILTER CHIPS -->
+  <div class="summary-strip" id="filterStrip">
+    <div class="summary-chip active" data-filter="all">All Orders</div>
+    <div class="summary-chip" data-filter="pending">Pending</div>
+  </div>
+
+  <!-- ORDERS LIST -->
+  <div class="orders-wrapper">
+    <p class="section-label" id="ordersLabel">Recent Orders</p>
+
+    <!-- Skeleton loaders shown while JS loads -->
+    <div id="skeletonLoaders">
+      <div class="skeleton skeleton-card"></div>
+      <div class="skeleton skeleton-card"></div>
+      <div class="skeleton skeleton-card"></div>
+    </div>
+
+    <!-- Real orders injected here by orders.js -->
+    <div id="ordersList"></div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="emptyState">
+      <span class="empty-icon">📦</span>
+      <h3>No orders yet</h3>
+      <p>Aapne abhi tak koi order nahi kiya.<br>Chaliye kuch explore karte hain!</p>
+      <a href="index.html" class="shop-btn">Shop Now</a>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-item" onclick="location.href='index.html'">
+      <span class="nav-emoji">📦</span> Bundle
+    </button>
+    <button class="nav-item" onclick="location.href='ai-editing.html'">
+      <span class="nav-emoji">🤖</span> AI & Edit
+    </button>
+    <button class="nav-item" onclick="location.href='social.html'">
+      <span class="nav-emoji">📱</span> Social
+    </button>
+    <button class="nav-item active">
+      <span class="nav-emoji">👤</span> Account
+    </button>
+  </div>
+
+  <!-- Filter chip JS (UI only, does not affect orders.js) -->
+  <script>
+    // Hide skeleton once ordersList has content (orders.js will populate it)
+    const observer = new MutationObserver(() => {
+      const list = document.getElementById('ordersList');
+      const skeleton = document.getElementById('skeletonLoaders');
+      const empty = document.getElementById('emptyState');
+      if (list.children.length > 0) {
+        skeleton.style.display = 'none';
+        empty.style.display = 'none';
+      } else if (skeleton.style.display === 'none') {
+        empty.style.display = 'block';
+      }
+    });
+    observer.observe(document.getElementById('ordersList'), { childList: true });
+
+    // Auto-hide skeleton after 3s fallback
+    setTimeout(() => {
+      const skeleton = document.getElementById('skeletonLoaders');
+      const list = document.getElementById('ordersList');
+      skeleton.style.display = 'none';
+      if (list.children.length === 0) {
+        document.getElementById('emptyState').style.display = 'block';
+      }
+    }, 3000);
+
+    // Filter chips (visual only — works with static cards too)
+    document.querySelectorAll('.summary-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.summary-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const filter = chip.dataset.filter;
+        const cards = document.querySelectorAll('.order-card');
+        let visible = 0;
+        cards.forEach(card => {
+          const match = filter === 'all' || card.dataset.status === filter;
+          card.style.display = match ? 'block' : 'none';
+          if (match) visible++;
+        });
+        document.getElementById('ordersLabel').textContent =
+          filter === 'all' ? 'Recent Orders' : filter.charAt(0).toUpperCase() + filter.slice(1) + ' Orders';
+        document.getElementById('emptyState').style.display = visible === 0 && cards.length > 0 ? 'block' : 'none';
+      });
+    });
+  </script>
+
+  <!-- YOUR EXISTING ORDERS JS — DO NOT CHANGE -->
+  <script type="module" src="js/orders.js"></script>
+
+</body>
+</html>
