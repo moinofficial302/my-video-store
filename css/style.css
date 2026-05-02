@@ -327,10 +327,12 @@ button { cursor: pointer; font-family: inherit; }
   display: flex;
   gap: 10px;
   overflow-x: auto;
+  overflow-y: visible;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  padding: 4px 0 14px;
+  padding: 4px 14px 14px;
   margin-bottom: 8px;
+  width: 100%;
 }
 
 .trending-scroll::-webkit-scrollbar { display: none; }
@@ -338,6 +340,7 @@ button { cursor: pointer; font-family: inherit; }
 .trending-card {
   min-width: 130px;
   max-width: 130px;
+  width: 130px;
   flex-shrink: 0;
   scroll-snap-align: start;
   background: var(--card-bg);
@@ -354,6 +357,7 @@ button { cursor: pointer; font-family: inherit; }
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 7px;
+  display: block;
 }
 
 .trending-card h4 {
@@ -377,12 +381,16 @@ button { cursor: pointer; font-family: inherit; }
   margin-bottom: 7px !important;
 }
 
-.trending-card .buy-btn {
+.t-buy-btn {
   width: 100%;
-  flex: unset;
-  font-size: 12px;
   padding: 8px 6px;
-  box-shadow: none;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--yellow);
+  color: #111;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 /* ==================================================
