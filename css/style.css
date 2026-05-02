@@ -338,9 +338,10 @@ button { cursor: pointer; font-family: inherit; }
 .trending-scroll::-webkit-scrollbar { display: none; }
 
 .trending-card {
-  min-width: 130px;
-  max-width: 130px;
-  width: 130px;
+  min-width: 140px !important;
+  max-width: 140px !important;
+  width: 140px !important;
+  flex: 0 0 140px !important;
   flex-shrink: 0;
   scroll-snap-align: start;
   background: var(--card-bg);
@@ -349,11 +350,12 @@ button { cursor: pointer; font-family: inherit; }
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border);
   text-align: center;
+  box-sizing: border-box;
 }
 
 .trending-card img {
-  width: 100%;
-  aspect-ratio: 2 / 3;
+  width: 120px !important;
+  height: 180px !important;
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 7px;
@@ -753,4 +755,4 @@ button { cursor: pointer; font-family: inherit; }
 
 @media (min-width: 480px) {
   .page-wrap { padding: 0 20px; }
-   }
+}
