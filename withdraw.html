@@ -1,130 +1,191 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Withdraw Amount</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <link rel="stylesheet" href="css/style.css" />  <style>
-    .withdraw-container{
-      padding:16px;
-      max-width:500px;
-      margin:auto;
-    }
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Withdraw — AKANS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/withdraw.css"/>
+</head>
+<body>
 
-    .card{
-      background:#fff;
-      border-radius:12px;
-      padding:16px;
-      margin-bottom:16px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.05);
-    }
+<!-- 🔔 TOAST -->
+<div id="toast" class="toast hidden"></div>
 
-    .balance{
-      font-size:22px;
-      font-weight:bold;
-      color:#28a745;
-    }
+<!-- 🔝 BRAND HEADER -->
+<div class="brand-card">
+  <div class="brand-left">
+    <span class="online-dot"></span>
+    <span class="active-label">Active</span>
+  </div>
+  <div class="brand-center">
+    <h3>Only M.7 Limited</h3>
+    <span class="verified-badge">✓ Verified Business</span>
+  </div>
+  <div class="brand-right">
+    <img src="assets/logo.png" alt="logo" class="brand-logo-img"/>
+  </div>
+</div>
 
-    .min-note{
-      font-size:13px;
-      color:#555;
-      margin-top:4px;
-    }
-
-    .option-box{
-      display:flex;
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .option-box button{
-      flex:1;
-      padding:12px;
-      border-radius:10px;
-      border:none;
-      cursor:pointer;
-      font-size:15px;
-    }
-
-    .withdraw-btn{ background:#ffc107; }
-    .convert-btn{ background:#17a2b8; color:#fff; }
-
-    .form-group{ margin-bottom:12px; }
-
-    .form-group input,
-    .form-group select{
-      width:100%;
-      padding:10px;
-      font-size:14px;
-    }
-
-    .submit-btn{
-      width:100%;
-      padding:14px;
-      border-radius:10px;
-      border:none;
-      font-size:16px;
-      cursor:pointer;
-      background:#28a745;
-      color:#fff;
-    }
-
-    .history-item{
-      border-bottom:1px solid #eee;
-      padding:10px 0;
-      font-size:14px;
-    }
-
-    .status{ font-weight:bold; }
-    .status.pending{ color:orange; }
-    .status.approved{ color:green; }
-    .status.rejected{ color:red; }
-  </style></head><body><div class="withdraw-container">  <!-- BALANCE -->  <div class="card">
-    <h2>Referral Wallet Balance</h2>
-    <div class="balance" id="referralBalance">₹0</div>
-    <div class="min-note">Minimum withdraw amount: ₹20</div>
-  </div>  <!-- OPTIONS -->  <div class="card">
-    <h2>Choose Option</h2>
-    <div class="option-box">
-      <button class="withdraw-btn" onclick="showWithdrawForm()">Withdraw to UPI</button>
-      <button class="convert-btn" onclick="showConvertForm()">Convert to Website Coins</button>
+<!-- 💰 BALANCE CARD -->
+<div class="card balance-card">
+  <div class="balance-top">
+    <div>
+      <p class="balance-label">Referral Wallet Balance</p>
+      <div class="balance-amount" id="referralBalance">₹—</div>
+      <p class="min-note">⚡ Minimum withdraw: ₹20</p>
     </div>
-  </div>  <!-- WITHDRAW FORM -->  <div class="card" id="withdrawForm" style="display:none;">
-    <h2>Withdraw to UPI</h2><div class="form-group">
-  <input type="number" id="withdrawAmount" placeholder="Amount ₹ (min 20)">
+    <div class="wallet-icon">💰</div>
+  </div>
+  <!-- Mini progress bar showing usable balance -->
+  <div class="balance-bar-wrap">
+    <div class="balance-bar" id="balanceBar" style="width:0%"></div>
+  </div>
+  <p class="balance-bar-label" id="balanceBarLabel">Loading balance...</p>
 </div>
 
-<div class="form-group">
-  <select id="paymentMethod">
-    <option value="UPI">UPI</option>
-    <option value="Paytm">Paytm</option>
-    <option value="PhonePe">PhonePe</option>
-    <option value="GPay">Google Pay</option>
-  </select>
+<!-- 🔘 OPTION BUTTONS -->
+<div class="option-row">
+  <button class="opt-btn active" id="btnWithdraw" onclick="showTab('withdraw')">
+    💸 Withdraw to UPI
+  </button>
+  <button class="opt-btn" id="btnConvert" onclick="showTab('convert')">
+    🪙 Convert to Coins
+  </button>
 </div>
 
-<div class="form-group">
-  <input type="text" id="upiInput" placeholder="UPI ID / Mobile">
+<!-- 📤 WITHDRAW FORM -->
+<div class="card form-card" id="withdrawForm">
+  <h3>💸 Withdraw to UPI</h3>
+
+  <div class="form-group">
+    <label>Amount (₹)</label>
+    <input type="number" id="withdrawAmount" placeholder="Min ₹20" min="20"/>
+  </div>
+
+  <div class="form-group">
+    <label>Payment Method</label>
+    <select id="paymentMethod">
+      <option value="UPI">UPI</option>
+      <option value="Paytm">Paytm</option>
+      <option value="PhonePe">PhonePe</option>
+      <option value="GPay">Google Pay</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>UPI ID / Mobile Number</label>
+    <input type="text" id="upiInput" placeholder="e.g. name@upi or 9876543210"/>
+  </div>
+
+  <div class="amount-preview" id="withdrawPreview" style="display:none">
+    <span>You will receive</span>
+    <strong id="previewAmt">₹0</strong>
+  </div>
+
+  <button class="submit-btn" id="withdrawSubmitBtn">
+    <span id="wBtnText">Submit Request</span>
+    <span id="wBtnSpinner" class="spinner hidden"></span>
+  </button>
 </div>
 
-<button class="submit-btn">Submit Withdrawal Request</button>
+<!-- 🪙 CONVERT FORM -->
+<div class="card form-card" id="convertForm" style="display:none">
+  <h3>🪙 Convert to Coins</h3>
 
-  </div>  <!-- CONVERT FORM -->  <div class="card" id="convertForm" style="display:none;">
-    <h2>Convert to Coins</h2><div class="form-group">
-  <input type="number" id="convertAmount" placeholder="Amount ₹">
+  <div class="info-box">
+    ℹ️ ₹1 = 1 Website Coin. Coins can be used for premium features.
+  </div>
+
+  <div class="form-group">
+    <label>Amount (₹)</label>
+    <input type="number" id="convertAmount" placeholder="Enter amount"/>
+  </div>
+
+  <div class="amount-preview" id="convertPreview" style="display:none">
+    <span>You will get</span>
+    <strong id="previewCoins">0 Coins</strong>
+  </div>
+
+  <button class="submit-btn" id="convertSubmitBtn">
+    <span id="cBtnText">Convert Now</span>
+    <span id="cBtnSpinner" class="spinner hidden"></span>
+  </button>
 </div>
 
-<button class="submit-btn">Convert Now</button>
+<!-- 📋 HISTORY -->
+<div class="card" id="historyBox">
+  <div class="history-header">
+    <h3>📋 History</h3>
+    <span class="history-count" id="historyCount">0 records</span>
+  </div>
+  <div id="historyList">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+  </div>
+</div>
 
-  </div>  <!-- ⭐⭐⭐ IMPORTANT FIX -->  <!-- HISTORY (EMPTY – JS FILLS THIS) -->  <div class="card" id="historyBox">
-    <h2>History</h2>
-  </div></div><script>
-function showWithdrawForm(){
-  withdrawForm.style.display="block";
-  convertForm.style.display="none";
+<!-- 🛡 TRUST -->
+<div class="card trust">
+  <div class="trust-grid">
+    <div class="trust-item">✅ <span>Safe & Secure</span></div>
+    <div class="trust-item">⚡ <span>Fast Processing</span></div>
+    <div class="trust-item">🔒 <span>Encrypted Data</span></div>
+    <div class="trust-item">💬 <span>24/7 Support</span></div>
+  </div>
+</div>
+
+<script>
+function showTab(tab) {
+  const wForm = document.getElementById("withdrawForm");
+  const cForm = document.getElementById("convertForm");
+  const btnW  = document.getElementById("btnWithdraw");
+  const btnC  = document.getElementById("btnConvert");
+
+  if (tab === "withdraw") {
+    wForm.style.display = "block";
+    cForm.style.display = "none";
+    btnW.classList.add("active");
+    btnC.classList.remove("active");
+  } else {
+    cForm.style.display = "block";
+    wForm.style.display = "none";
+    btnC.classList.add("active");
+    btnW.classList.remove("active");
+  }
 }
 
-function showConvertForm(){
-  convertForm.style.display="block";
-  withdrawForm.style.display="none";
-}
-</script><script type="module" src="js/withdraw.js"></script></body>
+// Live preview for withdraw amount
+document.addEventListener("DOMContentLoaded", () => {
+  const wAmt = document.getElementById("withdrawAmount");
+  const cAmt = document.getElementById("convertAmount");
+
+  wAmt?.addEventListener("input", () => {
+    const v = Number(wAmt.value);
+    const preview = document.getElementById("withdrawPreview");
+    const previewAmt = document.getElementById("previewAmt");
+    if (v > 0) {
+      preview.style.display = "flex";
+      previewAmt.textContent = "₹" + v;
+    } else {
+      preview.style.display = "none";
+    }
+  });
+
+  cAmt?.addEventListener("input", () => {
+    const v = Number(cAmt.value);
+    const preview = document.getElementById("convertPreview");
+    const previewCoins = document.getElementById("previewCoins");
+    if (v > 0) {
+      preview.style.display = "flex";
+      previewCoins.textContent = v + " Coins";
+    } else {
+      preview.style.display = "none";
+    }
+  });
+});
+</script>
+
+<script type="module" src="js/withdraw.js"></script>
+</body>
 </html>
