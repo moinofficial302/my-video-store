@@ -1,196 +1,360 @@
 import { db, auth } from "./firebase-init.js";
 
 import {
-collection,
-addDoc,
-serverTimestamp,
-getDocs,
-query,
-orderBy
+  collection,
+  addDoc,
+  serverTimestamp,
+  getDocs,
+  query,
+  orderBy,
+  where,
+  doc,
+  updateDoc,
+  increment
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 /* =========================
-⭐ STAR SELECTION
+   🔔 TOAST — alert() replace
 ========================= */
-let selectedRating = 0;
+function showToast(msg, type = "info", duration = 3000) {
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.className = `toast ${type}`;
+  toast.classList.remove("hidden");
 
-const stars = document.querySelectorAll("#starSelect span");
+  // Force reflow for animation restart
+  void toast.offsetWidth;
+  toast.classList.add("show");
 
-stars.forEach((star, index) => {
-star.addEventListener("click", () => {
-
-selectedRating = index + 1;
-
-stars.forEach(s => s.classList.remove("active"));
-
-for(let i = 0; i <= index; i++){
-  stars[i].classList.add("active");
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.classList.add("hidden"), 400);
+  }, duration);
 }
 
-});
+/* =========================
+   ⭐ STAR SELECTION
+========================= */
+let selectedRating = 0;
+const stars = document.querySelectorAll("#starSelect span");
+
+const ratingLabels = ["", "Terrible 😞", "Poor 😕", "Okay 😐", "Good 😊", "Excellent 🤩"];
+
+stars.forEach((star, index) => {
+
+  // Hover effect
+  star.addEventListener("mouseenter", () => {
+    stars.forEach((s, i) => {
+      s.classList.toggle("hover", i <= index);
+    });
+    document.getElementById("ratingLabel").textContent = ratingLabels[index + 1];
+  });
+
+  star.addEventListener("mouseleave", () => {
+    stars.forEach(s => s.classList.remove("hover"));
+    document.getElementById("ratingLabel").textContent =
+      selectedRating ? ratingLabels[selectedRating] : "Tap a star to rate";
+  });
+
+  // Click to select
+  star.addEventListener("click", () => {
+    selectedRating = index + 1;
+    stars.forEach((s, i) => {
+      s.classList.toggle("active", i <= index);
+    });
+    document.getElementById("ratingLabel").textContent = ratingLabels[selectedRating];
+  });
 });
 
 /* =========================
-🚀 SUBMIT REVIEW
+   📝 CHARACTER COUNTER
 ========================= */
-const submitBtn = document.getElementById("submitReview");
+const feedbackInput = document.getElementById("feedback");
+const charCount = document.getElementById("charCount");
+
+feedbackInput.addEventListener("input", () => {
+  const len = feedbackInput.value.length;
+  charCount.textContent = `${len}/300`;
+  charCount.style.color = len > 270 ? "#ff4b2b" : "#bbb";
+});
+
+/* =========================
+   🚀 SUBMIT REVIEW
+========================= */
+const submitBtn  = document.getElementById("submitReview");
+const btnText    = document.getElementById("btnText");
+const btnSpinner = document.getElementById("btnSpinner");
+
+function setLoading(loading) {
+  submitBtn.disabled = loading;
+  btnText.textContent = loading ? "Submitting..." : "Submit Review";
+  btnSpinner.classList.toggle("hidden", !loading);
+}
 
 submitBtn.addEventListener("click", async () => {
 
-const user = auth.currentUser;
+  const user = auth.currentUser;
 
-if(!user){
-alert("Login required ❌");
-return;
-}
+  if (!user) {
+    showToast("Login required ❌", "error");
+    return;
+  }
 
-const username = user.displayName || user.email || "User";
+  const feedback = feedbackInput.value.trim();
 
-const feedbackInput = document.getElementById("feedback");
-const feedback = feedbackInput.value.trim();
+  if (selectedRating === 0) {
+    showToast("Please select a star rating ⭐", "warn");
+    return;
+  }
 
-if(selectedRating === 0){
-alert("Please select rating ⭐");
-return;
-}
+  if (feedback === "") {
+    showToast("Please write your feedback 📝", "warn");
+    return;
+  }
 
-if(feedback === ""){
-alert("Please write feedback 📝");
-return;
-}
+  setLoading(true);
 
-try{
+  try {
 
-// 🚫 Duplicate review check
-const qCheck = query(collection(db, "reviews"));
-const snap = await getDocs(qCheck);
+    // 🔒 BUG FIX: Duplicate check by UID (not username — more reliable)
+    const dupQuery = query(
+      collection(db, "reviews"),
+      where("uid", "==", user.uid)
+    );
+    const dupSnap = await getDocs(dupQuery);
 
-let alreadyReviewed = false;
+    if (!dupSnap.empty) {
+      showToast("You already submitted a review ⚠️", "warn");
+      setLoading(false);
+      return;
+    }
 
-snap.forEach(doc => {
-  if(doc.data().username === username){
-    alreadyReviewed = true;
+    const username = user.displayName || user.email?.split("@")[0] || "Anonymous";
+
+    // ✅ Save review with uid field
+    await addDoc(collection(db, "reviews"), {
+      uid:       user.uid,
+      username:  username,
+      rating:    selectedRating,
+      feedback:  feedback,
+      createdAt: serverTimestamp(),
+      verified:  true,
+      likes:     0
+    });
+
+    showToast("Review Submitted! Thank you 🎉", "success");
+
+    // Reset form
+    feedbackInput.value = "";
+    charCount.textContent = "0/300";
+    selectedRating = 0;
+    stars.forEach(s => s.classList.remove("active", "hover"));
+    document.getElementById("ratingLabel").textContent = "Tap a star to rate";
+
+    loadReviews();
+
+  } catch (err) {
+    console.error(err);
+    showToast("Error submitting review ❌", "error");
+  } finally {
+    setLoading(false);
   }
 });
 
-if(alreadyReviewed){
-  alert("You already submitted review ⚠️");
-  return;
-}
-
-// ✅ Save review
-await addDoc(collection(db, "reviews"), {
-  username: username,
-  rating: selectedRating,
-  feedback: feedback,
-  createdAt: serverTimestamp(),
-  verified: true
-});
-
-alert("Review Submitted ✅");
-
-feedbackInput.value = "";
-selectedRating = 0;
-stars.forEach(s => s.classList.remove("active"));
-
-loadReviews();
-
-}catch(err){
-console.error(err);
-alert("Error submitting review ❌");
-}
-
-});
-
 /* =========================
-📥 LOAD REVIEWS + 📊 CALCULATION
+   📥 LOAD REVIEWS + 📊 CALCULATION
 ========================= */
 const reviewsContainer = document.getElementById("reviewsContainer");
 
-async function loadReviews(){
+// BUG FIX: Sort filter now connected + search filter added
+let allReviews = [];
 
-reviewsContainer.innerHTML = "Loading...";
+document.getElementById("sort").addEventListener("change", renderReviews);
+document.getElementById("searchInput").addEventListener("input", renderReviews);
 
-try{
-
-const q = query(
-  collection(db, "reviews"),
-  orderBy("createdAt", "desc")
-);
-
-const snapshot = await getDocs(q);
-
-reviewsContainer.innerHTML = "";
-
-if(snapshot.empty){
-  document.getElementById("avgRating").innerText = "0";
-  document.getElementById("totalReviews").innerText = "0 reviews";
-  reviewsContainer.innerHTML = "<p>No reviews yet 😶</p>";
-  return;
+function getTimeAgo(date) {
+  if (!date) return "Just now";
+  const diff = Math.floor((Date.now() - date) / 60000);
+  if (diff < 1)    return "Just now";
+  if (diff < 60)   return `${diff} min ago`;
+  if (diff < 1440) return `${Math.floor(diff / 60)} hr ago`;
+  if (diff < 10080) return `${Math.floor(diff / 1440)} day${Math.floor(diff / 1440) > 1 ? "s" : ""} ago`;
+  return date.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 }
 
-let total = 0;
-let count = 0;
+function getInitials(name) {
+  return name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
+}
 
-let starCount = {
-  1:0, 2:0, 3:0, 4:0, 5:0
-};
+function renderReviews() {
+  const sortVal   = document.getElementById("sort").value;
+  const searchVal = document.getElementById("searchInput").value.trim().toLowerCase();
 
-snapshot.forEach(doc => {
-  const data = doc.data();
+  let list = [...allReviews];
 
-  total += data.rating;
-  count++;
-  starCount[data.rating]++;
-
-  // 🕒 Time ago logic
-  const time = data.createdAt?.toDate();
-
-  let timeText = "Just now";
-
-  if(time){
-    const diff = Math.floor((Date.now() - time) / 60000);
-
-    if(diff < 1) timeText = "Just now";
-    else if(diff < 60) timeText = diff + " min ago";
-    else if(diff < 1440) timeText = Math.floor(diff/60) + " hr ago";
-    else timeText = Math.floor(diff/1440) + " days ago";
+  // 🔍 Search filter
+  if (searchVal) {
+    list = list.filter(r =>
+      r.username.toLowerCase().includes(searchVal) ||
+      r.feedback.toLowerCase().includes(searchVal)
+    );
   }
 
-  const div = document.createElement("div");
-  div.classList.add("review-card");
+  // 📊 Sort — BUG FIX: sort filter now works
+  if (sortVal === "top")    list.sort((a, b) => b.rating - a.rating || b.ts - a.ts);
+  if (sortVal === "lowest") list.sort((a, b) => a.rating - b.rating || b.ts - a.ts);
+  if (sortVal === "latest") list.sort((a, b) => b.ts - a.ts);
 
-  div.innerHTML = `
-    <h4>${data.username} ${data.verified ? "✅" : ""}</h4>
-    <div>${"⭐".repeat(data.rating)}</div>
-    <p>${data.feedback}</p>
-    <small>${timeText}</small>
+  reviewsContainer.innerHTML = "";
+
+  if (list.length === 0) {
+    reviewsContainer.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">😶</span>
+        ${searchVal ? "No matching reviews found." : "No reviews yet. Be the first!"}
+      </div>`;
+    return;
+  }
+
+  list.forEach(r => {
+    const div = document.createElement("div");
+    div.classList.add("review-card");
+
+    div.innerHTML = `
+      <div class="review-header">
+        <div class="review-avatar">${getInitials(r.username)}</div>
+        <div class="review-meta">
+          <h4>${r.username} ${r.verified ? "✅" : ""}</h4>
+          <small>${r.timeText}</small>
+        </div>
+      </div>
+      <div class="review-stars">${"⭐".repeat(r.rating)}${"☆".repeat(5 - r.rating)}</div>
+      <p class="review-text">${r.feedback}</p>
+      <div class="review-footer">
+        <button class="like-btn" data-id="${r.id}">
+          👍 Helpful <span class="like-count">${r.likes || 0}</span>
+        </button>
+        <small style="font-size:11px;color:#ccc;">${r.rating}/5</small>
+      </div>
+    `;
+
+    reviewsContainer.appendChild(div);
+  });
+
+  // 👍 Like button logic
+  document.querySelectorAll(".like-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      const likedKey = `liked_${id}`;
+
+      if (localStorage.getItem(likedKey)) {
+        showToast("Already marked as helpful 👍", "info");
+        return;
+      }
+
+      try {
+        await updateDoc(doc(db, "reviews", id), { likes: increment(1) });
+        localStorage.setItem(likedKey, "1");
+        btn.classList.add("liked");
+        const cnt = btn.querySelector(".like-count");
+        cnt.textContent = parseInt(cnt.textContent) + 1;
+        showToast("Marked as helpful! 🙌", "success");
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  });
+}
+
+async function loadReviews() {
+
+  // Show skeletons while loading
+  reviewsContainer.innerHTML = `
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
   `;
 
-  reviewsContainer.appendChild(div);
-});
+  try {
 
-const avg = (total / count).toFixed(1);
+    const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
+    const snapshot = await getDocs(q);
 
-document.getElementById("avgRating").innerText = avg;
-document.getElementById("totalReviews").innerText = count + " reviews";
+    allReviews = [];
 
-for(let i=1; i<=5; i++){
-  const percent = (starCount[i] / count) * 100;
-  const bar = document.getElementById("bar"+i);
-  if(bar){
-    bar.style.width = percent + "%";
+    if (snapshot.empty) {
+      document.getElementById("avgRating").textContent   = "0";
+      document.getElementById("totalReviews").textContent = "No reviews yet";
+      document.getElementById("stars").textContent        = "☆☆☆☆☆";
+      reviewsContainer.innerHTML = `<div class="empty-state"><span class="empty-icon">😶</span>No reviews yet. Be the first!</div>`;
+      return;
+    }
+
+    let total = 0, count = 0;
+    const starCount = { 1:0, 2:0, 3:0, 4:0, 5:0 };
+
+    snapshot.forEach(docSnap => {
+      const data = docSnap.data();
+      const time = data.createdAt?.toDate();
+      const ts   = time ? time.getTime() : 0;
+
+      total += data.rating;
+      count++;
+      starCount[data.rating] = (starCount[data.rating] || 0) + 1;
+
+      allReviews.push({
+        id:       docSnap.id,
+        username: data.username || "Anonymous",
+        rating:   data.rating,
+        feedback: data.feedback,
+        verified: data.verified,
+        likes:    data.likes || 0,
+        timeText: getTimeAgo(time),
+        ts:       ts
+      });
+
+      // Mark already-liked reviews
+      if (localStorage.getItem(`liked_${docSnap.id}`)) {
+        // will be applied after render
+      }
+    });
+
+    const avg = (total / count).toFixed(1);
+
+    document.getElementById("avgRating").textContent   = avg;
+    document.getElementById("totalReviews").textContent = `${count} review${count !== 1 ? "s" : ""}`;
+
+    // Star display based on avg
+    const fullStars  = Math.round(parseFloat(avg));
+    document.getElementById("stars").textContent =
+      "⭐".repeat(fullStars) + "☆".repeat(5 - fullStars);
+
+    // BUG FIX: Progress bars now have correct IDs (bar1–bar5) in HTML
+    for (let i = 1; i <= 5; i++) {
+      const percent = count > 0 ? (starCount[i] / count) * 100 : 0;
+      const bar = document.getElementById("bar" + i);
+      const cnt = document.getElementById("cnt" + i);
+      if (bar) bar.style.width = percent.toFixed(1) + "%";
+      if (cnt) cnt.textContent = starCount[i];
+    }
+
+    renderReviews();
+
+    // Re-apply liked state after render
+    document.querySelectorAll(".like-btn").forEach(btn => {
+      if (localStorage.getItem(`liked_${btn.dataset.id}`)) {
+        btn.classList.add("liked");
+      }
+    });
+
+  } catch (err) {
+    console.error(err);
+    reviewsContainer.innerHTML = `<div class="empty-state"><span class="empty-icon">❌</span>Error loading reviews. Please try again.</div>`;
   }
-}
-
-}catch(err){
-console.error(err);
-reviewsContainer.innerHTML = "Error loading reviews ❌";
-}
-
 }
 
 /* =========================
-🚀 INIT
+   🚀 INIT
 ========================= */
 loadReviews();
