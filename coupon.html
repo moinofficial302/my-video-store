@@ -4,57 +4,130 @@
   <meta charset="UTF-8">
   <title>Coupon Code | Akans</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/coupon.css">
 </head>
-
 <body>
 
-<!-- TOP HEADER -->
-<div class="header-box">
-  <span>Coupon Code</span>
-  <img src="assets/logo.png" alt="Logo">
+<!-- 🔔 TOAST -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- 🔝 BRAND HEADER -->
+<div class="brand-card">
+  <div class="brand-left">
+    <span class="online-dot"></span>
+    <span class="active-label">Active</span>
+  </div>
+  <div class="brand-center">
+    <h3>Only M.7 Limited</h3>
+    <span class="verified-badge">✓ Verified Business</span>
+  </div>
+  <div class="brand-right">
+    <img src="assets/logo.png" alt="logo" class="brand-logo-img"/>
+  </div>
 </div>
 
-<!-- COUPON CARD -->
-<div class="ai-wrapper">
+<!-- 🎟️ PAGE TITLE -->
+<div class="header-card">
+  <h2>🎟️ Coupon Code</h2>
+  <p>Apply coupon &amp; earn instant coins</p>
+</div>
 
-  <div class="card glass-card">
-    <h3>Apply Coupon</h3>
+<!-- 💰 COINS BALANCE -->
+<div class="card balance-card">
+  <div class="balance-top">
+    <div>
+      <p class="balance-label">Your Coin Balance</p>
+      <div class="balance-amount" id="coinBalance">—</div>
+      <p class="min-note">🪙 Use coins for premium features</p>
+    </div>
+    <div class="wallet-icon">🪙</div>
+  </div>
+  <div class="balance-bar-wrap">
+    <div class="balance-bar" id="coinBar" style="width:0%"></div>
+  </div>
+</div>
 
+<!-- 🎟️ COUPON CARD -->
+<div class="card coupon-card">
+  <h3>Apply Coupon</h3>
+
+  <div class="input-wrap">
+    <span class="input-icon">🎟️</span>
     <input
       type="text"
       id="couponInput"
-      placeholder="Enter Coupon Code"
-      style="
-        width:100%;
-        padding:14px;
-        border-radius:14px;
-        border:1px solid #ddd;
-        margin:14px 0;
-        font-size:16px;
-      "
+      placeholder="Enter coupon code (e.g. AKANS50)"
+      maxlength="20"
+      autocomplete="off"
     />
-
-    <button class="buy-btn" onclick="applyCoupon()">
-      Apply Coupon
-    </button>
-
-    <p id="couponMsg" style="margin-top:12px;"></p>
+    <button class="clear-btn" id="clearBtn" style="display:none">✕</button>
   </div>
 
+  <div class="char-hint" id="charHint">Max 20 characters</div>
+
+  <button class="submit-btn" id="applyBtn">
+    <span id="applyBtnText">Apply Coupon 🚀</span>
+    <span id="applyBtnSpinner" class="spinner hidden"></span>
+  </button>
+
+  <div id="couponMsg" class="coupon-msg hidden"></div>
 </div>
 
-<!-- BOTTOM NAV -->
+<!-- 📋 HISTORY -->
+<div class="card" id="historyBox">
+  <div class="history-header">
+    <h3>📋 Usage History</h3>
+    <span class="history-count" id="historyCount">—</span>
+  </div>
+  <div id="historyList">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+  </div>
+</div>
+
+<!-- 🛡 TRUST -->
+<div class="card trust">
+  <div class="trust-grid">
+    <div class="trust-item">✅ <span>Instant Coins</span></div>
+    <div class="trust-item">🔒 <span>One-time Use</span></div>
+    <div class="trust-item">⚡ <span>Fast Processing</span></div>
+    <div class="trust-item">💬 <span>24/7 Support</span></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV — unchanged as requested -->
 <div class="bottom-nav">
   <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
-  <button class="nav-item" onclick="location.href='ai-editing.html'">AI & Editing</button>
+  <button class="nav-item" onclick="location.href='ai-editing.html'">AI &amp; Editing</button>
   <button class="nav-item" onclick="location.href='social.html'">Social</button>
   <button class="nav-item active">Account</button>
 </div>
 
-<script type="module" src="js/coupon.js"></script>
+<script>
+// Input: auto uppercase + clear button + char counter
+const couponInput = document.getElementById("couponInput");
+const clearBtn    = document.getElementById("clearBtn");
+const charHint    = document.getElementById("charHint");
 
+couponInput.addEventListener("input", function () {
+  this.value = this.value.toUpperCase();
+  const len  = this.value.length;
+  clearBtn.style.display  = len > 0 ? "flex" : "none";
+  charHint.textContent    = len > 0 ? len + "/20 characters" : "Max 20 characters";
+  charHint.style.color    = len >= 18 ? "#ef4444" : "#aaa";
+});
+
+clearBtn.addEventListener("click", function () {
+  couponInput.value      = "";
+  clearBtn.style.display = "none";
+  charHint.textContent   = "Max 20 characters";
+  charHint.style.color   = "#aaa";
+  couponInput.focus();
+});
+</script>
+
+<script type="module" src="js/coupon.js"></script>
 </body>
 </html>
