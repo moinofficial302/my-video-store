@@ -1,22 +1,22 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAuth }       from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore }  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 /* =====================================================
-🚀 AKANS FIREBASE INIT (FINAL CORRECT CONFIG)
+   🚀 AKANS FIREBASE INIT
 ===================================================== */
 
 const firebaseConfig = {
-apiKey: "AIzaSyAdgT-GBSctb1xZyW1sVaH6ggB1hlYTAJQ",
-authDomain: "akans-d2bdc.firebaseapp.com",
-projectId: "akans-d2bdc",
-storageBucket: "akans-d2bdc.firebasestorage.app",
-messagingSenderId: "588727557262",
-appId: "1:588727557262:web:bdbe859770c97284837ddf",
-measurementId: "G-P2CF08HFQJ"
+  apiKey:            "AIzaSyAdgT-GBSctb1xZyW1sVaH6ggB1hlYTAJQ",
+  authDomain:        "akans-d2bdc.firebaseapp.com",
+  projectId:         "akans-d2bdc",
+  storageBucket:     "akans-d2bdc.firebasestorage.app",
+  messagingSenderId: "588727557262",
+  appId:             "1:588727557262:web:bdbe859770c97284837ddf",
+  measurementId:     "G-P2CF08HFQJ"
 };
 
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const db   = getFirestore(app);
