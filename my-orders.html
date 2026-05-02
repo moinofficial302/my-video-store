@@ -335,21 +335,15 @@
       flex: 1;
       background: transparent;
       border: none;
-      padding: 10px 4px 6px;
+      padding: 10px 4px;
       border-radius: 14px;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.2s;
       font-family: 'DM Sans', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
     }
-
-    .nav-item .nav-emoji { font-size: 18px; }
 
     .nav-item:hover { color: var(--primary); }
 
@@ -399,18 +393,10 @@
 
   <!-- BOTTOM NAV -->
   <div class="bottom-nav">
-    <button class="nav-item" onclick="location.href='index.html'">
-      <span class="nav-emoji">📦</span> Bundle
-    </button>
-    <button class="nav-item" onclick="location.href='ai-editing.html'">
-      <span class="nav-emoji">🤖</span> AI & Edit
-    </button>
-    <button class="nav-item" onclick="location.href='social.html'">
-      <span class="nav-emoji">📱</span> Social
-    </button>
-    <button class="nav-item active">
-      <span class="nav-emoji">👤</span> Account
-    </button>
+    <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
+    <button class="nav-item" onclick="location.href='ai-editing.html'">AI & Editing</button>
+    <button class="nav-item" onclick="location.href='social.html'">Social</button>
+    <button class="nav-item active">Account</button>
   </div>
 
   <!-- Filter chip JS (UI only, does not affect orders.js) -->
