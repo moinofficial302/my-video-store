@@ -1,130 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Refer & Earn | AKANS</title>
-
-  <!-- Same theme CSS -->
-  <link rel="stylesheet" href="css/login.css">
-
-  <style>
-    body{
-      background:#f6f7fb;
-      margin:0;
-      font-family:system-ui;
-    }
-
-    .wrap{
-      padding:16px;
-      max-width:520px;
-      margin:auto;
-    }
-
-    .card{
-      background:#fff;
-      border-radius:14px;
-      padding:16px;
-      margin-bottom:16px;
-      box-shadow:0 4px 12px rgba(0,0,0,.05);
-    }
-
-    .title{
-      font-size:18px;
-      font-weight:600;
-      margin-bottom:8px;
-    }
-
-    .row{
-      display:flex;
-      gap:8px;
-      margin-top:10px;
-    }
-
-    input{
-      flex:1;
-      padding:10px;
-      border-radius:8px;
-      border:1px solid #ddd;
-      font-size:14px;
-    }
-
-    button{
-      padding:10px 14px;
-      border:none;
-      border-radius:8px;
-      background:#ffc107;
-      font-weight:600;
-      cursor:pointer;
-    }
-
-    ul{
-      margin:8px 0 0 18px;
-      font-size:14px;
-      line-height:1.6;
-    }
-
-    .note{
-      font-size:13px;
-      color:#666;
-      margin-top:6px;
-    }
-
-  </style>
+  <title>Refer &amp; Earn | AKANS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/refer.css">
 </head>
-
-
 <body>
 
-<div class="wrap">
+<!-- 🔔 TOAST -->
+<div id="toast" class="toast hidden"></div>
 
-  <!-- ================= REFERRAL LINK ================= -->
+<!-- 🔝 BRAND HEADER -->
+<div class="brand-card">
+  <div class="brand-left">
+    <span class="online-dot"></span>
+    <span class="active-label">Active</span>
+  </div>
+  <div class="brand-center">
+    <h3>Only M.7 Limited</h3>
+    <span class="verified-badge">✓ Verified Business</span>
+  </div>
+  <div class="brand-right">
+    <img src="assets/logo.png" alt="logo" class="brand-logo-img"/>
+  </div>
+</div>
 
-  <div class="card">
-    <div class="title">🔗 Your Referral Link</div>
+<!-- 🎯 PAGE TITLE -->
+<div class="header-card">
+  <h2>🤝 Refer &amp; Earn</h2>
+  <p>Share your link &amp; earn real rewards</p>
+</div>
 
-    <div class="row">
-      <!-- 🔥 IMPORTANT ID (refer.js use karega) -->
-      <input id="refLink" readonly value="Loading...">
-      <button id="copyBtn">Copy</button>
+<!-- 💰 REFERRAL WALLET BALANCE -->
+<div class="card balance-card">
+  <div class="balance-top">
+    <div>
+      <p class="balance-label">Referral Wallet</p>
+      <div class="balance-amount" id="referralBalance">₹—</div>
+      <p class="min-note">💸 Withdraw anytime after ₹20</p>
     </div>
-
-    <p class="note">
-      Share this link with friends to earn rewards 💰
-    </p>
+    <div class="wallet-icon">💰</div>
   </div>
-
-
-
-  <!-- ================= RULES ================= -->
-
-  <div class="card">
-    <div class="title">📜 Referral Rules</div>
-
-    <ul>
-      <li><b>Normal Users</b> → 15% first deposit, 10% second</li>
-      <li><b>Premium Users (99+ coins spent)</b> → 40% first, 25% second</li>
-      <li>Reward goes to your Referral Wallet</li>
-      <li>Only first 2 deposits count</li>
-    </ul>
+  <div class="balance-bar-wrap">
+    <div class="balance-bar" id="balanceBar" style="width:0%"></div>
   </div>
+</div>
 
+<!-- 📊 STATS ROW -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-icon">👥</div>
+    <div class="stat-value" id="totalReferrals">—</div>
+    <div class="stat-label">Total Referred</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">✅</div>
+    <div class="stat-value" id="activeReferrals">—</div>
+    <div class="stat-label">Active Users</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">💎</div>
+    <div class="stat-value" id="totalEarned">₹—</div>
+    <div class="stat-label">Total Earned</div>
+  </div>
+</div>
 
+<!-- 🔗 REFERRAL LINK CARD -->
+<div class="card link-card">
+  <h3>🔗 Your Referral Link</h3>
 
-  <!-- ================= WITHDRAW ================= -->
+  <div class="link-box" id="linkBox">
+    <span class="link-text" id="refLinkText">Generating your link...</span>
+  </div>
+  <input type="hidden" id="refLink" value=""/>
 
-  <div class="card">
-    <button style="width:100%" onclick="location.href='withdraw.html'">
-      💸 Withdraw Referral Earnings
+  <div class="share-row">
+    <button class="share-btn whatsapp-btn" id="whatsappBtn" disabled>
+      📱 WhatsApp
+    </button>
+    <button class="share-btn copy-btn" id="copyBtn" disabled>
+      <span id="copyBtnText">📋 Copy Link</span>
     </button>
   </div>
 
+  <p class="link-note">🌟 Share with friends &amp; earn on every deposit!</p>
 </div>
 
+<!-- 🏷️ REFERRAL CODE -->
+<div class="card code-card">
+  <h3>🏷️ Your Referral Code</h3>
+  <div class="code-display">
+    <span class="code-text" id="referralCode">——</span>
+    <button class="code-copy-btn" id="codeCopyBtn" disabled>Copy Code</button>
+  </div>
+  <p class="code-note">Friends can enter this code directly at signup</p>
+</div>
 
+<!-- 📜 RULES CARD -->
+<div class="card rules-card">
+  <h3>📜 Referral Rules</h3>
 
-<!-- 🔥 ONLY LOGIC FILE -->
+  <div class="rule-item">
+    <div class="rule-icon">👤</div>
+    <div class="rule-content">
+      <div class="rule-title">Normal Users</div>
+      <div class="rule-desc">15% on 1st deposit &nbsp;·&nbsp; 10% on 2nd deposit</div>
+    </div>
+  </div>
+
+  <div class="rule-divider"></div>
+
+  <div class="rule-item">
+    <div class="rule-icon">💎</div>
+    <div class="rule-content">
+      <div class="rule-title">Premium Users <span class="premium-tag">99+ coins spent</span></div>
+      <div class="rule-desc">40% on 1st deposit &nbsp;·&nbsp; 25% on 2nd deposit</div>
+    </div>
+  </div>
+
+  <div class="rule-divider"></div>
+
+  <div class="rule-item">
+    <div class="rule-icon">ℹ️</div>
+    <div class="rule-content">
+      <div class="rule-title">Important Notes</div>
+      <div class="rule-desc">Reward goes to Referral Wallet &nbsp;·&nbsp; Only first 2 deposits count</div>
+    </div>
+  </div>
+</div>
+
+<!-- 👥 REFERRED USERS -->
+<div class="card" id="historyBox">
+  <div class="history-header">
+    <h3>👥 Referred Users</h3>
+    <span class="history-count" id="historyCount">—</span>
+  </div>
+  <div id="historyList">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+  </div>
+</div>
+
+<!-- 💸 WITHDRAW -->
+<div class="card withdraw-card">
+  <button class="withdraw-btn" onclick="location.href='withdraw.html'">
+    💸 Withdraw Referral Earnings
+  </button>
+</div>
+
+<!-- 🛡 TRUST -->
+<div class="card trust">
+  <div class="trust-grid">
+    <div class="trust-item">✅ <span>Real Earnings</span></div>
+    <div class="trust-item">⚡ <span>Instant Credit</span></div>
+    <div class="trust-item">🔒 <span>Safe &amp; Secure</span></div>
+    <div class="trust-item">💬 <span>24/7 Support</span></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV — unchanged -->
+<div class="bottom-nav">
+  <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
+  <button class="nav-item" onclick="location.href='ai-editing.html'">AI &amp; Editing</button>
+  <button class="nav-item" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item active">Account</button>
+</div>
+
 <script type="module" src="js/refer.js"></script>
-
 </body>
-</html>
+   </html>
