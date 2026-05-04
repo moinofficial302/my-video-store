@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About | Only M.7 Limited</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/nav.css">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(145deg, #eef6ff 0%, #f5f0ff 50%, #ffffff 100%);
+      min-height: 100vh;
+      padding: 15px;
+      padding-bottom: 80px;
+      color: #222;
+    }
+
+    /* CARD */
+    .card {
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.07);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    /* BRAND HEADER */
+    .brand-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(14px);
+      padding: 12px 16px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+      border: 1px solid rgba(255,255,255,0.6);
+      overflow: hidden;
+    }
+    .brand-left  { display:flex; align-items:center; gap:5px; min-width:60px; }
+    .active-label { font-size:12px; font-weight:600; color:#555; }
+    .brand-center { text-align:center; flex:1; }
+    .brand-center h3 { font-weight:700; font-size:15px; line-height:1.2; }
+    .verified-badge  { font-size:11px; color:#1e90ff; font-weight:600; }
+    .brand-right {
+      display:flex; align-items:center; justify-content:flex-end;
+      width:50px; min-width:50px; max-width:50px;
+      flex-shrink:0; overflow:hidden;
+    }
+    .brand-logo-img {
+      width:42px !important; height:42px !important;
+      max-width:42px !important; max-height:42px !important;
+      border-radius:12px; object-fit:cover;
+      border:2px solid rgba(30,144,255,0.2); display:block;
+    }
+    .online-dot {
+      width:9px; height:9px; background:#22c55e;
+      border-radius:50%; flex-shrink:0;
+      animation: dotPulse 1.5s infinite;
+    }
+    @keyframes dotPulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.5; transform:scale(1.3); }
+    }
+
+    /* BACK BUTTON */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-size: 13px; font-weight: 600;
+      color: #1e90ff;
+      text-decoration: none;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      transition: all 0.2s;
+      display: inline-flex;
+    }
+    .back-btn:hover { transform:translateX(-3px); }
+
+    /* PAGE HEADER */
+    .header-card { text-align:center; margin-bottom:14px; }
+    .header-card h2 {
+      font-family:'Nunito',sans-serif; font-weight:800; font-size:24px;
+      background: linear-gradient(135deg,#1e90ff,#a78bfa);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .header-card p { font-size:13px; color:#888; margin-top:4px; }
+
+    /* HERO BANNER */
+    .hero-card {
+      background: linear-gradient(135deg, #1e90ff, #a78bfa);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content:''; position:absolute;
+      top:-40px; right:-40px;
+      width:160px; height:160px;
+      background:rgba(255,255,255,0.08); border-radius:50%;
+    }
+    .hero-card::after {
+      content:''; position:absolute;
+      bottom:-30px; left:-30px;
+      width:120px; height:120px;
+      background:rgba(255,255,255,0.06); border-radius:50%;
+    }
+    .hero-emoji { font-size:50px; display:block; margin-bottom:12px; }
+    .hero-card h1 {
+      font-family:'Nunito',sans-serif; font-size:24px; font-weight:800;
+      color:#fff; margin-bottom:10px; position:relative; z-index:1;
+    }
+    .hero-card p {
+      font-size:13px; color:rgba(255,255,255,0.88);
+      line-height:1.7; position:relative; z-index:1;
+    }
+
+    /* STATS ROW */
+    .stats-row {
+      display:grid; grid-template-columns:1fr 1fr 1fr;
+      gap:10px; margin-bottom:14px;
+    }
+    .stat-card {
+      background:rgba(255,255,255,0.82);
+      backdrop-filter:blur(14px);
+      border-radius:16px; padding:14px 10px;
+      text-align:center;
+      box-shadow:0 6px 20px rgba(0,0,0,0.06);
+      border:1px solid rgba(255,255,255,0.6);
+    }
+    .stat-icon  { font-size:22px; margin-bottom:4px; }
+    .stat-value {
+      font-family:'Nunito',sans-serif; font-size:18px; font-weight:800;
+      background:linear-gradient(135deg,#1e90ff,#a78bfa);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .stat-label { font-size:11px; color:#888; margin-top:2px; }
+
+    /* SECTION CARDS */
+    .section-header {
+      display:flex; align-items:center; gap:10px; margin-bottom:14px;
+    }
+    .section-icon {
+      width:40px; height:40px; border-radius:12px;
+      background:linear-gradient(135deg,#1e90ff,#a78bfa);
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px; flex-shrink:0;
+    }
+    .section-title {
+      font-family:'Nunito',sans-serif; font-size:16px; font-weight:800; color:#1e1e2e;
+    }
+
+    /* CONTENT */
+    .content-text { font-size:14px; color:#444; line-height:1.75; margin-bottom:10px; }
+    .content-text strong { color:#1e1e2e; }
+
+    /* BULLETS */
+    .bullet-list { margin-top:8px; }
+    .bullet-item {
+      display:flex; align-items:flex-start; gap:10px;
+      padding:9px 0; border-bottom:1px solid #f5f5f5;
+      font-size:13px; color:#444; line-height:1.5;
+    }
+    .bullet-item:last-child { border-bottom:none; }
+    .bullet-dot {
+      width:24px; height:24px; border-radius:8px;
+      background:linear-gradient(135deg,rgba(30,144,255,0.1),rgba(167,139,250,0.1));
+      display:flex; align-items:center; justify-content:center;
+      font-size:12px; flex-shrink:0; margin-top:1px;
+    }
+
+    /* HIGHLIGHT & WARNING BOXES */
+    .highlight-box {
+      background:linear-gradient(135deg,rgba(30,144,255,0.07),rgba(167,139,250,0.07));
+      border-left:3px solid #1e90ff;
+      border-radius:12px; padding:12px 16px;
+      margin:12px 0; font-size:13px; color:#444; line-height:1.6;
+    }
+    .warning-box {
+      background:rgba(239,68,68,0.06);
+      border-left:3px solid #ef4444;
+      border-radius:12px; padding:12px 16px;
+      margin:12px 0; font-size:13px; color:#555; line-height:1.6;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height:1px;
+      background:linear-gradient(to right,transparent,#e0e7f0,transparent);
+      margin:14px 0;
+    }
+
+    /* THANK YOU */
+    .thankyou-card {
+      background:linear-gradient(135deg,#1e90ff,#a78bfa);
+      border-radius:20px; padding:26px 20px;
+      text-align:center; margin-bottom:14px;
+    }
+    .thankyou-card h3 {
+      font-family:'Nunito',sans-serif; font-size:20px; font-weight:800;
+      color:#fff; margin-bottom:10px;
+    }
+    .thankyou-card p { font-size:13px; color:rgba(255,255,255,0.88); line-height:1.7; }
+
+    /* TRUST */
+    .trust-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .trust-item {
+      font-size:13px; display:flex; align-items:center;
+      gap:6px; padding:8px 10px;
+      background:#f5f8ff; border-radius:10px; font-weight:500;
+    }
+
+    @media(max-width:400px) {
+      .stat-value { font-size:15px; }
+      .stats-row  { gap:8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 🔝 BRAND HEADER -->
+<div class="brand-card">
+  <div class="brand-left">
+    <span class="online-dot"></span>
+    <span class="active-label">Active</span>
+  </div>
+  <div class="brand-center">
+    <h3>Only M.7 Limited</h3>
+    <span class="verified-badge">✓ Verified Business</span>
+  </div>
+  <div class="brand-right">
+    <img src="assets/logo.png" alt="logo" class="brand-logo-img"/>
+  </div>
+</div>
+
+<!-- ⬅ BACK -->
+<a href="account.html" class="back-btn">⬅ Back to Account</a>
+
+<!-- 🎯 PAGE TITLE -->
+<div class="header-card">
+  <h2>About Us</h2>
+  <p>Learn more about Only M.7 Limited</p>
+</div>
+
+<!-- 🏆 HERO BANNER -->
+<div class="hero-card">
+  <span class="hero-emoji">🦅</span>
+  <h1>Only M.7 Limited</h1>
+  <p>
+    India ka trusted digital platform for creators, editors &amp; online earners.
+    Premium digital resources at unbeatable prices — bilkul ek hi jagah par.
+    Grow karo, earn karo, aur apna content next level pe le jao! 🚀
+  </p>
+</div>
+
+<!-- 📊 STATS -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-icon">👥</div>
+    <div class="stat-value">1000+</div>
+    <div class="stat-label">Happy Users</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📦</div>
+    <div class="stat-value">500+</div>
+    <div class="stat-label">Products</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">⭐</div>
+    <div class="stat-value">4.8</div>
+    <div class="stat-label">Avg Rating</div>
+  </div>
+</div>
+
+<!-- 📌 WHAT IS -->
+<div class="card">
+  <div class="section-header">
+    <div class="section-icon">📌</div>
+    <div class="section-title">What is Only M.7 Limited?</div>
+  </div>
+  <p class="content-text">
+    Only M.7 Limited ek professional <strong>digital services platform</strong> hai jo creators,
+    editors aur online earn karne wale users ke liye specially design kiya gaya hai.
+    Yahan users safe aur transparent tareeke se coins add karke premium digital products
+    jaise AI editing packs, video bundles, social media resources aur tools purchase kar sakte hain.
+  </p>
+  <p class="content-text">
+    Humara platform <strong>100% secure</strong> hai aur har transaction admin verification
+    ke baad process hoti hai. Hum believe karte hain ki quality digital resources
+    sabke liye accessible hone chahiye — isliye humari pricing specifically India ke
+    creators ko dhyan mein rakh ke set ki gayi hai.
+  </p>
+  <div class="highlight-box">
+    💡 <strong>Our Goal:</strong> Low cost mein high quality digital resources provide karna,
+    jisse creators apna kaam fast aur efficiently grow kar sakein — bina kisi compromise ke.
+    Ek platform, infinite possibilities.
+  </div>
+</div>
+
+<!-- 🏢 VISION & MISSION -->
+<div class="card">
+  <div class="section-header">
+    <div class="section-icon">🏢</div>
+    <div class="section-title">Company Vision &amp; Mission</div>
+  </div>
+  <p class="content-text"><strong>🎯 Vision:</strong></p>
+  <p class="content-text">
+    Digital creators ke liye ek trusted aur affordable platform banana jahan sab kuch
+    ek hi jagah par available ho — editing tools se lekar genuine earning opportunities tak.
+    Hum chahte hain ki har creator — chahe beginner ho ya seasoned pro — real growth kare.
+  </p>
+  <div class="divider"></div>
+  <p class="content-text"><strong>🚀 Mission:</strong></p>
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-dot">✅</div><span>High-quality digital products provide karna har budget ke liye — affordable pricing ke saath</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🔒</div><span>Transparent earning &amp; referral system maintain karna — koi hidden charges nahi</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🛡️</div><span>Users ka trust aur complete data security ensure karna — encrypted &amp; protected</span></div>
+    <div class="bullet-item"><div class="bullet-dot">⚡</div><span>Fast delivery aur instant access on all purchases — no waiting</span></div>
+    <div class="bullet-item"><div class="bullet-dot">💬</div><span>Active community support 24/7 — Hindi &amp; English dono mein</span></div>
+    <div class="bullet-item"><div class="bullet-dot">📈</div><span>Continuously platform improve karna user feedback ke basis par — aapki awaaz matters</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🤝</div><span>Long-term user relationships build karna — sirf transaction nahi, partnership</span></div>
+  </div>
+</div>
+
+<!-- 🔐 SECURITY -->
+<div class="card">
+  <div class="section-header">
+    <div class="section-icon">🔐</div>
+    <div class="section-title">Security &amp; User Safety</div>
+  </div>
+  <p class="content-text">
+    Only M.7 Limited user security ko sabse zyada priority deta hai.
+    Aapka account, data aur transactions completely protected hote hain.
+    Hum industry-standard encryption aur Firebase security use karte hain
+    taaki aapki information safe rahe har waqt — 24/7.
+  </p>
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-dot">🔒</div><span>User data encrypted environment mein store hota hai — koi third-party access nahi hoti</span></div>
+    <div class="bullet-item"><div class="bullet-dot">✅</div><span>Har Add Money aur Withdrawal request admin verification ke baad approve hoti hai</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🚫</div><span>Fake transactions, fraud aur misuse strictly prohibited — zero tolerance policy</span></div>
+    <div class="bullet-item"><div class="bullet-dot">📱</div><span>Firebase Authentication se secure login — koi password leakage risk nahi</span></div>
+    <div class="bullet-item"><div class="bullet-dot">👁️</div><span>Suspicious activity automatically detect hoti hai — real-time monitoring</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🛡️</div><span>Regular security audits — platform hamesha up-to-date aur protected rehta hai</span></div>
+  </div>
+</div>
+
+<!-- 💰 COINS & WALLET -->
+<div class="card">
+  <div class="section-header">
+    <div class="section-icon">💰</div>
+    <div class="section-title">Coins, Payments &amp; Wallet System</div>
+  </div>
+  <p class="content-text">
+    Website par coins ek internal wallet system ka part hote hain.
+    Ye coins sirf website ke andar premium digital products purchase karne ke
+    liye use kiye ja sakte hain. Coins system completely transparent aur fair hai —
+    koi hidden deductions ya expiry nahi.
+  </p>
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-dot">🪙</div><span>Coins ka use sirf digital products purchase ke liye hota hai — internal currency</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🚫</div><span>Coins direct withdraw nahi kiye ja sakte — sirf referral earnings withdraw hoti hain</span></div>
+    <div class="bullet-item"><div class="bullet-dot">⏳</div><span>Add Money requests manual admin approval ke baad wallet mein add hoti hain</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🎟️</div><span>Coupon codes se free coins earn kiye ja sakte hain — regularly new coupons available</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🔄</div><span>Referral earnings coins mein convert karne ka option bhi available hai</span></div>
+    <div class="bullet-item"><div class="bullet-dot">♾️</div><span>Coins ki koi expiry nahi — aapke coins hamesha safe rahenge account mein</span></div>
+  </div>
+  <div class="highlight-box">
+    💡 <strong>Pro Tip:</strong> Coupon codes regularly available hote hain community mein.
+    Active raho aur free coins earn karte raho! Regular users ko special bonus coupons bhi milte hain.
+  </div>
+</div>
+
+<!-- 🤝 REFER & EARN -->
+<div class="card">
+  <div class="section-header">
+    <div class="section-icon">🤝</div>
+    <div class="section-title">Refer &amp; Earn Program</div>
+  </div>
+  <p class="content-text">
+    Only M.7 Limited users ko ek genuine earning opportunity provide karta hai
+    Refer &amp; Earn system ke through. Yeh India ke top referral programs mein se ek hai
+    apni category mein — real money, real rewards, koi drama nahi.
+  </p>
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-dot">🔗</div><span>Har user ko ek unique referral link aur code milta hai — share karein aur earn karein</span></div>
+    <div class="bullet-item"><div class="bullet-dot">👤</div><span><strong>Normal Users:</strong> 15% on 1st deposit · 10% on 2nd deposit of referred user</span></div>
+    <div class="bullet-item"><div class="bullet-dot">💎</div><span><strong>Premium Users (99+ coins spent):</strong> 40% on 1st · 25% on 2nd deposit — massive earning!</span></div>
+    <div class="bullet-item"><div class="bullet-dot">💸</div><span>Referral rewards automatically Referral Wallet mein credit hote hain — instant</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🏦</div><span>Wallet se UPI, Paytm, PhonePe ya Google Pay pe withdraw karein — min ₹20</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🔄</div><span>Earnings coins mein bhi convert kar sakte hain — flexible options</span></div>
+  </div>
+  <div class="warning-box">
+    ⚠️ <strong>Important:</strong> Self-referral, fake accounts ya kisi bhi tarah ka misuse
+    strictly prohibited hai. Rules violate karne par account suspend ya permanently
+    terminate ho sakta hai aur balance forfeit ho sakta hai.
+  </div>
+</div>
+
+<!-- 📦 PRODUCTS -->
+<div class="card">
+  <div class="section-header">
+    <div class="section-icon">📦</div>
+    <div class="section-title">Digital Products &amp; Orders</div>
+  </div>
+  <p class="content-text">
+    Website par available sabhi products completely digital hote hain — koi physical
+    delivery nahi hoti. Purchases instant hote hain aur products turant available
+    ho jaate hain aapke account mein — koi wait nahi.
+  </p>
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-dot">⚡</div><span>Purchase ke baad products turant <strong>My Orders</strong> section mein mil jaate hain</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🎬</div><span>AI Editing Packs — professional grade editing resources for viral content</span></div>
+    <div class="bullet-item"><div class="bullet-dot">📹</div><span>Video Bundles — premium cricket aur trending content video collections</span></div>
+    <div class="bullet-item"><div class="bullet-dot">📱</div><span>Social Media Resources — templates, captions, strategies for maximum reach</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🔧</div><span>Digital Tools — utilities jo aapke content workflow ko 10x fast karte hain</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🆕</div><span>Naye products regularly add hote hain — hamesha fresh content available</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🚫</div><span>Products sirf personal use ke liye hain — unauthorized reselling strictly banned</span></div>
+  </div>
+</div>
+
+<!-- 💸 WITHDRAWAL POLICY -->
+<div class="card">
+  <div class="section-header">
+    <div class="section-icon">💸</div>
+    <div class="section-title">Withdrawal Policy</div>
+  </div>
+  <p class="content-text">
+    Withdrawal sirf referral earnings ke liye allowed hai.
+    Withdrawal process completely transparent, secure aur admin-verified hai.
+    Minimum withdrawal amount ₹20 hai aur processing time 24–48 working hours hai.
+  </p>
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-dot">📝</div><span>Withdrawal request submit karo — UPI ID ya mobile number ke saath</span></div>
+    <div class="bullet-item"><div class="bullet-dot">👨‍💼</div><span>Admin carefully review karta hai aur legitimate request approve karta hai</span></div>
+    <div class="bullet-item"><div class="bullet-dot">💳</div><span>Approved hone ke baad payment UPI / Paytm / PhonePe / Google Pay pe process hota hai</span></div>
+    <div class="bullet-item"><div class="bullet-dot">⏱️</div><span>Processing time: 24–48 hours on working days — weekends mein delay ho sakta hai</span></div>
+    <div class="bullet-item"><div class="bullet-dot">💹</div><span>Referral earnings coins mein bhi convert ki ja sakti hain — flexible withdrawal options</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🚫</div><span>Coins wallet se direct withdrawal allowed nahi hai — sirf referral wallet se</span></div>
+  </div>
+</div>
+
+<!-- ⚠️ RULES -->
+<div class="card">
+  <div class="section-header">
+    <div class="section-icon">⚠️</div>
+    <div class="section-title">Rules, Fair Usage &amp; Account Policy</div>
+  </div>
+  <p class="content-text">
+    Platform ka fair usage ensure karna sabke liye zaroori hai.
+    Hum ek honest aur transparent community build kar rahe hain.
+    Kisi bhi tarah ka misuse, fake activity, spam ya system exploit karna
+    strictly prohibited hai aur immediate action liya jayega.
+  </p>
+  <div class="warning-box">
+    🚫 <strong>Strictly Prohibited Activities:</strong><br/>
+    Fake referrals · Multiple accounts · Payment fraud · Chargeback abuse ·
+    Bot/automated activity · System exploitation · Unauthorized product reselling ·
+    Account sharing · Misleading other users
+  </div>
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-dot">📋</div><span>Only M.7 Limited ko poora adhikaar hai rules change karne ka — without prior notice</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🔍</div><span>Suspicious accounts restrict ya permanently ban kiye ja sakte hain — no refund</span></div>
+    <div class="bullet-item"><div class="bullet-dot">💰</div><span>Fraud ke case mein balance forfeit ho sakta hai — coins aur referral wallet dono</span></div>
+    <div class="bullet-item"><div class="bullet-dot">⚖️</div><span>All disputes handled by Only M.7 Limited team — final decision humara hoga</span></div>
+    <div class="bullet-item"><div class="bullet-dot">✅</div><span>Fair players ko hamesha protect kiya jayega — honest users ka platform hai yeh</span></div>
+  </div>
+</div>
+
+<!-- 📞 SUPPORT -->
+<div class="card">
+  <div class="section-header">
+    <div class="section-icon">📞</div>
+    <div class="section-title">Support &amp; Community</div>
+  </div>
+  <p class="content-text">
+    Agar aapko kisi bhi type ki help ya support chahiye, toh aap
+    Community section ke through official support channels join kar sakte hain.
+    Hum fast response dene ki puri koshish karte hain — aapki satisfaction humare liye priority hai.
+  </p>
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-dot">💬</div><span>Community section mein official support channel available hai — 24/7</span></div>
+    <div class="bullet-item"><div class="bullet-dot">⚡</div><span>Fast response — usually within a few hours on working days</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🇮🇳</div><span>Hindi &amp; English dono mein support milti hai — aapki language mein</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🔄</div><span>Account issues, payment queries, product help — sab topics covered</span></div>
+    <div class="bullet-item"><div class="bullet-dot">📢</div><span>Latest updates, new products &amp; special offers community mein pehle announce hote hain</span></div>
+    <div class="bullet-item"><div class="bullet-dot">🎁</div><span>Active community members ko special rewards aur early access milta hai</span></div>
+  </div>
+</div>
+
+<!-- 🛡 TRUST -->
+<div class="card trust">
+  <div class="trust-grid">
+    <div class="trust-item">✅ <span>1000+ Happy Users</span></div>
+    <div class="trust-item">⚡ <span>Instant Delivery</span></div>
+    <div class="trust-item">🔒 <span>Secure Platform</span></div>
+    <div class="trust-item">💬 <span>Active Community</span></div>
+    <div class="trust-item">🏦 <span>UPI Withdrawals</span></div>
+    <div class="trust-item">🎟️ <span>Free Coupon Coins</span></div>
+  </div>
+</div>
+
+<!-- ❤️ THANK YOU -->
+<div class="thankyou-card">
+  <h3>❤️ Shukriya!</h3>
+  <p>
+    Only M.7 Limited ko choose karne ke liye aapka dil se dhanyavaad 🙏<br/>
+    Aap hmare platform ki sabse badi strength hain — aapke bina hum kuch nahi.<br/><br/>
+    Hum hamesha apni services improve karte rahenge taaki aapko
+    <strong style="color:#fff;">best possible experience</strong> mile.
+    Milke grow karte hain, milke earn karte hain! 🚀🦅
+  </p>
+</div>
+
+<!-- BOTTOM NAV — unchanged -->
+<div class="bottom-nav">
+  <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
+  <button class="nav-item" onclick="location.href='ai-editing.html'">AI &amp; Editing</button>
+  <button class="nav-item" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item active">Account</button>
+</div>
+
+</body>
+</html>
