@@ -1,6 +1,11 @@
 // =======================================
-// ADMIN PRODUCTS MANAGEMENT
-// Firebase + Modal UI (No prompt())
+// ADMIN PRODUCTS MANAGEMENT — FULL UPGRADE
+// - Page selection: Bundle / AI & Editing / Social
+// - Description field
+// - Price + Discount Price
+// - Image filename field
+// - Type: Digital only
+// - Firebase save + website pe dikhega
 // =======================================
 
 import { db } from "../../js/firebase-init.js";
@@ -22,22 +27,19 @@ const cancelBtn     = document.getElementById("cancelProductModal");
 const saveBtn       = document.getElementById("saveProductBtn");
 
 // =======================================
-// OPEN / CLOSE MODAL
+// OPEN MODAL
 // =======================================
 function openModal(data = {}) {
-  document.getElementById("pName").value  = data.name  || "";
-  document.getElementById("pPrice").value = data.price || "";
-  document.getElementById("pType").value  = data.type  || "";
-  document.getElementById("pStock").value = data.stock || "";
-  document.getElementById("pDesc").value  = data.desc  || "";
-  document.getElementById("pImage").value = data.image || "";
+  document.getElementById("pPage").value          = data.page          || "";
+  document.getElementById("pName").value          = data.name          || "";
+  document.getElementById("pDesc").value          = data.desc          || "";
+  document.getElementById("pPrice").value         = data.price         || "";
+  document.getElementById("pDiscountPrice").value = data.discountPrice || "";
+  document.getElementById("pImageName").value     = data.imageName     || "";
+  document.getElementById("pImage").value         = data.image         || "";
 
-  // Store editing ID if editing existing product
-  saveBtn.dataset.editId       = data.id || "";
-  saveBtn.dataset.deliveryLink = data.deliveryLink || "";
-
-  // Change button label
-  saveBtn.textContent = data.id ? "✔ Update Product" : "+ Add Product";
+  saveBtn.dataset.editId = data.id || "";
+  saveBtn.textContent    = data.id ? "✔ Update Product" : "+ Add Product";
 
   modal.classList.add("open");
 }
@@ -45,51 +47,59 @@ function openModal(data = {}) {
 function closeModal() {
   modal.classList.remove("open");
   saveBtn.dataset.editId = "";
+  // Clear all fields
+  ["pPage","pName","pDesc","pPrice","pDiscountPrice","pImageName","pImage"]
+    .forEach(id => { document.getElementById(id).value = ""; });
 }
 
-addBtn.addEventListener("click", () => openModal());
+addBtn.addEventListener("click",   () => openModal());
 closeBtn.addEventListener("click", closeModal);
-cancelBtn.addEventListener("click", closeModal);
+cancelBtn.addEventListener("click",closeModal);
 modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
 
 // =======================================
 // SAVE (ADD or UPDATE)
 // =======================================
 saveBtn.addEventListener("click", async () => {
+  const page          = document.getElementById("pPage").value.trim();
   const name          = document.getElementById("pName").value.trim();
+  const desc          = document.getElementById("pDesc").value.trim();
   const price         = Number(document.getElementById("pPrice").value.trim());
-  const type          = document.getElementById("pType").value.trim();
+  const discountPrice = Number(document.getElementById("pDiscountPrice").value.trim()) || 0;
+  const imageName     = document.getElementById("pImageName").value.trim();
   const image         = document.getElementById("pImage").value.trim();
-  const deliveryLink  = saveBtn.dataset.deliveryLink || "";
   const editId        = saveBtn.dataset.editId;
 
-  if (!name || !price || !type) {
-    alert("Please fill in Name, Price, and Type.");
+  if (!page || !name || !price) {
+    alert("Page, Product Name aur Price zaroori hai.");
     return;
   }
 
   saveBtn.textContent = "Saving...";
-  saveBtn.disabled = true;
+  saveBtn.disabled    = true;
 
   try {
     if (editId) {
-      // UPDATE existing product
       await updateDoc(doc(db, "products", editId), {
-        name, price, type, image
+        page, name, desc, price, discountPrice, imageName, image,
+        type: "Digital"
       });
-      alert("Product updated!");
+      alert("Product updated! ✅");
     } else {
-      // ADD new product
       await addDoc(collection(db, "products"), {
+        page,           // "bundle" | "ai-editing" | "social"
         name,
+        desc,
         price,
-        type,
+        discountPrice,
+        imageName,
         image,
-        deliveryLink,
-        active: true,
+        type:      "Digital",
+        active:    true,
+        sellCount: 0,
         createdAt: serverTimestamp()
       });
-      alert("Product added!");
+      alert("Product added! ✅ Website pe bhi dikhega.");
     }
 
     closeModal();
@@ -98,7 +108,7 @@ saveBtn.addEventListener("click", async () => {
   } catch (err) {
     alert("Error: " + err.message);
   } finally {
-    saveBtn.disabled = false;
+    saveBtn.disabled    = false;
     saveBtn.textContent = "+ Add Product";
   }
 });
@@ -107,17 +117,20 @@ saveBtn.addEventListener("click", async () => {
 // LOAD PRODUCTS
 // =======================================
 async function loadProducts() {
-  productsTable.innerHTML = `<tr><td colspan="5" class="empty-row">Loading...</td></tr>`;
+  if (!productsTable) return;
+  productsTable.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:#64748b;">Loading...</td></tr>`;
 
   try {
     const snapshot = await getDocs(collection(db, "products"));
 
     if (snapshot.empty) {
-      productsTable.innerHTML = `<tr><td colspan="5" class="empty-row">No products found</td></tr>`;
+      productsTable.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:#64748b;">No products found</td></tr>`;
       return;
     }
 
     productsTable.innerHTML = "";
+
+    const pageLabels = { bundle: "📦 Bundle", "ai-editing": "🤖 AI & Editing", social: "📱 Social" };
 
     snapshot.forEach(docSnap => {
       const p  = docSnap.data();
@@ -125,9 +138,20 @@ async function loadProducts() {
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${p.name}</td>
-        <td>${p.price} coins</td>
-        <td><span class="badge pending">${p.type}</span></td>
+        <td>
+          <div style="font-weight:700;color:#0f172a;">${p.name}</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px;">${p.desc ? p.desc.substring(0,50)+"…" : "—"}</div>
+        </td>
+        <td>
+          <div style="font-weight:700;color:#1d4ed8;">₹${p.price}</div>
+          ${p.discountPrice ? `<div style="font-size:11px;color:#10b981;text-decoration:line-through;">₹${p.discountPrice} off</div>` : ""}
+        </td>
+        <td>
+          <span style="background:#eff6ff;color:#1d4ed8;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">
+            ${pageLabels[p.page] || p.page || "—"}
+          </span>
+        </td>
+        <td style="font-size:12px;color:#64748b;">${p.imageName || "—"}</td>
         <td>
           <span class="badge ${p.active ? 'success' : 'cancel'}">
             ${p.active ? "Active" : "Disabled"}
@@ -144,17 +168,16 @@ async function loadProducts() {
             onclick="deleteProduct('${id}')">🗑 Delete</button>
         </td>
       `;
-
       productsTable.appendChild(tr);
     });
 
   } catch (err) {
-    productsTable.innerHTML = `<tr><td colspan="5" class="empty-row">Error loading products: ${err.message}</td></tr>`;
+    productsTable.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:#ef4444;">Error: ${err.message}</td></tr>`;
   }
 }
 
 // =======================================
-// EDIT — Opens modal with existing data
+// EDIT
 // =======================================
 window.editProduct = async (id) => {
   try {
@@ -164,22 +187,23 @@ window.editProduct = async (id) => {
         const p = docSnap.data();
         openModal({
           id,
-          name:         p.name,
-          price:        p.price,
-          type:         p.type,
-          image:        p.image || "",
-          deliveryLink: p.deliveryLink || "",
-          desc:         p.desc || ""
+          page:          p.page          || "",
+          name:          p.name          || "",
+          desc:          p.desc          || "",
+          price:         p.price         || "",
+          discountPrice: p.discountPrice || "",
+          imageName:     p.imageName     || "",
+          image:         p.image         || ""
         });
       }
     });
   } catch (err) {
-    alert("Error loading product: " + err.message);
+    alert("Error: " + err.message);
   }
 };
 
 // =======================================
-// ENABLE / DISABLE
+// TOGGLE ACTIVE
 // =======================================
 window.toggleProduct = async (id, active) => {
   try {
@@ -194,7 +218,7 @@ window.toggleProduct = async (id, active) => {
 // DELETE
 // =======================================
 window.deleteProduct = async (id) => {
-  if (!confirm("Delete this product permanently?")) return;
+  if (!confirm("Is product ko permanently delete karein?")) return;
   try {
     await deleteDoc(doc(db, "products", id));
     loadProducts();
