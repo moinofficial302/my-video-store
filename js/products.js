@@ -1,3 +1,4 @@
+
 // ================================
 // FIREBASE IMPORTS
 // ================================
@@ -494,3 +495,92 @@ function showLowBalancePopup(price, coins){
     }
   });
        }
+
+
+// ===================================================
+// 🔥 FIREBASE DYNAMIC PRODUCTS — Admin se add products
+// Yeh block original code ke saath kaam karta hai
+// Original PRODUCTS object aur buyProduct intact hai
+// ===================================================
+
+// Firebase se dynamic products load karo (cache mein)
+const _fbCache = {};
+let   _fbLoaded = false;
+
+async function _loadFbProducts() {
+  if (_fbLoaded) return;
+  try {
+    const snap = await getDocs(collection(db, "products"));
+    snap.forEach(d => {
+      const p = d.data();
+      if (p.active) {
+        _fbCache[d.id] = {
+          id:    d.id,
+          name:  p.name  || "Product",
+          price: Number(p.price) || 0,
+          link:  p.deliveryLink || p.link || ""
+        };
+      }
+    });
+    _fbLoaded = true;
+  } catch(e) {
+    console.warn("FB products load:", e.message);
+  }
+}
+
+// ✅ Extended buyProduct — Firebase products bhi handle karta hai
+const _origBuy = window.buyProduct;
+window.buyProduct = async function(productId) {
+
+  // Hardcoded product — original function use karo
+  if (PRODUCTS[productId]) {
+    return _origBuy(productId);
+  }
+
+  // Firebase product — load karo aur temporarily PRODUCTS mein add karo
+  await _loadFbProducts();
+  const fp = _fbCache[productId];
+
+  if (!fp) {
+    alert("Product not found. Please refresh and try again.");
+    return;
+  }
+
+  // Temporarily add karo taaki original buyProduct kaam kare
+  PRODUCTS[productId] = fp;
+  try {
+    await _origBuy(productId);
+  } finally {
+    delete PRODUCTS[productId];
+  }
+};
+
+// ✅ Firebase products ka ownership check — page load pe
+onAuthStateChanged(auth, async (user) => {
+  if (!user) return;
+  await _loadFbProducts();
+
+  // Check each Firebase product button on this page
+  for (const [productId, fp] of Object.entries(_fbCache)) {
+    const btn = document.getElementById("buy-" + productId);
+    if (!btn) continue;
+
+    try {
+      const snap = await getDocs(
+        query(
+          collection(db, "orders"),
+          where("uid",       "==", user.uid),
+          where("productId", "==", productId),
+          limit(1)
+        )
+      );
+      if (!snap.empty) {
+        btn.innerText = "Open Product";
+        btn.onclick   = () => window.open(fp.link, "_blank");
+        btn.classList.add("owned");
+      }
+    } catch(e) {
+      console.warn("FB ownership:", e.message);
+    }
+  }
+});
