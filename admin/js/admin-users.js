@@ -41,18 +41,27 @@ async function loadUsers() {
       const d = docSnap.data();
       usersCount++;
 
-      const name      = d.name   || "—";
-      const email     = d.email  || "—";
-      const phone     = d.phone  || d.number || d.mobile || "—";
-      const coins     = d.coins  || 0;
-      const spent     = d.coinsSpent   || d.totalSpent      || 0;
-      const withdrawn = d.withdrawTotal || d.totalWithdrawn  || 0;
+      // ✅ Try all possible field names
+      const name  = d.name || d.displayName || d.username || d.fullName || "—";
 
+      // ✅ Email — Google login users ke paas email hoti hai
+      const email = d.email || d.gmail || "—";
+
+      // ✅ Phone — try all possible field names
+      const phone = d.phone || d.phoneNumber || d.mobile || d.number || d.contact || "—";
+
+      const coins     = Number(d.coins     || 0);
+      const spent     = Number(d.coinsSpent || d.totalSpent || d.spent || 0);
+      const withdrawn = Number(d.withdrawTotal || d.totalWithdrawn || d.withdrawn || 0);
+
+      // ✅ Joined date — createdAt
       const joinedDate = formatDate(d.createdAt);
       const joinedTime = formatTime(d.createdAt);
-      const lastLogin  = d.lastLogin
-        ? formatDate(d.lastLogin) + " · " + formatTime(d.lastLogin)
-        : "—";
+
+      // ✅ Last login
+      const hasLastLogin = d.lastLogin != null;
+      const lastLoginDate = hasLastLogin ? formatDate(d.lastLogin) : "—";
+      const lastLoginTime = hasLastLogin ? formatTime(d.lastLogin) : "";
 
       coinsSum += coins;
 
@@ -61,13 +70,16 @@ async function loadUsers() {
         <td>
           <div style="font-weight:700;color:#0f172a;">${name}</div>
         </td>
-        <td style="color:#374151;">${email}</td>
+        <td style="color:#374151;font-size:13px;">${email}</td>
         <td style="color:#374151;">${phone}</td>
         <td>
           <div style="font-weight:600;font-size:13px;">${joinedDate}</div>
           <div style="font-size:11px;color:#64748b;">${joinedTime}</div>
         </td>
-        <td style="font-size:13px;color:#374151;">${lastLogin}</td>
+        <td>
+          <div style="font-weight:600;font-size:13px;">${lastLoginDate}</div>
+          <div style="font-size:11px;color:#64748b;">${lastLoginTime}</div>
+        </td>
         <td>
           <span style="background:#eff6ff;color:#1d4ed8;padding:4px 10px;border-radius:20px;font-weight:700;font-size:12px;">
             🪙 ${coins}
@@ -102,17 +114,17 @@ async function loadUsers() {
 function formatDate(ts) {
   if (!ts) return "—";
   try {
-    const d = ts.toDate();
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
     return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
   } catch { return "—"; }
 }
 
 function formatTime(ts) {
-  if (!ts) return "—";
+  if (!ts) return "";
   try {
-    const d = ts.toDate();
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
     return d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true });
-  } catch { return "—"; }
+  } catch { return ""; }
 }
 
 // =======================================
