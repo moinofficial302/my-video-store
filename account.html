@@ -42,9 +42,30 @@
   <!-- ================= PROFILE ================= -->
 
   <div class="profile-card profile-flex">
-    <div class="profile-text">
-      <h3 id="userName">AKANS User</h3>
-      <p id="userEmail">user@gmail.com</p>
+
+    <!-- Profile Photo -->
+    <div style="display:flex;align-items:center;gap:12px;flex:1;">
+
+      <div style="position:relative;flex-shrink:0;">
+        <!-- Google photo — JS se set hoga -->
+        <img
+          id="userPhoto"
+          src=""
+          alt="Profile Photo"
+          style="width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid #e2e8f0;display:none;"
+          onerror="this.style.display='none';document.getElementById('avatarInitials').style.display='flex';"
+        >
+        <!-- Fallback initials circle -->
+        <div
+          id="avatarInitials"
+          style="width:54px;height:54px;border-radius:50%;background:#3b82f6;color:#fff;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;"
+        >A</div>
+      </div>
+
+      <div class="profile-text">
+        <h3 id="userName">AKANS User</h3>
+        <p id="userEmail">user@gmail.com</p>
+      </div>
     </div>
 
     <img src="assets/logo.png" class="profile-logo">
@@ -150,6 +171,24 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   document.getElementById("userEmail").innerText = user.email;
+
+  // ✅ Profile Photo — Google login se photo milta hai
+  const photoUrl = user.photoURL;
+  const photoEl    = document.getElementById("userPhoto");
+  const initialsEl = document.getElementById("avatarInitials");
+
+  if (photoUrl) {
+    // Google photo available hai
+    photoEl.src = photoUrl;
+    photoEl.style.display = "block";
+    initialsEl.style.display = "none";
+  } else {
+    // Photo nahi — initials dikhao (email ka pehla letter)
+    const letter = (user.email || "A").charAt(0).toUpperCase();
+    initialsEl.textContent = letter;
+    initialsEl.style.display = "flex";
+    photoEl.style.display = "none";
+  }
 
   const snap = await getDoc(doc(db, "users", user.uid));
 
