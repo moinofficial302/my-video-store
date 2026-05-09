@@ -2,63 +2,194 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Add Money</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="css/common.css">
+  <title>Add Money | AKANS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/add-money.css">
 </head>
 <body>
 
-  <div class="add-money-card">
-    <h1>Add Money</h1>
+<!-- 🔔 TOAST -->
+<div id="toast" class="toast hidden"></div>
 
-    <!-- Payment App -->
-    <label>Payment App</label>
-    <select id="paymentApp">
-      <option value="PhonePe">PhonePe</option>
-      <option value="Paytm">Paytm</option>
-      <option value="Google Pay">Google Pay</option>
-      <option value="Airtel Pay">Airtel Pay</option>
-      <option value="Other">Other</option>
-    </select>
+<!-- 🔝 BRAND HEADER -->
+<div class="brand-card">
+  <div class="brand-left">
+    <span class="online-dot"></span>
+    <span class="active-label">Active</span>
+  </div>
+  <div class="brand-center">
+    <h3>Only M.7 Limited</h3>
+    <span class="verified-badge">✓ Verified Business</span>
+  </div>
+  <div class="brand-right">
+    <img src="assets/logo.png" alt="logo" class="brand-logo-img"/>
+  </div>
+</div>
 
-    <!-- QR -->
-    <div class="qr-wrapper">
-      <div class="qr-box">
-        <img src="assets/upi-qr.png" alt="UPI QR">
-      </div>
-      <div class="qr-text">Scan QR & Pay</div>
+<!-- 🎯 PAGE TITLE -->
+<div class="header-card">
+  <h2>➕ Add Money</h2>
+  <p>Pay via UPI &amp; get instant coins</p>
+</div>
+
+<!-- 💰 COIN BALANCE -->
+<div class="card balance-card">
+  <div class="balance-top">
+    <div>
+      <p class="balance-label">Current Coin Balance</p>
+      <div class="balance-amount" id="coinBalance">—</div>
+      <p class="min-note">🪙 ₹1 = 1 Coin · Min ₹20</p>
     </div>
+    <div class="wallet-icon">🪙</div>
+  </div>
+  <div class="balance-bar-wrap">
+    <div class="balance-bar" id="coinBar" style="width:0%"></div>
+  </div>
+</div>
 
-    <!-- Amount -->
-    <label>Amount (₹)</label>
-    <input type="number" id="amount" placeholder="Enter amount">
+<!-- 💳 FORM CARD -->
+<div class="card form-card">
+  <h3>💳 Payment Details</h3>
 
-    <!-- UTR -->
-    <label>Transaction / UTR ID</label>
-    <input type="text" id="utr" placeholder="Enter transaction id">
-
-    <!-- Instructions -->
-    <div class="instructions">
-      <div><span>1</span>Pay using selected app</div>
-      <div><span>2</span>Copy Transaction / UTR ID</div>
-      <div><span>3</span>Enter amount & UTR</div>
-      <div><span>4</span>Submit request</div>
+  <!-- QR -->
+  <div class="qr-section">
+    <div class="qr-box">
+      <img src="assets/upi-qr.png" alt="UPI QR Code"/>
     </div>
-
-    <!-- Submit -->
-    <button class="submit-btn" id="submitBtn">
-      Submit Request
-    </button>
-
-    <div class="note">
-      Coins will be added after admin verification. So Please After A Submit Waiting 2 To 15 Minutes 
+    <p class="qr-label">📱 Scan &amp; Pay</p>
+    <div class="upi-id-box">
+      <span id="upiIdText">90219582**@XYZ</span>
+      <button class="upi-copy-btn" id="upiCopyBtn">Copy</button>
     </div>
   </div>
 
-    
+  <!-- QUICK PRESETS -->
+  <p class="field-label">Quick Amount</p>
+  <div class="preset-row">
+    <button class="preset-btn" data-amount="25">₹25</button>
+    <button class="preset-btn" data-amount="50">₹50</button>
+    <button class="preset-btn" data-amount="100">₹100</button>
+    <button class="preset-btn" data-amount="200">₹200</button>
+    <button class="preset-btn" data-amount="500">₹500</button>
+  </div>
 
-  <script type="module" src="js/add-money.js"></script>
+  <!-- PAYMENT APP -->
+  <div class="form-group">
+    <label>Payment App</label>
+    <select id="paymentApp">
+      <option value="PhonePe">📱 PhonePe</option>
+      <option value="Google Pay">💚 Google Pay</option>
+      <option value="Paytm">🔵 Paytm</option>
+      <option value="Airtel Pay">🔴 Airtel Pay</option>
+      <option value="Other">💳 Other UPI</option>
+    </select>
+  </div>
+
+  <!-- AMOUNT -->
+  <div class="form-group">
+    <label>Amount (₹)</label>
+    <div class="input-wrap">
+      <span class="input-prefix">₹</span>
+      <input type="number" id="amount" placeholder="Min ₹20" min="20"/>
+    </div>
+  </div>
+
+  <!-- UTR -->
+  <div class="form-group">
+    <label>Transaction / UTR ID</label>
+    <input type="text" id="utr" placeholder="Enter 12-digit UTR number" maxlength="30"/>
+    <p class="field-hint">💡 Find UTR in your UPI app's transaction history</p>
+  </div>
+
+  <!-- STEPS -->
+  <div class="instructions">
+    <div class="instruction-item">
+      <div class="step-num">1</div>
+      <span>Scan QR or copy UPI ID aur pay karo</span>
+    </div>
+    <div class="instruction-item">
+      <div class="step-num">2</div>
+      <span>Payment app mein Transaction / UTR ID copy karo</span>
+    </div>
+    <div class="instruction-item">
+      <div class="step-num">3</div>
+      <span>Amount aur UTR enter karke Submit karo</span>
+    </div>
+    <div class="instruction-item">
+      <div class="step-num">4</div>
+      <span>Admin verify karega — 2–15 min mein coins milenge</span>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <button class="submit-btn" id="submitBtn">
+    <span id="submitBtnText">Submit Request 🚀</span>
+    <span id="submitBtnSpinner" class="spinner hidden"></span>
+  </button>
+
+  <div class="note-box">
+    ⏱️ Coins added after admin verification — usually <strong>2–15 minutes</strong>
+  </div>
+</div>
+
+<!-- 📋 HISTORY -->
+<div class="card" id="historyBox">
+  <div class="history-header">
+    <h3>📋 Request History</h3>
+    <span class="history-count" id="historyCount">—</span>
+  </div>
+  <div id="historyList">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+  </div>
+</div>
+
+<!-- 🛡 TRUST -->
+<div class="card trust">
+  <div class="trust-grid">
+    <div class="trust-item">✅ <span>Safe Payment</span></div>
+    <div class="trust-item">⚡ <span>Fast Approval</span></div>
+    <div class="trust-item">🔒 <span>Secure System</span></div>
+    <div class="trust-item">💬 <span>24/7 Support</span></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
+  <button class="nav-item" onclick="location.href='ai-editing.html'">AI &amp; Editing</button>
+  <button class="nav-item" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item active">Account</button>
+</div>
+
+<script>
+// Preset buttons
+document.querySelectorAll(".preset-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.getElementById("amount").value = btn.dataset.amount;
+    document.querySelectorAll(".preset-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
+
+// UPI ID copy
+document.getElementById("upiCopyBtn").addEventListener("click", async () => {
+  const upi = document.getElementById("upiIdText").textContent;
+  try { await navigator.clipboard.writeText(upi); }
+  catch {
+    const ta = document.createElement("textarea");
+    ta.value = upi; document.body.appendChild(ta);
+    ta.select(); document.execCommand("copy");
+    document.body.removeChild(ta);
+  }
+  const btn = document.getElementById("upiCopyBtn");
+  btn.textContent = "✅ Copied!";
+  setTimeout(() => btn.textContent = "Copy", 2000);
+});
+</script>
+
+<script type="module" src="js/add-money.js"></script>
 </body>
-</html>
+  </html>
