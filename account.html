@@ -5,164 +5,480 @@
   <title>Account | AKANS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- MAIN CSS -->
-  <link rel="stylesheet" href="css/login.css">
   <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/style.css?v=7">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    html, body{
-      width:100%;
-      margin:0;
-      padding:0;
+    :root {
+      --blue:        #3b82f6;
+      --blue-dark:   #1d4ed8;
+      --blue-soft:   #eff6ff;
+      --purple:      #8b5cf6;
+      --purple-dark: #6d28d9;
+      --purple-soft: #f5f3ff;
+      --text:        #0f172a;
+      --muted:       #64748b;
+      --border:      rgba(59,130,246,0.10);
+      --surface:     #f8faff;
+      --white:       #ffffff;
+      --radius-lg:   20px;
+      --radius-md:   14px;
     }
 
-    .account-wrap{
-      width:100%;
-      padding:14px;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
     }
 
-    .profile-card,
-    .wallet-card,
-    .menu-list{
-      width:100%;
+    /* ===== ANIMATIONS ===== */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
+    @keyframes shimmer {
+      0%   { background-position: -300px 0; }
+      100% { background-position:  300px 0; }
+    }
+    @keyframes pulseRing {
+      0%   { box-shadow: 0 0 0 0   rgba(139,92,246,0.40); }
+      70%  { box-shadow: 0 0 0 10px rgba(139,92,246,0);    }
+      100% { box-shadow: 0 0 0 0   rgba(139,92,246,0);     }
+    }
+    @keyframes countPop {
+      from { opacity:0; transform: scale(0.82); }
+      to   { opacity:1; transform: scale(1);    }
+    }
+
+    /* ===== WRAP ===== */
+    .account-wrap {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px 14px 100px;
+    }
+
+    /* ===== SKELETON ===== */
+    .skeleton {
+      background: linear-gradient(90deg,#e2e8f0 25%,#f1f5f9 50%,#e2e8f0 75%);
+      background-size: 300px 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 8px;
+      color: transparent !important;
+      user-select: none;
+    }
+
+    /* ===== PROFILE CARD ===== */
+    .profile-card {
+      background: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
+      border-radius: var(--radius-lg);
+      padding: 20px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 36px rgba(109,40,217,0.28);
+      animation: slideUp 0.45s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      width: 170px; height: 170px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      top: -55px; right: -45px;
+      pointer-events: none;
+    }
+    .profile-card::after {
+      content: '';
+      position: absolute;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      bottom: -28px; left: 24px;
+      pointer-events: none;
+    }
+
+    .profile-left {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    #userPhoto {
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid rgba(255,255,255,0.55);
+      display: none;
+      flex-shrink: 0;
+    }
+
+    #avatarInitials {
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.16);
+      border: 2.5px solid rgba(255,255,255,0.40);
+      color: #fff;
+      font-size: 22px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Sora', sans-serif;
+      flex-shrink: 0;
+      animation: pulseRing 2.8s ease-out infinite;
+    }
+
+    #userName {
+      font-family: 'Sora', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+      line-height: 1.2;
+      min-width: 100px;
+      min-height: 18px;
+    }
+
+    #userEmail {
+      font-size: 12px;
+      color: rgba(255,255,255,0.68);
+      font-weight: 600;
+      min-width: 140px;
+      min-height: 13px;
+    }
+
+    .profile-logo {
+      width: 40px; height: 40px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.13);
+      padding: 5px;
+      position: relative; z-index: 1;
+      flex-shrink: 0;
+    }
+
+    /* ===== WALLET GRID ===== */
+    .wallet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .wallet-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 14px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .wallet-card:nth-child(1) { animation: slideUp 0.5s cubic-bezier(.22,1,.36,1) 0.07s both; }
+    .wallet-card:nth-child(2) { animation: slideUp 0.5s cubic-bezier(.22,1,.36,1) 0.13s both; }
+
+    .wallet-card:active {
+      transform: scale(0.96);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    /* top accent line */
+    .coins-card  { border-top: 3px solid var(--blue); }
+    .refer-card  { border-top: 3px solid var(--purple); }
+
+    .wallet-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.55px;
+      margin-bottom: 8px;
+    }
+    .coins-card  .wallet-label { color: var(--blue); }
+    .refer-card  .wallet-label { color: var(--purple); }
+
+    .wallet-amount {
+      font-family: 'Sora', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+      line-height: 1;
+    }
+
+    .wallet-currency {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .wallet-tap {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 6px;
+      font-weight: 700;
+    }
+
+    .balance-pop { animation: countPop 0.35s cubic-bezier(.22,1,.36,1); }
+
+    /* ===== MENU ===== */
+    .menu-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 10px;
+      animation: slideUp 0.55s cubic-bezier(.22,1,.36,1) 0.18s both;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 14px 18px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(226,232,240,0.55);
+      transition: background 0.13s;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-item:last-child { border-bottom: none; }
+
+    .menu-item:active { background: #f0f7ff; }
+
+    /* tap ripple */
+    .menu-item::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at center, rgba(59,130,246,0.10) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+    }
+    .menu-item:active::after { opacity: 1; }
+
+    .menu-icon {
+      width: 38px; height: 38px;
+      border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .menu-label {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .menu-arrow {
+      font-size: 18px;
+      color: #c3d0e0;
+      font-weight: 600;
+    }
+
+    .ic-blue   { background: #eff6ff; }
+    .ic-purple { background: #f5f3ff; }
+    .ic-green  { background: #f0fdf4; }
+    .ic-yellow { background: #fefce8; }
+    .ic-pink   { background: #fdf4ff; }
+    .ic-indigo { background: #eef2ff; }
+    .ic-cyan   { background: #ecfeff; }
+    .ic-orange { background: #fff7ed; }
+    .ic-gray   { background: #f8fafc; }
+
+    /* ===== LOGOUT ===== */
+    .logout-btn {
+      width: 100%;
+      padding: 15px;
+      border: 1.5px solid #fca5a5;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #fff1f1, #fee2e2);
+      color: #dc2626;
+      font-size: 14px;
+      font-weight: 800;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+      transition: opacity 0.15s, transform 0.15s;
+      animation: slideUp 0.6s cubic-bezier(.22,1,.36,1) 0.24s both;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .logout-btn:active { opacity: 0.82; transform: scale(0.98); }
   </style>
-
-  <!-- Firebase + Auth -->
-  <link rel="stylesheet" href="css/style.css?v=7">
-  <script type="module" src="js/firebase-init.js"></script>
-  <script type="module" src="js/auth.js"></script>
 </head>
 
-
 <body>
-
 <div class="account-wrap">
 
-  <!-- ================= PROFILE ================= -->
-
-  <div class="profile-card profile-flex">
-
-    <!-- Profile Photo -->
-    <div style="display:flex;align-items:center;gap:12px;flex:1;">
-
+  <!-- PROFILE -->
+  <div class="profile-card">
+    <div class="profile-left">
       <div style="position:relative;flex-shrink:0;">
-        <!-- Google photo — JS se set hoga -->
-        <img
-          id="userPhoto"
-          src=""
-          alt="Profile Photo"
-          style="width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid #e2e8f0;display:none;"
-          onerror="this.style.display='none';document.getElementById('avatarInitials').style.display='flex';"
-        >
-        <!-- Fallback initials circle -->
-        <div
-          id="avatarInitials"
-          style="width:54px;height:54px;border-radius:50%;background:#3b82f6;color:#fff;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;"
-        >A</div>
+        <img id="userPhoto" src="" alt="Profile"
+          onerror="this.style.display='none';document.getElementById('avatarInitials').style.display='flex';">
+        <div id="avatarInitials">A</div>
       </div>
-
-      <div class="profile-text">
-        <h3 id="userName">AKANS User</h3>
-        <p id="userEmail">user@gmail.com</p>
+      <div>
+        <h3 id="userName" class="skeleton" style="width:110px;height:18px;border-radius:6px;">‌</h3>
+        <p id="userEmail" class="skeleton" style="width:155px;height:13px;border-radius:5px;margin-top:5px;">‌</p>
       </div>
     </div>
-
-    <img src="assets/logo.png" class="profile-logo">
+    <img src="assets/logo.png" class="profile-logo" alt="AKANS">
   </div>
 
+  <!-- WALLET -->
+  <div class="wallet-grid">
+    <div class="wallet-card coins-card" onclick="goToAddMoney()">
+      <div class="wallet-label">💰 Coins</div>
+      <div class="wallet-amount">
+        <span class="wallet-currency">₹</span>
+        <span id="coinBalance">0</span>
+      </div>
+      <div class="wallet-tap">Tap to add →</div>
+    </div>
+    <div class="wallet-card refer-card" onclick="goToWithdraw()">
+      <div class="wallet-label">🤝 Referral</div>
+      <div class="wallet-amount">
+        <span class="wallet-currency">₹</span>
+        <span id="referralBalance">0</span>
+      </div>
+      <div class="wallet-tap">Tap to withdraw →</div>
+    </div>
+  </div>
 
-
-  <!-- ================= WALLET ================= -->
-
-
-
-<div class="wallet-card" 
-  onclick="goToAddMoney()" 
-  style="cursor:pointer;">
-  
-  <span>💰 Coins</span>
-  <h2 class="amount">
-    <span class="currency">₹</span>
-    <span id="coinBalance">0</span>
-  </h2>
-</div>
-
-  
-<div class="wallet-card" 
-  onclick="goToWithdraw()" 
-  style="cursor:pointer;">
-  
-  <span>🤝 Referral Wallet</span>
-  <h2 class="amount">
-    <span class="currency">₹</span>
-    <span id="referralBalance">0</span>
-  </h2>
-</div>
-
-
-
-  <!-- ================= MENU ================= -->
-
-  <div class="menu-list">
-
+  <!-- MENU -->
+  <div class="menu-card">
     <div class="menu-item" onclick="location.href='add-money.html'">
-      ➕ Add Money
+      <div class="menu-icon ic-blue">➕</div>
+      <span class="menu-label">Add Money</span>
+      <span class="menu-arrow">›</span>
     </div>
-
     <div class="menu-item" onclick="location.href='my-orders.html'">
-      📦 My Orders
+      <div class="menu-icon ic-purple">📦</div>
+      <span class="menu-label">My Orders</span>
+      <span class="menu-arrow">›</span>
     </div>
-
     <div class="menu-item" onclick="location.href='coupon.html'">
-      🎟 Coupon Code
+      <div class="menu-icon ic-yellow">🎟</div>
+      <span class="menu-label">Coupon Code</span>
+      <span class="menu-arrow">›</span>
     </div>
-
     <!-- ✅ ONLY SINGLE REFERRAL PAGE -->
     <div class="menu-item" onclick="location.href='refer.html'">
-      🔗 Refer & Earn
+      <div class="menu-icon ic-green">🔗</div>
+      <span class="menu-label">Refer & Earn</span>
+      <span class="menu-arrow">›</span>
     </div>
-
     <div class="menu-item" onclick="location.href='withdraw.html'">
-      💸 Withdraw Amount
+      <div class="menu-icon ic-indigo">💸</div>
+      <span class="menu-label">Withdraw Amount</span>
+      <span class="menu-arrow">›</span>
     </div>
-
-    
     <div class="menu-item" onclick="location.href='community.html'">
-  👥 Community
+      <div class="menu-icon ic-cyan">👥</div>
+      <span class="menu-label">Community</span>
+      <span class="menu-arrow">›</span>
     </div>
-    
-    <div class="menu-item">⬇ Download App</div>
-
-    
     <div class="menu-item" onclick="location.href='rating.html'">
-    ⭐ Rating 
+      <div class="menu-icon ic-orange">⭐</div>
+      <span class="menu-label">Rating</span>
+      <span class="menu-arrow">›</span>
     </div>
-    
     <div class="menu-item" onclick="location.href='about.html'">
-  ℹ About Information
+      <div class="menu-icon ic-gray">ℹ</div>
+      <span class="menu-label">About Information</span>
+      <span class="menu-arrow">›</span>
     </div>
-    
-
-    <div class="menu-item logout" onclick="logoutUser()">
-      🚪 Logout
+    <div class="menu-item" style="opacity:0.58;">
+      <div class="menu-icon ic-gray">⬇</div>
+      <span class="menu-label">Download App</span>
+      <span style="font-size:10px;background:#e0e7ff;color:#4338ca;padding:2px 9px;border-radius:20px;font-weight:800;">Soon</span>
     </div>
-
   </div>
+
+  <!-- LOGOUT -->
+  <button class="logout-btn" onclick="logoutUser()">🚪 Logout</button>
 
 </div>
 
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
+  <button class="nav-item" onclick="location.href='ai-editing.html'">AI & Editing</button>
+  <button class="nav-item" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item active" onclick="location.href='account.html'">Account</button>
+</div>
 
-
-<!-- ================= USER INFO LOAD ================= -->
-
+<!-- USER INFO + ALL SCRIPTS -->
 <script type="module">
 import { auth, db } from "./js/firebase-init.js";
-import { onAuthStateChanged }
+import { onAuthStateChanged, signOut }
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { doc, getDoc }
+import { doc, getDoc, updateDoc, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+// ✅ BUG FIX 1: logoutUser global
+window.logoutUser = async () => {
+  try { await signOut(auth); window.location.href = "login.html"; }
+  catch(e) { alert(e.message); }
+};
+
+// ✅ BUG FIX 2: goToAddMoney & goToWithdraw consolidated here
+window.goToAddMoney = () => { window.location.href = "add-money.html"; };
+window.goToWithdraw = () => { window.location.href = "withdraw.html"; };
+
+// Animated number counter
+function animateCount(el, target) {
+  const dur  = 700;
+  const t0   = performance.now();
+  function step(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * e);
+    if (p < 1) requestAnimationFrame(step);
+    else {
+      el.textContent = target;
+      el.classList.add("balance-pop");
+      setTimeout(() => el.classList.remove("balance-pop"), 350);
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+// Remove skeleton shimmer
+function clearSkeleton(el) {
+  el.classList.remove("skeleton");
+  el.style.cssText = "";
+}
+
+// ✅ BUG FIX 3: Single onAuthStateChanged
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
@@ -170,110 +486,70 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
-  document.getElementById("userEmail").innerText = user.email;
-
-  // ✅ Profile Photo — Google login se photo milta hai
-  const photoUrl = user.photoURL;
+  // Profile photo
   const photoEl    = document.getElementById("userPhoto");
   const initialsEl = document.getElementById("avatarInitials");
 
-  if (photoUrl) {
-    // Google photo available hai
-    photoEl.src = photoUrl;
-    photoEl.style.display = "block";
+  if (user.photoURL) {
+    photoEl.src            = user.photoURL;
+    photoEl.style.display  = "block";
     initialsEl.style.display = "none";
   } else {
-    // Photo nahi — initials dikhao (email ka pehla letter)
     const letter = (user.email || "A").charAt(0).toUpperCase();
-    initialsEl.textContent = letter;
+    initialsEl.textContent   = letter;
     initialsEl.style.display = "flex";
-    photoEl.style.display = "none";
+    photoEl.style.display    = "none";
   }
 
-  const snap = await getDoc(doc(db, "users", user.uid));
+  // Email
+  const emailEl = document.getElementById("userEmail");
+  clearSkeleton(emailEl);
+  emailEl.textContent = user.email;
 
-  if (!snap.exists()) return;
+  // Firestore
+  try {
+    const snap = await getDoc(doc(db, "users", user.uid));
+    const nameEl = document.getElementById("userName");
+    clearSkeleton(nameEl);
 
-  const data = snap.data();
+    if (!snap.exists()) {
+      nameEl.textContent = user.displayName || "AKANS User";
+      return;
+    }
 
-  document.getElementById("userName").innerText =
-    data.username || user.displayName || "AKANS User";
+    const data = snap.data();
+    nameEl.textContent = data.username || data.name || user.displayName || "AKANS User";
 
-  document.getElementById("coinBalance").innerText =
-    data.coins || 0;
+    animateCount(document.getElementById("coinBalance"),     Number(data.coins || 0));
+    animateCount(document.getElementById("referralBalance"), Number(data.referralBalance || data.referralWallet || data.referralCoins || 0));
 
-  document.getElementById("referralBalance").innerText =
-  data.referralBalance ||
-  data.referralWallet ||
-  data.referralCoins ||
-  0;
-  
+    // ✅ BUG FIX 4: lastLogin save
+    try {
+      await updateDoc(doc(db, "users", user.uid), { lastLogin: serverTimestamp() });
+    } catch(e) { console.warn("lastLogin:", e.message); }
+
+  } catch(err) {
+    console.error(err);
+    const nameEl = document.getElementById("userName");
+    clearSkeleton(nameEl);
+    nameEl.textContent = user.displayName || "AKANS User";
+  }
 });
 </script>
 
-
-
-<!-- ================= BOTTOM NAV ================= -->
-
-<div class="bottom-nav">
-
-  <button class="nav-item" onclick="location.href='index.html'">
-    Bundle
-  </button>
-
-  <button class="nav-item" onclick="location.href='ai-editing.html'">
-    AI & Editing
-  </button>
-
-  <button class="nav-item" onclick="location.href='social.html'">
-    Social
-  </button>
-
-  <button class="nav-item active" onclick="location.href='account.html'">
-    Account
-  </button>
-
-</div>
-
-
-
-<!-- NAV ACTIVE + HIDE -->
-
+<!-- NAV HIDE ON SCROLL -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-
-  const current = window.location.pathname.split("/").pop();
-
-  document.querySelectorAll(".nav-item").forEach(btn=>{
-    if(btn.textContent.toLowerCase().includes(current?.replace(".html","")))
-      btn.classList.add("active");
-  });
-
-  let lastScroll = 0;
+  let lastY = 0;
   const nav = document.querySelector(".bottom-nav");
-
   window.addEventListener("scroll", () => {
     const y = window.pageYOffset;
-
-    if(y > lastScroll && y > 80) nav.classList.add("hide");
+    if (y > lastY && y > 80) nav.classList.add("hide");
     else nav.classList.remove("hide");
-
-    lastScroll = y;
+    lastY = y;
   });
 });
 </script>
 
-  <script>
-function goToAddMoney() {
-  window.location.href = "add-money.html";
-}
-  </script>
-  
-  <script>
-function goToWithdraw() {
-  window.location.href = "withdraw.html";
-}
-  </script>
-  
 </body>
 </html>
