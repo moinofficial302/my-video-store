@@ -1,5 +1,5 @@
 /* =====================================================
-   💰 ADD MONEY SYSTEM — UPGRADED (ALL BUGS FIXED)
+   💰 ADD MONEY — UPGRADED + UPI DEEP LINKS
    ✔ Toast replaces all alert()
    ✔ Auth check on page load
    ✔ Duplicate UTR check
@@ -7,7 +7,7 @@
    ✔ Loading spinner
    ✔ History section
    ✔ Coin balance display
-   ✔ Coupon system removed (separate page hai)
+   ✔ amountConfirm synced with amount field
 ===================================================== */
 
 import { auth, db } from "./firebase-init.js";
@@ -24,12 +24,11 @@ import {
   where,
   getDocs,
   getDoc,
-  doc,
-  orderBy
+  doc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 /* =========================
-   🔔 TOAST — alert() replace
+   🔔 TOAST
 ========================= */
 function showToast(msg, type = "info", duration = 3200) {
   const toast = document.getElementById("toast");
@@ -52,9 +51,9 @@ function setLoading(loading) {
   const btn     = document.getElementById("submitBtn");
   const spinner = document.getElementById("submitBtnSpinner");
   const text    = document.getElementById("submitBtnText");
-  btn.disabled         = loading;
+  btn.disabled       = loading;
   spinner.classList.toggle("hidden", !loading);
-  text.textContent     = loading ? "Submitting..." : "Submit Request 🚀";
+  text.textContent   = loading ? "Submitting..." : "Submit Request 🚀";
 }
 
 /* =========================
@@ -102,7 +101,6 @@ async function loadHistory(uid) {
       return;
     }
 
-    // Sort newest first
     const items = [];
     snap.forEach(d => {
       const data = d.data();
@@ -153,8 +151,7 @@ async function loadHistory(uid) {
 }
 
 /* =========================
-   🔒 AUTH CHECK — BUG FIX
-   Page load pe check hota hai
+   🔒 AUTH CHECK
 ========================= */
 onAuthStateChanged(auth, user => {
   if (!user) {
@@ -167,9 +164,6 @@ onAuthStateChanged(auth, user => {
 
 /* =========================
    🚀 SUBMIT REQUEST
-   BUG FIX: duplicate UTR check
-   BUG FIX: amount validation
-   BUG FIX: alert() → toast
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -185,7 +179,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const amountVal = document.getElementById("amount").value;
+    // Read from amountConfirm (synced from amount field)
+    const amountVal = document.getElementById("amountConfirm").value
+                   || document.getElementById("amount").value;
     const utrVal    = document.getElementById("utr").value.trim();
     const appVal    = document.getElementById("paymentApp").value;
     const amount    = Number(amountVal);
@@ -194,8 +190,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!amountVal || isNaN(amount) || amount <= 0) {
       showToast("Please enter a valid amount 💰", "warn"); return;
     }
-    if (amount < 20) {
-      showToast("Minimum amount is ₹20 ⚡", "warn"); return;
+    if (amount < 25) {
+      showToast("Minimum amount is ₹25 ⚡", "warn"); return;
     }
     if (!utrVal || utrVal.length < 6) {
       showToast("Please enter a valid UTR/Transaction ID 🔢", "warn"); return;
@@ -204,8 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setLoading(true);
 
     try {
-
-      // 🔒 BUG FIX: Duplicate UTR check
+      // Duplicate UTR check
       const dupSnap = await getDocs(query(
         collection(db, "add_money_requests"),
         where("utr", "==", utrVal)
@@ -217,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // ✅ Save request
+      // Save request
       await addDoc(collection(db, "add_money_requests"), {
         uid:        user.uid,
         name:       user.displayName || "User",
@@ -231,15 +226,17 @@ document.addEventListener("DOMContentLoaded", () => {
         rejectedReason: null
       });
 
-      showToast(`Request of ₹${amount} submitted! ⏳ Wait 2–15 min`, "success", 4000);
+      showToast(`₹${amount} request submitted! ⏳ Wait 2–15 min`, "success", 4000);
 
       // Reset form
-      document.getElementById("amount").value = "";
-      document.getElementById("utr").value    = "";
+      document.getElementById("amount").value        = "";
+      document.getElementById("amountConfirm").value = "";
+      document.getElementById("utr").value           = "";
       document.querySelectorAll(".preset-btn").forEach(b => b.classList.remove("active"));
+      document.getElementById("amountPreview")?.classList.add("hidden");
 
-      // Reload history
       await loadHistory(user.uid);
+      await loadCoinBalance(user.uid);
 
     } catch (err) {
       console.error("Submit error:", err);
