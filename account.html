@@ -5,339 +5,18 @@
   <title>Account | AKANS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Original CSS files — intact -->
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/style.css?v=7">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --blue:        #3b82f6;
-      --blue-dark:   #1d4ed8;
-      --blue-soft:   #eff6ff;
-      --purple:      #8b5cf6;
-      --purple-dark: #6d28d9;
-      --purple-soft: #f5f3ff;
-      --text:        #0f172a;
-      --muted:       #64748b;
-      --border:      rgba(59,130,246,0.10);
-      --surface:     #f8faff;
-      --white:       #ffffff;
-      --radius-lg:   20px;
-      --radius-md:   14px;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-      width: 100%;
-      background: var(--surface);
-      color: var(--text);
-      font-family: 'Nunito', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-    }
-
-    /* ===== ANIMATIONS ===== */
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes shimmer {
-      0%   { background-position: -300px 0; }
-      100% { background-position:  300px 0; }
-    }
-    @keyframes pulseRing {
-      0%   { box-shadow: 0 0 0 0   rgba(139,92,246,0.40); }
-      70%  { box-shadow: 0 0 0 10px rgba(139,92,246,0);    }
-      100% { box-shadow: 0 0 0 0   rgba(139,92,246,0);     }
-    }
-    @keyframes countPop {
-      from { opacity:0; transform: scale(0.82); }
-      to   { opacity:1; transform: scale(1);    }
-    }
-
-    /* ===== WRAP ===== */
-    .account-wrap {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 16px 14px 100px;
-    }
-
-    /* ===== SKELETON ===== */
-    .skeleton {
-      background: linear-gradient(90deg,#e2e8f0 25%,#f1f5f9 50%,#e2e8f0 75%);
-      background-size: 300px 100%;
-      animation: shimmer 1.4s infinite;
-      border-radius: 8px;
-      color: transparent !important;
-      user-select: none;
-    }
-
-    /* ===== PROFILE CARD ===== */
-    .profile-card {
-      background: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
-      border-radius: var(--radius-lg);
-      padding: 20px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 10px 36px rgba(109,40,217,0.28);
-      animation: slideUp 0.45s cubic-bezier(.22,1,.36,1) both;
-    }
-
-    .profile-card::before {
-      content: '';
-      position: absolute;
-      width: 170px; height: 170px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-      top: -55px; right: -45px;
-      pointer-events: none;
-    }
-    .profile-card::after {
-      content: '';
-      position: absolute;
-      width: 90px; height: 90px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
-      bottom: -28px; left: 24px;
-      pointer-events: none;
-    }
-
-    .profile-left {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      flex: 1;
-      position: relative;
-      z-index: 1;
-    }
-
-    #userPhoto {
-      width: 58px; height: 58px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2.5px solid rgba(255,255,255,0.55);
-      display: none;
-      flex-shrink: 0;
-    }
-
-    #avatarInitials {
-      width: 58px; height: 58px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.16);
-      border: 2.5px solid rgba(255,255,255,0.40);
-      color: #fff;
-      font-size: 22px;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Sora', sans-serif;
-      flex-shrink: 0;
-      animation: pulseRing 2.8s ease-out infinite;
-    }
-
-    #userName {
-      font-family: 'Sora', sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 4px;
-      line-height: 1.2;
-      min-width: 100px;
-      min-height: 18px;
-    }
-
-    #userEmail {
-      font-size: 12px;
-      color: rgba(255,255,255,0.68);
-      font-weight: 600;
-      min-width: 140px;
-      min-height: 13px;
-    }
-
-    .profile-logo {
-      width: 40px; height: 40px;
-      object-fit: contain;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.13);
-      padding: 5px;
-      position: relative; z-index: 1;
-      flex-shrink: 0;
-    }
-
-    /* ===== WALLET GRID ===== */
-    .wallet-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .wallet-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 16px 14px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .wallet-card:nth-child(1) { animation: slideUp 0.5s cubic-bezier(.22,1,.36,1) 0.07s both; }
-    .wallet-card:nth-child(2) { animation: slideUp 0.5s cubic-bezier(.22,1,.36,1) 0.13s both; }
-
-    .wallet-card:active {
-      transform: scale(0.96);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-
-    /* top accent line */
-    .coins-card  { border-top: 3px solid var(--blue); }
-    .refer-card  { border-top: 3px solid var(--purple); }
-
-    .wallet-label {
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.55px;
-      margin-bottom: 8px;
-    }
-    .coins-card  .wallet-label { color: var(--blue); }
-    .refer-card  .wallet-label { color: var(--purple); }
-
-    .wallet-amount {
-      font-family: 'Sora', sans-serif;
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--text);
-      display: flex;
-      align-items: baseline;
-      gap: 2px;
-      line-height: 1;
-    }
-
-    .wallet-currency {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--muted);
-    }
-
-    .wallet-tap {
-      font-size: 10px;
-      color: var(--muted);
-      margin-top: 6px;
-      font-weight: 700;
-    }
-
-    .balance-pop { animation: countPop 0.35s cubic-bezier(.22,1,.36,1); }
-
-    /* ===== MENU ===== */
-    .menu-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: 10px;
-      animation: slideUp 0.55s cubic-bezier(.22,1,.36,1) 0.18s both;
-    }
-
-    .menu-item {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 14px 18px;
-      cursor: pointer;
-      border-bottom: 1px solid rgba(226,232,240,0.55);
-      transition: background 0.13s;
-      -webkit-tap-highlight-color: transparent;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .menu-item:last-child { border-bottom: none; }
-
-    .menu-item:active { background: #f0f7ff; }
-
-    /* tap ripple */
-    .menu-item::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(circle at center, rgba(59,130,246,0.10) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.25s;
-      pointer-events: none;
-    }
-    .menu-item:active::after { opacity: 1; }
-
-    .menu-icon {
-      width: 38px; height: 38px;
-      border-radius: 11px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .menu-label {
-      flex: 1;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .menu-arrow {
-      font-size: 18px;
-      color: #c3d0e0;
-      font-weight: 600;
-    }
-
-    .ic-blue   { background: #eff6ff; }
-    .ic-purple { background: #f5f3ff; }
-    .ic-green  { background: #f0fdf4; }
-    .ic-yellow { background: #fefce8; }
-    .ic-pink   { background: #fdf4ff; }
-    .ic-indigo { background: #eef2ff; }
-    .ic-cyan   { background: #ecfeff; }
-    .ic-orange { background: #fff7ed; }
-    .ic-gray   { background: #f8fafc; }
-
-    /* ===== LOGOUT ===== */
-    .logout-btn {
-      width: 100%;
-      padding: 15px;
-      border: 1.5px solid #fca5a5;
-      border-radius: var(--radius-md);
-      background: linear-gradient(135deg, #fff1f1, #fee2e2);
-      color: #dc2626;
-      font-size: 14px;
-      font-weight: 800;
-      font-family: 'Nunito', sans-serif;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 10px;
-      transition: opacity 0.15s, transform 0.15s;
-      animation: slideUp 0.6s cubic-bezier(.22,1,.36,1) 0.24s both;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .logout-btn:active { opacity: 0.82; transform: scale(0.98); }
-  </style>
+  <!-- Account page CSS (separate file) -->
+  <link rel="stylesheet" href="css/account.css">
 </head>
 
 <body>
 <div class="account-wrap">
 
-  <!-- PROFILE -->
+  <!-- ================= PROFILE ================= -->
   <div class="profile-card">
     <div class="profile-left">
       <div style="position:relative;flex-shrink:0;">
@@ -345,17 +24,18 @@
           onerror="this.style.display='none';document.getElementById('avatarInitials').style.display='flex';">
         <div id="avatarInitials">A</div>
       </div>
-      <div>
-        <h3 id="userName" class="skeleton" style="width:110px;height:18px;border-radius:6px;">‌</h3>
-        <p id="userEmail" class="skeleton" style="width:155px;height:13px;border-radius:5px;margin-top:5px;">‌</p>
+      <div class="profile-info">
+        <h3 id="userName" class="skeleton" style="width:115px;height:19px;border-radius:7px;display:block;">‌</h3>
+        <p  id="userEmail" class="skeleton" style="width:158px;height:13px;border-radius:5px;margin-top:6px;display:block;">‌</p>
       </div>
     </div>
     <img src="assets/logo.png" class="profile-logo" alt="AKANS">
   </div>
 
-  <!-- WALLET -->
+  <!-- ================= WALLET ================= -->
   <div class="wallet-grid">
-    <div class="wallet-card coins-card" onclick="goToAddMoney()">
+
+    <div class="wallet-card coins-card" onclick="tap(this); goTo('add-money.html')">
       <div class="wallet-label">💰 Coins</div>
       <div class="wallet-amount">
         <span class="wallet-currency">₹</span>
@@ -363,7 +43,8 @@
       </div>
       <div class="wallet-tap">Tap to add →</div>
     </div>
-    <div class="wallet-card refer-card" onclick="goToWithdraw()">
+
+    <div class="wallet-card refer-card" onclick="tap(this); goTo('withdraw.html')">
       <div class="wallet-label">🤝 Referral</div>
       <div class="wallet-amount">
         <span class="wallet-currency">₹</span>
@@ -371,64 +52,107 @@
       </div>
       <div class="wallet-tap">Tap to withdraw →</div>
     </div>
+
   </div>
 
-  <!-- MENU -->
+  <!-- ================= MENU ================= -->
+  <p class="menu-section-label">My Account</p>
+
   <div class="menu-card">
-    <div class="menu-item" onclick="location.href='add-money.html'">
+
+    <div class="menu-item" onclick="menuTap(this); goTo('add-money.html')">
       <div class="menu-icon ic-blue">➕</div>
-      <span class="menu-label">Add Money</span>
+      <div class="menu-text">
+        <div class="menu-label">Add Money</div>
+        <div class="menu-sub">Recharge your coin wallet</div>
+      </div>
       <span class="menu-arrow">›</span>
     </div>
-    <div class="menu-item" onclick="location.href='my-orders.html'">
+
+    <div class="menu-item" onclick="menuTap(this); goTo('my-orders.html')">
       <div class="menu-icon ic-purple">📦</div>
-      <span class="menu-label">My Orders</span>
+      <div class="menu-text">
+        <div class="menu-label">My Orders</div>
+        <div class="menu-sub">View purchased products</div>
+      </div>
       <span class="menu-arrow">›</span>
     </div>
-    <div class="menu-item" onclick="location.href='coupon.html'">
+
+    <div class="menu-item" onclick="menuTap(this); goTo('coupon.html')">
       <div class="menu-icon ic-yellow">🎟</div>
-      <span class="menu-label">Coupon Code</span>
+      <div class="menu-text">
+        <div class="menu-label">Coupon Code</div>
+        <div class="menu-sub">Apply discount coupons</div>
+      </div>
       <span class="menu-arrow">›</span>
     </div>
+
     <!-- ✅ ONLY SINGLE REFERRAL PAGE -->
-    <div class="menu-item" onclick="location.href='refer.html'">
+    <div class="menu-item" onclick="menuTap(this); goTo('refer.html')">
       <div class="menu-icon ic-green">🔗</div>
-      <span class="menu-label">Refer & Earn</span>
+      <div class="menu-text">
+        <div class="menu-label">Refer & Earn</div>
+        <div class="menu-sub">Invite friends, earn rewards</div>
+      </div>
+      <span class="menu-badge badge-new">HOT</span>
       <span class="menu-arrow">›</span>
     </div>
-    <div class="menu-item" onclick="location.href='withdraw.html'">
+
+    <div class="menu-item" onclick="menuTap(this); goTo('withdraw.html')">
       <div class="menu-icon ic-indigo">💸</div>
-      <span class="menu-label">Withdraw Amount</span>
+      <div class="menu-text">
+        <div class="menu-label">Withdraw Amount</div>
+        <div class="menu-sub">Transfer referral earnings</div>
+      </div>
       <span class="menu-arrow">›</span>
     </div>
-    <div class="menu-item" onclick="location.href='community.html'">
+
+    <div class="menu-item" onclick="menuTap(this); goTo('community.html')">
       <div class="menu-icon ic-cyan">👥</div>
-      <span class="menu-label">Community</span>
+      <div class="menu-text">
+        <div class="menu-label">Community</div>
+        <div class="menu-sub">Join our members group</div>
+      </div>
       <span class="menu-arrow">›</span>
     </div>
-    <div class="menu-item" onclick="location.href='rating.html'">
+
+    <div class="menu-item" onclick="menuTap(this); goTo('rating.html')">
       <div class="menu-icon ic-orange">⭐</div>
-      <span class="menu-label">Rating</span>
+      <div class="menu-text">
+        <div class="menu-label">Rating</div>
+        <div class="menu-sub">Rate your experience</div>
+      </div>
       <span class="menu-arrow">›</span>
     </div>
-    <div class="menu-item" onclick="location.href='about.html'">
+
+    <div class="menu-item" onclick="menuTap(this); goTo('about.html')">
       <div class="menu-icon ic-gray">ℹ</div>
-      <span class="menu-label">About Information</span>
+      <div class="menu-text">
+        <div class="menu-label">About Information</div>
+        <div class="menu-sub">App details & policies</div>
+      </div>
       <span class="menu-arrow">›</span>
     </div>
-    <div class="menu-item" style="opacity:0.58;">
+
+    <div class="menu-item" style="opacity:0.6;" onclick="menuTap(this)">
       <div class="menu-icon ic-gray">⬇</div>
-      <span class="menu-label">Download App</span>
-      <span style="font-size:10px;background:#e0e7ff;color:#4338ca;padding:2px 9px;border-radius:20px;font-weight:800;">Soon</span>
+      <div class="menu-text">
+        <div class="menu-label">Download App</div>
+        <div class="menu-sub">Native app coming soon</div>
+      </div>
+      <span class="menu-badge badge-soon">Soon</span>
     </div>
+
   </div>
 
-  <!-- LOGOUT -->
-  <button class="logout-btn" onclick="logoutUser()">🚪 Logout</button>
+  <!-- ================= LOGOUT ================= -->
+  <button class="logout-btn" onclick="handleLogout(this)">
+    🚪 Logout
+  </button>
 
 </div>
 
-<!-- BOTTOM NAV -->
+<!-- ================= BOTTOM NAV ================= -->
 <div class="bottom-nav">
   <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
   <button class="nav-item" onclick="location.href='ai-editing.html'">AI & Editing</button>
@@ -436,7 +160,8 @@
   <button class="nav-item active" onclick="location.href='account.html'">Account</button>
 </div>
 
-<!-- USER INFO + ALL SCRIPTS -->
+
+<!-- ================= FIREBASE — USER DATA ================= -->
 <script type="module">
 import { auth, db } from "./js/firebase-init.js";
 import { onAuthStateChanged, signOut }
@@ -444,21 +169,19 @@ import { onAuthStateChanged, signOut }
 import { doc, getDoc, updateDoc, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// ✅ BUG FIX 1: logoutUser global
+// ✅ Global functions
+window.goTo = (url) => { window.location.href = url; };
+
 window.logoutUser = async () => {
   try { await signOut(auth); window.location.href = "login.html"; }
   catch(e) { alert(e.message); }
 };
 
-// ✅ BUG FIX 2: goToAddMoney & goToWithdraw consolidated here
-window.goToAddMoney = () => { window.location.href = "add-money.html"; };
-window.goToWithdraw = () => { window.location.href = "withdraw.html"; };
-
-// Animated number counter
+// Animated coin counter
 function animateCount(el, target) {
-  const dur  = 700;
-  const t0   = performance.now();
-  function step(now) {
+  const dur = 750;
+  const t0  = performance.now();
+  (function step(now) {
     const p = Math.min((now - t0) / dur, 1);
     const e = 1 - Math.pow(1 - p, 3);
     el.textContent = Math.round(target * e);
@@ -466,25 +189,20 @@ function animateCount(el, target) {
     else {
       el.textContent = target;
       el.classList.add("balance-pop");
-      setTimeout(() => el.classList.remove("balance-pop"), 350);
+      setTimeout(() => el.classList.remove("balance-pop"), 450);
     }
-  }
-  requestAnimationFrame(step);
+  })(t0);
 }
 
-// Remove skeleton shimmer
+// Remove skeleton
 function clearSkeleton(el) {
   el.classList.remove("skeleton");
-  el.style.cssText = "";
+  el.removeAttribute("style");
 }
 
-// ✅ BUG FIX 3: Single onAuthStateChanged
+// ✅ BUG FIX: single auth listener
 onAuthStateChanged(auth, async (user) => {
-
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
+  if (!user) { window.location.href = "login.html"; return; }
 
   // Profile photo
   const photoEl    = document.getElementById("userPhoto");
@@ -495,10 +213,8 @@ onAuthStateChanged(auth, async (user) => {
     photoEl.style.display  = "block";
     initialsEl.style.display = "none";
   } else {
-    const letter = (user.email || "A").charAt(0).toUpperCase();
-    initialsEl.textContent   = letter;
+    initialsEl.textContent   = (user.email || "A").charAt(0).toUpperCase();
     initialsEl.style.display = "flex";
-    photoEl.style.display    = "none";
   }
 
   // Email
@@ -523,7 +239,7 @@ onAuthStateChanged(auth, async (user) => {
     animateCount(document.getElementById("coinBalance"),     Number(data.coins || 0));
     animateCount(document.getElementById("referralBalance"), Number(data.referralBalance || data.referralWallet || data.referralCoins || 0));
 
-    // ✅ BUG FIX 4: lastLogin save
+    // ✅ BUG FIX: save lastLogin
     try {
       await updateDoc(doc(db, "users", user.uid), { lastLogin: serverTimestamp() });
     } catch(e) { console.warn("lastLogin:", e.message); }
@@ -537,9 +253,92 @@ onAuthStateChanged(auth, async (user) => {
 });
 </script>
 
-<!-- NAV HIDE ON SCROLL -->
+
+<!-- ================= INTERACTIONS: Vibration + Sound + Ripple ================= -->
 <script>
+// ── Vibration + Click Sound ──────────────────────────────
+const _ctx = window.AudioContext || window.webkitAudioContext;
+let _ac = null;
+
+function playClick() {
+  try {
+    if (!_ac) _ac = new _ctx();
+    const osc  = _ac.createOscillator();
+    const gain = _ac.createGain();
+    osc.connect(gain);
+    gain.connect(_ac.destination);
+    osc.type            = "sine";
+    osc.frequency.value = 520;
+    gain.gain.setValueAtTime(0.08, _ac.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, _ac.currentTime + 0.09);
+    osc.start();
+    osc.stop(_ac.currentTime + 0.09);
+  } catch(e) {}
+}
+
+function vibrate(ms) {
+  if (navigator.vibrate) navigator.vibrate(ms);
+}
+
+// ── Ripple helper ───────────────────────────────────────
+function createRipple(el, e, cls) {
+  const rect = el.getBoundingClientRect();
+  const x    = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+  const y    = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+  const r    = document.createElement("span");
+  r.className = cls;
+  r.style.left = (x - 5) + "px";
+  r.style.top  = (y - 5) + "px";
+  el.appendChild(r);
+  setTimeout(() => r.remove(), 650);
+}
+
+// ── Menu item tap ────────────────────────────────────────
+window.menuTap = function(el, e) {
+  vibrate(18);
+  playClick();
+  const ev = e || window.event;
+  if (ev) createRipple(el, ev, "m-ripple");
+};
+
+// ── Wallet card tap ──────────────────────────────────────
+window.tap = function(el, e) {
+  vibrate(22);
+  playClick();
+  const ev = e || window.event;
+  if (ev) createRipple(el, ev, "w-ripple");
+};
+
+// ── Logout ───────────────────────────────────────────────
+window.handleLogout = function(btn) {
+  vibrate([30, 30, 60]);
+  playClick();
+  btn.classList.add("shake");
+  setTimeout(() => {
+    btn.classList.remove("shake");
+    if (window.logoutUser) window.logoutUser();
+  }, 450);
+};
+
+// ── goToAddMoney / goToWithdraw (backward compat) ────────
+window.goToAddMoney = () => { vibrate(18); playClick(); goTo("add-money.html"); };
+window.goToWithdraw = () => { vibrate(18); playClick(); goTo("withdraw.html"); };
+
+// ── Attach ripple to touchstart on menu items ────────────
 document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".menu-item").forEach(item => {
+    item.addEventListener("touchstart", function(e) {
+      createRipple(this, e, "m-ripple");
+    }, { passive: true });
+  });
+
+  document.querySelectorAll(".wallet-card").forEach(card => {
+    card.addEventListener("touchstart", function(e) {
+      createRipple(this, e, "w-ripple");
+    }, { passive: true });
+  });
+
+  // Nav scroll hide
   let lastY = 0;
   const nav = document.querySelector(".bottom-nav");
   window.addEventListener("scroll", () => {
@@ -547,9 +346,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (y > lastY && y > 80) nav.classList.add("hide");
     else nav.classList.remove("hide");
     lastY = y;
-  });
+  }, { passive: true });
 });
 </script>
 
 </body>
-</html>
+  </html>
