@@ -1,345 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI & Editing | Akans</title>
-
+  <title>AI &amp; Editing | AKANS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/style.css">
-
-  <style>
-    .ai-wrapper{
-      padding:16px;
-      padding-bottom:90px;
-    }
-
-    .ai-card{
-  max-width:420px;
-  margin:20px auto;
-
-  /* ⭐ frame effect */
-  background:#ffffff;
-  padding:14px;
-
-  border-radius:26px;
-
-  box-shadow:0 12px 30px rgba(0,0,0,.15);
-    }
-
-    .ai-image{
-  width:100%;
-  display:block;
-  border-radius:18px;
-    }
-
-    .ai-content{
-      padding:16px;
-      text-align:center;
-    }
-
-    .price{
-      margin:10px 0;
-    }
-
-    .price del{
-      color:#ff6b6b;
-      margin-right:6px;
-    }
-
-    .details-btn{
-      width:100%;
-      padding:12px;
-      border-radius:30px;
-      border:2px solid #3b82f6;
-      background:transparent;
-      color:#3b82f6;
-      font-weight:600;
-      margin-top:10px;
-      cursor:pointer;
-    }
-
-    .buy-btn{
-      width:100%;
-      padding:14px;
-      margin-top:10px;
-      border-radius:30px;
-      background:#ffd400;
-      border:none;
-      font-weight:700;
-      font-size:16px;
-      cursor:pointer;
-    }
-
-    .owned{
-      background:#22c55e !important;
-      color:#fff !important;
-    }
-
-    .details-box{
-      display:none;
-      margin-top:10px;
-      font-size:14px;
-    }
-  </style>
-
+  <link rel="stylesheet" href="css/ai-editing.css">
 </head>
 
-<body onload="requireLogin()">
+<!-- ✅ Login requirement REMOVED — body onload="requireLogin()" deleted -->
+<body>
 
-<!-- HEADER -->
-<div class="header-box">
-  <span>Only M.7 Limited</span>
-  <img src="assets/logo.png">
+<!-- 🔝 BRAND HEADER -->
+<div class="brand-card">
+  <div class="brand-left">
+    <span class="online-dot"></span>
+    <span class="active-label">Active</span>
+  </div>
+  <div class="brand-center">
+    <h3>Only M.7 Limited</h3>
+    <span class="verified-badge">✓ Verified Business</span>
+  </div>
+  <div class="brand-right">
+    <img src="assets/logo.png" alt="logo" class="brand-logo-img"/>
+  </div>
 </div>
 
-<div class="ai-wrapper">
+<!-- 🎯 PAGE HEADER -->
+<div class="page-header">
+  <h1>🎬 AI &amp; Editing</h1>
+  <p>Premium tools &amp; packs for content creators</p>
+</div>
 
-
+<!-- PRODUCTS WRAPPER -->
+<div class="products-wrapper">
 
   <!-- ================= CAPCUT PRO ================= -->
-<div class="ai-card">
+  <div class="ai-card" data-aos>
 
-  <img src="capcut.jpg" class="ai-image">
+    <div class="card-badge">🔥 Best Seller</div>
 
-  <div class="ai-content">
-
-    <h3>CapCut Pro</h3>
-
-    <p class="price">
-      <del>₹2799</del>
-      <strong>₹99 Only</strong>
-    </p>
-
-    <button class="details-btn">View Details</button>
-
-    <div class="details-box">
-
-      <h4>🎬 CapCut Pro Premium (Lifetime)</h4>
-
-      <hr style="margin:10px 0; opacity:.3;">
-
-      <p><strong>✅ Key Highlights</strong></p>
-      <p>✔ No VPN Required</p>
-      <p>✔ No Proxy</p>
-      <p>✔ No Region Restrictions</p>
-      <p>✔ Pre-Activated for Lifetime</p>
-      <p>✔ All AI Features Unlocked</p>
-      <p>✔ No Watermark on Export</p>
-      <p>✔ Instant Delivery via Email</p>
-
-      <hr style="margin:10px 0; opacity:.3;">
-
-      <p><strong>🎁 Everything Included</strong></p>
-      <p>🎬 No Watermark on Exports</p>
-      <p>🤖 AI Auto Captions & Tools</p>
-      <p>📺 4K / 8K Export Support</p>
-      <p>✨ Premium Effects & Templates</p>
-      <p>💼 Commercial License Included</p>
-      <p>🔒 Offline Activation</p>
-
-      <hr style="margin:10px 0; opacity:.3;">
-
-      <p>💰 No Monthly Subscription</p>
-      <p>⚡ Fast & Smooth Editing</p>
-      <p>🤖 Advanced AI Tools Access</p>
-      <p>🚀 Professional Quality Videos</p>
-
+    <div class="card-image-wrap">
+      <img src="capcut.jpg" class="ai-image" alt="CapCut Pro"/>
+      <div class="card-image-overlay"></div>
     </div>
 
-    <button
-      class="buy-btn"
-      id="buy-capcut-pro"
-      onclick="buyProduct('capcut-pro')">
-      Buy Now
-    </button>
-
-  </div>
-</div>
-
-  
-  <!-- ================= 15GB ================= -->
-  <div class="ai-card">
-
-    <img src="15gb.jpg" class="ai-image">
-
     <div class="ai-content">
+      <h3 class="product-title">CapCut Pro</h3>
 
-      <h3>15 GB Editing Pack</h3>
-
-      <p class="price">
-        <del>₹1999</del>
-        <strong>₹99 Only</strong>
-      </p>
-
-      <button class="details-btn">View Details</button>
-
-      
-        <div class="details-box">
-
-  <h4>🚀 15GB Ultimate Editing Pack for Content Creators</h4>
-
-<hr style="margin:10px 0; opacity:.3;">
-          
-  <p><strong>📦 What's inside?</strong></p>
-
-  <p>✅ Transitions Pack</p>
-  <p>✅ Motion Backgrounds</p>
-  <p>✅ Music & Sound Effects (SFX)</p>
-  <p>✅ Overlays & Text Effects</p>
-  <p>✅ Paper / Film Burns Effects</p>
-  <p>✅ High Quality PNGs</p>
-  <p>✅ Textures & Light Leaks</p>
-  <p>✅ Arrow Icons & Glowing Icons</p>
-  <p>✅ GIFs & Animations</p>
-  <p>✅ Fonts Collection</p>
-  <p>✅ Background Images & Videos</p>
-  <p>✅ And many more premium assets</p>
-
-  <hr style="margin:10px 0; opacity:.3;">
-
-  <p><strong>💾 Total Size:</strong> 15 GB+</p>
-            <hr style="margin:10px 0; opacity:.3;">
-  <p><strong>🎬 Perfect for:</strong> Instagram Reels, YouTube Shorts, Status Videos, Editing Projects</p>
-            <hr style="margin:10px 0; opacity:.3;">
-  <p><strong>📱 Use:</strong> Mobile + PC dono me use kar sakte ho</p>
-
-</div>
-        
-
-
-
-
-      <button
-        class="buy-btn"
-        id="buy-editing-pack"
-        onclick="buyProduct('editing-pack')">
-        Buy Now
-      </button>
-
-    </div>
-  </div>
-
-  <!-- ================= 50GB ================= -->
-  <div class="ai-card">
-
-    <img src="50gb.jpg" class="ai-image">
-
-    <div class="ai-content">
-
-      <h3>50 GB Editing Pack</h3>
-
-      <p class="price">
-        <del>₹4999</del>
-        <strong>₹199 Only</strong>
-      </p>
-
-      <button class="details-btn">View Details</button>
-
-
-
-
-
-      
-    
-        <div class="details-box">
-
-  <h4>🚀 50GB Ultimate Editing Pack for Content Creators</h4>
-
-<hr style="margin:10px 0; opacity:.3;">
-          
-        <p><strong>2.5x More Extra Materials</strong></p>  
-          
-          <hr style="margin:10px 0; opacity:.3;">
-          
-  <p><strong>📦 What's inside?</strong></p>
-
-  <p>✅ Transitions Pack</p>
-  <p>✅ Motion Backgrounds</p>
-  <p>✅ Music & Sound Effects (SFX)</p>
-  <p>✅ Overlays & Text Effects</p>
-  <p>✅ Paper / Film Burns Effects</p>
-  <p>✅ High Quality PNGs</p>
-  <p>✅ Textures & Light Leaks</p>
-  <p>✅ Arrow Icons & Glowing Icons</p>
-  <p>✅ GIFs & Animations</p>
-  <p>✅ Fonts Collection</p>
-  <p>✅ Background Images & Videos</p>
-  <p>✅ And many more premium assets</p>
-
-  <hr style="margin:10px 0; opacity:.3;">
-
-  <p><strong>💾 Total Size:</strong> 50 GB+</p>
-            <hr style="margin:10px 0; opacity:.3;">
-  <p><strong>🎬 Perfect for:</strong> Instagram Reels, YouTube Shorts, Status Videos, Editing Projects</p>
-            <hr style="margin:10px 0; opacity:.3;">
-  <p><strong>📱 Use:</strong> Mobile + PC dono me use kar sakte ho</p>
-          
-
-
-
-
-
-
-        
+      <div class="price-row">
+        <del class="old-price">₹2799</del>
+        <span class="new-price">₹99 Only</span>
+        <span class="discount-tag">96% OFF</span>
       </div>
 
-      <button
-        class="buy-btn"
-        id="buy-editing-pack-50"
-        onclick="buyProduct('editing-pack-50')">
-        Buy Now
+      <button class="details-btn" type="button">
+        <span class="details-btn-text">View Details</span>
+        <span class="details-arrow">▼</span>
       </button>
 
+      <div class="details-box">
+        <h4>🎬 CapCut Pro Premium (Lifetime)</h4>
+        <div class="detail-divider"></div>
+
+        <div class="feature-grid">
+          <div class="feature-item">✔ No VPN Required</div>
+          <div class="feature-item">✔ No Proxy</div>
+          <div class="feature-item">✔ No Region Lock</div>
+          <div class="feature-item">✔ Pre-Activated</div>
+          <div class="feature-item">✔ All AI Features</div>
+          <div class="feature-item">✔ No Watermark</div>
+          <div class="feature-item">✔ 4K / 8K Export</div>
+          <div class="feature-item">✔ Instant Delivery</div>
+        </div>
+
+        <div class="detail-divider"></div>
+        <div class="detail-highlight">
+          <span>💼 Commercial License Included</span>
+          <span>🔒 Offline Activation</span>
+          <span>💰 No Monthly Subscription</span>
+          <span>🤖 Advanced AI Tools</span>
+        </div>
+      </div>
+
+      <button class="buy-btn" id="buy-capcut-pro" onclick="buyProduct('capcut-pro')">
+        <span>Buy Now</span>
+        <span class="btn-coin">🪙 99</span>
+      </button>
     </div>
   </div>
 
+  <!-- ================= 15GB PACK ================= -->
+  <div class="ai-card" data-aos>
+
+    <div class="card-badge popular-badge">⭐ Popular</div>
+
+    <div class="card-image-wrap">
+      <img src="15gb.jpg" class="ai-image" alt="15GB Editing Pack"/>
+      <div class="card-image-overlay"></div>
+    </div>
+
+    <div class="ai-content">
+      <h3 class="product-title">15 GB Editing Pack</h3>
+
+      <div class="price-row">
+        <del class="old-price">₹1999</del>
+        <span class="new-price">₹99 Only</span>
+        <span class="discount-tag">95% OFF</span>
+      </div>
+
+      <button class="details-btn" type="button">
+        <span class="details-btn-text">View Details</span>
+        <span class="details-arrow">▼</span>
+      </button>
+
+      <div class="details-box">
+        <h4>🚀 15GB Ultimate Editing Pack</h4>
+        <div class="detail-divider"></div>
+
+        <div class="feature-grid">
+          <div class="feature-item">✅ Transitions Pack</div>
+          <div class="feature-item">✅ Motion Backgrounds</div>
+          <div class="feature-item">✅ Music &amp; SFX</div>
+          <div class="feature-item">✅ Overlays &amp; Text FX</div>
+          <div class="feature-item">✅ Film Burns Effects</div>
+          <div class="feature-item">✅ High Quality PNGs</div>
+          <div class="feature-item">✅ Textures &amp; Leaks</div>
+          <div class="feature-item">✅ GIFs &amp; Animations</div>
+          <div class="feature-item">✅ Fonts Collection</div>
+          <div class="feature-item">✅ BG Images &amp; Videos</div>
+        </div>
+
+        <div class="detail-divider"></div>
+        <div class="detail-highlight">
+          <span>💾 Total Size: 15 GB+</span>
+          <span>🎬 Reels · Shorts · Status</span>
+          <span>📱 Mobile + PC Compatible</span>
+        </div>
+      </div>
+
+      <button class="buy-btn" id="buy-editing-pack" onclick="buyProduct('editing-pack')">
+        <span>Buy Now</span>
+        <span class="btn-coin">🪙 99</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= 50GB PACK ================= -->
+  <div class="ai-card" data-aos>
+
+    <div class="card-badge pro-badge">💎 Pro</div>
+
+    <div class="card-image-wrap">
+      <img src="50gb.jpg" class="ai-image" alt="50GB Editing Pack"/>
+      <div class="card-image-overlay"></div>
+    </div>
+
+    <div class="ai-content">
+      <h3 class="product-title">50 GB Editing Pack</h3>
+
+      <div class="price-row">
+        <del class="old-price">₹4999</del>
+        <span class="new-price">₹199 Only</span>
+        <span class="discount-tag">96% OFF</span>
+      </div>
+
+      <button class="details-btn" type="button">
+        <span class="details-btn-text">View Details</span>
+        <span class="details-arrow">▼</span>
+      </button>
+
+      <div class="details-box">
+        <h4>🚀 50GB Ultimate Editing Pack</h4>
+        <div class="detail-divider"></div>
+
+        <div class="value-tag">2.5x More Materials than 15GB Pack!</div>
+
+        <div class="feature-grid">
+          <div class="feature-item">✅ Transitions Pack</div>
+          <div class="feature-item">✅ Motion Backgrounds</div>
+          <div class="feature-item">✅ Music &amp; SFX</div>
+          <div class="feature-item">✅ Overlays &amp; Text FX</div>
+          <div class="feature-item">✅ Film Burns Effects</div>
+          <div class="feature-item">✅ High Quality PNGs</div>
+          <div class="feature-item">✅ Textures &amp; Leaks</div>
+          <div class="feature-item">✅ GIFs &amp; Animations</div>
+          <div class="feature-item">✅ Fonts Collection</div>
+          <div class="feature-item">✅ BG Images &amp; Videos</div>
+          <div class="feature-item">✅ Exclusive 4K Packs</div>
+          <div class="feature-item">✅ Premium Templates</div>
+        </div>
+
+        <div class="detail-divider"></div>
+        <div class="detail-highlight">
+          <span>💾 Total Size: 50 GB+</span>
+          <span>🎬 Reels · Shorts · Status</span>
+          <span>📱 Mobile + PC Compatible</span>
+        </div>
+      </div>
+
+      <button class="buy-btn pro-buy-btn" id="buy-editing-pack-50" onclick="buyProduct('editing-pack-50')">
+        <span>Buy Now</span>
+        <span class="btn-coin">🪙 199</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Dynamic products from admin panel loads here -->
+  <div id="dynamic-products"></div>
+
 </div>
 
-
-<!-- ================= BOTTOM NAV ================= -->
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
-  <button class="nav-item active">AI & Editing</button>
+  <button class="nav-item active">AI &amp; Editing</button>
   <button class="nav-item" onclick="location.href='social.html'">Social</button>
   <button class="nav-item" onclick="location.href='account.html'">Account</button>
 </div>
 
-
-<!-- ================= SCRIPTS ================= -->
-
-<!-- AUTH -->
+<!-- SCRIPTS -->
 <script type="module" src="js/auth.js"></script>
-
-<!-- PRODUCTS -->
 <script type="module" src="js/products.js"></script>
-
-<!-- ✅ Dynamic products from admin panel -->
 <script type="module" src="js/products-loader.js"></script>
 
-<!-- PAGE LOGIC (NO MODULE – 100% WORKING) -->
 <script>
+/* =========================
+   DETAILS TOGGLE — with animation
+========================= */
+document.querySelectorAll(".details-btn").forEach(btn => {
+  btn.addEventListener("click", function () {
+    const box   = this.nextElementSibling;
+    const text  = this.querySelector(".details-btn-text");
+    const arrow = this.querySelector(".details-arrow");
+    const isOpen = box.classList.contains("open");
 
-  // ⭐ DETAILS BUTTON WORKING 100%
-  document.querySelectorAll(".details-btn").forEach(btn => {
-
-    btn.addEventListener("click", function(){
-
-      const box = this.nextElementSibling;
-
-      if(box.style.display === "block"){
-        box.style.display = "none";
-        this.innerText = "View Details";
-      } else {
-        box.style.display = "block";
-        this.innerText = "Hide Details";
-      }
-
-    });
-
+    if (isOpen) {
+      box.style.maxHeight = box.scrollHeight + "px";
+      requestAnimationFrame(() => {
+        box.style.maxHeight = "0";
+        box.style.opacity   = "0";
+      });
+      setTimeout(() => box.classList.remove("open"), 320);
+      text.textContent      = "View Details";
+      arrow.style.transform = "rotate(0deg)";
+      this.classList.remove("active");
+    } else {
+      box.classList.add("open");
+      box.style.maxHeight = "0";
+      box.style.opacity   = "0";
+      requestAnimationFrame(() => {
+        box.style.maxHeight = box.scrollHeight + "px";
+        box.style.opacity   = "1";
+      });
+      text.textContent      = "Hide Details";
+      arrow.style.transform = "rotate(180deg)";
+      this.classList.add("active");
+    }
   });
+});
 
+/* =========================
+   SCROLL ANIMATION
+========================= */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("aos-in");
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll("[data-aos]").forEach(el => observer.observe(el));
 </script>
 
 </body>
