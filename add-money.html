@@ -56,14 +56,18 @@
     <h3>Select Amount</h3>
   </div>
 
-  <!-- QUICK PRESETS -->
+  <!-- QUICK PRESETS — 4+4 layout -->
   <div class="preset-row">
     <button class="preset-btn" data-amount="25">₹25</button>
     <button class="preset-btn" data-amount="50">₹50</button>
     <button class="preset-btn" data-amount="100">₹100</button>
     <button class="preset-btn" data-amount="250">₹250</button>
+  </div>
+  <div class="preset-row" style="margin-top:8px;">
     <button class="preset-btn" data-amount="500">₹500</button>
     <button class="preset-btn" data-amount="1000">₹1000</button>
+    <button class="preset-btn" data-amount="2000">₹2000</button>
+    <button class="preset-btn" data-amount="4000">₹4000</button>
   </div>
 
   <!-- CUSTOM AMOUNT -->
@@ -162,7 +166,7 @@
     </div>
     <p class="qr-label">📱 Scan QR to Pay</p>
     <div class="upi-id-box">
-      <span id="upiIdText">9021958286@ybl</span>
+      <span id="upiIdText">akans.m7@ptaxis</span>
       <button class="upi-copy-btn" id="upiCopyBtn">Copy</button>
     </div>
   </div>
@@ -175,17 +179,8 @@
     <h3>Submit UTR After Payment</h3>
   </div>
 
-  <!-- PAYMENT APP SELECTOR -->
-  <div class="form-group">
-    <label>Payment App Used</label>
-    <select id="paymentApp">
-      <option value="PhonePe">📱 PhonePe</option>
-      <option value="Google Pay">💚 Google Pay</option>
-      <option value="Paytm">🔵 Paytm</option>
-      <option value="Airtel Pay">🔴 Airtel Pay</option>
-      <option value="Other">💳 Other UPI</option>
-    </select>
-  </div>
+  <!-- hidden paymentApp for JS -->
+  <input type="hidden" id="paymentApp" value="UPI"/>
 
   <!-- AMOUNT CONFIRM -->
   <div class="form-group">
@@ -342,8 +337,8 @@ function openUPI(upiId, appScheme) {
     window.location.href = upiLink;
   }, 1500);
 
-  // Auto-fill payment app selector
-  const selectMap = { phonepe: "PhonePe", paytm: "Paytm", gpay: "Google Pay" };
+  // Auto-set hidden paymentApp value
+  const selectMap = { phonepe: "PhonePe", paytm: "Paytm", gpay: "Google Pay", other: "Other" };
   if (selectMap[appScheme]) {
     document.getElementById("paymentApp").value = selectMap[appScheme];
   }
@@ -392,5 +387,4 @@ function showToastSimple(msg, type = "info") {
 
 <script type="module" src="js/add-money.js"></script>
 </body>
-  </html>
-  
+</html>
