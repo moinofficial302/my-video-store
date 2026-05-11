@@ -9,14 +9,14 @@
   <link rel="stylesheet" href="css/ai-editing.css">
 </head>
 
-<!-- ✅ Login requirement REMOVED — body onload="requireLogin()" deleted -->
+<!-- ✅ requireLogin() REMOVED — page open without login -->
 <body>
 
 <!-- 🔝 BRAND HEADER -->
 <div class="brand-card">
   <div class="brand-left">
     <span class="online-dot"></span>
-    <span class="active-label">Active</span>
+    <span class="active-label">● Active</span>
   </div>
   <div class="brand-center">
     <h3>Only M.7 Limited</h3>
@@ -24,6 +24,30 @@
   </div>
   <div class="brand-right">
     <img src="assets/logo.png" alt="logo" class="brand-logo-img"/>
+  </div>
+</div>
+
+<!-- 🛡️ TRUST BANNER -->
+<div class="trust-banner">
+  <div class="trust-pill">
+    <span>👥</span>
+    <span class="trust-val">1000+</span>
+    <span>Users</span>
+  </div>
+  <div class="trust-pill">
+    <span>⭐</span>
+    <span class="trust-val">4.8</span>
+    <span>Rating</span>
+  </div>
+  <div class="trust-pill">
+    <span>⚡</span>
+    <span class="trust-val">Instant</span>
+    <span>Delivery</span>
+  </div>
+  <div class="trust-pill">
+    <span>🔒</span>
+    <span class="trust-val">Secure</span>
+    <span>Payment</span>
   </div>
 </div>
 
@@ -55,6 +79,13 @@
         <span class="discount-tag">96% OFF</span>
       </div>
 
+      <!-- Trust chips -->
+      <div class="trust-row">
+        <span class="trust-chip">✔ No VPN</span>
+        <span class="trust-chip green-chip">⚡ Instant</span>
+        <span class="trust-chip purple-chip">💎 Lifetime</span>
+      </div>
+
       <button class="details-btn" type="button">
         <span class="details-btn-text">View Details</span>
         <span class="details-arrow">▼</span>
@@ -66,33 +97,36 @@
 
         <div class="feature-grid">
           <div class="feature-item">✔ No VPN Required</div>
-          <div class="feature-item">✔ No Proxy</div>
+          <div class="feature-item">✔ No Proxy Needed</div>
           <div class="feature-item">✔ No Region Lock</div>
           <div class="feature-item">✔ Pre-Activated</div>
           <div class="feature-item">✔ All AI Features</div>
           <div class="feature-item">✔ No Watermark</div>
           <div class="feature-item">✔ 4K / 8K Export</div>
           <div class="feature-item">✔ Instant Delivery</div>
+          <div class="feature-item">✔ Advanced AI Tools</div>
+          <div class="feature-item">✔ Offline Activation</div>
         </div>
 
         <div class="detail-divider"></div>
         <div class="detail-highlight">
           <span>💼 Commercial License Included</span>
-          <span>🔒 Offline Activation</span>
-          <span>💰 No Monthly Subscription</span>
-          <span>🤖 Advanced AI Tools</span>
+          <span>💰 No Monthly Subscription — Pay Once</span>
+          <span>🤖 AI Auto Captions &amp; Smart Tools</span>
+          <span>✨ Premium Effects &amp; Templates Unlocked</span>
+          <span>🚀 Professional Quality Videos Guaranteed</span>
         </div>
       </div>
 
       <button class="buy-btn" id="buy-capcut-pro" onclick="buyProduct('capcut-pro')">
-        <span>Buy Now</span>
-        <span class="btn-coin">🪙 99</span>
+        <span>🛒 Buy Now</span>
+        <span class="btn-coin">🪙 99 Coins</span>
       </button>
     </div>
   </div>
 
   <!-- ================= 15GB PACK ================= -->
-  <div class="ai-card" data-aos>
+  <div class="ai-card card-green" data-aos>
 
     <div class="card-badge popular-badge">⭐ Popular</div>
 
@@ -110,13 +144,19 @@
         <span class="discount-tag">95% OFF</span>
       </div>
 
+      <div class="trust-row">
+        <span class="trust-chip green-chip">💾 15 GB+</span>
+        <span class="trust-chip">📱 Mobile+PC</span>
+        <span class="trust-chip purple-chip">⚡ Instant</span>
+      </div>
+
       <button class="details-btn" type="button">
         <span class="details-btn-text">View Details</span>
         <span class="details-arrow">▼</span>
       </button>
 
       <div class="details-box">
-        <h4>🚀 15GB Ultimate Editing Pack</h4>
+        <h4>🚀 15GB Ultimate Editing Pack for Creators</h4>
         <div class="detail-divider"></div>
 
         <div class="feature-grid">
@@ -127,30 +167,32 @@
           <div class="feature-item">✅ Film Burns Effects</div>
           <div class="feature-item">✅ High Quality PNGs</div>
           <div class="feature-item">✅ Textures &amp; Leaks</div>
+          <div class="feature-item">✅ Arrow &amp; Glow Icons</div>
           <div class="feature-item">✅ GIFs &amp; Animations</div>
           <div class="feature-item">✅ Fonts Collection</div>
           <div class="feature-item">✅ BG Images &amp; Videos</div>
+          <div class="feature-item">✅ Many More Assets</div>
         </div>
 
         <div class="detail-divider"></div>
         <div class="detail-highlight">
-          <span>💾 Total Size: 15 GB+</span>
-          <span>🎬 Reels · Shorts · Status</span>
-          <span>📱 Mobile + PC Compatible</span>
+          <span>💾 Total Size: 15 GB+ Premium Assets</span>
+          <span>🎬 Perfect for: Reels · Shorts · Status · Projects</span>
+          <span>📱 Compatible with Mobile + PC — Any Editor</span>
         </div>
       </div>
 
       <button class="buy-btn" id="buy-editing-pack" onclick="buyProduct('editing-pack')">
-        <span>Buy Now</span>
-        <span class="btn-coin">🪙 99</span>
+        <span>🛒 Buy Now</span>
+        <span class="btn-coin">🪙 99 Coins</span>
       </button>
     </div>
   </div>
 
   <!-- ================= 50GB PACK ================= -->
-  <div class="ai-card" data-aos>
+  <div class="ai-card card-pro" data-aos>
 
-    <div class="card-badge pro-badge">💎 Pro</div>
+    <div class="card-badge pro-badge">💎 Pro Max</div>
 
     <div class="card-image-wrap">
       <img src="50gb.jpg" class="ai-image" alt="50GB Editing Pack"/>
@@ -166,16 +208,22 @@
         <span class="discount-tag">96% OFF</span>
       </div>
 
+      <div class="trust-row">
+        <span class="trust-chip purple-chip">💎 2.5x More</span>
+        <span class="trust-chip green-chip">💾 50 GB+</span>
+        <span class="trust-chip">📱 Mobile+PC</span>
+      </div>
+
       <button class="details-btn" type="button">
         <span class="details-btn-text">View Details</span>
         <span class="details-arrow">▼</span>
       </button>
 
       <div class="details-box">
-        <h4>🚀 50GB Ultimate Editing Pack</h4>
+        <h4>🚀 50GB Ultimate Editing Pack — Pro Max</h4>
         <div class="detail-divider"></div>
 
-        <div class="value-tag">2.5x More Materials than 15GB Pack!</div>
+        <div class="value-tag">🔥 2.5x More Materials than 15GB Pack!</div>
 
         <div class="feature-grid">
           <div class="feature-item">✅ Transitions Pack</div>
@@ -194,20 +242,20 @@
 
         <div class="detail-divider"></div>
         <div class="detail-highlight">
-          <span>💾 Total Size: 50 GB+</span>
-          <span>🎬 Reels · Shorts · Status</span>
-          <span>📱 Mobile + PC Compatible</span>
+          <span>💾 Total Size: 50 GB+ Massive Collection</span>
+          <span>🎬 Perfect for: Reels · Shorts · Status · Projects</span>
+          <span>📱 Compatible with Mobile + PC — Any Editor</span>
         </div>
       </div>
 
       <button class="buy-btn pro-buy-btn" id="buy-editing-pack-50" onclick="buyProduct('editing-pack-50')">
-        <span>Buy Now</span>
-        <span class="btn-coin">🪙 199</span>
+        <span>🛒 Buy Now</span>
+        <span class="btn-coin">🪙 199 Coins</span>
       </button>
     </div>
   </div>
 
-  <!-- Dynamic products from admin panel loads here -->
+  <!-- Dynamic products from admin panel -->
   <div id="dynamic-products"></div>
 
 </div>
@@ -227,7 +275,77 @@
 
 <script>
 /* =========================
-   DETAILS TOGGLE — with animation
+   🔊 SOUND ENGINE
+   Web Audio API — no external files needed
+========================= */
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+function getCtx() {
+  if (!audioCtx) audioCtx = new AudioCtx();
+  return audioCtx;
+}
+
+// Soft click / details open sound
+function playClickSound() {
+  try {
+    const ctx = getCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(660, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.08);
+    gain.gain.setValueAtTime(0.12, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.18);
+  } catch(e) {}
+}
+
+// Close / collapse sound
+function playCloseSound() {
+  try {
+    const ctx = getCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(660, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.10, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.18);
+  } catch(e) {}
+}
+
+// Buy button — cheerful 3-note chime
+function playBuySound() {
+  try {
+    const ctx = getCtx();
+    const notes = [523, 659, 784]; // C5 E5 G5 — happy chord
+    notes.forEach((freq, i) => {
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = "triangle";
+      const t = ctx.currentTime + i * 0.10;
+      osc.frequency.setValueAtTime(freq, t);
+      gain.gain.setValueAtTime(0.0, t);
+      gain.gain.linearRampToValueAtTime(0.15, t + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
+      osc.start(t);
+      osc.stop(t + 0.30);
+    });
+  } catch(e) {}
+}
+
+/* =========================
+   DETAILS TOGGLE — with sound + animation
 ========================= */
 document.querySelectorAll(".details-btn").forEach(btn => {
   btn.addEventListener("click", function () {
@@ -236,28 +354,51 @@ document.querySelectorAll(".details-btn").forEach(btn => {
     const arrow = this.querySelector(".details-arrow");
     const isOpen = box.classList.contains("open");
 
+    // Click animation
+    this.classList.add("btn-click");
+    setTimeout(() => this.classList.remove("btn-click"), 200);
+
     if (isOpen) {
+      // CLOSE
+      playCloseSound();
       box.style.maxHeight = box.scrollHeight + "px";
       requestAnimationFrame(() => {
-        box.style.maxHeight = "0";
-        box.style.opacity   = "0";
+        requestAnimationFrame(() => {
+          box.style.maxHeight = "0";
+          box.style.opacity   = "0";
+        });
       });
-      setTimeout(() => box.classList.remove("open"), 320);
+      setTimeout(() => box.classList.remove("open"), 350);
       text.textContent      = "View Details";
       arrow.style.transform = "rotate(0deg)";
       this.classList.remove("active");
     } else {
+      // OPEN
+      playClickSound();
       box.classList.add("open");
       box.style.maxHeight = "0";
       box.style.opacity   = "0";
       requestAnimationFrame(() => {
-        box.style.maxHeight = box.scrollHeight + "px";
-        box.style.opacity   = "1";
+        requestAnimationFrame(() => {
+          box.style.maxHeight = box.scrollHeight + "px";
+          box.style.opacity   = "1";
+        });
       });
       text.textContent      = "Hide Details";
       arrow.style.transform = "rotate(180deg)";
       this.classList.add("active");
     }
+  });
+});
+
+/* =========================
+   BUY BUTTON — sound + animation
+========================= */
+document.querySelectorAll(".buy-btn").forEach(btn => {
+  btn.addEventListener("click", function () {
+    playBuySound();
+    this.classList.add("btn-buying");
+    setTimeout(() => this.classList.remove("btn-buying"), 250);
   });
 });
 
@@ -271,10 +412,10 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.08 });
 
 document.querySelectorAll("[data-aos]").forEach(el => observer.observe(el));
 </script>
 
 </body>
-</html>
+      </html>
