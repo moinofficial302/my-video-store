@@ -3,149 +3,230 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Only M.7 Limited</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css?v=5">
-
-  <style>
-
-    body{
-      background: linear-gradient(180deg,#eaf2ff,#f7faff);
-    }
-
-    .community-wrap{
-      max-width: 430px;
-      margin: auto;
-      padding: 16px;
-    }
-
-    /* 🔥 TOP BRAND */
-    .community-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(12px);
-      border-radius: 18px;
-      padding: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
-
-    .community-header h2{
-      font-size:18px;
-      font-weight:700;
-    }
-
-    .community-header img{
-      width:45px;
-      height:45px;
-      border-radius:50%;
-    }
-
-    /* 🔥 CARD */
-    .community-card{
-      background: rgba(255,255,255,0.65);
-      backdrop-filter: blur(18px);
-      border-radius: 22px;
-      padding: 18px;
-      margin-bottom: 18px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-      text-align:center;
-
-      animation: fadeUp 0.6s ease forwards;
-    }
-
-    @keyframes fadeUp{
-      from{
-        opacity:0;
-        transform:translateY(20px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
-
-    .community-card img{
-      width:60px;
-      margin-bottom:10px;
-    }
-
-    .community-card h3{
-      font-size:20px;
-      margin-bottom:6px;
-    }
-
-    .community-card p{
-      font-size:14px;
-      opacity:0.7;
-      margin-bottom:14px;
-    }
-
-    /* 🔥 BUTTON */
-    .join-btn{
-      display:block;
-      width:100%;
-      padding:14px;
-      border-radius:30px;
-      text-decoration:none;
-      font-weight:700;
-      font-size:15px;
-      color:#fff;
-    }
-
-    .telegram{
-      background: linear-gradient(135deg,#3b82f6,#60a5fa);
-    }
-
-    .whatsapp{
-      background: linear-gradient(135deg,#22c55e,#4ade80);
-    }
-
-    .join-btn:active{
-      transform:scale(0.96);
-    }
-
-  </style>
-
+  <title>Community | AKANS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/community.css">
 </head>
 <body>
 
-<div class="community-wrap">
-
-  <!-- 🔥 HEADER -->
-  <div class="community-header">
-    <h2>Only M.7 Limited</h2>
-    <img src="assets/logo.png">
+<!-- 🔝 BRAND HEADER -->
+<div class="brand-card">
+  <div class="brand-left">
+    <span class="online-dot"></span>
+    <span class="active-label">Active</span>
   </div>
-
-  <!-- 🔥 TELEGRAM -->
-  <div class="community-card">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
-    <h3>Join Telegram</h3>
-    <p>Real-time updates, drops & discussion</p>
-
-    <a href="https://t.me/Only_M7" class="join-btn telegram">
-      Join Telegram
-    </a>
+  <div class="brand-center">
+    <h3>Only M.7 Limited</h3>
+    <span class="verified-badge">✓ Verified Business</span>
   </div>
-
-  <!-- 🔥 WHATSAPP -->
-  <div class="community-card">
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-    <h3>Join WhatsApp</h3>
-    <p>Fast support & community help</p>
-
-    <a href="https://whatsapp.com/channel/0029VbCB5O6Dp2Q5rvsm7O3g" class="join-btn whatsapp">
-      Join WhatsApp
-    </a>
+  <div class="brand-right">
+    <img src="assets/logo.png" alt="logo" class="brand-logo-img"/>
   </div>
-
 </div>
 
-  
+<!-- 🎯 PAGE HEADER -->
+<div class="page-header">
+  <h1>🌐 Our Community</h1>
+  <p>Join 1000+ creators — updates, support &amp; drops</p>
+</div>
+
+<!-- 📊 STATS ROW -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-icon">👥</div>
+    <div class="stat-value">1000+</div>
+    <div class="stat-label">Members</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📢</div>
+    <div class="stat-value">Daily</div>
+    <div class="stat-label">Updates</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">⚡</div>
+    <div class="stat-value">Fast</div>
+    <div class="stat-label">Support</div>
+  </div>
+</div>
+
+<!-- 📣 TELEGRAM CARD -->
+<div class="community-card telegram-card" data-aos>
+  <div class="card-glow telegram-glow"></div>
+
+  <div class="app-header">
+    <div class="app-icon telegram-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram"/>
+    </div>
+    <div class="app-info">
+      <h3>Telegram Channel</h3>
+      <span class="app-tag telegram-tag">📣 Official Channel</span>
+    </div>
+    <div class="members-badge">1K+</div>
+  </div>
+
+  <p class="card-desc">
+    Real-time updates, new product drops, exclusive coupons aur announcements sabse pehle yahan milenge!
+  </p>
+
+  <div class="feature-list">
+    <div class="feature-row">
+      <span class="feat-dot telegram-dot"></span>
+      <span>New product launches — first on Telegram</span>
+    </div>
+    <div class="feature-row">
+      <span class="feat-dot telegram-dot"></span>
+      <span>Exclusive coupon codes for members</span>
+    </div>
+    <div class="feature-row">
+      <span class="feat-dot telegram-dot"></span>
+      <span>Important updates &amp; announcements</span>
+    </div>
+    <div class="feature-row">
+      <span class="feat-dot telegram-dot"></span>
+      <span>Tips &amp; tricks for content creators</span>
+    </div>
+  </div>
+
+  <a href="https://t.me/Only_M7" class="join-btn telegram-btn" target="_blank" rel="noopener">
+    <span class="btn-icon">📣</span>
+    <span>Join Telegram Channel</span>
+    <span class="btn-arrow">→</span>
+  </a>
+</div>
+
+<!-- 💬 WHATSAPP CARD -->
+<div class="community-card whatsapp-card" data-aos>
+  <div class="card-glow whatsapp-glow"></div>
+
+  <div class="app-header">
+    <div class="app-icon whatsapp-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"/>
+    </div>
+    <div class="app-info">
+      <h3>WhatsApp Channel</h3>
+      <span class="app-tag whatsapp-tag">💬 Support &amp; Help</span>
+    </div>
+    <div class="members-badge whatsapp-badge">500+</div>
+  </div>
+
+  <p class="card-desc">
+    Fast support, community discussions, aur help chahiye toh WhatsApp channel sabse best option hai!
+  </p>
+
+  <div class="feature-list">
+    <div class="feature-row">
+      <span class="feat-dot whatsapp-dot"></span>
+      <span>Quick support — queries fast resolve hoti hain</span>
+    </div>
+    <div class="feature-row">
+      <span class="feat-dot whatsapp-dot"></span>
+      <span>Community discussions &amp; creator tips</span>
+    </div>
+    <div class="feature-row">
+      <span class="feat-dot whatsapp-dot"></span>
+      <span>Payment &amp; order related help</span>
+    </div>
+    <div class="feature-row">
+      <span class="feat-dot whatsapp-dot"></span>
+      <span>Updates on Hindi &amp; English both</span>
+    </div>
+  </div>
+
+  <a href="https://whatsapp.com/channel/0029VbCB5O6Dp2Q5rvsm7O3g" class="join-btn whatsapp-btn" target="_blank" rel="noopener">
+    <span class="btn-icon">💬</span>
+    <span>Join WhatsApp Channel</span>
+    <span class="btn-arrow">→</span>
+  </a>
+</div>
+
+<!-- 🎁 BENEFITS CARD -->
+<div class="benefits-card" data-aos>
+  <h3>🎁 Community Members Ko Milta Hai</h3>
+  <div class="benefits-grid">
+    <div class="benefit-item">
+      <span class="benefit-emoji">🎟️</span>
+      <span>Exclusive Coupons</span>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-emoji">⚡</span>
+      <span>Early Access</span>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-emoji">🆓</span>
+      <span>Free Resources</span>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-emoji">💬</span>
+      <span>Fast Support</span>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-emoji">📢</span>
+      <span>First Updates</span>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-emoji">🏆</span>
+      <span>Creator Tips</span>
+    </div>
+  </div>
+</div>
+
+<!-- 🛡 TRUST -->
+<div class="card trust">
+  <div class="trust-grid">
+    <div class="trust-item">✅ <span>1000+ Happy Users</span></div>
+    <div class="trust-item">⚡ <span>Instant Updates</span></div>
+    <div class="trust-item">🔒 <span>Safe Community</span></div>
+    <div class="trust-item">💬 <span>Active Support</span></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
+  <button class="nav-item" onclick="location.href='ai-editing.html'">AI &amp; Editing</button>
+  <button class="nav-item" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item active">Account</button>
+</div>
+
+<script>
+/* Scroll animation */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("aos-in");
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll("[data-aos]").forEach(el => observer.observe(el));
+
+/* Join button sound */
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+document.querySelectorAll(".join-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    try {
+      if (!audioCtx) audioCtx = new AudioCtx();
+      const notes = [523, 659, 784];
+      notes.forEach((freq, i) => {
+        const osc  = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.type = "triangle";
+        const t = audioCtx.currentTime + i * 0.09;
+        osc.frequency.setValueAtTime(freq, t);
+        gain.gain.setValueAtTime(0, t);
+        gain.gain.linearRampToValueAtTime(0.13, t + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+        osc.start(t); osc.stop(t + 0.27);
+      });
+    } catch(e) {}
+  });
+});
+</script>
+
 </body>
 </html>
