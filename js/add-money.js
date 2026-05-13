@@ -1,13 +1,9 @@
 /* =====================================================
-   💰 ADD MONEY — UPGRADED + UPI DEEP LINKS
-   ✔ Toast replaces all alert()
-   ✔ Auth check on page load
-   ✔ Duplicate UTR check
-   ✔ Amount validation
-   ✔ Loading spinner
-   ✔ History section
-   ✔ Coin balance display
-   ✔ amountConfirm synced with amount field
+   💰 ADD MONEY — FIXED VERSION
+   Bug Fix 1: DOMContentLoaded removed (module conflict)
+   Bug Fix 2: Duplicate UTR check — ab sirf user ki
+              apni requests check hogi (permission fix)
+   Bug Fix 3: email null safety added
 ===================================================== */
 
 import { auth, db } from "./firebase-init.js";
@@ -32,6 +28,7 @@ import {
 ========================= */
 function showToast(msg, type = "info", duration = 3200) {
   const toast = document.getElementById("toast");
+  if (!toast) return;
   toast.textContent = msg;
   toast.className = `toast ${type}`;
   toast.classList.remove("hidden");
@@ -51,9 +48,10 @@ function setLoading(loading) {
   const btn     = document.getElementById("submitBtn");
   const spinner = document.getElementById("submitBtnSpinner");
   const text    = document.getElementById("submitBtnText");
-  btn.disabled       = loading;
+  if (!btn) return;
+  btn.disabled     = loading;
   spinner.classList.toggle("hidden", !loading);
-  text.textContent   = loading ? "Submitting..." : "Submit Request 🚀";
+  text.textContent = loading ? "Submitting..." : "Submit Request 🚀";
 }
 
 /* =========================
@@ -64,9 +62,10 @@ async function loadCoinBalance(uid) {
     const snap = await getDoc(doc(db, "users", uid));
     if (!snap.exists()) return;
     const coins = Number(snap.data().coins || 0);
-    document.getElementById("coinBalance").textContent = coins;
-    const pct = Math.min((coins / 1000) * 100, 100);
-    document.getElementById("coinBar").style.width = pct + "%";
+    const el = document.getElementById("coinBalance");
+    if (el) el.textContent = coins;
+    const bar = document.getElementById("coinBar");
+    if (bar) bar.style.width = Math.min((coins / 1000) * 100, 100) + "%";
   } catch (err) {
     console.error("Balance load error:", err);
   }
@@ -78,6 +77,7 @@ async function loadCoinBalance(uid) {
 async function loadHistory(uid) {
   const historyList  = document.getElementById("historyList");
   const historyCount = document.getElementById("historyCount");
+  if (!historyList) return;
 
   historyList.innerHTML = `
     <div class="skeleton-card"></div>
@@ -85,12 +85,15 @@ async function loadHistory(uid) {
   `;
 
   try {
+    // ✅ FIX: Sirf is user ki requests — full collection scan nahi
     const snap = await getDocs(query(
       collection(db, "add_money_requests"),
       where("uid", "==", uid)
     ));
 
-    historyCount.textContent = `${snap.size} request${snap.size !== 1 ? "s" : ""}`;
+    if (historyCount) {
+      historyCount.textContent = `${snap.size} request${snap.size !== 1 ? "s" : ""}`;
+    }
 
     if (snap.empty) {
       historyList.innerHTML = `
@@ -117,7 +120,9 @@ async function loadHistory(uid) {
     historyList.innerHTML = "";
     items.forEach(item => {
       const dateStr = item.createdAt
-        ? item.createdAt.toLocaleDateString("en-IN", { day:"numeric", month:"short", year:"numeric" })
+        ? item.createdAt.toLocaleDateString("en-IN", {
+            day: "numeric", month: "short", year: "numeric"
+          })
         : "Just now";
 
       const statusLabel =
@@ -151,25 +156,14 @@ async function loadHistory(uid) {
 }
 
 /* =========================
-   🔒 AUTH CHECK
-========================= */
-onAuthStateChanged(auth, user => {
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
-  loadCoinBalance(user.uid);
-  loadHistory(user.uid);
-});
-
-/* =========================
    🚀 SUBMIT REQUEST
+   ✅ FIX: DOMContentLoaded HATAYA — module mein zarurat nahi
+   ✅ FIX: Duplicate UTR — ab sirf user ki apni requests mein check
+   ✅ FIX: email null safe
 ========================= */
-document.addEventListener("DOMContentLoaded", () => {
+const submitBtn = document.getElementById("submitBtn");
 
-  const submitBtn = document.getElementById("submitBtn");
-  if (!submitBtn) return;
-
+if (submitBtn) {
   submitBtn.addEventListener("click", async () => {
 
     const user = auth.currentUser;
@@ -179,11 +173,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Read from amountConfirm (synced from amount field)
-    const amountVal = document.getElementById("amountConfirm").value
-                   || document.getElementById("amount").value;
-    const utrVal    = document.getElementById("utr").value.trim();
-    const appVal    = document.getElementById("paymentApp").value;
+    const amountVal = document.getElementById("amountConfirm")?.value
+                   || document.getElementById("amount")?.value;
+    const utrVal    = document.getElementById("utr")?.value.trim();
+    const appVal    = document.getElementById("paymentApp")?.value || "UPI";
     const amount    = Number(amountVal);
 
     // Validations
@@ -200,9 +193,11 @@ document.addEventListener("DOMContentLoaded", () => {
     setLoading(true);
 
     try {
-      // Duplicate UTR check
+      // ✅ FIX: Duplicate UTR check — sirf is user ki requests mein
+      // Puri collection scan nahi — permission error nahi aayega
       const dupSnap = await getDocs(query(
         collection(db, "add_money_requests"),
+        where("uid", "==", user.uid),
         where("utr", "==", utrVal)
       ));
 
@@ -212,38 +207,62 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Save request
+      // ✅ FIX: email null safe — empty string fallback
       await addDoc(collection(db, "add_money_requests"), {
-        uid:        user.uid,
-        name:       user.displayName || "User",
-        email:      user.email || "",
-        amount:     amount,
-        utr:        utrVal,
-        paymentApp: appVal,
-        status:     "pending",
-        createdAt:  serverTimestamp(),
-        approvedAt: null,
+        uid:            user.uid,
+        name:           user.displayName || "User",
+        email:          user.email       || "",   // null safe
+        amount:         amount,
+        utr:            utrVal,
+        paymentApp:     appVal,
+        status:         "pending",
+        createdAt:      serverTimestamp(),
+        approvedAt:     null,
         rejectedReason: null
       });
 
       showToast(`₹${amount} request submitted! ⏳ Wait 2–15 min`, "success", 4000);
 
       // Reset form
-      document.getElementById("amount").value        = "";
-      document.getElementById("amountConfirm").value = "";
-      document.getElementById("utr").value           = "";
+      const amountEl        = document.getElementById("amount");
+      const amountConfirmEl = document.getElementById("amountConfirm");
+      const utrEl           = document.getElementById("utr");
+      const amountPreview   = document.getElementById("amountPreview");
+
+      if (amountEl)        amountEl.value        = "";
+      if (amountConfirmEl) amountConfirmEl.value  = "";
+      if (utrEl)           utrEl.value            = "";
+      if (amountPreview)   amountPreview.classList.add("hidden");
       document.querySelectorAll(".preset-btn").forEach(b => b.classList.remove("active"));
-      document.getElementById("amountPreview")?.classList.add("hidden");
 
       await loadHistory(user.uid);
       await loadCoinBalance(user.uid);
 
     } catch (err) {
-      console.error("Submit error:", err);
-      showToast("Something went wrong. Please try again ❌", "error");
+      console.error("Submit error:", err.code, err.message);
+
+      // ✅ Specific error messages
+      if (err.code === "permission-denied") {
+        showToast("Permission error. Please logout and login again 🔐", "error");
+      } else if (err.code === "unavailable") {
+        showToast("No internet connection. Check network and retry 📡", "error");
+      } else {
+        showToast("Something went wrong. Please try again ❌", "error");
+      }
     } finally {
       setLoading(false);
     }
   });
+}
 
+/* =========================
+   🔒 AUTH CHECK
+========================= */
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+  loadCoinBalance(user.uid);
+  loadHistory(user.uid);
 });
