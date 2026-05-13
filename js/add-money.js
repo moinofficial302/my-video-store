@@ -1,9 +1,9 @@
 /* =====================================================
-   💰 ADD MONEY — FIXED VERSION
-   Bug Fix 1: DOMContentLoaded removed (module conflict)
-   Bug Fix 2: Duplicate UTR check — ab sirf user ki
-              apni requests check hogi (permission fix)
-   Bug Fix 3: email null safety added
+   💰 ADD MONEY — FIXED + UTR 2-TIME LIMIT
+   ✅ Fix 1: DOMContentLoaded removed (module conflict fix)
+   ✅ Fix 2: UTR same user 2 baar use kar sakta hai, 3rd baar nahi
+   ✅ Fix 3: email null safe
+   ✅ Fix 4: Specific error messages
 ===================================================== */
 
 import { auth, db } from "./firebase-init.js";
@@ -50,8 +50,8 @@ function setLoading(loading) {
   const text    = document.getElementById("submitBtnText");
   if (!btn) return;
   btn.disabled     = loading;
-  spinner.classList.toggle("hidden", !loading);
-  text.textContent = loading ? "Submitting..." : "Submit Request 🚀";
+  if (spinner) spinner.classList.toggle("hidden", !loading);
+  if (text)    text.textContent = loading ? "Submitting..." : "Submit Request 🚀";
 }
 
 /* =========================
@@ -62,9 +62,9 @@ async function loadCoinBalance(uid) {
     const snap = await getDoc(doc(db, "users", uid));
     if (!snap.exists()) return;
     const coins = Number(snap.data().coins || 0);
-    const el = document.getElementById("coinBalance");
+    const el    = document.getElementById("coinBalance");
     if (el) el.textContent = coins;
-    const bar = document.getElementById("coinBar");
+    const bar   = document.getElementById("coinBar");
     if (bar) bar.style.width = Math.min((coins / 1000) * 100, 100) + "%";
   } catch (err) {
     console.error("Balance load error:", err);
@@ -85,7 +85,6 @@ async function loadHistory(uid) {
   `;
 
   try {
-    // ✅ FIX: Sirf is user ki requests — full collection scan nahi
     const snap = await getDocs(query(
       collection(db, "add_money_requests"),
       where("uid", "==", uid)
@@ -155,11 +154,9 @@ async function loadHistory(uid) {
   }
 }
 
+
 /* =========================
    🚀 SUBMIT REQUEST
-   ✅ FIX: DOMContentLoaded HATAYA — module mein zarurat nahi
-   ✅ FIX: Duplicate UTR — ab sirf user ki apni requests mein check
-   ✅ FIX: email null safe
 ========================= */
 const submitBtn = document.getElementById("submitBtn");
 
@@ -193,35 +190,68 @@ if (submitBtn) {
     setLoading(true);
 
     try {
-      // ✅ FIX: Duplicate UTR check — sirf is user ki requests mein
-      // Puri collection scan nahi — permission error nahi aayega
-      const dupSnap = await getDocs(query(
+
+      // =====================================================
+      // ✅ UTR 2-TIME LIMIT CHECK
+      // Same UTR — sirf is user ke liye — max 2 times allowed
+      // 3rd time block hoga
+      // =====================================================
+      const utrSnap = await getDocs(query(
         collection(db, "add_money_requests"),
         where("uid", "==", user.uid),
         where("utr", "==", utrVal)
       ));
 
-      if (!dupSnap.empty) {
-        showToast("This UTR ID is already submitted! ⚠️", "error");
+      const utrCount = utrSnap.size; // Kitni baar yeh UTR submit hui hai
+
+      if (utrCount >= 2) {
+        // 3rd baar — block karo
+        showToast(
+          "Yeh UTR ID 2 baar submit ho chuki hai. Ek UTR sirf 2 baar use ho sakti hai. ⚠️",
+          "error",
+          5000
+        );
         setLoading(false);
         return;
       }
 
-      // ✅ FIX: email null safe — empty string fallback
+      // utrCount === 0 → pehli baar → allow
+      // utrCount === 1 → doosri baar → allow (correction ke liye)
+      // utrCount >= 2  → teesri baar → block (upar handle ho gaya)
+
+      // =====================================================
+      // Save request
+      // =====================================================
       await addDoc(collection(db, "add_money_requests"), {
         uid:            user.uid,
         name:           user.displayName || "User",
-        email:          user.email       || "",   // null safe
+        email:          user.email       || "",   // ✅ null safe
         amount:         amount,
         utr:            utrVal,
         paymentApp:     appVal,
         status:         "pending",
+        // ✅ Agar 2nd submission hai — admin ko pata chale
+        isCorrection:   utrCount === 1,
+        submissionNo:   utrCount + 1,           // 1 ya 2
         createdAt:      serverTimestamp(),
         approvedAt:     null,
         rejectedReason: null
       });
 
-      showToast(`₹${amount} request submitted! ⏳ Wait 2–15 min`, "success", 4000);
+      // Toast message — correction ke liye alag
+      if (utrCount === 1) {
+        showToast(
+          `₹${amount} correction request submitted! ✅ Admin purani reject karke yeh approve karega.`,
+          "success",
+          5000
+        );
+      } else {
+        showToast(
+          `₹${amount} request submitted! ⏳ Wait 2–15 min`,
+          "success",
+          4000
+        );
+      }
 
       // Reset form
       const amountEl        = document.getElementById("amount");
@@ -241,7 +271,6 @@ if (submitBtn) {
     } catch (err) {
       console.error("Submit error:", err.code, err.message);
 
-      // ✅ Specific error messages
       if (err.code === "permission-denied") {
         showToast("Permission error. Please logout and login again 🔐", "error");
       } else if (err.code === "unavailable") {
@@ -266,3 +295,5 @@ onAuthStateChanged(auth, user => {
   loadCoinBalance(user.uid);
   loadHistory(user.uid);
 });
+
+
