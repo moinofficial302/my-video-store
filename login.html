@@ -2,116 +2,202 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login | AKANS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <title>Login | AKANS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/login.css">
-
-  <style>
-    .hidden{display:none}
-
-    .input-group{
-      position:relative;
-      width:100%;
-    }
-
-    .input-group input{
-      width:100%;
-      padding-right:45px;
-    }
-
-    .eye{
-      position:absolute;
-      right:14px;
-      top:50%;
-      transform:translateY(-50%);
-      cursor:pointer;
-      font-size:18px;
-    }
-  </style>
 </head>
-
 <body>
+
+<!-- 🔔 TOAST -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- ✨ BACKGROUND PARTICLES -->
+<div class="bg-particles">
+  <div class="particle p1"></div>
+  <div class="particle p2"></div>
+  <div class="particle p3"></div>
+  <div class="particle p4"></div>
+  <div class="particle p5"></div>
+</div>
 
 <div class="auth-wrapper">
 
-  <div class="logo-top">
-    <img src="assets/logo.png">
-    <p class="logo-text">Only M.7 Limited</p>
+  <!-- 🦅 LOGO -->
+  <div class="logo-section">
+    <div class="logo-ring">
+      <img src="assets/logo.png" alt="Only M7" class="logo-img"/>
+    </div>
+    <h1 class="brand-name">Only M.7 Limited</h1>
+    <p class="brand-tagline">Premium Digital Platform</p>
   </div>
 
+  <!-- 📦 AUTH CARD -->
   <div class="auth-card">
+
+    <!-- SHIMMER -->
+    <div class="card-shimmer"></div>
 
     <!-- TABS -->
     <div class="auth-tabs">
-      <button id="loginTab" class="tab active">Login</button>
-      <button id="signupTab" class="tab">Sign Up</button>
+      <button id="loginTab" class="tab active" type="button">
+        <span>🔑</span> Login
+      </button>
+      <button id="signupTab" class="tab" type="button">
+        <span>✨</span> Sign Up
+      </button>
     </div>
 
-
-    <!-- ================= LOGIN ================= -->
+    <!-- ================= LOGIN FORM ================= -->
     <div id="loginForm" class="form-box">
 
-      <input id="loginIdentifier" placeholder="Username or Email">
-
       <div class="input-group">
-        <input type="password" id="loginPassword" placeholder="Password">
-        <span class="eye" onclick="togglePassword('loginPassword')">👁️</span>
+        <span class="input-icon">👤</span>
+        <input
+          type="text"
+          id="loginIdentifier"
+          placeholder="Username or Email"
+          autocomplete="username"
+        />
       </div>
 
-      <button id="loginBtn" class="primary-btn">Login</button>
-      <button id="googleBtn" class="google-btn">Continue with Google</button>
+      <div class="input-group">
+        <span class="input-icon">🔒</span>
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Password"
+          autocomplete="current-password"
+        />
+        <span class="eye-toggle" id="eyeLogin">👁️</span>
+      </div>
+
+      <button class="primary-btn" id="loginBtn" type="button">
+        <span id="loginBtnText">Login</span>
+        <span id="loginBtnSpinner" class="btn-spinner hidden"></span>
+      </button>
+
+      <div class="divider"><span>OR</span></div>
+
+      <button class="google-btn" id="googleBtn" type="button">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" class="google-icon"/>
+        Continue with Google
+      </button>
 
     </div>
 
-
-    <!-- ================= SIGNUP ================= -->
+    <!-- ================= SIGNUP FORM ================= -->
     <div id="signupForm" class="form-box hidden">
 
-      <input id="signup-username" placeholder="Username">
-      <input id="signup-email" placeholder="Email">
-
       <div class="input-group">
-        <input type="password" id="signupPassword" placeholder="Password">
-        <span class="eye" onclick="togglePassword('signupPassword')">👁️</span>
+        <span class="input-icon">👤</span>
+        <input
+          type="text"
+          id="signup-username"
+          placeholder="Username"
+          autocomplete="username"
+        />
       </div>
 
       <div class="input-group">
-        <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
-        <span class="eye" onclick="togglePassword('signupConfirmPassword')">👁️</span>
+        <span class="input-icon">📧</span>
+        <input
+          type="email"
+          id="signup-email"
+          placeholder="Email"
+          autocomplete="email"
+        />
       </div>
 
-      <!-- ⭐⭐⭐ FIXED HERE ⭐⭐⭐ -->
-      <input id="referralCode" placeholder="Referral Code (Optional)">
+      <div class="input-group">
+        <span class="input-icon">🔒</span>
+        <input
+          type="password"
+          id="signupPassword"
+          placeholder="Password"
+          autocomplete="new-password"
+        />
+        <span class="eye-toggle" id="eyeSignup1">👁️</span>
+      </div>
 
-      <input id="signup-whatsapp" placeholder="WhatsApp (Optional)">
+      <!-- Password strength bar -->
+      <div class="strength-wrap" id="strengthWrap">
+        <div class="strength-bar">
+          <div class="strength-fill" id="strengthFill"></div>
+        </div>
+        <span class="strength-label" id="strengthLabel">Weak</span>
+      </div>
 
-      <button id="signupBtn" class="primary-btn">Create Account</button>
+      <div class="input-group">
+        <span class="input-icon">🔒</span>
+        <input
+          type="password"
+          id="signupConfirmPassword"
+          placeholder="Confirm Password"
+          autocomplete="new-password"
+        />
+        <span class="eye-toggle" id="eyeSignup2">👁️</span>
+      </div>
+
+      <div class="input-group">
+        <span class="input-icon">🎟️</span>
+        <input
+          type="text"
+          id="referralCode"
+          placeholder="Referral Code (Optional)"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="input-group">
+        <span class="input-icon">📱</span>
+        <input
+          type="tel"
+          id="signup-whatsapp"
+          placeholder="WhatsApp Number (Optional)"
+          autocomplete="tel"
+        />
+      </div>
+
+      <button class="primary-btn signup-btn" id="signupBtn" type="button">
+        <span id="signupBtnText">Create Account ✨</span>
+        <span id="signupBtnSpinner" class="btn-spinner hidden"></span>
+      </button>
+
+      <p class="terms-text">
+        By signing up you agree to our
+        <a href="about.html" class="terms-link">Terms &amp; Policies</a>
+      </p>
 
     </div>
 
   </div>
+
+  <!-- FOOTER -->
+  <p class="footer-text">🔒 Secure · Encrypted · Trusted by 1000+</p>
+
 </div>
 
-
-
-<!-- ================= ONLY LOAD AUTH ================= -->
 <script type="module">
 import "./js/auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* buttons */
-  loginBtn.onclick = () => window.loginUser();
-  signupBtn.onclick = () => window.signupUser();
-  googleBtn.onclick = () => window.googleLogin();
+  /* ========================
+     TABS
+  ======================== */
+  const loginTab    = document.getElementById("loginTab");
+  const signupTab   = document.getElementById("signupTab");
+  const loginForm   = document.getElementById("loginForm");
+  const signupForm  = document.getElementById("signupForm");
 
-  /* tabs */
   loginTab.onclick = () => {
     loginTab.classList.add("active");
     signupTab.classList.remove("active");
     loginForm.classList.remove("hidden");
     signupForm.classList.add("hidden");
+    loginForm.classList.add("form-enter");
+    setTimeout(() => loginForm.classList.remove("form-enter"), 400);
   };
 
   signupTab.onclick = () => {
@@ -119,28 +205,102 @@ document.addEventListener("DOMContentLoaded", () => {
     loginTab.classList.remove("active");
     signupForm.classList.remove("hidden");
     loginForm.classList.add("hidden");
+    signupForm.classList.add("form-enter");
+    setTimeout(() => signupForm.classList.remove("form-enter"), 400);
   };
 
+  /* ========================
+     BUTTONS
+  ======================== */
+  document.getElementById("loginBtn").onclick = () => window.loginUser();
+  document.getElementById("signupBtn").onclick = () => window.signupUser();
+  document.getElementById("googleBtn").onclick = () => window.googleLogin();
 
-
-  /* ========================================
-     ⭐ AUTO FILL REFERRAL FROM LINK
-  ======================================== */
-  const params = new URLSearchParams(window.location.search);
-  const ref = params.get("ref");
-
-  if(ref){
-    const input = document.getElementById("referralCode");
-    if(input) input.value = ref;
+  /* ========================
+     PASSWORD TOGGLE
+  ======================== */
+  function setupEye(eyeId, inputId) {
+    const eye = document.getElementById(eyeId);
+    if (!eye) return;
+    eye.addEventListener("click", () => {
+      const inp = document.getElementById(inputId);
+      if (!inp) return;
+      inp.type = inp.type === "password" ? "text" : "password";
+      eye.textContent = inp.type === "password" ? "👁️" : "🙈";
+    });
   }
+  setupEye("eyeLogin",   "loginPassword");
+  setupEye("eyeSignup1", "signupPassword");
+  setupEye("eyeSignup2", "signupConfirmPassword");
+
+  /* ========================
+     PASSWORD STRENGTH
+  ======================== */
+  const pwdInput = document.getElementById("signupPassword");
+  const fill     = document.getElementById("strengthFill");
+  const label    = document.getElementById("strengthLabel");
+  const wrap     = document.getElementById("strengthWrap");
+
+  if (pwdInput) {
+    pwdInput.addEventListener("input", () => {
+      const val = pwdInput.value;
+      wrap.style.display = val.length > 0 ? "flex" : "none";
+
+      let score = 0;
+      if (val.length >= 6)  score++;
+      if (val.length >= 10) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+
+      const levels = [
+        { pct:"20%", color:"#ef4444", text:"Weak" },
+        { pct:"40%", color:"#f97316", text:"Fair" },
+        { pct:"60%", color:"#eab308", text:"Good" },
+        { pct:"80%", color:"#22c55e", text:"Strong" },
+        { pct:"100%",color:"#10b981", text:"Very Strong" },
+      ];
+      const lvl = levels[Math.min(score, 4)];
+      fill.style.width      = lvl.pct;
+      fill.style.background = lvl.color;
+      label.textContent     = lvl.text;
+      label.style.color     = lvl.color;
+    });
+  }
+
+  /* ========================
+     REFERRAL AUTO-FILL
+  ======================== */
+  const params = new URLSearchParams(window.location.search);
+  const ref    = params.get("ref");
+  if (ref) {
+    const inp = document.getElementById("referralCode");
+    if (inp) { inp.value = ref; inp.readOnly = true; }
+
+    // Auto switch to signup tab if ref in URL
+    signupTab.click();
+  }
+
+  /* ========================
+     INPUT FOCUS GLOW
+  ======================== */
+  document.querySelectorAll(".input-group input").forEach(inp => {
+    inp.addEventListener("focus", () => {
+      inp.closest(".input-group").classList.add("focused");
+    });
+    inp.addEventListener("blur", () => {
+      inp.closest(".input-group").classList.remove("focused");
+    });
+  });
 
 });
 
-
-/* password toggle */
+/* ========================
+   PASSWORD TOGGLE (global fallback)
+======================== */
 window.togglePassword = (id) => {
   const el = document.getElementById(id);
-  el.type = el.type === "password" ? "text" : "password";
+  if (el) el.type = el.type === "password" ? "text" : "password";
 };
 </script>
 
