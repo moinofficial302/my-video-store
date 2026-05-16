@@ -12,21 +12,27 @@
 <!-- 🔔 TOAST -->
 <div id="toast" class="toast hidden"></div>
 
-<!-- ✨ BACKGROUND PARTICLES -->
+<!-- 🫧 BG ORBS -->
 <div class="bg-particles">
   <div class="particle p1"></div>
   <div class="particle p2"></div>
   <div class="particle p3"></div>
   <div class="particle p4"></div>
-  <div class="particle p5"></div>
 </div>
 
 <div class="auth-wrapper">
 
-  <!-- 🦅 LOGO -->
+  <!-- 🦅 LOGO — HARD SIZE CONSTRAINED -->
   <div class="logo-section">
     <div class="logo-ring">
-      <img src="assets/logo.png" alt="Only M7" class="logo-img"/>
+      <img
+        src="assets/logo.png"
+        alt="Only M7"
+        class="logo-img"
+        width="88"
+        height="88"
+        style="width:88px!important;height:88px!important;max-width:88px!important;max-height:88px!important;border-radius:50%;object-fit:cover;display:block;background:#fff;"
+      />
     </div>
     <h1 class="brand-name">Only M.7 Limited</h1>
     <p class="brand-tagline">Premium Digital Platform</p>
@@ -34,41 +40,25 @@
 
   <!-- 📦 AUTH CARD -->
   <div class="auth-card">
-
-    <!-- SHIMMER -->
     <div class="card-shimmer"></div>
 
     <!-- TABS -->
     <div class="auth-tabs">
-      <button id="loginTab" class="tab active" type="button">
-        <span>🔑</span> Login
-      </button>
-      <button id="signupTab" class="tab" type="button">
-        <span>✨</span> Sign Up
-      </button>
+      <button id="loginTab" class="tab active" type="button">🔑 Login</button>
+      <button id="signupTab" class="tab" type="button">✨ Sign Up</button>
     </div>
 
-    <!-- ================= LOGIN FORM ================= -->
+    <!-- ===== LOGIN FORM ===== -->
     <div id="loginForm" class="form-box">
 
       <div class="input-group">
         <span class="input-icon">👤</span>
-        <input
-          type="text"
-          id="loginIdentifier"
-          placeholder="Username or Email"
-          autocomplete="username"
-        />
+        <input type="text" id="loginIdentifier" placeholder="Username or Email" autocomplete="username"/>
       </div>
 
       <div class="input-group">
         <span class="input-icon">🔒</span>
-        <input
-          type="password"
-          id="loginPassword"
-          placeholder="Password"
-          autocomplete="current-password"
-        />
+        <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password"/>
         <span class="eye-toggle" id="eyeLogin">👁️</span>
       </div>
 
@@ -86,41 +76,26 @@
 
     </div>
 
-    <!-- ================= SIGNUP FORM ================= -->
+    <!-- ===== SIGNUP FORM ===== -->
     <div id="signupForm" class="form-box hidden">
 
       <div class="input-group">
         <span class="input-icon">👤</span>
-        <input
-          type="text"
-          id="signup-username"
-          placeholder="Username"
-          autocomplete="username"
-        />
+        <input type="text" id="signup-username" placeholder="Username" autocomplete="username"/>
       </div>
 
       <div class="input-group">
         <span class="input-icon">📧</span>
-        <input
-          type="email"
-          id="signup-email"
-          placeholder="Email"
-          autocomplete="email"
-        />
+        <input type="email" id="signup-email" placeholder="Email" autocomplete="email"/>
       </div>
 
       <div class="input-group">
         <span class="input-icon">🔒</span>
-        <input
-          type="password"
-          id="signupPassword"
-          placeholder="Password"
-          autocomplete="new-password"
-        />
+        <input type="password" id="signupPassword" placeholder="Password" autocomplete="new-password"/>
         <span class="eye-toggle" id="eyeSignup1">👁️</span>
       </div>
 
-      <!-- Password strength bar -->
+      <!-- Password strength -->
       <div class="strength-wrap" id="strengthWrap">
         <div class="strength-bar">
           <div class="strength-fill" id="strengthFill"></div>
@@ -130,33 +105,18 @@
 
       <div class="input-group">
         <span class="input-icon">🔒</span>
-        <input
-          type="password"
-          id="signupConfirmPassword"
-          placeholder="Confirm Password"
-          autocomplete="new-password"
-        />
+        <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" autocomplete="new-password"/>
         <span class="eye-toggle" id="eyeSignup2">👁️</span>
       </div>
 
       <div class="input-group">
         <span class="input-icon">🎟️</span>
-        <input
-          type="text"
-          id="referralCode"
-          placeholder="Referral Code (Optional)"
-          autocomplete="off"
-        />
+        <input type="text" id="referralCode" placeholder="Referral Code (Optional)" autocomplete="off"/>
       </div>
 
       <div class="input-group">
         <span class="input-icon">📱</span>
-        <input
-          type="tel"
-          id="signup-whatsapp"
-          placeholder="WhatsApp Number (Optional)"
-          autocomplete="tel"
-        />
+        <input type="tel" id="signup-whatsapp" placeholder="WhatsApp Number (Optional)" autocomplete="tel"/>
       </div>
 
       <button class="primary-btn signup-btn" id="signupBtn" type="button">
@@ -170,10 +130,8 @@
       </p>
 
     </div>
-
   </div>
 
-  <!-- FOOTER -->
   <p class="footer-text">🔒 Secure · Encrypted · Trusted by 1000+</p>
 
 </div>
@@ -183,125 +141,88 @@ import "./js/auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ========================
-     TABS
-  ======================== */
-  const loginTab    = document.getElementById("loginTab");
-  const signupTab   = document.getElementById("signupTab");
-  const loginForm   = document.getElementById("loginForm");
-  const signupForm  = document.getElementById("signupForm");
+  /* TABS */
+  const loginTab   = document.getElementById("loginTab");
+  const signupTab  = document.getElementById("signupTab");
+  const loginForm  = document.getElementById("loginForm");
+  const signupForm = document.getElementById("signupForm");
 
   loginTab.onclick = () => {
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
-    loginForm.classList.remove("hidden");
-    signupForm.classList.add("hidden");
+    loginTab.classList.add("active");   signupTab.classList.remove("active");
+    loginForm.classList.remove("hidden"); signupForm.classList.add("hidden");
     loginForm.classList.add("form-enter");
-    setTimeout(() => loginForm.classList.remove("form-enter"), 400);
+    setTimeout(() => loginForm.classList.remove("form-enter"), 350);
   };
 
   signupTab.onclick = () => {
-    signupTab.classList.add("active");
-    loginTab.classList.remove("active");
-    signupForm.classList.remove("hidden");
-    loginForm.classList.add("hidden");
+    signupTab.classList.add("active");  loginTab.classList.remove("active");
+    signupForm.classList.remove("hidden"); loginForm.classList.add("hidden");
     signupForm.classList.add("form-enter");
-    setTimeout(() => signupForm.classList.remove("form-enter"), 400);
+    setTimeout(() => signupForm.classList.remove("form-enter"), 350);
   };
 
-  /* ========================
-     BUTTONS
-  ======================== */
-  document.getElementById("loginBtn").onclick = () => window.loginUser();
+  /* BUTTONS */
+  document.getElementById("loginBtn").onclick  = () => window.loginUser();
   document.getElementById("signupBtn").onclick = () => window.signupUser();
   document.getElementById("googleBtn").onclick = () => window.googleLogin();
 
-  /* ========================
-     PASSWORD TOGGLE
-  ======================== */
-  function setupEye(eyeId, inputId) {
-    const eye = document.getElementById(eyeId);
-    if (!eye) return;
-    eye.addEventListener("click", () => {
-      const inp = document.getElementById(inputId);
-      if (!inp) return;
-      inp.type = inp.type === "password" ? "text" : "password";
-      eye.textContent = inp.type === "password" ? "👁️" : "🙈";
+  /* EYE TOGGLES */
+  [["eyeLogin","loginPassword"],["eyeSignup1","signupPassword"],["eyeSignup2","signupConfirmPassword"]]
+    .forEach(([eId, iId]) => {
+      const eye = document.getElementById(eId);
+      if (!eye) return;
+      eye.onclick = () => {
+        const inp = document.getElementById(iId);
+        if (!inp) return;
+        inp.type = inp.type === "password" ? "text" : "password";
+        eye.textContent = inp.type === "password" ? "👁️" : "🙈";
+      };
     });
-  }
-  setupEye("eyeLogin",   "loginPassword");
-  setupEye("eyeSignup1", "signupPassword");
-  setupEye("eyeSignup2", "signupConfirmPassword");
 
-  /* ========================
-     PASSWORD STRENGTH
-  ======================== */
-  const pwdInput = document.getElementById("signupPassword");
-  const fill     = document.getElementById("strengthFill");
-  const label    = document.getElementById("strengthLabel");
-  const wrap     = document.getElementById("strengthWrap");
+  /* PASSWORD STRENGTH */
+  const pwd   = document.getElementById("signupPassword");
+  const fill  = document.getElementById("strengthFill");
+  const label = document.getElementById("strengthLabel");
+  const wrap  = document.getElementById("strengthWrap");
 
-  if (pwdInput) {
-    pwdInput.addEventListener("input", () => {
-      const val = pwdInput.value;
-      wrap.style.display = val.length > 0 ? "flex" : "none";
-
-      let score = 0;
-      if (val.length >= 6)  score++;
-      if (val.length >= 10) score++;
-      if (/[A-Z]/.test(val)) score++;
-      if (/[0-9]/.test(val)) score++;
-      if (/[^A-Za-z0-9]/.test(val)) score++;
-
-      const levels = [
-        { pct:"20%", color:"#ef4444", text:"Weak" },
-        { pct:"40%", color:"#f97316", text:"Fair" },
-        { pct:"60%", color:"#eab308", text:"Good" },
-        { pct:"80%", color:"#22c55e", text:"Strong" },
-        { pct:"100%",color:"#10b981", text:"Very Strong" },
+  if (pwd) {
+    pwd.addEventListener("input", () => {
+      const v = pwd.value;
+      wrap.style.display = v.length > 0 ? "flex" : "none";
+      let s = 0;
+      if (v.length >= 6)          s++;
+      if (v.length >= 10)         s++;
+      if (/[A-Z]/.test(v))        s++;
+      if (/[0-9]/.test(v))        s++;
+      if (/[^A-Za-z0-9]/.test(v)) s++;
+      const lvls = [
+        {p:"20%",c:"#ef4444",t:"Weak"},
+        {p:"40%",c:"#f97316",t:"Fair"},
+        {p:"60%",c:"#eab308",t:"Good"},
+        {p:"80%",c:"#22c55e",t:"Strong"},
+        {p:"100%",c:"#10b981",t:"Very Strong"},
       ];
-      const lvl = levels[Math.min(score, 4)];
-      fill.style.width      = lvl.pct;
-      fill.style.background = lvl.color;
-      label.textContent     = lvl.text;
-      label.style.color     = lvl.color;
+      const l = lvls[Math.min(s,4)];
+      fill.style.width = l.p; fill.style.background = l.c;
+      label.textContent = l.t; label.style.color = l.c;
     });
   }
 
-  /* ========================
-     REFERRAL AUTO-FILL
-  ======================== */
-  const params = new URLSearchParams(window.location.search);
-  const ref    = params.get("ref");
+  /* INPUT FOCUS GLOW */
+  document.querySelectorAll(".input-group input").forEach(inp => {
+    inp.addEventListener("focus", () => inp.closest(".input-group").classList.add("focused"));
+    inp.addEventListener("blur",  () => inp.closest(".input-group").classList.remove("focused"));
+  });
+
+  /* REFERRAL AUTO-FILL */
+  const ref = new URLSearchParams(window.location.search).get("ref");
   if (ref) {
     const inp = document.getElementById("referralCode");
     if (inp) { inp.value = ref; inp.readOnly = true; }
-
-    // Auto switch to signup tab if ref in URL
     signupTab.click();
   }
 
-  /* ========================
-     INPUT FOCUS GLOW
-  ======================== */
-  document.querySelectorAll(".input-group input").forEach(inp => {
-    inp.addEventListener("focus", () => {
-      inp.closest(".input-group").classList.add("focused");
-    });
-    inp.addEventListener("blur", () => {
-      inp.closest(".input-group").classList.remove("focused");
-    });
-  });
-
 });
-
-/* ========================
-   PASSWORD TOGGLE (global fallback)
-======================== */
-window.togglePassword = (id) => {
-  const el = document.getElementById(id);
-  if (el) el.type = el.type === "password" ? "text" : "password";
-};
 </script>
 
 </body>
