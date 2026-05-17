@@ -13,13 +13,9 @@
 ========================= */
 body {
   min-height: 100vh;
-  background: linear-gradient(160deg,
-    #1a3a6e 0%,
-    #1e4d8c 25%,
-    #2563b0 50%,
-    #1a3a6e 75%,
-    #0f2855 100%
-  );
+  background:
+    radial-gradient(ellipse 130% 70% at 50% -10%, #1e3a7a 0%, transparent 60%),
+    linear-gradient(180deg, #0d1b3e 0%, #112154 50%, #0a1530 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,10 +36,10 @@ body {
   opacity: 0.22;
   animation: floatOrb ease-in-out infinite alternate;
 }
-.p1 { width:280px; height:280px; background:#60c8f8; top:-80px; left:-80px; animation-duration:9s; opacity:0.28; }
-.p2 { width:220px; height:220px; background:#a78bfa; top:20%; right:-80px; animation-duration:11s; animation-delay:-3s; opacity:0.22; }
-.p3 { width:200px; height:200px; background:#fde68a; bottom:5%; left:-50px; animation-duration:13s; animation-delay:-6s; opacity:0.18; }
-.p4 { width:160px; height:160px; background:#38bdf8; bottom:20%; right:0; animation-duration:10s; animation-delay:-2s; opacity:0.20; }
+.p1 { width:320px; height:320px; background:#1e40af; top:-100px; left:-100px; animation-duration:9s; opacity:0.35; }
+.p2 { width:240px; height:240px; background:#1d4ed8; top:30%; right:-80px; animation-duration:12s; animation-delay:-4s; opacity:0.25; }
+.p3 { width:200px; height:200px; background:#facc15; bottom:0; left:-60px; animation-duration:14s; animation-delay:-7s; opacity:0.10; }
+.p4 { width:180px; height:180px; background:#1e3a8a; bottom:25%; right:-40px; animation-duration:10s; animation-delay:-2s; opacity:0.30; }
 
 @keyframes floatOrb {
   from { transform: translate(0, 0) scale(1); }
@@ -171,17 +167,17 @@ body {
 .auth-card {
   background: linear-gradient(
     145deg,
-    rgba(255,255,255,0.16),
-    rgba(255,255,255,0.08)
+    rgba(255,255,255,0.08),
+    rgba(15,30,80,0.55)
   );
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-radius: 24px;
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+  border-radius: 26px;
   padding: 22px 18px 24px;
   box-shadow:
-    0 20px 50px rgba(0,0,0,0.35),
-    inset 0 0 0 1px rgba(255,255,255,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.25);
+    0 30px 70px rgba(0,0,0,0.50),
+    inset 0 0 0 1px rgba(255,255,255,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.15);
   position: relative;
   overflow: hidden;
   animation: cardIn 0.65s cubic-bezier(0.22,1,0.36,1) 0.3s both;
@@ -198,7 +194,7 @@ body {
   background: linear-gradient(
     115deg,
     transparent 30%,
-    rgba(56,189,248,0.08) 50%,
+    rgba(250,204,21,0.07) 50%,
     transparent 70%
   );
   animation: shimmerMove 8s ease-in-out infinite;
