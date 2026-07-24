@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Money | AKANS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/add-money.css">
+</head>
+<body>
+
+<!-- 🔔 TOAST -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- 🔝 BRAND HEADER -->
+<div class="brand-card">
+  <div class="brand-left">
+    <span class="online-dot"></span>
+    <span class="active-label">Active</span>
+  </div>
+  <div class="brand-center">
+    <h3>Only M.7 Limited</h3>
+    <span class="verified-badge">✓ Verified Business</span>
+  </div>
+  <div class="brand-right">
+    <img src="assets/logo.png" alt="logo" class="brand-logo-img"/>
+  </div>
+</div>
+
+<!-- 🎯 PAGE TITLE -->
+<div class="header-card">
+  <h2>➕ Add Money</h2>
+  <p>Pay via UPI &amp; get instant coins</p>
+</div>
+
+<!-- 💰 COIN BALANCE -->
+<div class="card balance-card">
+  <div class="balance-top">
+    <div>
+      <p class="balance-label">Current Coin Balance</p>
+      <div class="balance-amount" id="coinBalance">—</div>
+      <p class="min-note">🪙 ₹1 = 1 Coin · Min ₹25</p>
+    </div>
+    <div class="wallet-icon">🪙</div>
+  </div>
+  <div class="balance-bar-wrap">
+    <div class="balance-bar" id="coinBar" style="width:0%"></div>
+  </div>
+</div>
+
+<!-- ⚡ STEP 1 — AMOUNT SELECT -->
+<div class="card form-card">
+  <div class="step-header">
+    <div class="step-badge">1</div>
+    <h3>Select Amount</h3>
+  </div>
+
+  <!-- QUICK PRESETS — 4+4 layout -->
+  <div class="preset-row">
+    <button class="preset-btn" data-amount="25">₹25</button>
+    <button class="preset-btn" data-amount="50">₹50</button>
+    <button class="preset-btn" data-amount="100">₹100</button>
+    <button class="preset-btn" data-amount="250">₹250</button>
+  </div>
+  <div class="preset-row" style="margin-top:8px;">
+    <button class="preset-btn" data-amount="500">₹500</button>
+    <button class="preset-btn" data-amount="1000">₹1000</button>
+    <button class="preset-btn" data-amount="2000">₹2000</button>
+    <button class="preset-btn" data-amount="4000">₹4000</button>
+  </div>
+
+  <!-- CUSTOM AMOUNT -->
+  <div class="form-group">
+    <label>Custom Amount (₹)</label>
+    <div class="input-wrap">
+      <span class="input-prefix">₹</span>
+      <input type="number" id="amount" placeholder="Min ₹25" min="25"/>
+    </div>
+  </div>
+
+  <!-- AMOUNT PREVIEW -->
+  <div class="amount-preview hidden" id="amountPreview">
+    <span>You will get</span>
+    <strong id="previewCoins">0 🪙</strong>
+  </div>
+</div>
+
+<!-- ⚡ STEP 2 — PAY WITH APP -->
+<div class="card form-card">
+  <div class="step-header">
+    <div class="step-badge">2</div>
+    <h3>Pay with UPI App</h3>
+  </div>
+
+  <p class="pay-hint">Amount select karo upar, phir apni app choose karo — amount automatic fill hoga!</p>
+
+  <!-- UPI APP BUTTONS -->
+  <div class="upi-apps-grid">
+
+    <button class="upi-app-btn phonepe-btn" id="openPhonePe">
+      <div class="upi-app-icon">
+        <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="#5f259f"/>
+          <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="white">Pe</text>
+        </svg>
+      </div>
+      <div class="upi-app-info">
+        <span class="upi-app-name">PhonePe</span>
+        <span class="upi-app-sub">Tap to open &amp; pay</span>
+      </div>
+      <span class="upi-app-arrow">→</span>
+    </button>
+
+    <button class="upi-app-btn paytm-btn" id="openPaytm">
+      <div class="upi-app-icon">
+        <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="#002970"/>
+          <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" font-size="13" fill="#00baf2" font-weight="bold">PAY</text>
+        </svg>
+      </div>
+      <div class="upi-app-info">
+        <span class="upi-app-name">Paytm</span>
+        <span class="upi-app-sub">Tap to open &amp; pay</span>
+      </div>
+      <span class="upi-app-arrow">→</span>
+    </button>
+
+    <button class="upi-app-btn gpay-btn" id="openGPay">
+      <div class="upi-app-icon">
+        <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="#fff"/>
+          <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" font-size="13" fill="#4285f4" font-weight="bold">G</text>
+        </svg>
+      </div>
+      <div class="upi-app-info">
+        <span class="upi-app-name">Google Pay</span>
+        <span class="upi-app-sub">Tap to open &amp; pay</span>
+      </div>
+      <span class="upi-app-arrow">→</span>
+    </button>
+
+    <button class="upi-app-btn other-btn" id="openOther">
+      <div class="upi-app-icon">
+        <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="#1e90ff"/>
+          <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" font-size="13" fill="white" font-weight="bold">UPI</text>
+        </svg>
+      </div>
+      <div class="upi-app-info">
+        <span class="upi-app-name">Any UPI App</span>
+        <span class="upi-app-sub">Tap to open &amp; pay</span>
+      </div>
+      <span class="upi-app-arrow">→</span>
+    </button>
+
+  </div>
+
+  <!-- OR DIVIDER -->
+  <div class="or-divider"><span>OR</span></div>
+
+  <!-- QR + UPI ID -->
+  <div class="qr-section">
+    <div class="qr-box">
+      <img src="assets/upi-qr.png" alt="UPI QR Code"/>
+    </div>
+    <p class="qr-label">📱 Scan QR to Pay</p>
+    <div class="upi-id-box">
+      <span id="upiIdText">9021958286@ybl</span>
+      <button class="upi-copy-btn" id="upiCopyBtn">Copy</button>
+    </div>
+  </div>
+</div>
+
+<!-- ⚡ STEP 3 — SUBMIT UTR -->
+<div class="card form-card">
+  <div class="step-header">
+    <div class="step-badge">3</div>
+    <h3>Submit UTR After Payment</h3>
+  </div>
+
+  <!-- hidden paymentApp for JS -->
+  <input type="hidden" id="paymentApp" value="UPI"/>
+
+  <!-- AMOUNT CONFIRM -->
+  <div class="form-group">
+    <label>Amount Paid (₹)</label>
+    <div class="input-wrap">
+      <span class="input-prefix">₹</span>
+      <input type="number" id="amountConfirm" placeholder="Enter amount you paid" min="25" readonly/>
+    </div>
+    <p class="field-hint">💡 Yeh automatic fill hoga amount select karne ke baad</p>
+  </div>
+
+  <!-- UTR -->
+  <div class="form-group">
+    <label>Transaction / UTR ID</label>
+    <input type="text" id="utr" placeholder="Enter UTR / Transaction ID" maxlength="30"/>
+    <p class="field-hint">💡 Payment app → Transaction History → UTR ID copy karo</p>
+  </div>
+
+  <!-- WARNING -->
+  <div class="warning-box">
+    ⚠️ <strong>Important:</strong> Payment karne ke baad hi UTR submit karo. Galat UTR se request reject ho sakti hai.
+  </div>
+
+  <!-- SUBMIT -->
+  <button class="submit-btn" id="submitBtn">
+    <span id="submitBtnText">Submit Request 🚀</span>
+    <span id="submitBtnSpinner" class="spinner hidden"></span>
+  </button>
+
+  <div class="note-box">
+    ⏱️ Coins added after admin verification — usually <strong>2–15 minutes</strong>
+  </div>
+</div>
+
+<!-- 📋 HISTORY -->
+<div class="card" id="historyBox">
+  <div class="history-header">
+    <h3>📋 Request History</h3>
+    <span class="history-count" id="historyCount">—</span>
+  </div>
+  <div id="historyList">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+  </div>
+</div>
+
+<!-- 🛡 TRUST -->
+<div class="card trust">
+  <div class="trust-grid">
+    <div class="trust-item">✅ <span>Safe Payment</span></div>
+    <div class="trust-item">⚡ <span>Fast Approval</span></div>
+    <div class="trust-item">🔒 <span>Secure System</span></div>
+    <div class="trust-item">💬 <span>24/7 Support</span></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-item" onclick="location.href='index.html'">Bundle</button>
+  <button class="nav-item" onclick="location.href='ai-editing.html'">AI &amp; Editing</button>
+  <button class="nav-item" onclick="location.href='social.html'">Social</button>
+  <button class="nav-item active">Account</button>
+</div>
+
+<script>
+/* =========================
+   UPI DETAILS
+========================= */
+const UPI_PHONEPE = "9021958286@ybl";
+const UPI_PAYTM   = "akans.m7@ptaxis";
+const UPI_GPAY    = "moinkhanmanyar@okhdfcbank";
+const UPI_NAME    = "Only M7 Limited";
+
+/* =========================
+   PRESET BUTTONS
+========================= */
+document.querySelectorAll(".preset-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const val = btn.dataset.amount;
+    document.getElementById("amount").value       = val;
+    document.getElementById("amountConfirm").value = val;
+    document.querySelectorAll(".preset-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    updatePreview(val);
+  });
+});
+
+document.getElementById("amount").addEventListener("input", function() {
+  document.getElementById("amountConfirm").value = this.value;
+  updatePreview(this.value);
+});
+
+function updatePreview(val) {
+  const preview = document.getElementById("amountPreview");
+  const coins   = document.getElementById("previewCoins");
+  if (val && Number(val) > 0) {
+    preview.classList.remove("hidden");
+    coins.textContent = Number(val) + " 🪙 Coins";
+  } else {
+    preview.classList.add("hidden");
+  }
+}
+
+/* =========================
+   UPI ID COPY
+========================= */
+document.getElementById("upiCopyBtn").addEventListener("click", async () => {
+  const upi = UPI_PHONEPE;
+  try { await navigator.clipboard.writeText(upi); }
+  catch {
+    const ta = document.createElement("textarea");
+    ta.value = upi; document.body.appendChild(ta);
+    ta.select(); document.execCommand("copy");
+    document.body.removeChild(ta);
+  }
+  const btn = document.getElementById("upiCopyBtn");
+  btn.textContent = "✅ Copied!";
+  setTimeout(() => btn.textContent = "Copy", 2000);
+});
+
+/* =========================
+   UPI DEEP LINK HELPER
+========================= */
+function getAmount() {
+  const amt = document.getElementById("amount").value;
+  if (!amt || Number(amt) < 25) {
+    showToastSimple("Pehle amount select karo! ⚡", "warn");
+    return null;
+  }
+  return Number(amt).toFixed(2);
+}
+
+function openUPI(upiId, appScheme) {
+  const amount = getAmount();
+  if (!amount) return;
+
+  // UPI deep link — works on most apps
+  const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(UPI_NAME)}&am=${amount}&cu=INR&tn=AKANS+Add+Money`;
+
+  // App-specific intent links
+  const appLinks = {
+    phonepe: `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(UPI_NAME)}&am=${amount}&cu=INR`,
+    paytm:   `paytmmp://pay?pa=${upiId}&pn=${encodeURIComponent(UPI_NAME)}&am=${amount}&cu=INR`,
+    gpay:    `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(UPI_NAME)}&am=${amount}&cu=INR`,
+  };
+
+  const link = appLinks[appScheme] || upiLink;
+
+  // Try app-specific link first, fallback to generic UPI
+  window.location.href = link;
+
+  // Fallback after 1.5s if app not installed
+  setTimeout(() => {
+    window.location.href = upiLink;
+  }, 1500);
+
+  // Auto-set hidden paymentApp value
+  const selectMap = { phonepe: "PhonePe", paytm: "Paytm", gpay: "Google Pay", other: "Other" };
+  if (selectMap[appScheme]) {
+    document.getElementById("paymentApp").value = selectMap[appScheme];
+  }
+}
+
+/* =========================
+   APP BUTTON LISTENERS
+========================= */
+document.getElementById("openPhonePe").addEventListener("click", () => {
+  openUPI(UPI_PHONEPE, "phonepe");
+});
+
+document.getElementById("openPaytm").addEventListener("click", () => {
+  openUPI(UPI_PAYTM, "paytm");
+});
+
+document.getElementById("openGPay").addEventListener("click", () => {
+  openUPI(UPI_GPAY, "gpay");
+});
+
+document.getElementById("openOther").addEventListener("click", () => {
+  const amount = getAmount();
+  if (!amount) return;
+  // Generic UPI link — opens UPI selector on device
+  const upiLink = `upi://pay?pa=${UPI_PHONEPE}&pn=${encodeURIComponent(UPI_NAME)}&am=${amount}&cu=INR&tn=AKANS+Add+Money`;
+  window.location.href = upiLink;
+  document.getElementById("paymentApp").value = "Other";
+});
+
+/* =========================
+   SIMPLE TOAST (for script tag)
+========================= */
+function showToastSimple(msg, type = "info") {
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.className = `toast ${type}`;
+  toast.classList.remove("hidden");
+  void toast.offsetWidth;
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.classList.add("hidden"), 400);
+  }, 3000);
+}
+</script>
+
+<script type="module" src="js/add-money.js"></script>
+</body>
+</html>
