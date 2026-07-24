@@ -6,6 +6,15 @@
    ✔ Same logic preserved
 ===================================================== */
 
+
+/* =====================================================
+   🚀 AKANS AUTH SYSTEM — UPGRADED
+   ✔ All alert() → Toast
+   ✔ Loading spinners on buttons
+   ✔ Better error messages
+   ✔ Same logic preserved
+===================================================== */
+
 import { auth, db } from "./firebase-init.js";
 
 import {
@@ -278,12 +287,38 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 /* =========================
-   🔐 PAGE GUARD
+   🔐 PAGE GUARD — TIMING FIX
+   Firebase session restore ke liye wait karta hai
+   Pehle check karta hai agar user already available hai
 ========================= */
 window.requireLogin = function () {
-  onAuthStateChanged(auth, user => {
-    if (!user) window.location.replace("login.html");
+
+  // ✅ Step 1: Agar Firebase ke paas already user hai toh kuch mat karo
+  if (auth.currentUser) return;
+
+  // ✅ Step 2: Page ko hide karo jab tak auth resolve na ho
+  document.documentElement.style.visibility = "hidden";
+
+  // ✅ Step 3: Ek baar hi check karo — unsubscribe immediately
+  const unsub = onAuthStateChanged(auth, user => {
+    unsub(); // Sirf ek baar fire karo
+
+    if (!user) {
+      // Genuinely logged out — redirect
+      window.location.replace("login.html");
+    } else {
+      // Logged in — page dikhao
+      document.documentElement.style.visibility = "visible";
+    }
   });
+
+  // ✅ Step 4: Safety fallback — 5 second ke baad bhi resolve nahi hua toh check karo
+  setTimeout(() => {
+    document.documentElement.style.visibility = "visible";
+    if (!auth.currentUser) {
+      window.location.replace("login.html");
+    }
+  }, 5000);
 };
 
 /* =========================
@@ -330,4 +365,5 @@ async function giveReferralSignupBonus(user, referralCode) {
   } catch(e) {
     console.error("Referral bonus error:", e);
   }
-}
+   }
+   
